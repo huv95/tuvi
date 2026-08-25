@@ -3,36 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tử Vi Đẩu Số - 14 Chính Tinh & Quy Luật Cát Hung</title>
+    <title>Tử Vi Đẩu Số - Mục Lục</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        tuvi: {
-                            gold: '#D4AF37',
-                            goldHover: '#F3E5AB',
-                            purple: '#2A0845',
-                            darkBg: '#0F0817',
-                            cardBg: '#1A1028',
-                            border: '#3D255A',
-                            fire: '#E53E3E',
-                            water: '#3182CE',
-                            wood: '#38A169',
-                            metal: '#CBD5E0',
-                            earth: '#D69E2E'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Be Vietnam Pro', 'Inter', 'sans-serif'],
-                        serif: ['Merriweather', 'serif']
-                    }
-                }
-            }
-        }
-    </script>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -40,7 +12,7 @@
             background-color: #0F0817;
             color: #E2E8F0;
             font-family: 'Be Vietnam Pro', sans-serif;
-            background-image: 
+            background-image:
                 radial-gradient(circle at 10% 20%, rgba(88, 28, 135, 0.25) 0%, transparent 40%),
                 radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 40%);
             background-attachment: fixed;
@@ -50,9 +22,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .gold-border {
-            border-image: linear-gradient(to bottom right, #D4AF37, #3D255A, #AA7C11) 1;
-        }
         .glass-card {
             background: rgba(26, 16, 40, 0.75);
             backdrop-filter: blur(12px);
@@ -61,1109 +30,154 @@
         .glass-card:hover {
             border-color: rgba(212, 175, 55, 0.5);
             box-shadow: 0 10px 25px -5px rgba(212, 175, 55, 0.15);
+            transform: translateY(-4px);
         }
-        .scrollbar-thin::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+        #wanderingHeart {
+            position: fixed;
+            width: 44px;
+            height: 44px;
+            border-radius: 9999px;
+            background: rgba(236, 72, 153, 0.15);
+            border: 1px solid rgba(236, 72, 153, 0.4);
+            color: #f472b6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 40;
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.25);
+            transition: top 4s ease-in-out, left 4s ease-in-out, transform 0.2s ease;
+            animation: heartbeat 1.6s ease-in-out infinite;
         }
-        .scrollbar-thin::-webkit-scrollbar-track {
-            background: #1A1028;
+        #wanderingHeart:hover {
+            transform: scale(1.15);
         }
-        .scrollbar-thin::-webkit-scrollbar-thumb {
-            background: #3D255A;
-            border-radius: 3px;
-        }
-        .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-            background: #D4AF37;
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.15); }
+            40% { transform: scale(0.95); }
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between scrollbar-thin">
+<body class="min-h-screen">
 
-    <!-- HEADER -->
-    <header class="sticky top-0 z-40 bg-[#0F0817]/90 backdrop-blur-md border-b border-tuvi-border/50">
-        <div class="max-w-7xl mx-mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-tuvi-gold to-purple-900 flex items-center justify-center text-slate-900 font-bold text-xl shadow-lg border border-tuvi-gold/50">
-                    <i class="fa-solid font-serif text-slate-950">☯</i>
-                </div>
-                <div>
-                    <h1 class="text-xl sm:text-2xl font-bold font-serif gold-gradient-text tracking-wide">TỬ VI ĐẨU SỐ</h1>
-                    <p class="text-xs text-purple-300/80">14 Chính Tinh & Quy Luật Cung - Sao Cát Hung</p>
-                </div>
-            </div>
-
-            <!-- Navigation Tabs -->
-            <nav class="flex flex-wrap justify-center gap-1 sm:gap-2 bg-tuvi-purple/60 p-1 rounded-xl border border-tuvi-border/60">
-                <button onclick="switchTab('matrix')" id="nav-matrix" class="tab-btn active px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 bg-tuvi-gold text-slate-950 font-semibold shadow">
-                    <i class="fa-solid fa-layer-group"></i> Ma Trận 14 Star
-                </button>
-                <button onclick="switchTab('palace')" id="nav-palace" class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 text-slate-300 hover:text-tuvi-gold">
-                    <i class="fa-solid fa-chess-board"></i> Tra Cứu Cung
-                </button>
-                <button onclick="switchTab('compare')" id="nav-compare" class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 text-slate-300 hover:text-tuvi-gold">
-                    <i class="fa-solid fa-code-compare"></i> So Sánh Sao
-                </button>
-                <button onclick="switchTab('ai')" id="nav-ai" class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 text-slate-300 hover:text-tuvi-gold">
-                    <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> AI Trợ Lý
-                </button>
-                <button onclick="switchTab('quiz')" id="nav-quiz" class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 text-slate-300 hover:text-tuvi-gold">
-                    <i class="fa-solid fa-graduation-cap"></i> Thử Tài
-                </button>
-            </nav>
+    <header class="max-w-5xl mx-auto px-4 sm:px-6 pt-16 pb-10 text-center">
+        <div class="w-14 h-14 mx-auto rounded-full bg-gradient-to-tr from-amber-400 to-purple-900 flex items-center justify-center text-slate-950 text-2xl font-bold shadow-lg border border-amber-400/50 mb-4">
+            ☯
         </div>
+        <h1 class="text-3xl sm:text-4xl font-bold font-serif gold-gradient-text tracking-wide">TỬ VI ĐẨU SỐ</h1>
+        <p class="text-sm text-purple-300/80 mt-2">Mục lục các công cụ tra cứu & luận giải</p>
     </header>
 
-    <!-- MAIN CONTENT CONTAINER -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full">
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 pb-16">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
 
-        <!-- TAB 1: MATRIX & CARDS VIEW -->
-        <section id="tab-matrix" class="tab-content space-y-6">
-            <!-- Filter Bar & Search -->
-            <div class="glass-card rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row gap-4 items-center justify-between">
-                <div class="relative w-full md:w-72">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-purple-400"></i>
-                    <input type="text" id="searchInput" oninput="filterStars()" placeholder="Tìm tên sao, tính chất..." 
-                        class="w-full pl-10 pr-4 py-2 bg-tuvi-darkBg/80 border border-tuvi-border rounded-xl text-sm focus:outline-none focus:border-tuvi-gold transition-colors">
-                </div>
-
-                <div class="flex flex-wrap items-center gap-2 w-full md:w-auto justify-start md:justify-end">
-                    <span class="text-xs text-purple-300/70 font-semibold mr-1">Bộ Sao:</span>
-                    <button onclick="setGroupFilter('all')" class="group-btn active text-xs px-3 py-1.5 rounded-lg border border-tuvi-gold bg-tuvi-gold text-slate-950 font-bold transition">Tất cả</button>
-                    <button onclick="setGroupFilter('Tử Phủ Vũ Tướng Liêm')" class="group-btn text-xs px-3 py-1.5 rounded-lg border border-tuvi-border bg-tuvi-purple/40 text-purple-200 hover:border-tuvi-gold transition">Tử Phủ Vũ Tướng Liêm</button>
-                    <button onclick="setGroupFilter('Sát Phá Tham')" class="group-btn text-xs px-3 py-1.5 rounded-lg border border-tuvi-border bg-tuvi-purple/40 text-purple-200 hover:border-tuvi-gold transition">Sát Phá Tham</button>
-                    <button onclick="setGroupFilter('Cơ Nguyệt Đồng Lương')" class="group-btn text-xs px-3 py-1.5 rounded-lg border border-tuvi-border bg-tuvi-purple/40 text-purple-200 hover:border-tuvi-gold transition">Cơ Nguyệt Đồng Lương</button>
-                    <button onclick="setGroupFilter('Cự Nhật')" class="group-btn text-xs px-3 py-1.5 rounded-lg border border-tuvi-border bg-tuvi-purple/40 text-purple-200 hover:border-tuvi-gold transition">Cự Nhật</button>
-                </div>
-
-                <div class="flex items-center gap-2 w-full md:w-auto">
-                    <span class="text-xs text-purple-300/70 font-semibold mr-1">Ngũ Hành:</span>
-                    <select id="elementFilter" onchange="filterStars()" class="bg-tuvi-darkBg border border-tuvi-border text-xs rounded-xl px-3 py-2 text-purple-200 focus:outline-none focus:border-tuvi-gold">
-                        <option value="all">Tất cả Ngũ Hành</option>
-                        <option value="Kim">Kim (Âm/Dương Kim)</option>
-                        <option value="Mộc">Mộc (Âm Mộc)</option>
-                        <option value="Thủy">Thủy (Dương/Âm Thủy)</option>
-                        <option value="Hỏa">Hỏa (Âm/Dương Hỏa)</option>
-                        <option value="Thổ">Thổ (Dương/Âm Thổ)</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Star Cards Grid -->
-            <div id="starCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                <!-- Cards injected dynamically -->
-            </div>
-        </section>
-
-        <!-- TAB 2: PALACE & STAR INTERACTION SIMULATOR -->
-        <section id="tab-palace" class="tab-content hidden space-y-6">
-            <div class="glass-card rounded-2xl p-5">
-                <div class="max-w-3xl mx-auto text-center space-y-2 mb-6">
-                    <h2 class="text-xl font-bold font-serif gold-gradient-text">Tra Cứu Tương Tác Cung & Sao</h2>
-                    <p class="text-sm text-purple-200/80">
-                        Chọn một Cung Chức Năng để xem danh sách các Chính Tinh Đắc Vị (Tốt Nhất) hoặc Kỵ Vị (Xấu Nhất), hoặc chọn một Sao để xem phân bổ Cát Hung trên 12 Cung.
-                    </p>
-                </div>
-
-                <!-- Control Mode Selector -->
-                <div class="flex justify-center gap-4 mb-6">
-                    <button onclick="setPalaceMode('byPalace')" id="btn-mode-palace" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-tuvi-gold text-slate-950 shadow">
-                        <i class="fa-solid fa-house flex-inline mr-1"></i> Theo Cung Chức Năng
-                    </button>
-                    <button onclick="setPalaceMode('byStar')" id="btn-mode-star" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-tuvi-purple border border-tuvi-border text-purple-200 hover:text-tuvi-gold">
-                        <i class="fa-solid fa-star flex-inline mr-1"></i> Theo Chính Tinh
-                    </button>
-                </div>
-
-                <!-- Dynamic Selector Container -->
-                <div class="flex flex-wrap justify-center items-center gap-3 max-w-xl mx-auto mb-8 bg-tuvi-darkBg/60 p-4 rounded-xl border border-tuvi-border">
-                    <label id="selectorLabel" class="text-sm font-medium text-tuvi-gold">Chọn Cung:</label>
-                    <select id="palaceSelect" onchange="renderPalaceAnalysis()" class="bg-tuvi-cardBg border border-tuvi-gold/50 rounded-xl px-4 py-2 text-sm text-amber-200 focus:outline-none focus:ring-2 focus:ring-tuvi-gold flex-1">
-                        <!-- Options generated in JS -->
-                    </select>
-                </div>
-
-                <!-- Visual Grid Display -->
-                <div id="palaceAnalysisResult" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Results rendered dynamically -->
-                </div>
-            </div>
-        </section>
-
-        <!-- TAB 3: STAR COMPARISON TOOL -->
-        <section id="tab-compare" class="tab-content hidden space-y-6">
-            <div class="glass-card rounded-2xl p-5">
-                <div class="text-center space-y-2 mb-6">
-                    <h2 class="text-xl font-bold font-serif gold-gradient-text">So Sánh Trực Quan 2 Chính Tinh</h2>
-                    <p class="text-sm text-purple-200/80">Đặt 2 ngôi sao cạnh nhau để phân tích sự tương phản về Ngũ Hành, Hóa Khí, Vị trí Tốt/Xấu & Bản tính cốt lõi.</p>
-                </div>
-
-                <!-- Selectors -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-8">
-                    <div class="bg-tuvi-darkBg/80 p-4 rounded-xl border border-tuvi-border">
-                        <label class="block text-xs text-purple-300 mb-1">Chọn Chính Tinh thứ nhất:</label>
-                        <select id="compareStar1" onchange="renderComparison()" class="w-full bg-tuvi-cardBg border border-tuvi-gold/40 rounded-lg p-2.5 text-sm text-gold-300 font-semibold focus:outline-none focus:border-tuvi-gold">
-                            <!-- Populated in JS -->
-                        </select>
-                    </div>
-                    <div class="bg-tuvi-darkBg/80 p-4 rounded-xl border border-tuvi-border">
-                        <label class="block text-xs text-purple-300 mb-1">Chọn Chính Tinh thứ hai:</label>
-                        <select id="compareStar2" onchange="renderComparison()" class="w-full bg-tuvi-cardBg border border-tuvi-gold/40 rounded-lg p-2.5 text-sm text-gold-300 font-semibold focus:outline-none focus:border-tuvi-gold">
-                            <!-- Populated in JS -->
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Comparison Table Result -->
-                <div id="comparisonContainer" class="overflow-x-auto">
-                    <!-- Injected dynamically -->
-                </div>
-            </div>
-        </section>
-
-        <!-- TAB 4: AI GEMINI CONSULTANT -->
-        <section id="tab-ai" class="tab-content hidden space-y-6">
-            <div class="glass-card rounded-2xl p-5 max-w-4xl mx-auto">
-                <div class="flex items-center gap-3 border-b border-tuvi-border/60 pb-4 mb-4">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-purple-800 flex items-center justify-center text-slate-950 font-bold">
-                        <i class="fa-solid fa-robot text-lg"></i>
-                    </div>
-                    <div>
-                        <h2 class="text-lg font-bold gold-gradient-text">Trợ Lý Tử Vi Gemini AI</h2>
-                        <p class="text-xs text-purple-300/80">Hỏi đáp luận đoán chi tiết về 14 Chính Tinh & các cách cục Tử Vi dựa trên Gemini 3 Flash</p>
-                    </div>
-                </div>
-
-                <!-- Quick Prompts -->
-                <div class="mb-4">
-                    <span class="text-xs text-purple-300/70 font-semibold block mb-2">Gợi ý câu hỏi nhanh:</span>
-                    <div class="flex flex-wrap gap-2">
-                        <button onclick="setPrompt('Tại sao Tử Vi kỵ đóng ở các cung Lục thân như Bào, Phụ, Tử?')" class="text-xs bg-tuvi-purple/60 border border-tuvi-border hover:border-tuvi-gold px-3 py-1.5 rounded-lg text-purple-200 transition text-left">
-                            ❓ Tử Vi kỵ cung Lục Thân
-                        </button>
-                        <button onclick="setPrompt('Phân tích cách cục Hỏa Tham và Linh Tham tại Mệnh Tài Bộc khi có Tham Lang?')" class="text-xs bg-tuvi-purple/60 border border-tuvi-border hover:border-tuvi-gold px-3 py-1.5 rounded-lg text-purple-200 transition text-left">
-                            🔥 Cách Hỏa Tham & Linh Tham
-                        </button>
-                        <button onclick="setPrompt('Tại sao Thiên Phủ gặp Tuần Triệt Địa Không Địa Kiếp lại biến thành Kho Rỗng?')" class="text-xs bg-tuvi-purple/60 border border-tuvi-border hover:border-tuvi-gold px-3 py-1.5 rounded-lg text-purple-200 transition text-left">
-                            🏰 Thiên Phủ gặp Không Vong
-                        </button>
-                        <button onclick="setPrompt('Giải thích tính chất Tù tinh và Cô độc của Vũ Khúc tại cung Phu Thê.')" class="text-xs bg-tuvi-purple/60 border border-tuvi-border hover:border-tuvi-gold px-3 py-1.5 rounded-lg text-purple-200 transition text-left">
-                            💔 Vũ Khúc tại Phu Thê
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Chat Box -->
-                <div id="aiChatBox" class="h-96 bg-tuvi-darkBg/90 border border-tuvi-border rounded-xl p-4 overflow-y-auto space-y-4 scrollbar-thin text-sm">
-                    <div class="flex items-start gap-3">
-                        <div class="w-8 h-8 rounded-full bg-tuvi-gold/20 text-tuvi-gold flex items-center justify-center shrink-0 text-xs font-bold border border-tuvi-gold/40">
-                            AI
-                        </div>
-                        <div class="bg-tuvi-cardBg border border-tuvi-border p-3.5 rounded-2xl rounded-tl-none max-w-2xl text-purple-100 text-xs sm:text-sm leading-relaxed">
-                            Xin chào! Tôi là Trợ lý Luận Đoán Tử Vi Đẩu Số. Bạn muốn hỏi hoặc nhờ luận giải cụ thể về sự tương tác giữa Cung và Sao nào trong 14 Chính Tinh?
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Chat Input -->
-                <div class="mt-4 flex gap-2">
-                    <input type="text" id="aiInput" placeholder="Nhập câu hỏi Tử Vi của bạn tại đây..." onkeypress="if(event.key === 'Enter') askGemini()"
-                        class="flex-1 bg-tuvi-darkBg border border-tuvi-border rounded-xl px-4 py-2.5 text-sm text-purple-100 focus:outline-none focus:border-tuvi-gold">
-                    <button onclick="askGemini()" id="sendAiBtn" class="bg-tuvi-gold hover:bg-amber-400 text-slate-950 px-5 py-2.5 rounded-xl font-bold text-sm transition flex items-center gap-2 shadow">
-                        <span>Gửi</span> <i class="fa-solid fa-paper-plane"></i>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- TAB 5: QUIZ GAME -->
-        <section id="tab-quiz" class="tab-content hidden space-y-6 max-w-3xl mx-auto">
-            <div class="glass-card rounded-2xl p-6 text-center space-y-6">
+            <a href="chinhtinh-cathung.html" class="glass-card rounded-2xl p-5 transition-all flex items-start gap-4">
+                <i class="fa-solid fa-layer-group text-2xl text-amber-400 mt-1"></i>
                 <div>
-                    <span class="text-xs uppercase tracking-widest text-tuvi-gold font-bold">Thử Tài Tử Vi Đẩu Số</span>
-                    <h2 class="text-2xl font-bold font-serif text-white mt-1">Kiểm Tra Kiến Thức 14 Chính Tinh</h2>
-                    <p class="text-xs text-purple-300 mt-1">Trả lời các câu hỏi trắc nghiệm để đánh giá mức độ am hiểu về Vị trí Đắc/Hãm và Ngũ hành của các sao.</p>
+                    <h2 class="font-bold font-serif text-lg text-amber-200">14 Chính Tinh & Cát Hung</h2>
+                    <p class="text-xs text-purple-200/70 mt-1 leading-relaxed">Ma trận 14 chính tinh, tra cứu cung, so sánh sao, AI trợ lý và trắc nghiệm kiến thức.</p>
                 </div>
+            </a>
 
-                <!-- Quiz Progress -->
-                <div class="w-full bg-tuvi-darkBg rounded-full h-2.5 border border-tuvi-border overflow-hidden">
-                    <div id="quizProgressBar" class="bg-gradient-to-r from-tuvi-gold to-amber-500 h-2.5 transition-all duration-300" style="width: 0%"></div>
+            <a href="chinhtinh-chucnang.html" class="glass-card rounded-2xl p-5 transition-all flex items-start gap-4">
+                <i class="fa-solid fa-chess-board text-2xl text-blue-400 mt-1"></i>
+                <div>
+                    <h2 class="font-bold font-serif text-lg text-blue-200">Chính Tinh & 12 Cung Chức Năng</h2>
+                    <p class="text-xs text-purple-200/70 mt-1 leading-relaxed">Tra cứu tương tác chi tiết giữa 14 chính tinh và 12 cung chức năng.</p>
                 </div>
+            </a>
 
-                <!-- Quiz Card -->
-                <div id="quizCard" class="bg-tuvi-darkBg/80 border border-tuvi-border rounded-2xl p-6 text-left space-y-4">
-                    <!-- Injected dynamically -->
+            <a href="ansaochinhtinh.html" class="glass-card rounded-2xl p-5 transition-all flex items-start gap-4">
+                <i class="fa-solid fa-map-location-dot text-2xl text-emerald-400 mt-1"></i>
+                <div>
+                    <h2 class="font-bold font-serif text-lg text-emerald-200">Bản Đồ Tương Tác An Sao</h2>
+                    <p class="text-xs text-purple-200/70 mt-1 leading-relaxed">An 14 chính tinh lên lá số, xem tương tác trực quan theo cung.</p>
                 </div>
+            </a>
 
-                <!-- Quiz Actions -->
-                <div class="flex justify-between items-center pt-2">
-                    <span id="quizScoreText" class="text-xs font-semibold text-tuvi-gold">Điểm: 0 / 0</span>
-                    <button id="nextQuizBtn" onclick="nextQuestion()" class="hidden bg-tuvi-gold text-slate-950 font-bold px-5 py-2 rounded-xl text-sm hover:bg-amber-400 transition shadow">
-                        Câu Tiếp Theo <i class="fa-solid fa-arrow-right ml-1"></i>
-                    </button>
+            <a href="ansao14chinhtinh_toigian.html" class="glass-card rounded-2xl p-5 transition-all flex items-start gap-4">
+                <i class="fa-solid fa-diagram-project text-2xl text-cyan-400 mt-1"></i>
+                <div>
+                    <h2 class="font-bold font-serif text-lg text-cyan-200">Bản Đồ An Sao (Bản Tối Giản)</h2>
+                    <p class="text-xs text-purple-200/70 mt-1 leading-relaxed">Phiên bản rút gọn của công cụ an 14 chính tinh.</p>
                 </div>
-            </div>
-        </section>
+            </a>
 
+            <a href="SatPhaTham.html" class="glass-card rounded-2xl p-5 transition-all flex items-start gap-4">
+                <i class="fa-solid fa-fire text-2xl text-red-400 mt-1"></i>
+                <div>
+                    <h2 class="font-bold font-serif text-lg text-red-200">Tam Hợp Sát Phá Tham</h2>
+                    <p class="text-xs text-purple-200/70 mt-1 leading-relaxed">Khám phá bộ ba Thất Sát - Phá Quân - Tham Lang trên 12 cung.</p>
+                </div>
+            </a>
+
+            <a href="conguyetdongluong.html" class="glass-card rounded-2xl p-5 transition-all flex items-start gap-4">
+                <i class="fa-solid fa-moon text-2xl text-indigo-300 mt-1"></i>
+                <div>
+                    <h2 class="font-bold font-serif text-lg text-indigo-200">Bộ Cơ Nguyệt Đồng Lương</h2>
+                    <p class="text-xs text-purple-200/70 mt-1 leading-relaxed">Đặc tính 4 sao Thiên Cơ - Thái Âm - Thiên Đồng - Thiên Lương và các cách cục nổi bật.</p>
+                </div>
+            </a>
+
+        </div>
     </main>
 
-    <!-- STAR DETAIL MODAL -->
-    <div id="starModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-        <div class="glass-card bg-[#1A1028] border-tuvi-gold/40 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto scrollbar-thin p-6 relative space-y-5 animate-fade-in">
-            <button onclick="closeStarModal()" class="absolute top-4 right-4 text-purple-400 hover:text-tuvi-gold w-8 h-8 rounded-full bg-tuvi-darkBg flex items-center justify-center border border-tuvi-border">
+    <footer class="border-t border-tuvi-border/40 py-4 text-center text-xs text-purple-400/60">
+        <p>© Tử Vi Đẩu Số</p>
+    </footer>
+
+    <!-- WANDERING HEART EASTER EGG -->
+    <div id="wanderingHeart" onclick="openThiepModal()" title="???">
+        <i class="fa-solid fa-heart"></i>
+    </div>
+
+    <!-- THIEP CUOI SIDE-SELECT MODAL -->
+    <div id="thiepModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden" onclick="if(event.target === this) closeThiepModal()">
+        <div class="glass-card bg-[#1A1028] border-pink-400/30 rounded-2xl max-w-sm w-full p-6 relative space-y-5 text-center">
+            <button onclick="closeThiepModal()" class="absolute top-4 right-4 text-purple-400 hover:text-pink-300 w-8 h-8 rounded-full bg-tuvi-darkBg flex items-center justify-center border border-tuvi-border">
                 <i class="fa-solid fa-xmark"></i>
             </button>
 
-            <div id="modalContent">
-                <!-- Injected via JS -->
+            <i class="fa-solid fa-heart text-3xl text-pink-400"></i>
+            <h3 class="font-bold font-serif text-xl text-pink-200">Bạn là khách mời của nhà nào?</h3>
+            <p class="text-xs text-purple-300/70">Chọn để xem thiệp mời phù hợp.</p>
+
+            <div class="grid grid-cols-2 gap-3 pt-2">
+                <a href="thiepcuoi-nhatrai.html" class="bg-tuvi-purple/60 hover:bg-pink-500/20 border border-tuvi-border hover:border-pink-400 rounded-xl px-4 py-3 text-sm font-semibold text-purple-100 transition">
+                    Nhà Trai
+                </a>
+                <a href="thiepcuoi-nhagai.html" class="bg-tuvi-purple/60 hover:bg-pink-500/20 border border-tuvi-border hover:border-pink-400 rounded-xl px-4 py-3 text-sm font-semibold text-purple-100 transition">
+                    Nhà Gái
+                </a>
             </div>
         </div>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="border-t border-tuvi-border/40 bg-[#0F0817]/90 py-4 text-center text-xs text-purple-400/60">
-        <p>© Tử Vi Đẩu Số - Hệ Thống Luận Giải Tương Tác 14 Chính Tinh & Cung Chức Năng</p>
-    </footer>
-
     <script>
-        /* ----------------------------------------------------
-           DATA STRUCTURE FOR 14 MAIN STARS (CHÍNH TINH)
-           ---------------------------------------------------- */
-        const starsData = [
-            {
-                id: 'tu-vi',
-                name: 'Tử Vi',
-                group: 'Tử Phủ Vũ Tướng Liêm',
-                element: 'Dương Thổ',
-                elementCategory: 'Thổ',
-                essence: 'Đế Tinh (Lãnh Đạo, Tôn Quý)',
-                bestPositions: ['Mệnh', 'Quan Lộc'],
-                worstPositions: ['Huynh Đệ (Bào)', 'Phụ Mẫu', 'Tử Tức'],
-                summary: 'Ngôi sao tôn quý nhất, thủ lãnh 14 chính tinh, đại diện cho uy quyền, khí chất minh quân và khả năng gánh vác trách nhiệm.',
-                bestDetail: 'Khi thủ Mệnh hoặc Quan Lộc, Tử Vi phát huy tối đa khí chất "minh quân", có năng lực chỉ huy đắc lực, gánh vác trách nhiệm lớn và dễ đạt được danh vị cao.',
-                worstDetail: 'Do bản chất Đế tinh mang cái tôi rất cao và sĩ diện, khi đóng ở các cung Lục thân dễ gây ra sự cô khắc, lấn át người thân, hoặc khiến đương số phải gánh vác trách nhiệm gia đình quá nặng nề dẫn đến mệt mỏi. Tại cung Bào, Tử Vi chủ về sự đơn độc, hình khắc.',
-                keywords: ['Đế vương', 'Quyền lực', 'Lãnh đạo', 'Sĩ diện', 'Cô khắc Lục thân'],
-                color: 'text-amber-400',
-                borderBg: 'border-amber-500/30'
-            },
-            {
-                id: 'thien-phu',
-                name: 'Thiên Phủ',
-                group: 'Tử Phủ Vũ Tướng Liêm',
-                element: 'Âm Thổ',
-                elementCategory: 'Thổ',
-                essence: 'Phú Tinh, Lộc Khố (Kho Tiền Của Trời)',
-                bestPositions: ['Tài Bạch', 'Điền Trạch'],
-                worstPositions: ['Đồng cung Không vong (Địa Không, Địa Kiếp, Tuần, Triệt)'],
-                summary: 'Kho báu trời ban, giữ vai trò tích lũy, bảo bọc, quản lý tài sản và xây dựng nền tảng tài chính bền vững.',
-                bestDetail: 'Đóng tại Tài Bạch, Điền Trạch là đắc vị, ví như kho vàng bạc được cất giữ cẩn mật, chủ về điền sản dồi dào, tài chính tích lũy vững bền.',
-                worstDetail: 'Thiên Phủ rất kỵ gặp các sao Không (Địa Không, Địa Kiếp, Tuần, Triệt). Khi gặp Không vong, kho tiền bị "thủng" thành "không khố" (kho rỗng), khiến đương số dễ lâm vào cảnh túng thiếu đột ngột, phá tán di sản tổ nghiệp.',
-                keywords: ['Lộc khố', 'Tích lũy', 'An toàn', 'Kỵ Không Vong', 'Bền vững'],
-                color: 'text-yellow-400',
-                borderBg: 'border-yellow-500/30'
-            },
-            {
-                id: 'vu-khuc',
-                name: 'Vũ Khúc',
-                group: 'Tử Phủ Vũ Tướng Liêm',
-                element: 'Âm Kim',
-                elementCategory: 'Kim',
-                essence: 'Tài Tinh, Hóa khí Tù & Cô Độc',
-                bestPositions: ['Tài Bạch'],
-                worstPositions: ['Phu Thê', 'Tử Tức'],
-                summary: 'Chính Tài tinh quả cảm, dứt khoát, giỏi kinh doanh nhưng mang thuộc tính Âm Kim thu liễm, dễ cô khắc gia đạo.',
-                bestDetail: 'Đóng tại Tài Bạch giúp đương số có tư duy tài chính sắc bén, khả năng kinh doanh xuất sắc, dứt khoát và dòng tiền dồi dào.',
-                worstDetail: 'Hóa khí của Vũ Khúc là "Tù" và "Cô độc" (Quả tú tinh). Ngũ hành Âm Kim mang tính chất thu liễm, lạnh lùng. Khi đóng ở cung Phu Thê hay Tử Tức, nó gây ra sự hình khắc mạnh mẽ, vợ chồng lãnh đạm, sinh ly tử biệt hoặc hiếm muộn con cái.',
-                keywords: ['Chính tài', 'Quả cảm', 'Tư duy tài chính', 'Cô độc', 'Khắc Phu Thê'],
-                color: 'text-slate-300',
-                borderBg: 'border-slate-400/30'
-            },
-            {
-                id: 'thien-tuong',
-                name: 'Thiên Tướng',
-                group: 'Tử Phủ Vũ Tướng Liêm',
-                element: 'Dương Thủy',
-                elementCategory: 'Thủy',
-                essence: 'Ấn Tinh (Uy Tín, Danh Dự, Phò Tá)',
-                bestPositions: ['Quan Lộc', 'Mệnh'],
-                worstPositions: ['Cung gặp Tuần, Triệt', 'Phu Thê hãm địa'],
-                summary: 'Biểu tượng của ấn tín, danh dự, lòng trắc ẩn và vai trò quân sư phò tá đắc lực.',
-                bestDetail: 'Đóng tại Quan Lộc chủ về công danh an định, bình ổn, cực kỳ hợp với vai trò phò tá đắc lực (thư ký, tham mưu, phó phòng, trợ lý cao cấp).',
-                worstDetail: 'Thiên Tướng tượng trưng cho khuôn mặt và danh dự. Nếu gặp Tuần, Triệt án ngữ, chủ về bị "mất mặt", gãy đổ công danh tai hại hoặc tàn tật. Đóng tại Phu Thê hãm địa chủ về sự lấn lướt bạn đời, gia đạo hay cãi vã.',
-                keywords: ['Ấn tín', 'Uy tín', 'Phò tá', 'Kỵ Tuần Triệt', 'Danh dự'],
-                color: 'text-blue-400',
-                borderBg: 'border-blue-500/30'
-            },
-            {
-                id: 'liem-trinh',
-                name: 'Liêm Trinh',
-                group: 'Tử Phủ Vũ Tướng Liêm',
-                element: 'Âm Hỏa',
-                elementCategory: 'Hỏa',
-                essence: 'Tù Tinh, Đào Hoa Thứ (Kỷ Luật, Quan Tư Pháp)',
-                bestPositions: ['Quan Lộc (tại Dần, Thân)'],
-                worstPositions: ['Phu Thê', 'Tật Ách'],
-                summary: 'Nghiêm nghị, kỷ luật, quản lý tư pháp. Bên trong dồn nén ngọn lửa Âm Hỏa dễ gây cuồng nhiệt hoặc xung đột nội tâm.',
-                bestDetail: 'Khi đắc địa ở Quan Lộc (đặc biệt Dần, Thân), Liêm Trinh bộc lộ tính chất của một vị quan thanh liêm, giúp đương số thăng tiến nhanh, nắm giữ uy quyền lớn.',
-                worstDetail: 'Liêm Trinh mang ngọn lửa Âm Hỏa dồn nén bên trong. Đóng tại Phu Thê chủ về sự ghen tuông khắc nghiệt, dễ gây hình khắc, ly hôn nhiều lần. Đóng tại Tật Ách dễ bộc phát các bệnh về máu mủ, tim mạch hoặc tai nạn mổ xẻ dữ dội.',
-                keywords: ['Quan tư pháp', 'Kỷ luật', 'Ghen tuông', 'Bệnh máu mủ', 'Nghiêm nghị'],
-                color: 'text-red-400',
-                borderBg: 'border-red-500/30'
-            },
-            {
-                id: 'that-sat',
-                name: 'Thất Sát',
-                group: 'Sát Phá Tham',
-                element: 'Dương Kim',
-                elementCategory: 'Kim',
-                essence: 'Quyền Tinh, Tướng Tinh (Dũng Mãnh, Quyết Liệt)',
-                bestPositions: ['Mệnh', 'Quan Lộc'],
-                worstPositions: ['Huynh Đệ', 'Phụ Mẫu', 'Tử Tức', 'Phu Thê (Lục Thân)'],
-                summary: 'Ngôi sao võ nghiệp dũng mãnh, dám đột phá và dấn thân, nhưng sát khí cực mạnh gây cô độc.',
-                bestDetail: 'Đóng tại Mệnh hay Quan Lộc giúp đương số có tư duy độc lập, chịu được áp lực cực lớn, dám dấn thân và dễ lập chiến công lừng lẫy trong võ nghiệp hoặc kinh doanh mạo hiểm.',
-                worstDetail: 'Do mang sát khí mạnh và tính chất cô độc, Thất Sát đóng ở các cung Lục thân như Phu Thê, Phụ Mẫu, Tử Tức chủ về sự hình khắc nặng nề, gia đình ly tán, khó tìm được sự nâng đỡ từ người thân.',
-                keywords: ['Tướng tinh', 'Dũng mãnh', 'Sát khí', 'Chịu áp lực', 'Khắc Lục thân'],
-                color: 'text-slate-200',
-                borderBg: 'border-slate-300/30'
-            },
-            {
-                id: 'pha-quan',
-                name: 'Phá Quân',
-                group: 'Sát Phá Tham',
-                element: 'Dương Thủy',
-                elementCategory: 'Thủy',
-                essence: 'Hao Tinh (Tiên Phong, Đập Cũ Xây Mới)',
-                bestPositions: ['Mệnh', 'Quan Lộc (tại Tý, Ngọ)'],
-                worstPositions: ['Phu Thê', 'Tử Tức', 'Tài Bạch hãm địa'],
-                summary: 'Sao tiên phong sẵn sàng phá bỏ quy tắc cũ để tái thiết cái mới, tính chất biến động và hao tán rất lớn.',
-                bestDetail: 'Đắc địa tại Mệnh, Quan (đặc biệt tại Tý, Ngọ) giúp đương số có uy quyền hiển hách, tạo nên những bước ngoặt vĩ đại và mang tính cách mạng cho sự nghiệp.',
-                worstDetail: 'Phá Quân là "Hao tinh" chủ về sự hao tán, biến động đột ngột. Đóng tại Phu Thê chủ sự hao tán phu thê, vợ chồng bất nghĩa phải chắp nối nhiều lần; đóng tại Tử Tức gây hiếm con, khó nuôi; đóng tại Tài Bạch hãm địa chủ về tiền bạc ra vào thất thường, dễ bị phá sản.',
-                keywords: ['Đột phá', 'Hao tinh', 'Biến động', 'Chắp nối Phu Thê', 'Tiên phong'],
-                color: 'text-cyan-400',
-                borderBg: 'border-cyan-500/30'
-            },
-            {
-                id: 'tham-lang',
-                name: 'Tham Lang',
-                group: 'Sát Phá Tham',
-                element: 'Dương Thủy đới Kim',
-                elementCategory: 'Thủy',
-                essence: 'Đào Hoa Tinh, Dục Vọng Tinh (Giao Tiếp, Đa Tài)',
-                bestPositions: ['Mệnh', 'Tài Bạch (gặp Hỏa/Linh tại Thìn Tuất Sửu Mùi)'],
-                worstPositions: ['Phu Thê', 'Hãm địa tại Tỵ, Hợi'],
-                summary: 'Khéo giao tiếp, đa tài, nhạy bén tài chính nhưng tham vọng lớn, kỵ lụy tửu sắc khi hãm địa.',
-                bestDetail: 'Khi tọa Mệnh, Tài gặp Hỏa Tinh/Linh Tinh (cách Hỏa Tham, Linh Tham) chủ về sự hoạnh phát tài lộc rực rỡ, giàu sang tột bậc đột ngột.',
-                worstDetail: 'Khi rơi vào vị trí hãm địa (Tỵ, Hợi) hoặc đóng ở cung Phu Thê, Tham Lang bộc lộ tính chất "Đào hoa lộ" dâm dật, chơi bời sa đọa, gây hình khắc gia đạo và lụy thân vì tửu sắc.',
-                keywords: ['Đa tài', 'Hỏa Tham hoạnh phát', 'Khéo giao tiếp', 'Tửu sắc hãm', 'Dục vọng'],
-                color: 'text-teal-300',
-                borderBg: 'border-teal-400/30'
-            },
-            {
-                id: 'thien-co',
-                name: 'Thiên Cơ',
-                group: 'Cơ Nguyệt Đồng Lương',
-                element: 'Âm Mộc',
-                elementCategory: 'Mộc',
-                essence: 'Thiện Tinh, Mưu Trí (Bộ Não, Mưu Lược)',
-                bestPositions: ['Mệnh', 'Quan Lộc', 'Phúc Đức'],
-                worstPositions: ['Phu Thê', 'Điền Trạch hãm địa (như Dậu)'],
-                summary: 'Trí tuệ, tư duy mưu lược, giỏi lên kế hoạch nhưng là Động tinh nên kỵ đóng ở các cung cần sự an định.',
-                bestDetail: 'Đóng tại Mệnh, Quan, Phúc giúp đương số có trí tuệ siêu việt, giỏi lên kế hoạch, tham mưu, học vấn cao rộng và giỏi giải quyết vấn đề.',
-                worstDetail: 'Thiên Cơ là một "Động tinh" uyển chuyển như dây leo Âm Mộc. Khi đóng ở Phu Thê dễ gây ra biến động lớn trong tình cảm, vợ chồng bất hòa. Đóng ở Điền Trạch hãm địa (như tại Dậu) dễ gây ra cảnh phá sản, lìa bỏ tổ nghiệp, nhà đất ít và phải chuyển nhà thường xuyên.',
-                keywords: ['Bộ não', 'Mưu trí', 'Tham mưu', 'Động tinh', 'Khắc Điền/Thê hãm'],
-                color: 'text-emerald-400',
-                borderBg: 'border-emerald-500/30'
-            },
-            {
-                id: 'thai-am',
-                name: 'Thái Âm',
-                group: 'Cơ Nguyệt Đồng Lương',
-                element: 'Âm Thủy',
-                elementCategory: 'Thủy',
-                essence: 'Phú Tinh (Mặt Trăng, Tích Lũy, Nhu Hòa)',
-                bestPositions: ['Điền Trạch', 'Tài Bạch'],
-                worstPositions: ['Tật Ách', 'Hãm địa tại các cung ban ngày'],
-                summary: 'Biểu tượng Mặt Trăng, dịu dàng, chủ về điền sản, tài sản tích lũy và trực giác tinh tế.',
-                bestDetail: 'Đóng tại Điền, Tài sáng sủa giúp đương số có duyên lớn với điền sản, bất động sản nhiều và tích lũy được khối tài sản khổng lồ.',
-                worstDetail: 'Thái Âm hãm địa đóng ở Tật Ách dễ gây ra các bệnh sinh lý nữ hoặc đau mắt. Nếu hãm địa thủ Mệnh, tính chất âm nhu quá mức khiến đương số dễ rơi vào đa sầu đa cảm, suy nghĩ tiêu cực, tự gây áp lực tinh thần cho bản thân.',
-                keywords: ['Mặt Trăng', 'Bất động sản', 'Âm nhu', 'Đa sầu đa cảm', 'Đau mắt'],
-                color: 'text-indigo-300',
-                borderBg: 'border-indigo-400/30'
-            },
-            {
-                id: 'thien-dong',
-                name: 'Thiên Đồng',
-                group: 'Cơ Nguyệt Đồng Lương',
-                element: 'Dương Thủy',
-                elementCategory: 'Thủy',
-                essence: 'Phúc Tinh (An Nhàn, Hồn Nhiên, Cứu Giúp)',
-                bestPositions: ['Mệnh', 'Phúc Đức'],
-                worstPositions: ['Quan Lộc', 'Tài Bạch hãm địa'],
-                summary: 'Đứa trẻ tâm hồn hồn nhiên, hay gặp may mắn hóa nguy thành an, nhưng thiếu tính kiên trì bứt phá.',
-                bestDetail: 'Đóng tại Mệnh, Phúc giúp đương số có đời sống tinh thần an lạc, sống thọ, tấm lòng nhân hậu và luôn gặp hung hóa cát.',
-                worstDetail: 'Thiên Đồng có nhược điểm là lười biếng, thiếu kiên nhẫn và dễ thỏa hiệp. Nếu đóng ở Quan, Tài hãm địa mà không được sát tinh kích phát, đương số sẽ thiếu ý chí tiến thủ, làm việc đầu voi đuôi chuột, tiền bạc túng thiếu và sự nghiệp trì trệ.',
-                keywords: ['Phúc tinh', 'An nhàn', 'Thọ trường', 'Thiếu kiên nhẫn', 'Trì trệ Quan Tài'],
-                color: 'text-sky-300',
-                borderBg: 'border-sky-400/30'
-            },
-            {
-                id: 'thien-luong',
-                name: 'Thiên Lương',
-                group: 'Cơ Nguyệt Đồng Lương',
-                element: 'Dương Thổ',
-                elementCategory: 'Thổ',
-                essence: 'Thọ Tinh, Ấm Tinh (Che Chở, Người Thầy, Giải Tai)',
-                bestPositions: ['Phụ Mẫu', 'Tật Ách', 'Mệnh'],
-                worstPositions: ['Tử Tức', 'Phu Thê hãm địa'],
-                summary: 'Bậc trưởng lão nhân từ, đệ nhất sao giải tai bệnh, cốt cách nhà giáo nhưng đôi khi nguyên tắc bảo thủ.',
-                bestDetail: 'Đóng tại Phụ Mẫu giúp cha mẹ thọ trường, đóng tại Tật Ách là đệ nhất cứu giải giúp hóa giải mọi bệnh tật, tai ương nan y.',
-                worstDetail: 'Bản chất của Thiên Lương mang tính chất "Trưởng lão" bảo thủ, thích giáo huấn người khác. Khi đóng ở Tử Tức hay Phu Thê hãm địa, tính chất này dễ gây ra sự cô đơn, xa cách về mặt tình cảm, vợ chồng hình khắc hoặc chậm con cái.',
-                keywords: ['Ấm tinh', 'Giải tai ách', 'Trưởng lão', 'Bảo thủ', 'Xa cách Phu Thê'],
-                color: 'text-amber-300',
-                borderBg: 'border-amber-400/30'
-            },
-            {
-                id: 'cu-mon',
-                name: 'Cự Môn',
-                group: 'Cự Nhật',
-                element: 'Âm Thủy',
-                elementCategory: 'Thủy',
-                essence: 'Ám Tinh (Cánh Cửa Bị Che, Ngôn Ngữ, Khẩu Thị)',
-                bestPositions: ['Quan Lộc', 'Điền Trạch'],
-                worstPositions: ['Phu Thê', 'Phúc Đức', 'Phụ Mẫu'],
-                summary: 'Ngôn ngữ sắc bén, tư duy phản biện xuất sắc nhưng hóa khí Ám kỵ các cung tình cảm gia đạo.',
-                bestDetail: 'Đóng ở Quan Lộc đắc địa giúp đương số hiển đạt trong ngành tư pháp, thẩm phán, ngoại giao hay diễn thuyết. Đóng ở Điền Trạch mang tượng nhà cửa cao ráo, điền sản vượng.',
-                worstDetail: 'Hóa khí của Cự Môn là "Ám" (che lấp ánh sáng) và chủ về thị phi. Khi đóng ở các cung tình cảm như Phu Thê, Phụ Mẫu, Phúc Đức, nó kích hoạt sự nghi ngờ, khắt khe, dễ gây ra tranh cãi khẩu thiệt, gia đạo lạnh nhạt, bất hòa và ly tán.',
-                keywords: ['Ngoại giao', 'Khẩu tài', 'Hóa khí Ám', 'Tranh cãi', 'Thị phi gia đạo'],
-                color: 'text-purple-300',
-                borderBg: 'border-purple-400/30'
-            },
-            {
-                id: 'thai-duong',
-                name: 'Thái Dương',
-                group: 'Cự Nhật',
-                element: 'Dương Hỏa',
-                elementCategory: 'Hỏa',
-                essence: 'Quý Tinh (Mặt Trời, Quang Minh, Công Danh)',
-                bestPositions: ['Quan Lộc', 'Mệnh (Sáng sủa ban ngày)'],
-                worstPositions: ['Phu Thê hãm địa', 'Cung ban đêm (Thân đến Tý)'],
-                summary: 'Biểu tượng Mặt Trời rực rỡ, rộng lượng, phụng sự và danh tiếng hiển hách khi đắc địa.',
-                bestDetail: 'Đóng ở Mệnh, Quan đắc địa (sinh ban ngày, các cung từ Dần đến Ngọ) giúp đương số sớm thành đạt, công danh hiển hách, tâm hồn quang minh chính đại.',
-                worstDetail: 'Thái Dương tượng trưng cho người cha, người chồng. Khi hãm địa đóng ở Phu Thê hoặc các cung ban đêm, nó chủ về sự lu mờ ánh sáng, gây bất lợi cực lớn cho nam giới trong nhà (cha/chồng dễ đoản thọ, yếu nhược), hoặc khiến đương số dễ thu hút thị phi, bôi nhọ danh dự.',
-                keywords: ['Mặt Trời', 'Công danh', 'Bất lợi Nam giới hãm', 'Quang minh', 'Tỏa sáng'],
-                color: 'text-orange-400',
-                borderBg: 'border-orange-500/30'
-            }
-        ];
-
-        /* ----------------------------------------------------
-           DATA STRUCTURE FOR 12 PALACES (CUNG CHỨC NĂNG)
-           ---------------------------------------------------- */
-        const palacesData = [
-            { id: 'menh', name: 'Mệnh', desc: 'Tinh thần cốt lõi, khí chất, tính cách và định hướng vận mệnh cả đời.' },
-            { id: 'quan-loc', name: 'Quan Lộc', desc: 'Công danh, sự nghiệp, môi trường làm việc và năng lực quản lý.' },
-            { id: 'tai-bach', name: 'Tài Bạch', desc: 'Tư duy tài chính, khả năng kiếm tiền, dòng tiền và quản lý của cải.' },
-            { id: 'dien-trach', name: 'Điền Trạch', desc: 'Bất động sản, điền sản, nhà cửa, gia phong và tích lũy gia sản.' },
-            { id: 'phu-the', name: 'Phu Thê', desc: 'Tình cảm lứa đôi, mối quan hệ vợ chồng, hôn nhân và gia đạo.' },
-            { id: 'luc-than', name: 'Lục Thân (Bào, Phụ, Tử)', desc: 'Mối quan hệ với cha mẹ, anh chị em và con cái trong gia đình.' },
-            { id: 'tat-ach', name: 'Tật Ách', desc: 'Sức khỏe, bệnh tật nội tạng, tai ương nguy hiểm và khả năng cứu giải.' },
-            { id: 'phuc-duc', name: 'Phúc Đức', desc: 'Tâm tính, tư tưởng, phúc đức tổ tiên, tuổi thọ và sự an lạc.' }
-        ];
-
-        // Global State variables
-        let selectedGroupFilter = 'all';
-        let currentPalaceMode = 'byPalace';
-        let currentQuizIndex = 0;
-        let quizScore = 0;
-
-        /* ----------------------------------------------------
-           STREAMING_CHUNK:Initializing Application UI logic...
-           ---------------------------------------------------- */
-        window.addEventListener('DOMContentLoaded', () => {
-            renderStarGrid();
-            populatePalaceSelect();
-            populateCompareSelects();
-            renderPalaceAnalysis();
-            renderComparison();
-            loadQuizQuestion();
-        });
-
-        /* TAB SWITCHING */
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('bg-tuvi-gold', 'text-slate-950', 'font-semibold', 'shadow');
-                btn.classList.add('text-slate-300');
-            });
-
-            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-            const activeBtn = document.getElementById(`nav-${tabId}`);
-            if (activeBtn) {
-                activeBtn.classList.add('bg-tuvi-gold', 'text-slate-950', 'font-semibold', 'shadow');
-                activeBtn.classList.remove('text-slate-300');
-            }
+        function openThiepModal() {
+            document.getElementById('thiepModal').classList.remove('hidden');
+        }
+        function closeThiepModal() {
+            document.getElementById('thiepModal').classList.add('hidden');
         }
 
-        /* ----------------------------------------------------
-           TAB 1: MATRIX & FILTERING LOGIC
-           ---------------------------------------------------- */
-        function setGroupFilter(group) {
-            selectedGroupFilter = group;
-            document.querySelectorAll('.group-btn').forEach(btn => {
-                btn.classList.remove('border-tuvi-gold', 'bg-tuvi-gold', 'text-slate-950', 'font-bold');
-                btn.classList.add('border-tuvi-border', 'bg-tuvi-purple/40', 'text-purple-200');
-            });
-            event.target.classList.add('border-tuvi-gold', 'bg-tuvi-gold', 'text-slate-950', 'font-bold');
-            event.target.classList.remove('bg-tuvi-purple/40', 'text-purple-200');
-            filterStars();
+        // Wandering heart easter egg: move to a random spot every few seconds
+        function moveWanderingHeart() {
+            const heart = document.getElementById('wanderingHeart');
+            if (!heart) return;
+            const margin = 24;
+            const maxX = window.innerWidth - heart.offsetWidth - margin;
+            const maxY = window.innerHeight - heart.offsetHeight - margin;
+            const x = margin + Math.random() * Math.max(0, maxX - margin);
+            const y = margin + Math.random() * Math.max(0, maxY - margin);
+            heart.style.left = `${x}px`;
+            heart.style.top = `${y}px`;
         }
-
-        function filterStars() {
-            const searchText = document.getElementById('searchInput').value.toLowerCase().trim();
-            const elementVal = document.getElementById('elementFilter').value;
-
-            const filtered = starsData.filter(star => {
-                const matchesGroup = (selectedGroupFilter === 'all') || (star.group === selectedGroupFilter);
-                const matchesElement = (elementVal === 'all') || (star.elementCategory === elementVal);
-                const matchesSearch = star.name.toLowerCase().includes(searchText) ||
-                                      star.summary.toLowerCase().includes(searchText) ||
-                                      star.essence.toLowerCase().includes(searchText) ||
-                                      star.keywords.some(k => k.toLowerCase().includes(searchText));
-                return matchesGroup && matchesElement && matchesSearch;
-            });
-
-            renderStarGrid(filtered);
-        }
-
-        function renderStarGrid(list = starsData) {
-            const grid = document.getElementById('starCardsGrid');
-            if (list.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-full py-12 text-center text-purple-300/60">
-                        <i class="fa-solid fa-ghost text-3xl mb-2"></i>
-                        <p>Không tìm thấy Chính Tinh phù hợp với bộ lọc!</p>
-                    </div>
-                `;
-                return;
-            }
-
-            grid.innerHTML = list.map(star => `
-                <div onclick="openStarModal('${star.id}')" class="glass-card rounded-2xl p-5 cursor-pointer transition-all hover:-translate-y-1 group flex flex-col justify-between border ${star.borderBg}">
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <span class="text-[10px] uppercase font-bold tracking-wider text-purple-300/70 block">${star.group}</span>
-                                <h3 class="text-xl font-bold font-serif ${star.color} group-hover:underline">${star.name}</h3>
-                            </div>
-                            <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-tuvi-darkBg border border-tuvi-border text-gold-300">
-                                ${star.element}
-                            </span>
-                        </div>
-
-                        <div class="text-xs font-medium text-amber-200/90 flex items-center gap-1.5">
-                            <i class="fa-solid fa-gem text-tuvi-gold"></i> ${star.essence}
-                        </div>
-
-                        <p class="text-xs text-purple-200/70 line-clamp-2 leading-relaxed">
-                            ${star.summary}
-                        </p>
-                    </div>
-
-                    <div class="mt-4 pt-3 border-t border-tuvi-border/50 space-y-1.5">
-                        <div class="text-[11px] flex items-center justify-between">
-                            <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-circle-check"></i> Tốt:</span>
-                            <span class="text-purple-200 truncate max-w-[140px]">${star.bestPositions.join(', ')}</span>
-                        </div>
-                        <div class="text-[11px] flex items-center justify-between">
-                            <span class="text-rose-400 font-semibold"><i class="fa-solid fa-triangle-exclamation"></i> Xấu:</span>
-                            <span class="text-purple-200 truncate max-w-[140px]">${star.worstPositions.join(', ')}</span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        /* ----------------------------------------------------
-           MODAL DETAILS LOGIC
-           ---------------------------------------------------- */
-        function openStarModal(id) {
-            const star = starsData.find(s => s.id === id);
-            if (!star) return;
-
-            const modalContent = document.getElementById('modalContent');
-            modalContent.innerHTML = `
-                <div class="space-y-4">
-                    <div class="border-b border-tuvi-border pb-3 flex justify-between items-end">
-                        <div>
-                            <span class="text-xs font-bold text-tuvi-gold uppercase tracking-wider">${star.group}</span>
-                            <h2 class="text-3xl font-bold font-serif ${star.color}">${star.name}</h2>
-                        </div>
-                        <div class="text-right">
-                            <span class="text-xs px-3 py-1 rounded-full bg-tuvi-purple border border-tuvi-gold/40 text-amber-200 font-semibold">
-                                ${star.element}
-                            </span>
-                            <div class="text-xs text-purple-300 mt-1">${star.essence}</div>
-                        </div>
-                    </div>
-
-                    <p class="text-sm text-purple-100 italic bg-tuvi-darkBg/60 p-3 rounded-xl border border-tuvi-border">
-                        "${star.summary}"
-                    </p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Best Position Box -->
-                        <div class="bg-emerald-950/30 border border-emerald-500/40 rounded-xl p-4 space-y-2">
-                            <h4 class="text-sm font-bold text-emerald-400 flex items-center gap-2">
-                                <i class="fa-solid fa-circle-check"></i> Vị Trí Tốt Nhất (Đắc Vị)
-                            </h4>
-                            <div class="text-xs font-semibold text-emerald-200">
-                                ${star.bestPositions.join(', ')}
-                            </div>
-                            <p class="text-xs text-emerald-100/80 leading-relaxed">
-                                ${star.bestDetail}
-                            </p>
-                        </div>
-
-                        <!-- Worst Position Box -->
-                        <div class="bg-rose-950/30 border border-rose-500/40 rounded-xl p-4 space-y-2">
-                            <h4 class="text-sm font-bold text-rose-400 flex items-center gap-2">
-                                <i class="fa-solid fa-triangle-exclamation"></i> Vị Trí Xấu Nhất (Hãm/Kỵ)
-                            </h4>
-                            <div class="text-xs font-semibold text-rose-200">
-                                ${star.worstPositions.join(', ')}
-                            </div>
-                            <p class="text-xs text-rose-100/80 leading-relaxed">
-                                ${star.worstDetail}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="pt-2">
-                        <span class="text-xs text-purple-300 font-semibold block mb-2">Từ khóa cốt lõi:</span>
-                        <div class="flex flex-wrap gap-1.5">
-                            ${star.keywords.map(k => `<span class="text-xs px-2.5 py-1 bg-tuvi-darkBg border border-tuvi-border rounded-lg text-amber-200/90"># ${k}</span>`).join('')}
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('starModal').classList.remove('hidden');
-        }
-
-        function closeStarModal() {
-            document.getElementById('starModal').classList.add('hidden');
-        }
-
-        /* ----------------------------------------------------
-           TAB 2: PALACE & STAR INTERACTION LOGIC
-           ---------------------------------------------------- */
-        function setPalaceMode(mode) {
-            currentPalaceMode = mode;
-            const btnP = document.getElementById('btn-mode-palace');
-            const btnS = document.getElementById('btn-mode-star');
-            const label = document.getElementById('selectorLabel');
-
-            if (mode === 'byPalace') {
-                btnP.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-tuvi-gold text-slate-950 shadow";
-                btnS.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-tuvi-purple border border-tuvi-border text-purple-200 hover:text-tuvi-gold";
-                label.textContent = "Chọn Cung Chức Năng:";
-                populatePalaceSelect();
-            } else {
-                btnS.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-tuvi-gold text-slate-950 shadow";
-                btnP.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-tuvi-purple border border-tuvi-border text-purple-200 hover:text-tuvi-gold";
-                label.textContent = "Chọn Chính Tinh:";
-                populateStarSelect();
-            }
-            renderPalaceAnalysis();
-        }
-
-        function populatePalaceSelect() {
-            const select = document.getElementById('palaceSelect');
-            select.innerHTML = palacesData.map(p => `<option value="${p.id}">${p.name} - ${p.desc.substring(0, 35)}...</option>`).join('');
-        }
-
-        function populateStarSelect() {
-            const select = document.getElementById('palaceSelect');
-            select.innerHTML = starsData.map(s => `<option value="${s.id}">${s.name} (${s.element} - ${s.group})</option>`).join('');
-        }
-
-        function renderPalaceAnalysis() {
-            const val = document.getElementById('palaceSelect').value;
-            const resultBox = document.getElementById('palaceAnalysisResult');
-
-            if (currentPalaceMode === 'byPalace') {
-                // Find palace info
-                const palace = palacesData.find(p => p.id === val);
-                if (!palace) return;
-
-                // Filter best and worst stars for this palace
-                const bestStars = starsData.filter(s => s.bestPositions.some(p => p.toLowerCase().includes(palace.name.toLowerCase())));
-                const worstStars = starsData.filter(s => s.worstPositions.some(p => p.toLowerCase().includes(palace.name.toLowerCase()) || (palace.id === 'luc-than' && p.includes('Lục thân'))));
-
-                resultBox.innerHTML = `
-                    <!-- Best Stars -->
-                    <div class="bg-tuvi-darkBg/90 border border-emerald-500/40 rounded-2xl p-5 space-y-4">
-                        <div class="border-b border-emerald-500/30 pb-3">
-                            <span class="text-xs text-emerald-400 font-bold uppercase tracking-wider">CÁT VỊ - ĐẮC ĐỊA</span>
-                            <h3 class="text-lg font-bold text-emerald-300 font-serif">Các Sao Tốt Nhất Tại Cung ${palace.name}</h3>
-                            <p class="text-xs text-purple-300/70 mt-0.5">${palace.desc}</p>
-                        </div>
-                        ${bestStars.length > 0 ? bestStars.map(s => `
-                            <div class="p-3 bg-tuvi-cardBg/80 border border-emerald-500/20 rounded-xl space-y-1">
-                                <div class="flex justify-between items-center">
-                                    <span class="font-bold text-sm text-emerald-300 cursor-pointer hover:underline" onclick="openStarModal('${s.id}')">${s.name} (${s.element})</span>
-                                    <span class="text-[10px] px-2 py-0.5 bg-emerald-950 border border-emerald-500/40 text-emerald-200 rounded">${s.group}</span>
-                                </div>
-                                <p class="text-xs text-purple-200/80 leading-relaxed">${s.bestDetail}</p>
-                            </div>
-                        `).join('') : '<p class="text-xs text-purple-300/60 italic">Không có chính tinh nào coi vị trí này là tốt duy nhất, phụ thuộc vào đắc/hãm địa.</p>'}
-                    </div>
-
-                    <!-- Worst Stars -->
-                    <div class="bg-tuvi-darkBg/90 border border-rose-500/40 rounded-2xl p-5 space-y-4">
-                        <div class="border-b border-rose-500/30 pb-3">
-                            <span class="text-xs text-rose-400 font-bold uppercase tracking-wider">HUNG VỊ - HÃM KỊ</span>
-                            <h3 class="text-lg font-bold text-rose-300 font-serif">Các Sao Kỵ Nhất Tại Cung ${palace.name}</h3>
-                            <p class="text-xs text-purple-300/70 mt-0.5">${palace.desc}</p>
-                        </div>
-                        ${worstStars.length > 0 ? worstStars.map(s => `
-                            <div class="p-3 bg-tuvi-cardBg/80 border border-rose-500/20 rounded-xl space-y-1">
-                                <div class="flex justify-between items-center">
-                                    <span class="font-bold text-sm text-rose-300 cursor-pointer hover:underline" onclick="openStarModal('${s.id}')">${s.name} (${s.element})</span>
-                                    <span class="text-[10px] px-2 py-0.5 bg-rose-950 border border-rose-500/40 text-rose-200 rounded">${s.group}</span>
-                                </div>
-                                <p class="text-xs text-purple-200/80 leading-relaxed">${s.worstDetail}</p>
-                            </div>
-                        `).join('') : '<p class="text-xs text-purple-300/60 italic">Cung này ít gặp hình khắc tuyệt đối từ chính tinh hãm địa đơn lẻ.</p>'}
-                    </div>
-                `;
-            } else {
-                // By Star Mode
-                const star = starsData.find(s => s.id === val);
-                if (!star) return;
-
-                resultBox.innerHTML = `
-                    <div class="bg-tuvi-darkBg/90 border border-emerald-500/40 rounded-2xl p-5 space-y-4">
-                        <div class="border-b border-emerald-500/30 pb-3">
-                            <span class="text-xs text-emerald-400 font-bold uppercase tracking-wider">ĐẮC VỊ NỔI BẬT</span>
-                            <h3 class="text-lg font-bold text-emerald-300 font-serif">Vị Trí Tốt Nhất Của ${star.name}</h3>
-                            <p class="text-xs text-purple-200/80 mt-1">Cung: <strong class="text-amber-300">${star.bestPositions.join(', ')}</strong></p>
-                        </div>
-                        <p class="text-xs text-purple-100 leading-relaxed bg-tuvi-cardBg/60 p-3 rounded-xl border border-tuvi-border">
-                            ${star.bestDetail}
-                        </p>
-                    </div>
-
-                    <div class="bg-tuvi-darkBg/90 border border-rose-500/40 rounded-2xl p-5 space-y-4">
-                        <div class="border-b border-rose-500/30 pb-3">
-                            <span class="text-xs text-rose-400 font-bold uppercase tracking-wider">HÃM / HÌNH KHẮC</span>
-                            <h3 class="text-lg font-bold text-rose-300 font-serif">Vị Trí Xấu Nhất Của ${star.name}</h3>
-                            <p class="text-xs text-purple-200/80 mt-1">Cung: <strong class="text-rose-300">${star.worstPositions.join(', ')}</strong></p>
-                        </div>
-                        <p class="text-xs text-purple-100 leading-relaxed bg-tuvi-cardBg/60 p-3 rounded-xl border border-tuvi-border">
-                            ${star.worstDetail}
-                        </p>
-                    </div>
-                `;
-            }
-        }
-
-        /* ----------------------------------------------------
-           TAB 3: COMPARISON LOGIC
-           ---------------------------------------------------- */
-        function populateCompareSelects() {
-            const s1 = document.getElementById('compareStar1');
-            const s2 = document.getElementById('compareStar2');
-            const options = starsData.map(s => `<option value="${s.id}">${s.name} (${s.group})</option>`).join('');
-            s1.innerHTML = options;
-            s2.innerHTML = options;
-            s2.selectedIndex = 1; // Default select second star
-        }
-
-        function renderComparison() {
-            const id1 = document.getElementById('compareStar1').value;
-            const id2 = document.getElementById('compareStar2').value;
-
-            const star1 = starsData.find(s => s.id === id1);
-            const star2 = starsData.find(s => s.id === id2);
-
-            if (!star1 || !star2) return;
-
-            const container = document.getElementById('comparisonContainer');
-            container.innerHTML = `
-                <table class="w-full text-left border-collapse text-xs sm:text-sm">
-                    <thead>
-                        <tr class="border-b border-tuvi-border bg-tuvi-purple/40">
-                            <th class="p-3 text-purple-300 font-semibold w-1/4">Tiêu Chí So Sánh</th>
-                            <th class="p-3 font-bold font-serif text-lg ${star1.color} w-3/8">${star1.name}</th>
-                            <th class="p-3 font-bold font-serif text-lg ${star2.color} w-3/8">${star2.name}</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-tuvi-border/40">
-                        <tr>
-                            <td class="p-3 text-purple-300 font-semibold">Bộ Sao</td>
-                            <td class="p-3 text-purple-100">${star1.group}</td>
-                            <td class="p-3 text-purple-100">${star2.group}</td>
-                        </tr>
-                        <tr>
-                            <td class="p-3 text-purple-300 font-semibold">Ngũ Hành</td>
-                            <td class="p-3 text-amber-300 font-semibold">${star1.element}</td>
-                            <td class="p-3 text-amber-300 font-semibold">${star2.element}</td>
-                        </tr>
-                        <tr>
-                            <td class="p-3 text-purple-300 font-semibold">Hóa Khí & Cốt Lõi</td>
-                            <td class="p-3 text-purple-200">${star1.essence}</td>
-                            <td class="p-3 text-purple-200">${star2.essence}</td>
-                        </tr>
-                        <tr>
-                            <td class="p-3 text-purple-300 font-semibold">Vị Trí Tốt Nhất</td>
-                            <td class="p-3 text-emerald-400 font-semibold">${star1.bestPositions.join(', ')}</td>
-                            <td class="p-3 text-emerald-400 font-semibold">${star2.bestPositions.join(', ')}</td>
-                        </tr>
-                        <tr>
-                            <td class="p-3 text-purple-300 font-semibold">Vị Trí Xấu Nhất</td>
-                            <td class="p-3 text-rose-400 font-semibold">${star1.worstPositions.join(', ')}</td>
-                            <td class="p-3 text-rose-400 font-semibold">${star2.worstPositions.join(', ')}</td>
-                        </tr>
-                        <tr>
-                            <td class="p-3 text-purple-300 font-semibold">Luận Đoán Cát Vị</td>
-                            <td class="p-3 text-purple-200 leading-relaxed">${star1.bestDetail}</td>
-                            <td class="p-3 text-purple-200 leading-relaxed">${star2.bestDetail}</td>
-                        </tr>
-                        <tr>
-                            <td class="p-3 text-purple-300 font-semibold">Luận Đoán Hung Vị</td>
-                            <td class="p-3 text-purple-200 leading-relaxed">${star1.worstDetail}</td>
-                            <td class="p-3 text-purple-200 leading-relaxed">${star2.worstDetail}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            `;
-        }
-
-        /* ----------------------------------------------------
-           TAB 4: AI GEMINI INTEGRATION LOGIC
-           ---------------------------------------------------- */
-        function setPrompt(txt) {
-            document.getElementById('aiInput').value = txt;
-            askGemini();
-        }
-
-        async function askGemini() {
-            const input = document.getElementById('aiInput');
-            const query = input.value.trim();
-            if (!query) return;
-
-            const chatBox = document.getElementById('aiChatBox');
-            const sendBtn = document.getElementById('sendAiBtn');
-
-            // Render User Message
-            chatBox.innerHTML += `
-                <div class="flex items-start justify-end gap-3">
-                    <div class="bg-tuvi-purple/80 border border-tuvi-gold/40 p-3.5 rounded-2xl rounded-tr-none max-w-2xl text-amber-100 text-xs sm:text-sm">
-                        ${query}
-                    </div>
-                </div>
-            `;
-            input.value = '';
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-            // Render Loading AI Message
-            const loadingId = 'loading-' + Date.now();
-            chatBox.innerHTML += `
-                <div id="${loadingId}" class="flex items-start gap-3">
-                    <div class="w-8 h-8 rounded-full bg-tuvi-gold/20 text-tuvi-gold flex items-center justify-center shrink-0 text-xs font-bold border border-tuvi-gold/40">
-                        AI
-                    </div>
-                    <div class="bg-tuvi-cardBg border border-tuvi-border p-3.5 rounded-2xl rounded-tl-none text-purple-300 text-xs animate-pulse flex items-center gap-2">
-                        <i class="fa-solid fa-spinner fa-spin"></i> Đang tham khảo Tử Vi Đẩu Số thư tịch và luận giải...
-                    </div>
-                </div>
-            `;
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-            sendBtn.disabled = true;
-
-            try {
-                const systemPrompt = `Bạn là một chuyên gia cao cấp về Tử Vi Đẩu Số. Hãy trả lời câu hỏi dựa trên các nguyên lý cốt lõi về Ngũ hành sinh khắc, 14 Chính tinh (Tử Vi, Thiên Phủ, Vũ Khúc, Thiên Tướng, Liêm Trinh, Thất Sát, Phá Quân, Tham Lang, Thiên Cơ, Thái Âm, Thiên Đồng, Thiên Lương, Cự Môn, Thái Dương) và sự tương tác giữa Cung (môi trường) và Sao (năng lượng). Hãy trả lời ngắn gọn, lập luận chặt chẽ, mạch lạc bằng tiếng Việt.`;
-                
-                const apiKey = "";
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
-
-                const payload = {
-                    contents: [{ parts: [{ text: query }] }],
-                    systemInstruction: { parts: [{ text: systemPrompt }] }
-                };
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                const result = await response.json();
-                const aiText = result.candidates?.[0]?.content?.parts?.[0]?.text || "Rất tiếc, hiện tại không thể kết nối tới chuyên gia Tử Vi. Vui lòng thử lại sau!";
-
-                // Remove loading element
-                const loadingEl = document.getElementById(loadingId);
-                if (loadingEl) loadingEl.remove();
-
-                // Render AI Answer
-                chatBox.innerHTML += `
-                    <div class="flex items-start gap-3">
-                        <div class="w-8 h-8 rounded-full bg-tuvi-gold/20 text-tuvi-gold flex items-center justify-center shrink-0 text-xs font-bold border border-tuvi-gold/40">
-                            AI
-                        </div>
-                        <div class="bg-tuvi-cardBg border border-tuvi-border p-3.5 rounded-2xl rounded-tl-none max-w-2xl text-purple-100 text-xs sm:text-sm leading-relaxed space-y-2 whitespace-pre-wrap">
-                            ${aiText}
-                        </div>
-                    </div>
-                `;
-            } catch (err) {
-                console.error(err);
-                const loadingEl = document.getElementById(loadingId);
-                if (loadingEl) loadingEl.remove();
-
-                chatBox.innerHTML += `
-                    <div class="flex items-start gap-3">
-                        <div class="w-8 h-8 rounded-full bg-rose-950 text-rose-400 flex items-center justify-center shrink-0 text-xs font-bold">!</div>
-                        <div class="bg-rose-950/40 border border-rose-500/40 p-3 rounded-xl text-rose-200 text-xs">
-                            Đã xảy ra lỗi khi gửi yêu cầu. Vui lòng kiểm tra lại kết nối mạng.
-                        </div>
-                    </div>
-                `;
-            } finally {
-                sendBtn.disabled = false;
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }
-        }
-
-        /* ----------------------------------------------------
-           TAB 5: QUIZ GAME LOGIC
-           ---------------------------------------------------- */
-        const quizQuestions = [
-            {
-                q: "Chính tinh nào được mệnh danh là 'Lộc khố' (kho tiền của trời) và rất kỵ gặp các sao Không (Địa Không, Địa Kiếp, Tuần, Triệt)?",
-                options: ["Tử Vi", "Thiên Phủ", "Vũ Khúc", "Thái Âm"],
-                answer: 1,
-                explain: "Thiên Phủ là Lộc Khố. Khi gặp Không Vong sẽ bị thủng kho thành 'Không khố', gây túng thiếu đột ngột."
-            },
-            {
-                q: "Vũ Khúc có hóa khí là 'Tù' và 'Cô độc' (Âm Kim), ngôi sao này xấu nhất khi tọa thủ tại các cung nào?",
-                options: ["Quan Lộc & Tài Bạch", "Mệnh & Thân", "Phu Thê & Tử Tức", "Điền Trạch & Tật Ách"],
-                answer: 2,
-                explain: "Tính thu liễm lạnh lùng của Âm Kim làm Vũ Khúc kỵ nhất đóng tại Phu Thê hoặc Tử Tức, chủ về hình khắc và đơn độc."
-            },
-            {
-                q: "Tại sao Tử Vi – ngôi sao tôn quý nhất – lại được cho là xấu nhất khi đóng ở các cung Lục Thân (Bào, Phụ, Tử)?",
-                options: [
-                    "Vì Tử Vi không có năng lực lãnh đạo",
-                    "Do bản chất Đế Tinh cái tôi cao, sĩ diện, lấn át người thân hoặc gánh nặng quá lớn",
-                    "Vì Tử Vi thuộc hành Dương Thủy gây ngập lụt",
-                    "Vì Tử Vi luôn biến thành hao tinh ở Lục thân"
-                ],
-                answer: 1,
-                explain: "Tử Vi là Đế Tinh có khí chất lấn át và cái tôi lớn, đóng ở Lục Thân gây cô khắc, đơn độc hoặc gánh vác trách nhiệm gia đình quá mệt mỏi."
-            },
-            {
-                q: "Tham Lang đạt cách cục hoạnh phát tài lộc rực rỡ nhất khi tọa thủ Mệnh/Tài Bạch hội cùng các sao nào tại Thìn Tuất Sửu Mùi?",
-                options: ["Tuần, Triệt", "Địa Không, Địa Kiếp", "Hỏa Tinh hoặc Linh Tinh", "Kình Dương, Đà La"],
-                answer: 2,
-                explain: "Tham Lang gặp Hỏa Tinh hoặc Linh Tinh tạo thành cách cục 'Hỏa Tham' hoặc 'Linh Tham' hoạnh phát tài lộc rực rỡ."
-            },
-            {
-                q: "Cự Môn mang hóa khí là gì và kỵ nhất khi đóng ở nhóm cung nào?",
-                options: [
-                    "Hóa khí 'Ấn', kỵ Quan Lộc",
-                    "Hóa khí 'Tù', kỵ Tật Ách",
-                    "Hóa khí 'Ám' (thị phi), kỵ Phu Thê, Phúc Đức, Phụ Mẫu",
-                    "Hóa khí 'Phúc', kỵ Điền Trạch"
-                ],
-                answer: 2,
-                explain: "Cự Môn là Ám Tinh, chủ về che lấp và thị phi. Đóng ở các cung tình cảm gia đạo dễ gây ngờ vực, tranh cãi và ly tán."
-            }
-        ];
-
-        function loadQuizQuestion() {
-            if (currentQuizIndex >= quizQuestions.length) {
-                // Quiz completed
-                document.getElementById('quizCard').innerHTML = `
-                    <div class="text-center py-8 space-y-4">
-                        <i class="fa-solid fa-trophy text-5xl text-tuvi-gold animate-bounce"></i>
-                        <h3 class="text-2xl font-bold font-serif text-amber-300">Hoàn Thành Trắc Nghiệm!</h3>
-                        <p class="text-sm text-purple-200">Bạn đã đạt được <strong class="text-tuvi-gold text-lg">${quizScore} / ${quizQuestions.length}</strong> điểm.</p>
-                        <button onclick="resetQuiz()" class="bg-tuvi-gold text-slate-950 font-bold px-6 py-2.5 rounded-xl text-sm hover:bg-amber-400 transition shadow">
-                            <i class="fa-solid fa-rotate-right mr-1"></i> Làm Lại Trắc Nghiệm
-                        </button>
-                    </div>
-                `;
-                document.getElementById('nextQuizBtn').classList.add('hidden');
-                return;
-            }
-
-            const qData = quizQuestions[currentQuizIndex];
-            const progress = ((currentQuizIndex) / quizQuestions.length) * 100;
-            document.getElementById('quizProgressBar').style.width = `${progress}%`;
-            document.getElementById('quizScoreText').textContent = `Điểm: ${quizScore} / ${quizQuestions.length}`;
-
-            document.getElementById('quizCard').innerHTML = `
-                <div class="space-y-4">
-                    <span class="text-xs font-bold text-tuvi-gold tracking-wide uppercase">Câu ${currentQuizIndex + 1} / ${quizQuestions.length}</span>
-                    <h3 class="text-base sm:text-lg font-bold text-slate-100">${qData.q}</h3>
-                    <div class="space-y-2 pt-2">
-                        ${qData.options.map((opt, idx) => `
-                            <button onclick="checkAnswer(${idx})" class="quiz-opt-btn w-full text-left p-3.5 rounded-xl bg-tuvi-purple/40 border border-tuvi-border hover:border-tuvi-gold text-xs sm:text-sm text-purple-100 transition flex items-center justify-between">
-                                <span>${opt}</span>
-                                <i class="fa-regular fa-circle text-purple-400"></i>
-                            </button>
-                        `).join('')}
-                    </div>
-                    <div id="quizExplain" class="hidden p-4 rounded-xl text-xs leading-relaxed mt-4"></div>
-                </div>
-            `;
-
-            document.getElementById('nextQuizBtn').classList.add('hidden');
-        }
-
-        function checkAnswer(selectedIdx) {
-            const qData = quizQuestions[currentQuizIndex];
-            const buttons = document.querySelectorAll('.quiz-opt-btn');
-            const explainBox = document.getElementById('quizExplain');
-
-            buttons.forEach((btn, idx) => {
-                btn.disabled = true;
-                if (idx === qData.answer) {
-                    btn.classList.remove('bg-tuvi-purple/40', 'border-tuvi-border');
-                    btn.classList.add('bg-emerald-950/80', 'border-emerald-500', 'text-emerald-200');
-                } else if (idx === selectedIdx) {
-                    btn.classList.remove('bg-tuvi-purple/40', 'border-tuvi-border');
-                    btn.classList.add('bg-rose-950/80', 'border-rose-500', 'text-rose-200');
-                }
-            });
-
-            if (selectedIdx === qData.answer) {
-                quizScore++;
-                explainBox.className = "p-4 rounded-xl text-xs leading-relaxed mt-4 bg-emerald-950/60 border border-emerald-500/40 text-emerald-200";
-                explainBox.innerHTML = `<strong><i class="fa-solid fa-circle-check"></i> Chính xác!</strong> ${qData.explain}`;
-            } else {
-                explainBox.className = "p-4 rounded-xl text-xs leading-relaxed mt-4 bg-rose-950/60 border border-rose-500/40 text-rose-200";
-                explainBox.innerHTML = `<strong><i class="fa-solid fa-circle-xmark"></i> Chưa đúng!</strong> ${qData.explain}`;
-            }
-
-            explainBox.classList.remove('hidden');
-            document.getElementById('nextQuizBtn').classList.remove('hidden');
-            document.getElementById('quizScoreText').textContent = `Điểm: ${quizScore} / ${quizQuestions.length}`;
-        }
-
-        function nextQuestion() {
-            currentQuizIndex++;
-            loadQuizQuestion();
-        }
-
-        function resetQuiz() {
-            currentQuizIndex = 0;
-            quizScore = 0;
-            loadQuizQuestion();
-        }
+        moveWanderingHeart();
+        setInterval(moveWanderingHeart, 4000);
     </script>
+
 </body>
 </html>
