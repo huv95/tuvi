@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bản Đồ Tương Tác An Sao Tử Vi - 14 Chính Tinh</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <!-- React & Babel CDN for Single File Interactive App -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        mystic: {
+                            50: '#f5f7fa',
+                            100: '#eaeef4',
+                            200: '#d0dbe6',
+                            300: '#a6bdd4',
+                            400: '#7699bd',
+                            500: '#547aa2',
+                            600: '#416186',
+                            700: '#354f6e',
+                            800: '#2e435d',
+                            900: '#2a3b51',
+                            950: '#0f172a', // Deep slate for dark mode background
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f19;
+            color: #e2e8f0;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        /* Pulsing/Glowing Effects for Selection */
+        .glow-active {
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+            border-color: rgba(168, 85, 247, 0.8) !important;
+        }
+        .glow-tamhop {
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.25);
+            border-color: rgba(59, 130, 246, 0.6) !important;
+        }
+        .glow-xungchieu {
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.25);
+            border-color: rgba(239, 68, 68, 0.6) !important;
+        }
+        .glow-nhihop {
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
+            border-color: rgba(16, 185, 129, 0.6) !important;
+        }
+        
+        /* Sparkle/Glow elements */
+        .celestial-bg {
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.08) 0%, transparent 50%);
+        }
+    </style>
+</head>
+<body class="celestial-bg min-h-screen">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo } = React;
+
+        // Custom Safe Inline SVG Icon Component to bypass external DOM manipulation problems
+        const Icon = ({ name, className = "w-4 h-4" }) => {
+            const icons = {
+                compass: (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                        <circle cx="12" cy="12" r="10"/>
+                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+                    </svg>
+                ),
+                "map-pin": (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                ),
+                eye: (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                ),
+                palette: (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 14.7255 3.09032 17.1962 4.85857 19C5.03345 19.1749 5.09902 19.4318 5.0243 19.6644L4.7402 20.5471C4.54245 21.1616 5.01131 21.7879 5.65171 21.7483L7.69741 21.6217C7.94046 21.6067 8.16914 21.7371 8.27793 21.9547L8.43093 22.2607C8.9056 23.21 10.3662 23.0872 10.6698 22.046L10.8719 21.3533C10.9702 21.0163 11.2785 20.7879 11.6293 20.7879H12.3707C12.7215 20.7879 13.0298 21.0163 13.1281 21.3533L13.3302 22.046C13.6338 23.0872 15.0944 23.21 15.5691 22.2607L15.7221 21.9547C15.8309 21.7371 16.0595 21.6067 16.3026 21.6217L18.3483 21.7483C18.9887 21.7879 19.4575 21.1616 19.2598 20.5471L18.9757 19.6644C18.901 19.4318 18.9666 19.1749 19.1414 19C20.9097 17.1962 22 14.7255 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"/>
+                        <circle cx="7.5" cy="10.5" r="1.5" fill="currentColor"/>
+                        <circle cx="11.5" cy="7.5" r="1.5" fill="currentColor"/>
+                        <circle cx="16.5" cy="9.5" r="1.5" fill="currentColor"/>
+                        <circle cx="15.5" cy="14.5" r="1.5" fill="currentColor"/>
+                    </svg>
+                ),
+                "git-branch": (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                        <line x1="6" y1="3" x2="6" y2="15" />
+                        <circle cx="18" cy="6" r="3" />
+                        <circle cx="6" cy="18" r="3" />
+                        <path d="M18 9a9 9 0 0 1-9 9" />
+                    </svg>
+                ),
+                "mouse-pointer": (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                        <path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z" />
+                        <path d="m13 13 6 6" />
+                    </svg>
+                ),
+                "layout-grid": (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                        <rect width="7" height="7" x="3" y="3" rx="1" />
+                        <rect width="7" height="7" x="14" y="3" rx="1" />
+                        <rect width="7" height="7" x="14" y="14" rx="1" />
+                        <rect width="7" height="7" x="3" y="14" rx="1" />
+                    </svg>
+                ),
+                "circle-dot": (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                        <circle cx="12" cy="12" r="10" />
+                        <circle cx="12" cy="12" r="1" />
+                    </svg>
+                ),
+                link: (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                    </svg>
+                ),
+                sparkles: (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                        <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                        <path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5.5z" />
+                        <path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1z" />
+                    </svg>
+                ),
+                "git-merge": (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                        <circle cx="18" cy="18" r="3" />
+                        <circle cx="6" cy="6" r="3" />
+                        <path d="M6 9a9 9 0 0 0 9 9" />
+                    </svg>
+                ),
+                "alert-circle": (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="12" />
+                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                )
+            };
+            return icons[name] || null;
+        };
+
+        // 12 Earthly Branches (Địa Chi) with coordinates and metadata
+        // Index mapping: 0: Tý, 1: Sửu, 2: Dần, ... 11: Hợi
+        const BRANCHES = [
+            { id: 0, name: "Tý", element: "Thủy", polarity: "Dương", direction: "Bắc", time: "23:00 - 01:00", description: "Phương Bắc cực âm, khởi nguồn của dương khí." },
+            { id: 1, name: "Sửu", element: "Thổ", polarity: "Âm", direction: "Đông Bắc", time: "01:00 - 03:00", description: "Đất phù sa lạnh, giao mùa giữa đông và xuân." },
+            { id: 2, name: "Dần", element: "Mộc", polarity: "Dương", direction: "Đông Bắc", time: "03:00 - 05:00", description: "Cửa ngõ của mùa xuân, mầm sống vươn mình." },
+            { id: 3, name: "Mão", element: "Mộc", polarity: "Âm", direction: "Đông", time: "05:00 - 07:00", description: "Phương chính Đông rực rỡ ôn hòa." },
+            { id: 4, name: "Thìn", element: "Thổ", polarity: "Dương", direction: "Đông Nam", time: "07:00 - 09:00", description: "Rồng cuộn nước ấm, biến ảo khôn lường." },
+            { id: 5, name: "Tỵ", element: "Hỏa", polarity: "Âm", direction: "Đông Nam", time: "09:00 - 11:00", description: "Ánh lửa bắt đầu lan tỏa nhiệt lượng." },
+            { id: 6, name: "Ngọ", element: "Hỏa", polarity: "Dương", direction: "Nam", time: "11:00 - 13:00", description: "Chính Nam cực dương, rực rỡ chói lọi nhất." },
+            { id: 7, name: "Mùi", element: "Thổ", polarity: "Âm", direction: "Tây Nam", time: "13:00 - 15:00", description: "Đất khô mùa hạ, nuôi dưỡng cây trái vàng." },
+            { id: 8, name: "Thân", element: "Kim", polarity: "Dương", direction: "Tây Nam", time: "15:00 - 17:00", description: "Nơi kim khí bắt đầu kết tụ cô đọng." },
+            { id: 9, name: "Dậu", element: "Kim", polarity: "Âm", direction: "Tây", time: "17:00 - 19:00", description: "Chính Tây thanh khiết, mùa gặt hái thu tàng." },
+            { id: 10, name: "Tuất", element: "Thổ", polarity: "Dương", direction: "Tây Bắc", time: "19:00 - 21:00", description: "Kho tàng cất giữ ánh sáng cuối ngày." },
+            { id: 11, name: "Hợi", element: "Thủy", polarity: "Âm", direction: "Tây Bắc", time: "21:00 - 23:00", description: "Nước tụ đêm sâu, chuẩn bị vòng tuần hoàn mới." }
+        ];
+
+        // 14 Main Stars (Chính tinh) specifications
+        const STARS_METADATA = {
+            "Tử Vi": {
+                name: "Tử Vi",
+                chinese: "紫微",
+                element: "Thổ",
+                system: "Tử Vi",
+                character: "Đế tinh (Vua)",
+                desc: "Đại diện cho uy quyền, tôn quý, tài lãnh đạo và sự bao dung che chở.",
+                keywords: "Quyền lực, danh vọng, tôn quý, chính trực",
+                color: "purple"
+            },
+            "Thiên Cơ": {
+                name: "Thiên Cơ",
+                chinese: "天機",
+                element: "Mộc",
+                system: "Tử Vi",
+                character: "Thiện tinh (Mưu sĩ)",
+                desc: "Chủ về trí tuệ, mưu lược, tính toán cơ mưu và sự dịch chuyển linh hoạt.",
+                keywords: "Trí óc, mưu tính, dịch chuyển, hiếu học",
+                color: "green"
+            },
+            "Thái Dương": {
+                name: "Thái Dương",
+                chinese: "太陽",
+                element: "Hỏa",
+                system: "Tử Vi",
+                character: "Quý tinh (Mặt Trời)",
+                desc: "Đại diện cho sự quang minh, hào sảng, nam giới, tiếng tăm và sự phát tán ban phát.",
+                keywords: "Quang minh, danh tiếng, cho đi, phụ thân/chồng",
+                color: "red"
+            },
+            "Vũ Khúc": {
+                name: "Vũ Khúc",
+                chinese: "武曲",
+                element: "Kim",
+                system: "Tử Vi",
+                character: "Tài tinh (Đại tướng)",
+                desc: "Chủ về tài lộc thực tế, sự quyết đoán, tính cách cô độc và hành động thực tiễn dứt khoát.",
+                keywords: "Tiền tài, cô độc, thực tế, quyết đoán",
+                color: "amber"
+            },
+            "Thiên Đồng": {
+                name: "Thiên Đồng",
+                chinese: "天同",
+                element: "Thủy",
+                system: "Tử Vi",
+                character: "Phúc tinh (Đứa trẻ)",
+                desc: "Chủ về phúc thọ, sự nhàn nhã ôn hòa, dễ thỏa mãn và có xu hướng nghệ thuật thụ hưởng.",
+                keywords: "Phúc đức, hưởng thụ, trẻ con, lười biếng",
+                color: "blue"
+            },
+            "Liêm Trinh": {
+                name: "Liêm Trinh",
+                chinese: "廉貞",
+                element: "Hỏa",
+                system: "Tử Vi",
+                character: "Tù tinh / Đào hoa tinh",
+                desc: "Đại diện cho sự liêm khiết, nghiêm khắc tự tôn, đào hoa xã giao và dễ nóng nảy cực đoan.",
+                keywords: "Chính trực, nóng nảy, đào hoa khuất tất, tù vết",
+                color: "rose"
+            },
+            "Thiên Phủ": {
+                name: "Thiên Phủ",
+                chinese: "天府",
+                element: "Thổ",
+                system: "Thiên Phủ",
+                character: "Phú tinh (Thủ kho)",
+                desc: "Là kho báu của trời, chủ về tích lũy tài sản, sự an toàn, bảo thủ và lòng bao dung che chở vững chắc.",
+                keywords: "Tích lũy, ổn định, cẩn trọng, bao dung",
+                color: "yellow"
+            },
+            "Thái Âm": {
+                name: "Thái Âm",
+                chinese: "太陰",
+                element: "Thủy",
+                system: "Thiên Phủ",
+                character: "Phú tinh (Mặt Trăng)",
+                desc: "Đại diện cho nữ giới, điền sản, tài lộc âm thầm tích lũy, sự nhu hòa và tâm hồn lãng mạn nghệ thuật.",
+                keywords: "Nhu hòa, điền sản, người mẹ/vợ, nhạy cảm",
+                color: "indigo"
+            },
+            "Tham Lang": {
+                name: "Tham Lang",
+                chinese: "貪狼",
+                element: "Thủy (đới Mộc)",
+                system: "Thiên Phủ",
+                character: "Đào hoa tinh / Sát tinh",
+                desc: "Chủ về dục vọng, tham vọng lớn, tài năng giao tiếp xã hội, tôn giáo tâm linh và hưởng thụ vật chất.",
+                keywords: "Tham vọng, đào hoa lớn, khéo léo, tâm linh",
+                color: "emerald"
+            },
+            "Cự Môn": {
+                name: "Cự Môn",
+                chinese: "巨門",
+                element: "Thủy",
+                system: "Thiên Phủ",
+                character: "Ám tinh (Cánh cổng lớn)",
+                desc: "Chủ về ngôn từ, tài ăn nói mưu lược, sự hoài nghi phản biện, nghiên cứu sâu nhưng dễ gặp thị phi đố kỵ.",
+                keywords: "Ngôn từ, thị phi, nghiên cứu, bí ẩn",
+                color: "teal"
+            },
+            "Thiên Tướng": {
+                name: "Thiên Tướng",
+                chinese: "天相",
+                element: "Thủy",
+                system: "Thiên Phủ",
+                character: "Ấn tinh (Tể tướng)",
+                desc: "Chủ về sự trung thành, chính trực, ưa giúp đỡ người khác, có nguyên tắc sống vững vàng và khiếu thẩm mỹ.",
+                keywords: "Chính trực, phò tá, từ thiện, trang phục",
+                color: "cyan"
+            },
+            "Thiên Lương": {
+                name: "Thiên Lương",
+                chinese: "天梁",
+                element: "Mộc",
+                system: "Thiên Phủ",
+                character: "Ấm tinh / Thầy thuốc",
+                desc: "Chủ về sự che chở bảo bọc, giải tai ách, tính cách nghiêm túc của bậc trưởng thượng và lòng từ thiện.",
+                keywords: "Giải nạn, thọ tinh, nguyên tắc, cô độc",
+                color: "lime"
+            },
+            "Thất Sát": {
+                name: "Thất Sát",
+                chinese: "七殺",
+                element: "Kim",
+                system: "Thiên Phủ",
+                character: "Quyền tinh / Sát tinh",
+                desc: "Đại diện cho tướng quân tiên phong, sự quả cảm dũng mãnh, mạo hiểm biến động lớn và tính khí cô độc nóng nảy.",
+                keywords: "Khai phá, dũng cảm, cô độc, biến động nhanh",
+                color: "orange"
+            },
+            "Phá Quân": {
+                name: "Phá Quân",
+                chinese: "破軍",
+                element: "Thủy",
+                system: "Thiên Phủ",
+                character: "Hao tinh / Sát tinh",
+                desc: "Chủ về sự tàn phá cũ để xây dựng mới, tinh thần tiên phong dũng mãnh, hao tán vật chất tiền tài.",
+                keywords: "Đổi mới, phá bỏ, tiên phong, hao tán",
+                color: "pink"
+            }
+        };
+
+        // Standard profiles of the 12 layouts of Tử Vi
+        const LAYOUTS_INFO = {
+            0: {
+                title: "Tử Vi Cư Tý - Độc Quân Nhàn Đàm",
+                description: "Tử Vi đơn độc ngự trị tại Tý (Cung Thủy lạnh lẽo). Đây là cách cục 'Cô Quân' (Vua cô đơn), nếu không có Tả Hữu, Xương Khúc phò tá thì dễ rơi vào trạng thái chí lớn nhưng thực tế khó lòng đạt được toàn vẹn. Thiên Phủ lúc này trú đóng tại Thìn hội tụ cùng Liêm Trinh, tạo thế tài khố khá vững nhưng tâm lý đầy lo toan sầu muộn.",
+                procon: "Ưu điểm: Nội tâm sâu sắc, có thực tài. Nhược điểm: Dễ cô độc, gánh vác nặng nề."
+            },
+            1: {
+                title: "Tử Phá Sửu Mùi - Khai Sáng Thăng Trầm",
+                description: "Tử Vi đồng cung cùng Phá Quân tại Sửu/Mùi. Đây là cách cục 'Vua trực tiếp xông pha trận mạc'. Đương số có dũng khí phi thường, sẵn sàng phá bỏ cái cũ để kiến tạo cái mới, tuy nhiên cuộc đời phải trải qua nhiều phen thăng trầm sóng gió lớn mới gặt hái được quả ngọt.",
+                procon: "Ưu điểm: Sức đột phá cực mạnh, có khả năng lội ngược dòng. Nhược điểm: Tiền vận vất vả, gia đạo thường trắc trở."
+            },
+            2: {
+                title: "Tử Phủ Đồng Cung Tại Dần - Đế Khố Tôn Nghiêm",
+                description: "Vua (Tử Vi) gặp Thủ Kho (Thiên Phủ) đồng cung tại Dần. Đây là một trong những cách cục cao cấp nhất của Tử Vi Đẩu Số. Sự kết hợp giữa uy quyền tôn kính của Tử Vi và tính phòng thủ, tích trữ tài sản bền vững của Thiên Phủ tạo nên một cuộc đời phú quý, danh giá ít sóng gió.",
+                procon: "Ưu điểm: Phúc thọ song toàn, tiền tài dồi dào vững chắc. Nhược điểm: Đôi khi quá an toàn, thiếu sức bứt phá mạnh mẽ."
+            },
+            3: {
+                title: "Tử Tham Mão Dậu - Đào Hoa Phạm Chủ",
+                description: "Tử Vi cùng Tham Lang cư Mão hoặc Dậu. Đây là thế đứng có sắc thái nghệ thuật và hưởng thụ cực mạnh. Nếu hội ngộ cát tinh và Không Vong (Tuần Triệt, Địa Không, Địa Kiếp), đương số lại là người có ngộ tính tâm linh rất cao, dễ tìm đến sự thanh tịnh triết học tôn giáo.",
+                procon: "Ưu điểm: Giao tế khéo léo, có tài nghệ thuật xuất chúng. Nhược điểm: Dễ sa đà vào tình cảm đào hoa phức tạp."
+            },
+            4: {
+                title: "Tử Tướng Thìn Tuất - Trung Thần La Võng",
+                description: "Tử Vi đồng cung cùng Thiên Tướng tại Thìn/Tuất (Cửa Thiên La Địa Võng). Vua mang theo ấn tín ngọc tỷ của tể tướng để hành đạo. Đương số là người trọng nghĩa khí, có tài tổ chức và quản lý xuất sắc, nhưng vì nằm ở thế La Võng nên đời có nhiều thử thách gột rửa chí khí.",
+                procon: "Ưu điểm: Trung thực, trách nhiệm cao, năng lực gánh vác tốt. Nhược điểm: Đời nhiều lo toan, dễ mang tiếng thị phi ách lòng."
+            },
+            5: {
+                title: "Tử Sát Tỵ Hợi - Quyền Uy Biến Hóa",
+                description: "Tử Vi đồng cung cùng Thất Sát dũng mãnh tại Tỵ/Hợi. Đây là thế đứng 'Hóa Sát Vi Quyền'. Vua trao thượng phương bảo kiếm cho võ tướng oai dũng nhất. Đương số có khả năng quyết đoán đáng kinh ngạc, thích hợp lập công trong quân đội, kinh doanh mạo hiểm hay các ngành kỹ nghệ cao.",
+                procon: "Ưu điểm: Quyết đoán mạnh mẽ, uy quyền lẫm liệt. Nhược điểm: Sát khí lớn dễ cô độc, tính khí nóng nảy đột ngột."
+            },
+            6: {
+                title: "Tử Vi Cư Ngọ - Cực Hướng Ly Minh",
+                description: "Vua độc tôn ngự trị tại ngôi vị cao quý nhất (Cung Ngọ - chính Nam thuộc Hỏa). Đây là cách cục hoàng kim 'Đế tinh cư Đế vị', ánh sáng tôn nghiêm chiếu khắp muôn phương. Đương số có phong thái quân vương đường bệ, danh tiếng lừng lẫy, tài bang quốc trị dân xuất chúng nếu hội đủ tả hữu cát tinh.",
+                procon: "Ưu điểm: Uy tín lừng lẫy, lãnh đạo thiên bẩm. Nhược điểm: Đòi hỏi tính hoàn mỹ quá cao, dễ tạo áp lực cho cấp dưới."
+            },
+            7: {
+                title: "Tử Phá Cư Mùi - Uy Chấn Phương Xa",
+                description: "Tương tự như ở Sửu nhưng tại Mùi năng lượng Thổ khô ấm áp giúp dung hòa tốt hơn mối quan hệ khắc chế giữa Thổ (Tử Vi) và Thủy (Phá Quân). Đây là cách cục cho người có ý chí sắt đá, có tài xoay chuyển càn khôn, gây dựng cơ nghiệp từ bàn tay trắng tại nơi xa xứ.",
+                procon: "Ưu điểm: Ý chí vươn lên mãnh liệt, tài trí hơn người. Nhược điểm: Hao tâm tổn trí, thời trẻ lao đao bôn ba."
+            },
+            8: {
+                title: "Tử Phủ Cư Thân - Danh Lộc Song Toàn",
+                description: "Tử Vi đồng cung Thiên Phủ tại cung Thân (hành Kim sinh Thủy). Sự uy nghi quyền quý hiển hiện rõ nét. Lúc này Thái Dương đắc địa cực đẹp tại Tỵ (Cung Quan Lộc lý tưởng) chiếu sáng rực rỡ, giúp cuộc đời đương số vạn dặm hanh thông, danh tài đều trọn vẹn và bền bỉ.",
+                procon: "Ưu điểm: Vừa có danh vừa có thực lực tài chính to lớn. Nhược điểm: Tâm lý phòng thủ tự cao, khó lắng nghe cấp dưới."
+            },
+            9: {
+                title: "Tử Tham Cư Dậu - Hoài Cổ U Hoài",
+                description: "Thế đồng cung Tử Tham tại Dậu (hành Kim lãng đãng chiều tà). Sắc thái đào hoa ẩn tàng sâu trong tâm trí. Đương số có con mắt thẩm mỹ cực kỳ tinh tế, nội tâm phong phú, dễ thành danh trong các lĩnh vực thiết kế, nghệ thuật biểu diễn hoặc nghiên cứu triết học tinh hoa cổ học.",
+                procon: "Ưu điểm: Trí óc sáng tạo vượt trội, cuốn hút tự nhiên. Nhược điểm: Tâm lý dao động, hay hoài nghi nhân sinh."
+            },
+            10: {
+                title: "Tử Tướng Cư Tuất - Khắc Khổ Trùng Lai",
+                description: "Tử Vi Thiên Tướng đồng cung tại Tuất. Đương số có phẩm chất lãnh đạo vững vàng, nghiêm cẩn tự luật. Dù cuộc sống có những giai đoạn rơi vào ngõ cụt gò bó (thế La Võng), nhưng với bản lĩnh trung chính luôn tìm được cách xoay chuyển tình thế ngoạn mục.",
+                procon: "Ưu điểm: Trung thành đáng tin cậy, vượt khó kiên cường. Nhược điểm: Đời tư chịu nhiều hy sinh thầm kín."
+            },
+            11: {
+                title: "Tử Sát Cư Hợi - Bôn Ba Chiến Đấu",
+                description: "Tử Sát đồng cung tại cung Thủy Hợi lạnh lẽo của phương Bắc. Vua bôn ba ngoài biên ải xa xôi để giữ vững giang sơn. Người có cách cục này mang tinh thần chiến binh quả cảm, thích hành động thực tế hơn lý thuyết suông, cuộc đời giàu biến động ly kỳ thú vị.",
+                procon: "Ưu điểm: Không ngại khó khăn hiểm nguy, xông xáo quyết liệt. Nhược điểm: Tâm tính bồn chồn khó yên ổn một chỗ lâu dài."
+            }
+        };
+
+        function App() {
+            const [ziweiPos, setZiweiPos] = useState(2); // Default Tử Vi at Dần (2)
+            const [hoveredPalace, setHoveredPalace] = useState(null);
+            const [selectedStar, setSelectedStar] = useState(null);
+            const [viewMode, setViewMode] = useState("overview"); // overview, elements, relationships
+            const [activeTab, setActiveTab] = useState("layout"); // layout, stars, luchai
+
+            // Dynamic calculations of the 14 main stars based on Ziwei's position (0-11)
+            const calculatedStars = useMemo(() => {
+                const map = Array.from({ length: 12 }, () => []);
+
+                // 1. Purple Star System (Tử Vi tinh hệ) - Go Counter-Clockwise
+                const ziwei = ziweiPos;
+                const tianji = (ziwei - 1 + 12) % 12;
+                const taiduang = (ziwei - 3 + 12) % 12;
+                const wuxu = (ziwei - 4 + 12) % 12;
+                const tiandong = (ziwei - 5 + 12) % 12;
+                const liamtrinh = (ziwei - 8 + 12) % 12;
+
+                map[ziwei].push("Tử Vi");
+                map[tianji].push("Thiên Cơ");
+                map[taiduang].push("Thái Dương");
+                map[wuxu].push("Vũ Khúc");
+                map[tiandong].push("Thiên Đồng");
+                map[liamtrinh].push("Liêm Trinh");
+
+                // 2. Heavenly Treasury System (Thiên Phủ tinh hệ) - Go Clockwise relative to symmetric axis Dan-Shen
+                // Symmetry formula across axis 2 (Dan) and 8 (Shen): f = (4 - v + 12) % 12
+                const tianfu = (4 - ziwei + 12) % 12;
+                const taiyin = (tianfu + 1) % 12;
+                const tamlang = (tianfu + 2) % 12;
+                const cumon = (tianfu + 3) % 12;
+                const tiantuang = (tianfu + 4) % 12;
+                const tianluong = (tianfu + 5) % 12;
+                const thatsat = (tianfu + 6) % 12;
+                const phaquan = (tianfu + 10) % 12;
+
+                map[tianfu].push("Thiên Phủ");
+                map[taiyin].push("Thái Âm");
+                map[tamlang].push("Tham Lang");
+                map[cumon].push("Cự Môn");
+                map[tiantuang].push("Thiên Tướng");
+                map[tianluong].push("Thiên Lương");
+                map[thatsat].push("Thất Sát");
+                map[phaquan].push("Phá Quân");
+
+                return {
+                    palaceMap: map,
+                    positions: {
+                        "Tử Vi": ziwei,
+                        "Thiên Cơ": tianji,
+                        "Thái Dương": taiduang,
+                        "Vũ Khúc": wuxu,
+                        "Thiên Đồng": tiandong,
+                        "Liêm Trinh": liamtrinh,
+                        "Thiên Phủ": tianfu,
+                        "Thái Âm": taiyin,
+                        "Tham Lang": tamlang,
+                        "Cự Môn": cumon,
+                        "Thiên Tướng": tiantuang,
+                        "Thiên Lương": tianluong,
+                        "Thất Sát": thatsat,
+                        "Phá Quân": phaquan
+                    }
+                };
+            }, [ziweiPos]);
+
+            // Relationship helper formulas
+            const getPalaceRelations = (activeIdx) => {
+                if (activeIdx === null) return { tamHop: [], xungChieu: null, nhiHop: null, lucHai: null };
+                
+                // Tam hợp (Trine): index + 4, index + 8
+                const tamHop = [
+                    (activeIdx + 4) % 12,
+                    (activeIdx + 8) % 12
+                ];
+                
+                // Xung chiếu (Opposition): index + 6
+                const xungChieu = (activeIdx + 6) % 12;
+                
+                // Nhị hợp (Harmony): (13 - index) % 12
+                const nhiHop = (13 - activeIdx) % 12;
+                
+                // Lục hại (Clash): (19 - index) % 12
+                const lucHai = (19 - activeIdx) % 12;
+
+                return { tamHop, xungChieu, nhiHop, lucHai };
+            };
+
+            const selectedRelations = useMemo(() => {
+                return getPalaceRelations(hoveredPalace !== null ? hoveredPalace : ziweiPos);
+            }, [hoveredPalace, ziweiPos]);
+
+            const getStarPosition = (starName) => {
+                return calculatedStars.positions[starName];
+            };
+
+            // Grid mapping to traditional layout coordinates (4x4 layout)
+            const getGridStyle = (id) => {
+                // Returns custom CSS grid Row & Col based on traditional Earthly Branch index
+                switch(id) {
+                    case 5: return { gridRow: 1, gridColumn: 1 }; // Tỵ (Top-Left)
+                    case 6: return { gridRow: 1, gridColumn: 2 }; // Ngọ
+                    case 7: return { gridRow: 1, gridColumn: 3 }; // Mùi
+                    case 8: return { gridRow: 1, gridColumn: 4 }; // Thân (Top-Right)
+                    case 9: return { gridRow: 2, gridColumn: 4 }; // Dậu
+                    case 10: return { gridRow: 3, gridColumn: 4 }; // Tuất
+                    case 11: return { gridRow: 4, gridColumn: 4 }; // Hợi (Bottom-Right)
+                    case 0: return { gridRow: 4, gridColumn: 3 }; // Tý
+                    case 1: return { gridRow: 4, gridColumn: 2 }; // Sửu
+                    case 2: return { gridRow: 4, gridColumn: 1 }; // Dần (Bottom-Left)
+                    case 3: return { gridRow: 3, gridColumn: 1 }; // Mão
+                    case 4: return { gridRow: 2, gridColumn: 1 }; // Thìn
+                    default: return {};
+                }
+            };
+
+            const currentLayoutInfo = LAYOUTS_INFO[ziweiPos] || { title: "Đồ Hình Tử Vi", description: "" };
+
+            // Colors mapping for 5 Elements (Ngũ Hành)
+            const getElementBadgeColor = (element) => {
+                switch(element) {
+                    case "Thủy": return "bg-blue-950/80 text-blue-300 border-blue-800";
+                    case "Hỏa": return "bg-red-950/80 text-red-300 border-red-800";
+                    case "Thổ": return "bg-amber-950/80 text-amber-300 border-amber-800/80";
+                    case "Mộc": return "bg-emerald-950/80 text-emerald-300 border-emerald-800";
+                    case "Kim": return "bg-slate-800/80 text-slate-200 border-slate-600";
+                    default: return "bg-gray-800 text-gray-200 border-gray-700";
+                }
+            };
+
+            const getStarColorClasses = (starName) => {
+                const meta = STARS_METADATA[starName];
+                if (!meta) return "";
+                if (viewMode === "elements") {
+                    const el = meta.element.includes("Thủy") ? "Thủy" :
+                               meta.element.includes("Hỏa") ? "Hỏa" :
+                               meta.element.includes("Mộc") ? "Mộc" :
+                               meta.element.includes("Kim") ? "Kim" : "Thổ";
+                    return getElementBadgeColor(el);
+                }
+                
+                // Default System-based color scheme
+                if (starName === "Tử Vi") return "bg-purple-900/40 text-purple-300 border-purple-800 hover:bg-purple-900/60";
+                if (starName === "Thiên Phủ") return "bg-amber-900/40 text-amber-300 border-amber-800 hover:bg-amber-900/60";
+                
+                if (meta.system === "Tử Vi") {
+                    return "bg-slate-900 text-purple-200 border-purple-950 hover:bg-purple-950/40";
+                } else {
+                    return "bg-slate-900 text-amber-200 border-amber-950 hover:bg-amber-950/40";
+                }
+            };
+
+            return (
+                <div className="max-w-7xl mx-auto px-4 py-6 md:py-10">
+                    {}
+                    <header className="text-center mb-8">
+                        <div className="inline-flex items-center justify-center space-x-3 mb-2">
+                            <span className="p-2 bg-gradient-to-tr from-purple-600 to-amber-500 rounded-lg shadow-lg">
+                                <Icon name="compass" className="w-6 h-6 text-white animate-spin-slow" />
+                            </span>
+                            <h1 className="text-3xl md:text-4xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-white to-purple-300">
+                                Bản Đồ Tương Tác An Sao Tử Vi
+                            </h1>
+                        </div>
+                        <p className="text-sm md:text-base text-slate-400 max-w-2xl mx-auto">
+                            Hệ thống mô phỏng 12 Đồ hình Bản mệnh. Cho phép di chuyển ngai vị sao <b className="text-purple-300">Tử Vi</b> để xem sự luân chuyển chuẩn xác của 14 Chính tinh của phái Nam Tông và Bắc Tông.
+                        </p>
+                    </header>
+
+                    {}
+                    <div className="mb-6 bg-slate-900/60 border border-slate-800 rounded-xl p-3 flex flex-wrap justify-center items-center gap-2 shadow-inner">
+                        <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 mr-2 flex items-center gap-1">
+                            <Icon name="map-pin" className="w-3.5 h-3.5 text-purple-400" /> An Tử Vi tại:
+                        </span>
+                        {BRANCHES.map(b => (
+                            <button
+                                key={b.id}
+                                onClick={() => {
+                                    setZiweiPos(b.id);
+                                    setSelectedStar("Tử Vi");
+                                }}
+                                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                                    ziweiPos === b.id 
+                                    ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md ring-2 ring-purple-400/30 font-bold scale-105' 
+                                    : 'bg-slate-950 text-slate-300 border border-slate-800 hover:border-slate-700 hover:text-white'
+                                }`}
+                            >
+                                {b.name}
+                            </button>
+                        ))}
+                    </div>
+
+                    {}
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+                        <div className="flex bg-slate-950 p-1 rounded-lg border border-slate-800">
+                            <button 
+                                onClick={() => setViewMode("overview")}
+                                className={`px-4 py-1.5 rounded-md text-xs font-medium transition-all flex items-center gap-1.5 ${viewMode === 'overview' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'}`}
+                            >
+                                <Icon name="eye" className="w-3.5 h-3.5" /> Tổng quan hệ thống
+                            </button>
+                            <button 
+                                onClick={() => setViewMode("elements")}
+                                className={`px-4 py-1.5 rounded-md text-xs font-medium transition-all flex items-center gap-1.5 ${viewMode === 'elements' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'}`}
+                            >
+                                <Icon name="palette" className="w-3.5 h-3.5" /> Ngũ hành tinh thể
+                            </button>
+                            <button 
+                                onClick={() => setViewMode("relationships")}
+                                className={`px-4 py-1.5 rounded-md text-xs font-medium transition-all flex items-center gap-1.5 ${viewMode === 'relationships' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'}`}
+                            >
+                                <Icon name="git-branch" className="w-3.5 h-3.5" /> Tam hợp & Nhị hợp
+                            </button>
+                        </div>
+
+                        {/* Current selected pointer */}
+                        <div className="text-xs text-slate-400 bg-slate-900/40 px-3 py-1.5 rounded-lg border border-slate-800 flex items-center gap-2">
+                            <span className="inline-block w-2.5 h-2.5 rounded-full bg-purple-500 animate-pulse"></span>
+                            Tử Vi cư <span className="font-bold text-amber-300">{BRANCHES[ziweiPos].name}</span>, Thiên Phủ đối xứng tại <span className="font-bold text-cyan-300">{BRANCHES[(4 - ziweiPos + 12) % 12].name}</span>
+                        </div>
+                    </div>
+
+                    {}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                        
+                        {/* LEFT COLUMN: 12-Palace Chart (Grid 4x4) */}
+                        <div className="lg:col-span-8 overflow-x-auto pb-4">
+                            <div className="min-w-[650px] tuvi-grid grid grid-cols-4 grid-rows-4 gap-2 bg-slate-950/40 border border-slate-800 p-3 rounded-2xl relative shadow-2xl">
+                                
+                                {BRANCHES.map((b) => {
+                                    const starsInPalace = calculatedStars.palaceMap[b.id];
+                                    const gridStyle = getGridStyle(b.id);
+                                    
+                                    // Relationship statuses
+                                    const isSelected = ziweiPos === b.id;
+                                    const isHovered = hoveredPalace === b.id;
+                                    const isSelectedRef = hoveredPalace !== null ? hoveredPalace : ziweiPos;
+                                    
+                                    const { tamHop, xungChieu, nhiHop, lucHai } = selectedRelations;
+                                    const isTamHop = tamHop.includes(b.id);
+                                    const isXungChieu = xungChieu === b.id;
+                                    const isNhiHop = nhiHop === b.id;
+                                    const isLucHai = lucHai === b.id;
+
+                                    let highlightClass = "border-slate-800 bg-slate-900/60";
+                                    let relationLabel = null;
+
+                                    if (viewMode === "relationships") {
+                                        if (b.id === isSelectedRef) {
+                                            highlightClass = "glow-active border-purple-500 bg-purple-950/10";
+                                            relationLabel = "Bản cung";
+                                        } else if (isXungChieu) {
+                                            highlightClass = "glow-xungchieu border-red-500/80 bg-red-950/5";
+                                            relationLabel = "Xung chiếu";
+                                        } else if (isTamHop) {
+                                            highlightClass = "glow-tamhop border-blue-500/80 bg-blue-950/5";
+                                            relationLabel = "Tam hợp";
+                                        } else if (isNhiHop) {
+                                            highlightClass = "glow-nhihop border-emerald-500/80 bg-emerald-950/5";
+                                            relationLabel = "Nhị hợp";
+                                        } else if (isLucHai) {
+                                            highlightClass = "border-orange-500/60 bg-orange-950/5";
+                                            relationLabel = "Lục hại";
+                                        }
+                                    } else {
+                                        // Standard view styling
+                                        if (isSelected) {
+                                            highlightClass = "glow-active border-purple-500 bg-purple-950/10";
+                                        } else if (isHovered) {
+                                            highlightClass = "border-slate-600 bg-slate-900";
+                                        }
+                                    }
+
+                                    return (
+                                        <div
+                                            key={b.id}
+                                            style={gridStyle}
+                                            onMouseEnter={() => setHoveredPalace(b.id)}
+                                            onMouseLeave={() => setHoveredPalace(null)}
+                                            onClick={() => {
+                                                setZiweiPos(b.id);
+                                                setSelectedStar("Tử Vi");
+                                            }}
+                                            className={`p-3 min-h-[145px] flex flex-col justify-between rounded-xl border transition-all duration-300 cursor-pointer select-none relative ${highlightClass}`}
+                                        >
+                                            {/* Palace Header */}
+                                            <div className="flex justify-between items-start mb-2">
+                                                <div className="flex flex-col">
+                                                    <span className="text-sm font-extrabold text-slate-100 flex items-center gap-1">
+                                                        Cung {b.name}
+                                                        {isSelected && <span className="text-[9px] bg-purple-600/80 text-white px-1.5 py-0.2 rounded-full font-sans">Vua</span>}
+                                                    </span>
+                                                    <span className="text-[10px] text-slate-400 font-medium">Hành {b.element} ({b.polarity})</span>
+                                                </div>
+                                                <span className="text-xs font-serif font-semibold text-slate-600 dark:text-slate-500 bg-slate-950/60 border border-slate-800 px-1.5 py-0.5 rounded">
+                                                    {b.id + 1}
+                                                </span>
+                                            </div>
+
+                                            {/* Stars Listing */}
+                                            <div className="flex-grow flex flex-col justify-start gap-1">
+                                                {starsInPalace.length === 0 ? (
+                                                    <div className="text-[11px] text-slate-600 italic py-2">Vô chính diệu</div>
+                                                ) : (
+                                                    <div className="flex flex-wrap gap-1">
+                                                        {starsInPalace.map(starName => (
+                                                            <div
+                                                                key={starName}
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    setSelectedStar(starName);
+                                                                    setActiveTab("stars");
+                                                                }}
+                                                                className={`px-2 py-1 rounded text-[11px] font-bold border transition-all duration-200 flex items-center gap-1 ${
+                                                                    selectedStar === starName 
+                                                                    ? 'bg-gradient-to-r from-amber-500/20 to-purple-500/20 text-white border-yellow-400 scale-105 shadow-md shadow-yellow-500/10' 
+                                                                    : getStarColorClasses(starName)
+                                                                }`}
+                                                            >
+                                                                {starName === "Tử Vi" && <span className="w-1 h-1 rounded-full bg-purple-400"></span>}
+                                                                {starName === "Thiên Phủ" && <span className="w-1 h-1 rounded-full bg-yellow-400"></span>}
+                                                                {starName}
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {/* Palace Footer Info */}
+                                            <div className="mt-2 pt-1 border-t border-slate-800/40 flex justify-between items-center">
+                                                <span className="text-[10px] text-slate-500">{b.direction}</span>
+                                                {relationLabel && (
+                                                    <span className={`text-[9px] px-1.5 py-0.5 rounded font-medium ${
+                                                        relationLabel === 'Bản cung' ? 'bg-purple-950 text-purple-400 border border-purple-900/50' :
+                                                        relationLabel === 'Xung chiếu' ? 'bg-red-950 text-red-400 border border-red-900/50' :
+                                                        relationLabel === 'Tam hợp' ? 'bg-blue-950 text-blue-400 border border-blue-900/50' :
+                                                        relationLabel === 'Nhị hợp' ? 'bg-emerald-950 text-emerald-400 border border-emerald-900/50' :
+                                                        'bg-orange-950 text-orange-400 border border-orange-900/50'
+                                                    }`}>
+                                                        {relationLabel}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+
+                                {/* CENTER SPACE: 2x2 grid in the middle for Control Center & Dynamic Info */}
+                                <div style={{ gridRow: "2 / span 2", gridColumn: "2 / span 2" }} className="p-4 bg-slate-950 border border-slate-800/80 rounded-2xl flex flex-col justify-between shadow-inner celestial-bg">
+                                    <div className="text-center">
+                                        <span className="text-[9px] font-semibold text-amber-400 uppercase tracking-widest border border-amber-900/80 bg-amber-950/40 px-2 py-0.5 rounded-full inline-block mb-1">
+                                            Thiên Bàn Đồ Hình
+                                        </span>
+                                        <h3 className="text-md font-serif font-bold text-slate-100 line-clamp-1 mb-1">
+                                            {currentLayoutInfo.title}
+                                        </h3>
+                                        <p className="text-[11px] text-slate-400 line-clamp-3 leading-relaxed">
+                                            {currentLayoutInfo.description}
+                                        </p>
+                                    </div>
+
+                                    <div className="border-t border-slate-800/60 pt-3 mt-3 flex flex-col gap-1.5">
+                                        <div className="flex justify-between items-center text-[10px] text-slate-400">
+                                            <span>Thế lục hợp sao Thiên Phủ:</span>
+                                            <span className="text-amber-300 font-medium">Nhị Hợp Thái Dương</span>
+                                        </div>
+                                        <div className="flex justify-between items-center text-[10px] text-slate-400">
+                                            <span>Sự phân bổ hệ sao:</span>
+                                            <span className="text-purple-300 font-medium">14 Chính Tinh Phân Cực</span>
+                                        </div>
+                                        <div className="flex justify-between items-center text-[10px]">
+                                            <span className="text-slate-500">Mẹo: Click cung ngoài rìa để dời Vua Tử Vi</span>
+                                            <span className="text-purple-400 flex items-center gap-0.5 font-bold">
+                                                Click <Icon name="mouse-pointer" className="w-3 h-3" />
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        {}
+                        {/* RIGHT COLUMN: Informational Side Panel */}
+                        <div className="lg:col-span-4 flex flex-col gap-6">
+                            
+                            {/* Navigation Tabs */}
+                            <div className="flex bg-slate-950 p-1 rounded-xl border border-slate-800">
+                                <button
+                                    onClick={() => setActiveTab("layout")}
+                                    className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${activeTab === 'layout' ? 'bg-gradient-to-tr from-slate-900 to-slate-850 text-white shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
+                                >
+                                    Đồ Hình Hiện Tại
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab("stars")}
+                                    className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${activeTab === 'stars' ? 'bg-gradient-to-tr from-slate-900 to-slate-850 text-white shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
+                                >
+                                    Tính Chất 14 Sao
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab("luchai")}
+                                    className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${activeTab === 'luchai' ? 'bg-gradient-to-tr from-slate-900 to-slate-850 text-white shadow-md' : 'text-slate-400 hover:text-slate-200'}`}
+                                >
+                                    Lục Hại & Nhị Hợp
+                                </button>
+                            </div>
+
+                            {/* TAB CONTENT: Layout details */}
+                            {activeTab === "layout" && (
+                                <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-5 shadow-xl">
+                                    <h4 className="text-lg font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-yellow-400 mb-3 flex items-center gap-2">
+                                        <Icon name="layout-grid" className="w-5 h-5 text-amber-400" /> Phân Tích Bản Đồ
+                                    </h4>
+                                    <div className="p-3 bg-slate-950 rounded-xl border border-slate-800/80 mb-4">
+                                        <div className="text-xs text-slate-500 mb-1">TÊN GỌI CÁCH CỤC</div>
+                                        <div className="text-base font-bold text-white mb-2">{currentLayoutInfo.title}</div>
+                                        <p className="text-xs text-slate-300 leading-relaxed mb-1">
+                                            {currentLayoutInfo.description}
+                                        </p>
+                                    </div>
+
+                                    <div className="mb-4">
+                                        <div className="text-xs font-semibold text-slate-400 mb-2">Đặc điểm cơ bản:</div>
+                                        <div className="text-xs text-slate-300 bg-slate-950 p-3 rounded-lg border border-slate-800 leading-relaxed">
+                                            {currentLayoutInfo.procon}
+                                        </div>
+                                    </div>
+
+                                    <div className="border-t border-slate-800/60 pt-4 mt-4">
+                                        <div className="text-xs font-semibold text-slate-400 mb-3 flex items-center gap-1.5">
+                                            <Icon name="circle-dot" className="w-3.5 h-3.5 text-purple-400" /> Các trục quan trọng ở đồ hình hiện tại:
+                                        </div>
+                                        <ul className="space-y-2.5 text-xs text-slate-300">
+                                            <li className="flex justify-between">
+                                                <span className="text-slate-500">Trục Vua (Tử Vi):</span>
+                                                <span className="text-purple-300 font-bold">Cung {BRANCHES[ziweiPos].name}</span>
+                                            </li>
+                                            <li className="flex justify-between">
+                                                <span className="text-slate-500">Trục Kho (Thiên Phủ):</span>
+                                                <span className="text-yellow-300 font-bold">Cung {BRANCHES[(4 - ziweiPos + 12) % 12].name}</span>
+                                            </li>
+                                            <li className="flex justify-between">
+                                                <span className="text-slate-500">Mối liên kết Tử - Phủ:</span>
+                                                <span className="text-slate-400">
+                                                    {ziweiPos % 6 === 2 ? (
+                                                        <span className="text-emerald-400 font-semibold flex items-center gap-1"><Icon name="link" className="w-3 h-3" /> Đồng cung tại {BRANCHES[ziweiPos].name}</span>
+                                                    ) : (
+                                                        <span className="text-amber-400 font-semibold">Đối xứng qua Dần-Thân</span>
+                                                    )}
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* TAB CONTENT: Stars Info */}
+                            {activeTab === "stars" && (
+                                <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-5 shadow-xl">
+                                    <div className="flex justify-between items-center mb-4">
+                                        <h4 className="text-lg font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-indigo-400 flex items-center gap-2">
+                                            <Icon name="sparkles" className="w-5 h-5 text-purple-400" /> Tính Chất Chính Tinh
+                                        </h4>
+                                        {selectedStar && (
+                                            <button 
+                                                onClick={() => setSelectedStar(null)}
+                                                className="text-[10px] text-slate-400 hover:text-slate-200 border border-slate-800 bg-slate-950 px-2.5 py-1 rounded"
+                                            >
+                                                Đặt lại
+                                            </button>
+                                        )}
+                                    </div>
+
+                                    {selectedStar ? (
+                                        // Selected Star Details
+                                        <div>
+                                            {(() => {
+                                                const starMeta = STARS_METADATA[selectedStar];
+                                                const currentPosIdx = getStarPosition(selectedStar);
+                                                const branch = BRANCHES[currentPosIdx];
+                                                
+                                                return (
+                                                    <div className="space-y-4">
+                                                        <div className="p-3 bg-gradient-to-tr from-slate-950 to-slate-900 rounded-xl border border-slate-800">
+                                                            <div className="flex justify-between items-start mb-2">
+                                                                <div>
+                                                                    <div className="flex items-center gap-2">
+                                                                        <span className="text-xl font-bold text-white">{starMeta.name}</span>
+                                                                        <span className="text-xs text-slate-500 italic">({starMeta.chinese})</span>
+                                                                    </div>
+                                                                    <span className="text-[10px] font-semibold text-slate-400 bg-slate-800/60 px-2 py-0.5 rounded mt-1 inline-block">
+                                                                        {starMeta.character}
+                                                                    </span>
+                                                                </div>
+                                                                <span className={`px-2 py-0.5 text-xs rounded border ${getElementBadgeColor(starMeta.element)}`}>
+                                                                    {starMeta.element}
+                                                                </span>
+                                                            </div>
+                                                            <div className="text-xs text-slate-400 border-t border-slate-800/60 pt-2 mt-2">
+                                                                Hệ thống: <span className="text-slate-200 font-semibold">{starMeta.system} Tinh Hệ</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div>
+                                                            <div className="text-[11px] font-semibold text-slate-400 mb-1">MÔ TẢ CHI TIẾT:</div>
+                                                            <p className="text-xs text-slate-300 bg-slate-950 p-3 rounded-lg border border-slate-800 leading-relaxed">
+                                                                {starMeta.desc}
+                                                            </p>
+                                                        </div>
+
+                                                        <div>
+                                                            <div className="text-[11px] font-semibold text-slate-400 mb-1">TỪ KHÓA TÍNH CHẤT:</div>
+                                                            <div className="flex flex-wrap gap-1">
+                                                                {starMeta.keywords.split(',').map(kw => (
+                                                                    <span key={kw} className="bg-slate-950 text-slate-300 border border-slate-800 text-[10px] px-2 py-1 rounded">
+                                                                        {kw.trim()}
+                                                                    </span>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="border-t border-slate-800/60 pt-3 flex justify-between items-center">
+                                                            <span className="text-xs text-slate-400">Vị trí hiện tại trên đồ hình:</span>
+                                                            <span className="text-xs text-amber-300 bg-slate-950 px-2 py-1 rounded border border-slate-800 font-bold">
+                                                                Cung {branch.name} ({branch.direction})
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })()}
+                                        </div>
+                                    ) : (
+                                        // Stars List Selection
+                                        <div>
+                                            <p className="text-xs text-slate-400 mb-4">Click vào một chính tinh dưới đây hoặc trên Bản đồ để xem lý giải chi tiết bản chất của sao:</p>
+                                            
+                                            <div className="grid grid-cols-2 gap-2">
+                                                {Object.keys(STARS_METADATA).map(starName => {
+                                                    const meta = STARS_METADATA[starName];
+                                                    const pos = getStarPosition(starName);
+                                                    return (
+                                                        <button
+                                                            key={starName}
+                                                            onClick={() => setSelectedStar(starName)}
+                                                            className="p-2.5 rounded-xl border border-slate-850 bg-slate-950 text-left hover:border-slate-700 hover:bg-slate-900 transition-all flex flex-col justify-between"
+                                                        >
+                                                            <div className="flex justify-between items-center w-full">
+                                                                <span className="text-xs font-bold text-white">{starName}</span>
+                                                                <span className="text-[9px] text-slate-500 font-sans">({BRANCHES[pos].name})</span>
+                                                            </div>
+                                                            <span className="text-[9px] text-slate-400 truncate w-full mt-1">{meta.character}</span>
+                                                        </button>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+                            {/* TAB CONTENT: Lục Hại & Nhị Hợp (Special Deep Dive) */}
+                            {activeTab === "luchai" && (
+                                <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-5 shadow-xl">
+                                    <h4 className="text-lg font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-cyan-400 mb-3 flex items-center gap-2">
+                                        <Icon name="git-merge" className="w-5 h-5 text-emerald-400" /> Lục Hại & Nhị Hợp Học Thuyết
+                                    </h4>
+                                    
+                                    <div className="space-y-4">
+                                        <div className="bg-slate-950 p-4 rounded-xl border border-emerald-950 text-xs text-slate-300 space-y-3 leading-relaxed">
+                                            <div className="font-bold text-slate-100 flex items-center gap-1">
+                                                <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span> 
+                                                Bản Chất Thiên Phủ nhị hợp Thái Dương
+                                            </div>
+                                            <p>
+                                                Mặc dù trong giới học thuật thường gọi là "Lục Hại" mang sắc thái mâu thuẫn sâu xa, nhưng về mặt hình học trên tinh bàn Tử Vi, <b>Thiên Phủ luôn luôn đứng ở vị trí Nhị Hợp với Thái Dương</b>.
+                                            </p>
+                                            <p className="text-[11px] text-slate-400">
+                                                Chúng ta có thể kiểm chứng toán học: Nếu Tử Vi ở vị trí <code className="text-purple-300">v</code>, Thiên Phủ sẽ ở <code className="text-amber-300">(4 - v)</code>, còn Thái Dương luôn ở <code className="text-orange-300">(v - 3)</code>. Do tổng chỉ số cung của hai sao luôn luôn là 1 hoặc 13 (đại diện cho trục Nhị Hợp Tý-Sửu, Dần-Hợi...), nên hai ngôi sao này <b>luôn luôn là Nhị Hợp của nhau</b>.
+                                            </p>
+                                        </div>
+
+                                        <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs text-slate-300 space-y-3 leading-relaxed">
+                                            <div className="font-bold text-slate-100 flex items-center gap-1 text-amber-300">
+                                                <Icon name="alert-circle" className="w-4 h-4 text-amber-400" /> Tại sao nhị hợp nhưng lại mang tính "Hại"?
+                                            </div>
+                                            <p>
+                                                Đây gọi là <b>Nhị Hợp sinh khắc / mâu thuẫn nội tại</b>:
+                                            </p>
+                                            <ul className="list-disc pl-4 space-y-1.5 text-slate-400 text-[11px]">
+                                                <li><b>Thiên Phủ (Mậu Thổ - Kho Tàng):</b> Chủ về thu vào, bảo bọc, kín đáo, cần sự ổn định bền vững tối đa.</li>
+                                                <li><b>Thái Dương (Bính Hỏa - Mặt Trời):</b> Chủ về phát tán, chiếu sáng rộng khắp, cho đi, đề cao sĩ diện hào sảng.</li>
+                                            </ul>
+                                            <p>
+                                                Sự nhị hợp này mang tính chất "kéo kéo đẩy đẩy" ngầm. Người có Thiên Phủ luôn có một Thái Dương nhị hợp bên cạnh bắt buộc cái kho ấy phải "tiêu pha", phải sĩ diện và gánh vác cho gia đình, xã hội khiến cái kho luôn bị lung lay ngầm.
+                                            </p>
+                                        </div>
+
+                                        <div className="border-t border-slate-800/60 pt-3">
+                                            <div className="text-xs font-semibold text-slate-400 mb-2">Trạng thái Nhị Hợp đồ hình hiện tại:</div>
+                                            {(() => {
+                                                const tfPos = (4 - ziweiPos + 12) % 12;
+                                                const tdPos = (ziweiPos - 3 + 12) % 12;
+                                                
+                                                return (
+                                                    <div className="bg-slate-950/60 p-3 rounded-lg border border-slate-850 text-xs flex justify-between items-center">
+                                                        <div>
+                                                            <div className="text-slate-400 font-medium">Thiên Phủ tại: <span className="text-yellow-400 font-bold">{BRANCHES[tfPos].name}</span></div>
+                                                            <div className="text-slate-400 font-medium">Thái Dương tại: <span className="text-orange-400 font-bold">{BRANCHES[tdPos].name}</span></div>
+                                                        </div>
+                                                        <div className="text-right text-[11px] text-slate-400">
+                                                            Phục vụ cho: <br/>
+                                                            <span className="text-purple-300 font-semibold">{BRANCHES[tfPos].element} sinh {BRANCHES[tdPos].element === 'Thủy' ? 'Khắc' : 'Hợp'}</span>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })()}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                        </div>
+
+                    </div>
+
+                    {/* Footer Explanatory Text */}
+                    <footer className="mt-12 pt-6 border-t border-slate-900 text-center text-xs text-slate-500">
+                        <p>© 2026 Bản Đồ Tương Tác Cổ Học Phương Đông. Thiết kế và phát triển dựa trên nguyên lý Tử Vi Đẩu Số truyền thống.</p>
+                    </footer>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khám Phá Tam Hợp Sát Phá Tham - Tử Vi Đẩu Số</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        mystic: {
+                            900: '#0b0813',
+                            800: '#140f26',
+                            700: '#1e1738',
+                            600: '#2d2252',
+                            500: '#4c3a85',
+                            accent: '#d97706',
+                            gold: '#fbbf24',
+                        },
+                        shat: '#ef4444',   /* Thất Sát - Đỏ / Kim Sát */
+                        pha: '#06b6d4',    /* Phá Quân - Xanh lam / Thủy Phá */
+                        tham: '#a855f7'    /* Tham Lang - Tím / Mộc Dục */
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0b0813;
+            color: #f3f4f6;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fff3c4 0%, #fbbf24 50%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .mystic-card {
+            background: rgba(30, 23, 56, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(251, 191, 36, 0.15);
+        }
+        .mystic-card:hover {
+            border-color: rgba(251, 191, 36, 0.4);
+        }
+        .star-glow-shat {
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.35);
+        }
+        .star-glow-pha {
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.35);
+        }
+        .star-glow-tham {
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.35);
+        }
+        /* Grid rotation for Tu Vi chart layout */
+        .tuvi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 8px;
+            aspect-ratio: 1 / 1;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0813;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d2252;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #fbbf24;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-12 flex flex-col">
+
+    <!-- Header -->
+    <header class="border-b border-mystic-700/60 bg-mystic-900/80 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-purple-700 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                    <i class="fa-solid font-serif">☯</i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold font-serif tracking-wide gold-gradient-text">SÁT PHÁ THAM INTERACTIVE</h1>
+                    <p class="text-xs text-gray-400">Khám Phá Vị Trí & Bí Mật Tam Hợp Cung Chức Năng</p>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <nav class="flex gap-2 bg-mystic-800/80 p-1 rounded-xl border border-mystic-700/50 text-sm">
+                <button onclick="switchTab('visualizer')" id="btn-tab-visualizer" class="px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 bg-mystic-600 text-amber-300">
+                    <i class="fa-solid fa-compass"></i> Trực Quan Lá Số
+                </button>
+                <button onclick="switchTab('matrix')" id="btn-tab-matrix" class="px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 text-gray-300 hover:text-white">
+                    <i class="fa-solid fa-table-cells"></i> Ma Trận 12 Cung
+                </button>
+                <button onclick="switchTab('knowledge')" id="btn-tab-knowledge" class="px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 text-gray-300 hover:text-white">
+                    <i class="fa-solid fa-book-open"></i> Đặc Tính 3 Sao
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full">
+
+        <!-- TAB 1: VISUALIZER (TRỰC QUAN LÁ SỐ) -->
+        <section id="tab-visualizer" class="space-y-6">
+            <!-- Controls & Preset Bar -->
+            <div class="mystic-card p-4 rounded-2xl flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-3 flex-1 min-w-[280px]">
+                    <label for="select-shat-position" class="text-sm font-semibold text-amber-200 whitespace-nowrap">
+                        <i class="fa-solid fa-crosshairs text-shat mr-1"></i> Chọn vị trí Thất Sát:
+                    </label>
+                    <select id="select-shat-position" onchange="onSelectShatPosition(this.value)" class="w-full bg-mystic-900 border border-mystic-600 rounded-xl px-3 py-2 text-sm text-amber-100 focus:outline-none focus:border-amber-400">
+                        <!-- Options generated dynamically -->
+                    </select>
+                </div>
+
+                <!-- Quick Preset Selector -->
+                <div class="flex items-center gap-2 overflow-x-auto py-1">
+                    <span class="text-xs text-gray-400 font-medium mr-1 whitespace-nowrap">Xem nhanh:</span>
+                    <button onclick="setPreset(0)" class="px-3 py-1.5 bg-mystic-800 hover:bg-mystic-700 border border-mystic-600 text-xs rounded-lg text-amber-300 whitespace-nowrap">
+                        🔥 Mệnh - Tài - Quan
+                    </button>
+                    <button onclick="setPreset(2)" class="px-3 py-1.5 bg-mystic-800 hover:bg-mystic-700 border border-mystic-600 text-xs rounded-lg text-purple-300 whitespace-nowrap">
+                        ✨ Phúc - Di - Phối
+                    </button>
+                    <button onclick="setPreset(1)" class="px-3 py-1.5 bg-mystic-800 hover:bg-mystic-700 border border-mystic-600 text-xs rounded-lg text-cyan-300 whitespace-nowrap">
+                        🤝 Phụ - Tử - Nô
+                    </button>
+                    <button onclick="setPreset(3)" class="px-3 py-1.5 bg-mystic-800 hover:bg-mystic-700 border border-mystic-600 text-xs rounded-lg text-emerald-300 whitespace-nowrap">
+                        🏠 Huynh - Tật - Điền
+                    </button>
+                </div>
+            </div>
+
+            <!-- Visual Grid + Detailed Analysis Split View -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+                <!-- Left Column: Interactive Tu Vi Palace Chart (5 Cols on LG) -->
+                <div class="lg:col-span-5 mystic-card p-5 rounded-2xl relative overflow-hidden">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="font-serif text-lg font-bold text-amber-300 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-nodes text-amber-400"></i> Bàn Đồ 12 Cung
+                        </h2>
+                        <span id="tamhap-group-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                            Group Tam Hợp
+                        </span>
+                    </div>
+
+                    <!-- SVG Canvas overlay for connecting triangle lines -->
+                    <div class="relative aspect-square w-full">
+                        <svg id="triangle-svg" class="absolute inset-0 w-full h-full pointer-events-none z-10">
+                            <polygon id="tamhap-polygon" points="0,0 0,0 0,0" fill="rgba(251, 191, 36, 0.08)" stroke="#fbbf24" stroke-width="2" stroke-dasharray="4,4" class="transition-all duration-500"/>
+                        </svg>
+
+                        <!-- 12 Cung Layout Matrix (4x4 perimeter grid) -->
+                        <div id="chart-grid" class="tuvi-grid w-full h-full relative z-20">
+                            <!-- JS populated 12 boxes + center summary area -->
+                        </div>
+                    </div>
+
+                    <!-- Legend -->
+                    <div class="mt-4 pt-3 border-t border-mystic-700/60 flex items-center justify-around text-xs">
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-3 h-3 rounded-full bg-shat border border-red-300"></span>
+                            <span class="text-red-300 font-semibold">Thất Sát</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-3 h-3 rounded-full bg-pha border border-cyan-300"></span>
+                            <span class="text-cyan-300 font-semibold">Phá Quân</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="w-3 h-3 rounded-full bg-tham border border-purple-300"></span>
+                            <span class="text-purple-300 font-semibold">Tham Lang</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Detailed Interpretation (7 Cols on LG) -->
+                <div class="lg:col-span-7 space-y-4">
+
+                    <!-- Header Summary Card -->
+                    <div class="mystic-card p-6 rounded-2xl border-l-4 border-l-amber-400">
+                        <div class="flex items-start justify-between gap-4">
+                            <div>
+                                <span class="text-xs uppercase tracking-wider text-amber-400 font-semibold">Tam Hợp Hiện Tại</span>
+                                <h2 id="detail-group-title" class="text-2xl font-serif font-bold text-white mt-1">
+                                    Tam Hợp Mệnh - Tài - Quan
+                                </h2>
+                            </div>
+                            <div class="text-right">
+                                <span id="detail-triad-type" class="inline-block px-3 py-1 rounded-lg text-xs font-semibold bg-mystic-700 text-amber-200">
+                                    Cấu trúc Nòng Cốt
+                                </span>
+                            </div>
+                        </div>
+                        <p id="detail-group-desc" class="text-sm text-gray-300 mt-3 leading-relaxed">
+                            Mô tả tổng quan về năng lượng của bộ ba này khi nằm ở các cung hiện tại.
+                        </p>
+                    </div>
+
+                    <!-- Detailed Breakdown Cards for the 3 Stars -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        
+                        <!-- Thất Sát Card -->
+                        <div class="mystic-card p-4 rounded-xl border-t-2 border-t-shat flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs font-bold uppercase tracking-wider text-red-400">Chủ Lực Quan / Sát</span>
+                                    <span id="shat-house-name" class="px-2 py-0.5 rounded bg-red-950/80 text-red-200 text-xs font-semibold">Cung Mệnh</span>
+                                </div>
+                                <h3 class="text-lg font-bold text-white font-serif flex items-center gap-2">
+                                    <i class="fa-solid fa-sword text-shat text-sm"></i> Thất Sát
+                                </h3>
+                                <p id="shat-role-text" class="text-xs text-gray-300 mt-2 leading-normal">
+                                    Năng lượng tiên phong, gánh vác trách nhiệm, độc lập và quyết đoán.
+                                </p>
+                            </div>
+                            <div class="mt-4 pt-2 border-t border-mystic-700/50">
+                                <span class="text-[11px] text-amber-300/80 font-medium block">Từ khóa:</span>
+                                <div id="shat-tags" class="flex flex-wrap gap-1 mt-1">
+                                    <!-- JS tags -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Phá Quân Card -->
+                        <div class="mystic-card p-4 rounded-xl border-t-2 border-t-pha flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs font-bold uppercase tracking-wider text-cyan-400">Khai Phá / Tiên Phong</span>
+                                    <span id="pha-house-name" class="px-2 py-0.5 rounded bg-cyan-950/80 text-cyan-200 text-xs font-semibold">Cung Quan Lộc</span>
+                                </div>
+                                <h3 class="text-lg font-bold text-white font-serif flex items-center gap-2">
+                                    <i class="fa-solid fa-bolt text-pha text-sm"></i> Phá Quân
+                                </h3>
+                                <p id="pha-role-text" class="text-xs text-gray-300 mt-2 leading-normal">
+                                    Sẵn sàng đập bỏ mô hình cũ, kiến tạo cái mới, mạo hiểm và bứt phá.
+                                </p>
+                            </div>
+                            <div class="mt-4 pt-2 border-t border-mystic-700/50">
+                                <span class="text-[11px] text-amber-300/80 font-medium block">Từ khóa:</span>
+                                <div id="pha-tags" class="flex flex-wrap gap-1 mt-1">
+                                    <!-- JS tags -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tham Lang Card -->
+                        <div class="mystic-card p-4 rounded-xl border-t-2 border-t-tham flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs font-bold uppercase tracking-wider text-purple-400">Giao Thiệp / Dục Vọng</span>
+                                    <span id="tham-house-name" class="px-2 py-0.5 rounded bg-purple-950/80 text-purple-200 text-xs font-semibold">Cung Tài Bạch</span>
+                                </div>
+                                <h3 class="text-lg font-bold text-white font-serif flex items-center gap-2">
+                                    <i class="fa-solid fa-gem text-tham text-sm"></i> Tham Lang
+                                </h3>
+                                <p id="tham-role-text" class="text-xs text-gray-300 mt-2 leading-normal">
+                                    Nhạy bén cơ hội, tài ngoại giao, đa năng, khéo léo biến tài nguyên thành thành quả.
+                                </p>
+                            </div>
+                            <div class="mt-4 pt-2 border-t border-mystic-700/50">
+                                <span class="text-[11px] text-amber-300/80 font-medium block">Từ khóa:</span>
+                                <div id="tham-tags" class="flex flex-wrap gap-1 mt-1">
+                                    <!-- JS tags -->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Practical Advice & Career Guidance Card -->
+                    <div class="mystic-card p-5 rounded-2xl bg-gradient-to-r from-mystic-800/90 to-mystic-900/90">
+                        <h3 class="text-base font-serif font-bold text-amber-300 flex items-center gap-2 mb-3">
+                            <i class="fa-solid fa-compass-drafting text-amber-400"></i> Lời Khuyên Định Hướng & Định Hướng Lĩnh Vực
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-gray-300">
+                            <div class="bg-mystic-900/60 p-3.5 rounded-xl border border-mystic-700/40">
+                                <div class="text-amber-200 font-semibold mb-1 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-briefcase text-amber-400"></i> Ngành Nghề Phù Hợp:
+                                </div>
+                                <p id="career-advice-text" class="leading-relaxed text-gray-300">
+                                    Quản lý, quân sự, kỹ thuật, kinh doanh mạo hiểm...
+                                </p>
+                            </div>
+                            <div class="bg-mystic-900/60 p-3.5 rounded-xl border border-mystic-700/40">
+                                <div class="text-amber-200 font-semibold mb-1 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-shield-halved text-amber-400"></i> Lời Khuyên Hành Động:
+                                </div>
+                                <p id="action-advice-text" class="leading-relaxed text-gray-300">
+                                    Cần rèn luyện tính kiên nhẫn, tránh vội vàng đầu tư...
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: MATRIX (MA TRẬN 12 CUNG) -->
+        <section id="tab-matrix" class="space-y-6 hidden">
+            <div class="mystic-card p-6 rounded-2xl">
+                <div class="max-w-3xl mb-6">
+                    <h2 class="text-2xl font-serif font-bold text-amber-300">Ma Trận Vị Trí Sát Phá Tham Trên 12 Cung Chức Năng</h2>
+                    <p class="text-sm text-gray-300 mt-2">
+                        Do nguyên lý Tam Hợp cố định trong Tử Vi Đẩu Số, bộ ba Sát Phá Tham luôn phân bổ đồng thời vào 3 cung thuộc cùng một nhóm Tam Hợp. Click vào bất kỳ cấu trúc nào dưới đây để xem trực quan.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="matrix-cards-container">
+                    <!-- JS generated matrix list -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: KNOWLEDGE (ĐẶC TÍNH 3 SAO) -->
+        <section id="tab-knowledge" class="space-y-6 hidden">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Thất Sát Card Detail -->
+                <div class="mystic-card p-6 rounded-2xl border-t-4 border-shat space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-red-950/80 border border-shat/40 flex items-center justify-center text-shat text-2xl">
+                            <i class="fa-solid fa-sword"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-serif font-bold text-white">Thất Sát</h3>
+                            <span class="text-xs text-red-300 font-medium">Nam Tẩu Xướng Tinh • Ngũ Hành: Kim</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-300 leading-relaxed">
+                        Thất Sát tượng trưng cho thanh kiếm, sự quyết đoán, độc lập, sẵn sàng xông pha gánh vác trọng trách. Là hình mẫu của tướng quân trận mạc, không sợ gian khổ, chịu được áp lực cực cao.
+                    </p>
+                    <div class="space-y-2 text-xs">
+                        <div class="bg-mystic-900/80 p-2.5 rounded-lg">
+                            <span class="font-bold text-red-300">Điểm mạnh:</span> Quyết liệt, dám làm dám chịu, năng lực điều hành xuất sắc, bản lĩnh vượt khó.
+                        </div>
+                        <div class="bg-mystic-900/80 p-2.5 rounded-lg">
+                            <span class="font-bold text-amber-300">Nhược điểm:</span> Đôi khi độc đoán, cứng rắn quá hóa gãy, ít lắng nghe ý kiến người khác.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phá Quân Card Detail -->
+                <div class="mystic-card p-6 rounded-2xl border-t-4 border-pha space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-950/80 border border-pha/40 flex items-center justify-center text-pha text-2xl">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-serif font-bold text-white">Phá Quân</h3>
+                            <span class="text-xs text-cyan-300 font-medium">Bắc Tẩu Tinh • Ngũ Hành: Thủy (Hao Tinh)</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-300 leading-relaxed">
+                        Phá Quân tượng trưng cho ngọn sóng dữ, sự khai phá, sáng tạo đột phá, đập bỏ cái cũ để xây cái mới. Thích hợp với việc làm mới hệ thống, khởi nghiệp hoặc cách tân mô hình kinh doanh.
+                    </p>
+                    <div class="space-y-2 text-xs">
+                        <div class="bg-mystic-900/80 p-2.5 rounded-lg">
+                            <span class="font-bold text-cyan-300">Điểm mạnh:</span> Sáng tạo không giới hạn, tinh thần mạo hiểm cao, dũng cảm đối mặt biến động.
+                        </div>
+                        <div class="bg-mystic-900/80 p-2.5 rounded-lg">
+                            <span class="font-bold text-amber-300">Nhược điểm:</span> Dễ tiêu hao tài lực, hay thay đổi thất thường, tính tốn hao "Hao Tinh".
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tham Lang Card Detail -->
+                <div class="mystic-card p-6 rounded-2xl border-t-4 border-tham space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-purple-950/80 border border-tham/40 flex items-center justify-center text-tham text-2xl">
+                            <i class="fa-solid fa-gem"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-serif font-bold text-white">Tham Lang</h3>
+                            <span class="text-xs text-purple-300 font-medium">Bắc Tẩu Tinh • Ngũ Hành: Mộc/Thủy (Đào Hoa / Dục)</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-300 leading-relaxed">
+                        Tham Lang tượng trưng cho dục vọng, cơ hội, nghệ thuật và kỹ năng giao thiệp xã hội. Rất đa tài, nhạy bén với cơ hội tài chính và có thiên hướng cả về vật chất lẫn huyền học tâm linh.
+                    </p>
+                    <div class="space-y-2 text-xs">
+                        <div class="bg-mystic-900/80 p-2.5 rounded-lg">
+                            <span class="font-bold text-purple-300">Điểm mạnh:</span> Linh hoạt, giao thiệp cực tốt, tài ứng biến cao, nắm bắt thời cơ nhanh.
+                        </div>
+                        <div class="bg-mystic-900/80 p-2.5 rounded-lg">
+                            <span class="font-bold text-amber-300">Nhược điểm:</span> Dễ đứng núi này trông núi nọ, ham muốn nhiều dẫn đến phân tán nguồn lực.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Data structure for the 12 Functional Houses in Zi Wei Dou Shu order
+        const HOUSES = [
+            { id: 0, name: "Mệnh", short: "Mệnh", pos: "top-left" },
+            { id: 1, name: "Phụ Mẫu", short: "Phụ", pos: "top-mid1" },
+            { id: 2, name: "Phúc Đức", short: "Phúc", pos: "top-mid2" },
+            { id: 3, name: "Điền Trạch", short: "Điền", pos: "top-right" },
+            { id: 4, name: "Quan Lộc", short: "Quan", pos: "right-mid1" },
+            { id: 5, name: "Nô Bộc", short: "Nô", pos: "right-mid2" },
+            { id: 6, name: "Thiên Di", short: "Di", pos: "bottom-right" },
+            { id: 7, name: "Tật Ách", short: "Tật", pos: "bottom-mid2" },
+            { id: 8, name: "Tài Bạch", short: "Tài", pos: "bottom-mid1" },
+            { id: 9, name: "Tử Tức", short: "Tử", pos: "bottom-left" },
+            { id: 10, name: "Phu Thê", short: "Phê", pos: "left-mid2" },
+            { id: 11, name: "Huynh Đệ", short: "Huynh", pos: "left-mid1" }
+        ];
+
+        // Grid positions in 4x4 matrix representation (0-indexed [row, col])
+        const GRID_LAYOUT = [
+            { houseIdx: 0, r: 0, c: 0 },  // Mệnh
+            { houseIdx: 1, r: 0, c: 1 },  // Phụ Mẫu
+            { houseIdx: 2, r: 0, c: 2 },  // Phúc Đức
+            { houseIdx: 3, r: 0, c: 3 },  // Điền Trạch
+            { houseIdx: 4, r: 1, c: 3 },  // Quan Lộc
+            { houseIdx: 5, r: 2, c: 3 },  // Nô Bộc
+            { houseIdx: 6, r: 3, c: 3 },  // Thiên Di
+            { houseIdx: 7, r: 3, c: 2 },  // Tật Ách
+            { houseIdx: 8, r: 3, c: 1 },  // Tài Bạch
+            { houseIdx: 9, r: 3, c: 0 },  // Tử Tức
+            { houseIdx: 10, r: 2, c: 0 }, // Phu Thê
+            { houseIdx: 11, r: 1, c: 0 }  // Huynh Đệ
+        ];
+
+        // Group definitions (4 Tam Hợp Groups)
+        const TRIAD_GROUPS = [
+            {
+                id: "menh-tai-quan",
+                name: "Tam Hợp Mệnh - Tài - Quan",
+                type: "Cấu Trúc Nòng Cốt Bản Thân",
+                houses: [0, 8, 4], // Mệnh (0), Tài Bạch (8), Quan Lộc (4)
+                description: "Đây là cách trí trực tiếp ảnh hưởng đến nhân cách, sự nghiệp và tài chính chính yếu của bản mệnh. Mang tính chất chủ động, ganh đua, hành động quyết liệt và thích bứt phá trong cuộc sống."
+            },
+            {
+                id: "phu-tu-no",
+                name: "Tam Hợp Phụ - Tử - Nô",
+                type: "Cấu Trúc Mối Quan Hệ Xã Hội & Đời Trước/Sau",
+                houses: [1, 9, 5], // Phụ Mẫu (1), Tử Tức (9), Nô Bộc (5)
+                description: "Sát Phá Tham nằm ở vòng Phụ - Tử - Nô thể hiện các mối quan hệ xã hội, cấp dưới, bạn bè hoặc gia đạo có tính chất biến động, mạnh mẽ, năng động hoặc gặp nhiều thử thách đan xen."
+            },
+            {
+                id: "phuc-di-phoi",
+                name: "Tam Hợp Phúc - Di - Phối",
+                type: "Cấu Trúc Tinh Thần, Môi Trường & Hôn Nhân",
+                houses: [2, 6, 10], // Phúc Đức (2), Thiên Di (6), Phu Thê (10)
+                description: "Ảnh hưởng lớn đến tư tưởng dòng họ, xu hướng ra ngoài xông pha (Thiên Di) và đường phối ngẫu. Mệnh thường thuộc nhóm Cơ Nguyệt Đồng Lương hoặc Cự Nhật chiếu sang."
+            },
+            {
+                id: "huynh-tat-dien",
+                name: "Tam Hợp Huynh - Tật - Điền",
+                type: "Cấu Trúc Thân Thể, Điền Sản & Anh Em",
+                houses: [11, 7, 3], // Huynh Đệ (11), Tật Ách (7), Điền Trạch (3)
+                description: "Tập trung vào khía cạnh bất động sản, tích lũy tài sản, sức khỏe thể chất và tình cảm anh em. Cho thấy tiềm lực ngầm và khả năng kiến tạo tài sản qua mạo hiểm."
+            }
+        ];
+
+        // Dynamic scenarios based on where Thất Sát resides
+        // Note: Phá Quân = (ShatIdx + 4) % 12, Tham Lang = (ShatIdx + 8) % 12
+        const SCENARIOS = {
+            0: { // Thất Sát at Mệnh (0) -> Phá Quân at Quan Lộc (4) -> Tham Lang at Tài Bạch (8)
+                shatRole: "Mệnh Thất Sát: Bạn là người độc lập, quyết đoán, mang tác phong lãnh đạo, chịu áp lực tốt, dám nghĩ dám làm.",
+                phaRole: "Quan Phá Quân: Sự nghiệp mang tính khai phá, thích làm mới mô hình, sẵn sàng đón nhận thử thách lớn.",
+                thamRole: "Tài Tham Lang: Kiếm tiền bằng tài giao tiếp, nhạy bén cơ hội, đa dạng nguồn thu, giỏi thương lượng.",
+                shatTags: ["Mệnh Chủ", "Quyết Đoán", "Bản Lĩnh"],
+                phaTags: ["Đổi Mới", "Tiên Phong", "Sáng Tạo"],
+                thamTags: ["Ngoại Giao", "Nhạy Bến", "Đa Tài"],
+                career: "Quản lý doanh nghiệp, lực lượng vũ trang, kỹ thuật công nghiệp, khởi nghiệp, đầu tư thương mại.",
+                action: "Nên phát huy sự kiên trì, kiểm soát cái tôi nóng nảy để giữ vững thành quả bền vững."
+            },
+            4: { // Thất Sát at Quan Lộc (4) -> Phá Quân at Tài Bạch (8) -> Tham Lang at Mệnh (0)
+                shatRole: "Quan Thất Sát: Trong công việc dứt khoát, muốn nắm quyền điều hành, có uy quyền, chịu khó dấn thân.",
+                phaRole: "Tài Phá Quân: Tài chính biến động lớn, thích đầu tư quy mô, tiền vào nhanh ra nhanh rồi mới tụ.",
+                thamRole: "Mệnh Tham Lang: Tính cách linh hoạt, quyến rũ, khéo léo trong ứng xử, nhạy bén thời thế và đa nghệ.",
+                shatTags: ["Uy Quyền", "Quyết Liệt", "Thực Lực"],
+                phaTags: ["Đầu Tư", "Tái Thiết", "Mạo Hiểm"],
+                thamTags: ["Khéo Ứng Xử", "Duyên Dáng", "Cơ Hội"],
+                career: "Nghệ thuật, truyền thông, kinh doanh dịch vụ, quản lý nhân sự, tư vấn tài chính.",
+                action: "Cần kỷ luật tài chính cá nhân, tránh đầu tư dàn trải khi chưa nghiên cứu kỹ."
+            },
+            8: { // Thất Sát at Tài Bạch (8) -> Phá Quân at Mệnh (0) -> Tham Lang at Quan Lộc (4)
+                shatRole: "Tài Thất Sát: Cách kiếm tiền quyết liệt, dứt khoát, thích đánh nhanh thắng nhanh, chấp nhận rủi ro lớn.",
+                phaRole: "Mệnh Phá Quân: Cá tính mạnh mẽ, không thích gò bó, cá tính độc đáo, hay làm mới bản thân.",
+                thamRole: "Quan Tham Lang: Công việc cần năng lực giao tiếp, mở rộng mạng lưới quan hệ, làm việc trong môi trường năng động.",
+                shatTags: ["Quyết Đoán", "Đánh Nhanh", "Táo Bạo"],
+                phaTags: ["Cá Tính", "Tự Do", "Bứt Phá"],
+                thamTags: ["Kết Nối", "Nhiều Mối", "Linh Hoạt"],
+                career: "Kinh doanh tự do, phát triển thị trường mới, giải trí, xuất nhập khẩu, mạo hiểm tài chính.",
+                action: "Cần xây dựng kế hoạch quản trị rủi ro kĩ càng, kiềm chế tính bồng bột."
+            },
+
+            // Phụ - Tử - Nô scenarios
+            1: { // Thất Sát at Phụ Mẫu (1)
+                shatRole: "Phụ Mẫu Thất Sát: Cha mẹ nghiêm khắc, tính cách mạnh mẽ, có kỷ luật cao hoặc công tác ngành vũ trang/kỹ thuật.",
+                phaRole: "Nô Bộc Phá Quân: Bạn bè, cấp dưới năng động, hay thay đổi, có sự cạnh tranh hoặc tính sàng lọc cao.",
+                thamRole: "Tử Tức Tham Lang: Con cái thông minh, đa tài, khéo léo, thích nghệ thuật hoặc giao tiếp tốt.",
+                shatTags: ["Nghiêm Khắc", "Kỷ Luật", "Độc Lập"],
+                phaTags: ["Sàng Lọc", "Năng Động", "Biến Động"],
+                thamTags: ["Thông Minh", "Nghệ Thuật", "Khéo Léo"],
+                career: "Hợp làm việc trong các tổ chức có tính kỷ luật cao, giáo dục, tư vấn gia đình.",
+                action: "Nên lắng nghe tôn trọng ý kiến cha mẹ và định hướng con cái đa dạng."
+            },
+            5: { // Thất Sát at Nô Bộc (5)
+                shatRole: "Nô Bộc Thất Sát: Bạn bè, đối tác có uy quyền, tính cách thẳng thắn, quyết đoán nhưng hơi áp đặt.",
+                phaRole: "Tử Tức Phá Quân: Con cái hiếu động, cá tính mạnh, thích tự lập sớm và có hướng đi riêng.",
+                thamRole: "Phụ Mẫu Tham Lang: Cha mẹ khéo léo, có tài giao thiệp, quan tâm đến đời sống tinh thần.",
+                shatTags: ["Bạn Uy Quyền", "Trực Tính", "Năng Nổ"],
+                phaTags: ["Tự Lập", "Cá Tính", "Độc Lập"],
+                thamTags: ["Tinh Tế", "Ngoại Giao", "Rộng Lượng"],
+                career: "Quản lý nhân sự, hợp tác kinh doanh có hợp đồng rõ ràng, làm việc cộng đồng.",
+                action: "Cần chọn lọc bạn bè uy tín, tránh tin tưởng quá mức vào cam kết miệng."
+            },
+            9: { // Thất Sát at Tử Tức (9)
+                shatRole: "Tử Tức Thất Sát: Con cái cá tính dũng cảm, kiên cường, thích làm thủ lĩnh, cần sự định hướng từ nhỏ.",
+                phaRole: "Phụ Mẫu Phá Quân: Cha mẹ hay thay đổi môi trường sống hoặc có tư tưởng tân tiến, đổi mới.",
+                thamRole: "Nô Bộc Tham Lang: Mạng lưới bạn bè rộng rãi, nhiều tầng lớp, giỏi giao lưu hỗ trợ công việc.",
+                shatTags: ["Con Dũng Cảm", "Lãnh Đạo", "Kiên Cường"],
+                phaTags: ["Tân Tiến", "Đổi Mới", "Mở Đường"],
+                thamTags: ["Bạn Rộng Rãi", "Hỗ Trợ", "Giao Tiếp"],
+                career: "Giáo dục tài năng trẻ, xây dựng cộng đồng, phát triển hệ thống đại lý.",
+                action: "Dành thời gian đồng hành cùng con cái, kiên nhẫn chia sẻ."
+            },
+
+            // Phúc - Di - Phối scenarios
+            2: { // Thất Sát at Phúc Đức (2) -> Phá Quân at Thiên Di (6) -> Tham Lang at Phu Thê (10)
+                shatRole: "Phúc Đức Thất Sát: Dòng họ có nhiều người thành đạt về quân sự, kinh doanh, tư tưởng ông bà kiên cường.",
+                phaRole: "Thiên Di Phá Quân: Ra ngoài hay xông pha, môi trường bên ngoài nhiều biến động, đòi hỏi khả năng thích nghi và khai phá cao.",
+                thamRole: "Phu Thê Tham Lang: Người phối ngẫu khéo léo, duyên dáng, lãng mạn, tài hoa và giỏi giao thiệp.",
+                shatTags: ["Dòng Họ Cương Trực", "Gia Phong", "Bản Lĩnh"],
+                phaTags: ["Xông Pha", "Khai Phá", "Biến Động"],
+                thamTags: ["Duyên Dáng", "Khéo Léo", "Lãng Mạn"],
+                career: "Ngoại giao, đi công tác xa, thương mại quốc tế, du lịch, truyền thông.",
+                action: "Học cách nhường nhịn trong đời sống vợ chồng và giữ tâm thế vững vàng khi xông pha ra bên ngoài."
+            },
+            6: { // Thất Sát at Thiên Di (6)
+                shatRole: "Thiên Di Thất Sát: Ra ngoài thể hiện sự uy nghi, dám gánh vác, thích hợp phát triển ở môi trường mới.",
+                phaRole: "Phu Thê Phá Quân: Hôn nhân trải qua thử thách mới vững bền, bạn đời thích tự do sáng tạo.",
+                thamRole: "Phúc Đức Tham Lang: Tư tưởng tâm linh, yêu thích văn hóa nghệ thuật, đời sống tinh thần phong phú.",
+                shatTags: ["Xông Pha", "Uy Nghi", "Tự Lập Xa Nhà"],
+                phaTags: ["Thử Thách", "Sáng Tạo", "Vững Vàng"],
+                thamTags: ["Tâm Linh", "Nghệ Thuật", "Đa Dạng"],
+                career: "Làm việc ở thị trường nước ngoài, điều hành chi nhánh, phát triển dự án xa.",
+                action: "Tự tin xông pha ra bên ngoài nhưng nhớ giữ mối liên kết với gia đình."
+            },
+
+            10: { // Thất Sát at Phu Thê (10)
+                shatRole: "Phu Thê Thất Sát: Người phối ngẫu quyết đoán, gánh vác gia đình, có năng lực quản lý tốt.",
+                phaRole: "Phúc Đức Phá Quân: Dòng họ có sự biến động, nhiều người đi xa lập nghiệp.",
+                thamRole: "Thiên Di Tham Lang: Khi ra ngoài rất thu hút, được nhiều người yêu mến, giỏi nắm bắt xu hướng.",
+                shatTags: ["Bạn Đời Độc Lập", "Gánh Vác", "Cương Trực"],
+                phaTags: ["Xa Lập Nghiệp", "Biến Động", "Đổi Mới"],
+                thamTags: ["Thu Hút", "Nhiều Mối Duyên", "Xu Hướng"],
+                career: "Hợp tác vợ chồng trong kinh doanh, ngoại giao, truyền thông.",
+                action: "Tôn trọng không gian riêng của nửa kia, phân công trách nhiệm rõ ràng."
+            },
+
+            // Huynh - Tật - Điền scenarios
+            3: { // Thất Sát at Điền Trạch (3)
+                shatRole: "Điền Trạch Thất Sát: Đất đai nhà cửa đến từ sự tự lực gánh vác, có tài sản lớn nếu kiên trì.",
+                phaRole: "Tật Ách Phá Quân: Chú ý sức khỏe hệ tiêu hóa, xương khớp hoặc hao tốn khi điều trị bệnh.",
+                thamRole: "Huynh Đệ Tham Lang: Anh em trong nhà tài hoa, linh hoạt, nhiều mối quan hệ xã hội.",
+                shatTags: ["Tự Lực Mua Nhà", "Điền Sản Bền", "Nỗ Lực"],
+                phaTags: ["Sức Khỏe Biến Động", "Chú Ý Điều Trị"],
+                thamTags: ["Anh Em Đa Tài", "Vui Vẻ", "Khéo Léo"],
+                career: "Bất động sản, xây dựng, kiến trúc, quy hoạch không gian.",
+                action: "Đầu tư bất động sản chắc chắn, rèn luyện thể thao đều đặn."
+            },
+            7: { // Thất Sát at Tật Ách (7)
+                shatRole: "Tật Ách Thất Sát: Sức khỏe tốt, tính cách kiên cường vượt qua bệnh tật, cần chú ý phẫu thuật nhẹ.",
+                phaRole: "Huynh Đệ Phá Quân: Tình cảm anh em có lúc thăng trầm, mỗi người một cá tính riêng biệt.",
+                thamRole: "Điền Trạch Tham Lang: Đất đai trang trí đẹp mắt, có duyên sở hữu nhà ở nơi sầm uất.",
+                shatTags: ["Sức Đề Kháng Tốt", "Bản Lĩnh Bệnh Tật"],
+                phaTags: ["Anh Em Độc Lập", "Cá Tính Trái Ngược"],
+                thamTags: ["Nhà Cửa Đẹp", "Nơi Sầm Uất", "Thẩm Mỹ"],
+                career: "Y khoa, phẫu thuật, thẩm mỹ, thiết kế nội thất nhà ở.",
+                action: "Chăm sóc bản thân kỹ lưỡng, giữ gìn hòa khí anh em."
+            },
+            11: { // Thất Sát at Huynh Đệ (11)
+                shatRole: "Huynh Đệ Thất Sát: Anh em trong nhà có người làm quản lý hoặc ngành lực lượng, thẳng thắn.",
+                phaRole: "Điền Trạch Phá Quân: Nhà cửa dễ sửa sang, cải tạo nhiều lần hoặc thay đổi nơi ở.",
+                thamRole: "Tật Ách Tham Lang: Chú ý chăm sóc sức khỏe tinh thần, tránh thức khuya hay sinh hoạt thất thường.",
+                shatTags: ["Anh Em Uy Quyền", "Thẳng Thắn", "Giúp Đỡ"],
+                phaTags: ["Cải Tạo Nhà", "Sửa Sang", "Đổi Mới"],
+                thamTags: ["Thói Quên Sống", "Tâm Lý", "Dưỡng Sinh"],
+                career: "Kinh doanh cùng người thân, sửa chữa cải tạo bất động sản.",
+                action: "Chú trọng cân bằng giữa làm việc và nghỉ ngơi hợp lý."
+            }
+        };
+
+        let currentShatIdx = 0; // Default Mệnh
+
+        window.addEventListener('DOMContentLoaded', () => {
+            populateSelectOptions();
+            renderChartGrid();
+            updateAllViews();
+        });
+
+        // Switch Tabs Logic
+        function switchTab(tabName) {
+            const tabs = ['visualizer', 'matrix', 'knowledge'];
+            tabs.forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                const btn = document.getElementById(`btn-tab-${t}`);
+                if (t === tabName) {
+                    el.classList.remove('hidden');
+                    btn.classList.add('bg-mystic-600', 'text-amber-300');
+                    btn.classList.remove('text-gray-300');
+                } else {
+                    el.classList.add('hidden');
+                    btn.classList.remove('bg-mystic-600', 'text-amber-300');
+                    btn.classList.add('text-gray-300');
+                }
+            });
+
+            if (tabName === 'matrix') {
+                renderMatrixCards();
+            }
+        }
+
+        // Populate Select Box
+        function populateSelectOptions() {
+            const select = document.getElementById('select-shat-position');
+            select.innerHTML = '';
+            HOUSES.forEach(h => {
+                const opt = document.createElement('option');
+                opt.value = h.id;
+                opt.textContent = `Thất Sát tại Cung ${h.name}`;
+                select.appendChild(opt);
+            });
+        }
+
+        // Handle Select change
+        function onSelectShatPosition(val) {
+            currentShatIdx = parseInt(val, 10);
+            updateAllViews();
+        }
+
+        // Handle Presets
+        function setPreset(triadGroupIdx) {
+            const group = TRIAD_GROUPS[triadGroupIdx];
+            currentShatIdx = group.houses[0]; // Set Shat to first house in group
+            document.getElementById('select-shat-position').value = currentShatIdx;
+            updateAllViews();
+        }
+
+        // Calculate positions
+        function getStarIndices(shatIdx) {
+            const phaIdx = (shatIdx + 4) % 12;
+            const thamIdx = (shatIdx + 8) % 12;
+            return { shatIdx, phaIdx, thamIdx };
+        }
+
+        // Identify active Triad Group
+        function getActiveTriadGroup(shatIdx) {
+            return TRIAD_GROUPS.find(g => g.houses.includes(shatIdx));
+        }
+
+        // Render standard 4x4 perimeter grid
+        function renderChartGrid() {
+            const gridEl = document.getElementById('chart-grid');
+            gridEl.innerHTML = '';
+
+            // Create 16 cells (4x4)
+            for (let r = 0; r < 4; r++) {
+                for (let c = 0; c < 4; c++) {
+                    const isCenter = (r === 1 || r === 2) && (c === 1 || c === 2);
+
+                    if (isCenter) {
+                        // Render central element once for (1,1)
+                        if (r === 1 && c === 1) {
+                            const centerCell = document.createElement('div');
+                            centerCell.className = "col-span-2 row-span-2 bg-mystic-900/90 border border-mystic-700/60 rounded-xl flex flex-col items-center justify-center p-2 text-center shadow-inner z-20";
+                            centerCell.innerHTML = `
+                                <div class="text-2xl font-serif text-amber-400 font-bold mb-1">☯</div>
+                                <div id="center-title" class="text-xs font-serif font-bold text-amber-200">Tam Hợp Sát Phá Tham</div>
+                                <div id="center-subtitle" class="text-[10px] text-gray-400 mt-1">Sát (Kim) • Phá (Thủy) • Tham (Thủy/Mộc)</div>
+                            `;
+                            gridEl.appendChild(centerCell);
+                        }
+                        continue;
+                    }
+
+                    // Find corresponding house
+                    const item = GRID_LAYOUT.find(g => g.r === r && g.c === c);
+                    if (!item) continue;
+
+                    const house = HOUSES[item.houseIdx];
+                    const cell = document.createElement('div');
+                    cell.id = `house-cell-${house.id}`;
+                    cell.setAttribute('onclick', `onHouseClick(${house.id})`);
+                    cell.className = "mystic-card rounded-xl p-1.5 flex flex-col justify-between items-center border border-mystic-700/50 hover:border-amber-400/60 cursor-pointer transition relative overflow-hidden text-center";
+                    cell.style.gridRowStart = r + 1;
+                    cell.style.gridColumnStart = c + 1;
+
+                    cell.innerHTML = `
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">${house.name}</span>
+                        <div id="stars-badge-container-${house.id}" class="my-auto flex flex-col gap-1 items-center w-full min-h-[32px] justify-center">
+                            <!-- Stars badges inserted dynamically -->
+                        </div>
+                        <span class="text-[9px] text-mystic-500 font-mono">Cung #${house.id + 1}</span>
+                    `;
+                    gridEl.appendChild(cell);
+                }
+            }
+        }
+
+        // Click house to jump
+        function onHouseClick(houseIdx) {
+            currentShatIdx = houseIdx;
+            document.getElementById('select-shat-position').value = currentShatIdx;
+            updateAllViews();
+        }
+
+        // Update display state
+        function updateAllViews() {
+            const { shatIdx, phaIdx, thamIdx } = getStarIndices(currentShatIdx);
+            const activeGroup = getActiveTriadGroup(shatIdx);
+            const scenario = SCENARIOS[shatIdx] || {
+                shatRole: `Thất Sát tại cung ${HOUSES[shatIdx].name}: Thể hiện tính quyết đoán và tự lực gánh vác ở vị trí này.`,
+                phaRole: `Phá Quân tại cung ${HOUSES[phaIdx].name}: Khai phá và mang tới những thay đổi đột phá.`,
+                thamRole: `Tham Lang tại cung ${HOUSES[thamIdx].name}: Khéo léo, nắm bắt cơ hội và tạo kết nối rộng mở.`,
+                shatTags: ["Cương Trực", "Lãnh Đạo"],
+                phaTags: ["Đổi Mới", "Khai Phá"],
+                thamTags: ["Nhạy Bến", "Ngoại Giao"],
+                career: "Quản lý, đầu tư, tư vấn chiến lược, phát triển thị trường.",
+                action: "Phát huy sở trường và kiểm soát cảm xúc bộc phát."
+            };
+
+            // 1. Update Grid Badges
+            HOUSES.forEach(h => {
+                const badgeContainer = document.getElementById(`stars-badge-container-${h.id}`);
+                const cell = document.getElementById(`house-cell-${h.id}`);
+                if (!badgeContainer || !cell) return;
+
+                badgeContainer.innerHTML = '';
+                cell.classList.remove('border-amber-400', 'bg-mystic-700/80', 'star-glow-shat', 'star-glow-pha', 'star-glow-tham');
+
+                if (h.id === shatIdx) {
+                    badgeContainer.innerHTML += `<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-red-950 text-red-200 border border-red-500/50 w-full truncate">Thất Sát</span>`;
+                    cell.classList.add('border-shat', 'star-glow-shat');
+                }
+                if (h.id === phaIdx) {
+                    badgeContainer.innerHTML += `<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-cyan-950 text-cyan-200 border border-cyan-500/50 w-full truncate">Phá Quân</span>`;
+                    cell.classList.add('border-pha', 'star-glow-pha');
+                }
+                if (h.id === thamIdx) {
+                    badgeContainer.innerHTML += `<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-purple-950 text-purple-200 border border-purple-500/50 w-full truncate">Tham Lang</span>`;
+                    cell.classList.add('border-tham', 'star-glow-tham');
+                }
+            });
+
+            // 2. Draw Triad SVG Polygon
+            drawTriadPolygon(shatIdx, phaIdx, thamIdx);
+
+            // 3. Update Center Text
+            document.getElementById('center-title').textContent = activeGroup.name;
+            document.getElementById('tamhap-group-badge').textContent = activeGroup.type;
+
+            // 4. Update Header Details
+            document.getElementById('detail-group-title').textContent = `${activeGroup.name}`;
+            document.getElementById('detail-triad-type').textContent = activeGroup.type;
+            document.getElementById('detail-group-desc').textContent = activeGroup.description;
+
+            // 5. Update Star Cards
+            document.getElementById('shat-house-name').textContent = `Cung ${HOUSES[shatIdx].name}`;
+            document.getElementById('shat-role-text').textContent = scenario.shatRole;
+            renderTags('shat-tags', scenario.shatTags, 'bg-red-950/80 text-red-300 border-red-800');
+
+            document.getElementById('pha-house-name').textContent = `Cung ${HOUSES[phaIdx].name}`;
+            document.getElementById('pha-role-text').textContent = scenario.phaRole;
+            renderTags('pha-tags', scenario.phaTags, 'bg-cyan-950/80 text-cyan-300 border-cyan-800');
+
+            document.getElementById('tham-house-name').textContent = `Cung ${HOUSES[thamIdx].name}`;
+            document.getElementById('tham-role-text').textContent = scenario.thamRole;
+            renderTags('tham-tags', scenario.thamTags, 'bg-purple-950/80 text-purple-300 border-purple-800');
+
+            // 6. Update Advice Text
+            document.getElementById('career-advice-text').textContent = scenario.career;
+            document.getElementById('action-advice-text').textContent = scenario.action;
+        }
+
+        // Draw connecting SVG Polygon
+        function drawTriadPolygon(sIdx, pIdx, tIdx) {
+            const svgPolygon = document.getElementById('tamhap-polygon');
+            const gridEl = document.getElementById('chart-grid');
+            if (!svgPolygon || !gridEl) return;
+
+            const rect = gridEl.getBoundingClientRect();
+            if (rect.width === 0) return; // Not visible yet
+
+            function getCellCenter(idx) {
+                const cell = document.getElementById(`house-cell-${idx}`);
+                if (!cell) return { x: 0, y: 0 };
+                const cRect = cell.getBoundingClientRect();
+                return {
+                    x: (cRect.left + cRect.width / 2) - rect.left,
+                    y: (cRect.top + cRect.height / 2) - rect.top
+                };
+            }
+
+            const p1 = getCellCenter(sIdx);
+            const p2 = getCellCenter(pIdx);
+            const p3 = getCellCenter(tIdx);
+
+            svgPolygon.setAttribute('points', `${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y}`);
+        }
+
+        // Window resize event to adjust SVG lines
+        window.addEventListener('resize', () => {
+            const { shatIdx, phaIdx, thamIdx } = getStarIndices(currentShatIdx);
+            drawTriadPolygon(shatIdx, phaIdx, thamIdx);
+        });
+
+        // Helper to render tag pill elements
+        function renderTags(elementId, tagsArray, colorClasses) {
+            const container = document.getElementById(elementId);
+            container.innerHTML = '';
+            tagsArray.forEach(tag => {
+                const span = document.createElement('span');
+                span.className = `px-2 py-0.5 rounded text-[10px] font-semibold border ${colorClasses}`;
+                span.textContent = tag;
+                container.appendChild(span);
+            });
+        }
+
+        // Render Matrix Tab Cards
+        function renderMatrixCards() {
+            const container = document.getElementById('matrix-cards-container');
+            if (!container || container.children.length > 0) return; // Avoid re-render if populated
+
+            TRIAD_GROUPS.forEach(group => {
+                group.houses.forEach(shatPos => {
+                    const { shatIdx, phaIdx, thamIdx } = getStarIndices(shatPos);
+                    const card = document.createElement('div');
+                    card.className = "mystic-card p-4 rounded-xl hover:border-amber-400/60 cursor-pointer transition flex flex-col justify-between";
+                    card.onclick = () => {
+                        currentShatIdx = shatIdx;
+                        document.getElementById('select-shat-position').value = currentShatIdx;
+                        switchTab('visualizer');
+                    };
+
+                    card.innerHTML = `
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-bold text-amber-300 font-serif">${group.name}</span>
+                                <span class="text-[10px] bg-mystic-800 text-gray-300 px-2 py-0.5 rounded">Thất Sát ở ${HOUSES[shatIdx].name}</span>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-center text-xs my-3">
+                                <div class="bg-red-950/60 p-2 rounded border border-red-900/50">
+                                    <span class="block text-[10px] text-red-300">Thất Sát</span>
+                                    <strong class="text-white text-xs">${HOUSES[shatIdx].name}</strong>
+                                </div>
+                                <div class="bg-cyan-950/60 p-2 rounded border border-cyan-900/50">
+                                    <span class="block text-[10px] text-cyan-300">Phá Quân</span>
+                                    <strong class="text-white text-xs">${HOUSES[phaIdx].name}</strong>
+                                </div>
+                                <div class="bg-purple-950/60 p-2 rounded border border-purple-900/50">
+                                    <span class="block text-[10px] text-purple-300">Tham Lang</span>
+                                    <strong class="text-white text-xs">${HOUSES[thamIdx].name}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right text-[11px] text-amber-400 font-medium flex items-center justify-end gap-1">
+                            Xem mô hình chi tiết <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
