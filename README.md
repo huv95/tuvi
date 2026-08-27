@@ -27,11 +27,11 @@ Chrome/Edge cài sẵn ở chế độ headless, ví dụ trên macOS:
 | `index.html` | Mục lục, cũng là nơi lập lá số nhanh |
 | `ansaotudong.html` | Lập lá số đầy đủ (đại/tiểu hạn, luận giải AI) |
 | `SatPhaTham.html` | Khám phá tam hợp Sát Phá Tham |
-| `ansaochinhtinh.html` | Bản đồ tương tác an 14 chính tinh |
-| `ansao14chinhtinh_toigian.html` | Bản đồ an 14 chính tinh, bản gọn |
+| `ansaothucong.html` | Tự tay lập lá số từng bước, an 14 chính tinh |
 | `chinhtinh-chucnang.html` | Tra cứu 14 chính tinh với 12 cung chức năng |
 | `chinhtinh-cathung.html` | 14 chính tinh & quy luật cát hung |
 | `conguyetdongluong.html` | Cơ Nguyệt Đồng Lương |
+| `amduongnguhanh.html` | Âm Dương Ngũ Hành — kiến thức nền |
 | `thiepcuoi-nhagai.html` / `thiepcuoi-nhatrai.html` | Thiệp cưới, ngoài phạm vi lá số |
 
 ## Ba tầng
@@ -114,6 +114,8 @@ không có lá số, nên dùng `O_LUOI`/`veKhungLuoi` ở mức thấp hơn:
    hard-code trùng nhau ở cả hai file — bằng công thức tra `O_LUOI`. Bật được
    nhờ `data-type="module"` trên `<script type="text/babel">`, tính năng có
    sẵn của babel-standalone cho phép `import` ES module trong JSX inline.
+   (Về sau hai file này bị xoá hẳn, gộp vào `ansaothucong.html` — xem mục
+   "An Sao Thủ Công" bên dưới.)
 4. **`chinhtinh-chucnang.html`** (Alpine) — cũng chỉ lấy vị trí lưới từ
    `O_LUOI` qua `:style`, không gọi `veDiaBan`. Phát hiện thêm khi sửa: class
    động `pos-${palace.chi}` build ra tên **có dấu** (`pos-Tị`) nhưng CSS chỉ
@@ -225,6 +227,39 @@ client vẫn nhanh hơn, backend chỉ cần lưu tham số đầu vào — lá 
 - Trang vẫn chạy được ở chế độ tĩnh khi không có backend (tính năng AI tắt,
   phần còn lại nguyên vẹn)
 - `npm test` vẫn 209/209 — `lib/` không được phụ thuộc vào mạng
+
+---
+
+## An Sao Thủ Công
+
+Gộp `ansaochinhtinh.html` và `ansao14chinhtinh_toigian.html` (hai công cụ minh
+hoạ vị trí 14 chính tinh theo Chi, không có dữ liệu sinh thật) cùng nội dung
+tính tay trong `note/An sao.html` và `note/Bảng tra cứu.html` thành
+`ansaothucong.html` — nhập ngày giờ sinh thật, xem từng bước tính lá số thay
+vì chỉ ra kết quả cuối như `ansaotudong.html`.
+
+Hai chặng:
+1. **Thiết lập lá số** — Âm Dương, Cung Mệnh/Cung Thân, Cục, Chủ Mệnh/Chủ Thân
+2. **An 14 chính tinh** — vị trí Tử Vi, vị trí Thiên Phủ, vòng Tử Vi (6 sao,
+   nghịch), vòng Thiên Phủ (8 sao, thuận), rồi vẽ bàn cờ bằng `veDiaBan`
+
+Mỗi bước gọi thẳng hàm thuần trong `lib/ansao.js` (`calculateMenhThan`,
+`calculateNgocHanhCuc`, `calculateTuViPosition`, `MENH_CHU`, `THAN_CHU`) — tính
+lại giá trị trung gian bằng đúng công thức của engine, không suy luận riêng,
+nên không lệch với bàn cờ cuối cùng. Hai việc phải sửa `lib/ansao.js` để lộ ra
+được:
+- `TU_VI_GROUP`/`THIEN_PHU_GROUP` (offset 6 sao vòng Tử Vi, 8 sao vòng Thiên
+  Phủ) trước đây khai cục bộ trong `generateTuViChart`, giờ xuất ra module để
+  trang hiển thị bảng offset. Đổi `push(s)` thành `push({...s})` khi gắn vào
+  cung — nếu không, `tuHoa` gắn lên object dùng chung sẽ rò rỉ giữa các lần
+  gọi hàm khác nhau.
+- `calculateNgocHanhCuc` trả thêm `canChi`/`napAm` của cung Mệnh (bước trung
+  gian để ra Cục) — chỉ thêm trường, không đổi trường cũ nên không ảnh hưởng
+  chỗ gọi khác.
+
+Đối chiếu kết quả trang với đúng ví dụ tính tay trong `note/An sao.html`
+(Ất Hợi 1995, Âm Nam, giờ Dần) — khớp hoàn toàn từng bước: Cục, Chủ Mệnh, Chủ
+Thân, vị trí Tử Vi/Thiên Phủ.
 
 ---
 
