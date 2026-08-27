@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An Sao Thủ Công - Tử Vi Myn 001</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        mystic: {
+                            900: 'var(--nen)',
+                            800: '#140f26',
+                            700: '#1e1738',
+                            600: '#2d2252',
+                            500: '#4c3a85',
+                            accent: '#d97706',
+                            gold: '#fbbf24',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="./assets/theme.css">
+    <style>
+        body {
+            background-color: var(--nen);
+            color: #f3f4f6;
+            font-family: var(--font-chu);
+        }
+        .mystic-card {
+            background: rgba(30, 23, 56, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(251, 191, 36, 0.15);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--nen); }
+        ::-webkit-scrollbar-thumb { background: #2d2252; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #fbbf24; }
+
+        /* Số thứ tự bước, dùng chung cho mọi thẻ bước */
+        .so-buoc {
+            width: 2.25rem; height: 2.25rem; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 9999px; font-family: var(--font-nhan); font-weight: 700; font-size: 1.1rem;
+            background: rgba(251, 191, 36, 0.12); color: var(--nhan); border: 1px solid rgba(251, 191, 36, 0.4);
+        }
+        /* Bàn cờ dùng đúng màu slate/amber mặc định của veDiaBan (assets/ui.js)
+           — không cần đảo sang nền giấy như ansaotudong.html vì trang này
+           không có nhu cầu in. */
+    </style>
+</head>
+<body class="min-h-screen pb-16 flex flex-col">
+
+    <!-- Header -->
+    <header class="border-b border-mystic-700/60 bg-mystic-900/80 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-purple-800 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                    <i class="fa-solid font-serif">☯</i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold font-serif tracking-wide gold-gradient-text">AN SAO THỦ CÔNG</h1>
+                    <p class="text-xs text-gray-400">Tự Tay Lập Lá Số — Từng Bước Một</p>
+                </div>
+            </div>
+            <a href="index.html" class="text-xs sm:text-sm text-gray-300 hover:text-amber-300 transition flex items-center gap-1.5">
+                <i class="fa-solid fa-arrow-left"></i> Mục lục
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-8 flex-1 w-full space-y-8">
+
+        <!-- INTRO -->
+        <section class="mystic-card rounded-2xl p-6 sm:p-8">
+            <span class="text-xs uppercase tracking-widest text-amber-400 font-semibold">Học Cách Tự Lập Lá Số</span>
+            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white mt-1 mb-3">An Sao Thủ Công</h2>
+            <p class="text-sm text-gray-300 leading-relaxed">
+                Nhập ngày giờ sinh bên dưới — trang sẽ phanh nhỏ đúng những phép tính mà
+                <a href="ansaotudong.html" class="text-amber-300 hover:underline">công cụ lập lá số tự động</a>
+                làm ngầm bên trong, hiện ra từng bước có công thức và số liệu thật của bạn, thay vì chỉ đưa ra kết
+                quả cuối cùng. Gồm hai chặng: <strong class="text-amber-300">thiết lập lá số</strong> (Âm Dương, Cung
+                Mệnh, Cục, Chủ Mệnh/Chủ Thân) rồi đến <strong class="text-amber-300">an 14 chính tinh</strong> lên
+                bàn cờ.
+            </p>
+        </section>
+
+        <!-- FORM -->
+        <section class="mystic-card rounded-2xl p-6 sm:p-8">
+            <form id="form-sinh" class="space-y-4">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">Giới Tính</label>
+                        <select id="gender" class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                            <option value="1">Nam</option>
+                            <option value="0">Nữ</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1">Loại Lịch Sinh</label>
+                        <select id="calendarType" onchange="toggleLeap()" class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                            <option value="solar">Dương Lịch</option>
+                            <option value="lunar">Âm Lịch</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Ngày</label>
+                        <input type="number" id="day" min="1" max="31" value="17" required class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Tháng</label>
+                        <input type="number" id="month" min="1" max="12" value="3" required class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Năm</label>
+                        <input type="number" id="year" min="1900" max="2100" value="1995" required class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Giờ (0-23)</label>
+                        <input type="number" id="hour" min="0" max="23" value="4" required class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Phút</label>
+                        <input type="number" id="minute" min="0" max="59" value="30" required class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                    </div>
+                </div>
+                <div id="leap-container" class="hidden">
+                    <label class="inline-flex items-center text-xs text-amber-300 cursor-pointer">
+                        <input type="checkbox" id="isLeapMonth" class="rounded bg-mystic-900 border-mystic-600 text-amber-500 mr-2">
+                        Là Tháng Nhuận (Âm Lịch)
+                    </label>
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 text-slate-950 font-bold py-2.5 px-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-pen-ruler"></i> Tính Từng Bước
+                </button>
+            </form>
+        </section>
+
+        <!-- KẾT QUẢ -->
+        <section id="ket-qua" class="hidden space-y-8">
+
+            <div>
+                <h2 class="text-lg font-serif font-bold text-amber-300 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-compass-drafting"></i> Chặng 1 — Thiết Lập Lá Số
+                </h2>
+                <div id="chang-1" class="space-y-3"></div>
+            </div>
+
+            <div>
+                <h2 class="text-lg font-serif font-bold text-amber-300 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-star"></i> Chặng 2 — An 14 Chính Tinh
+                </h2>
+                <div id="chang-2" class="space-y-3"></div>
+            </div>
+
+            <div>
+                <h2 class="text-lg font-serif font-bold text-amber-300 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-chess-board"></i> Bàn Cờ Kết Quả
+                </h2>
+                <p class="text-xs text-gray-400 mb-3">Bấm vào một cung để xem chi tiết. Mỗi cung chỉ hiện chính
+                    tinh vừa an ở trên — đúng trọng tâm của trang này; xem đầy đủ phụ tinh, đại/tiểu hạn ở
+                    <a href="ansaotudong.html" class="text-amber-300 hover:underline">công cụ lập lá số tự động</a>.</p>
+                <div class="bg-mystic-900 border-2 border-amber-600/50 rounded-2xl p-2 md:p-3 shadow-2xl">
+                    <div id="dia-ban" class="grid grid-cols-4 grid-rows-4 gap-1.5 md:gap-2 aspect-square md:aspect-auto min-h-[600px] text-slate-200 text-xs"></div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Modal chi tiết cung -->
+    <div id="cungModal" class="fixed inset-0 bg-mystic-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-mystic-800 border border-mystic-600 rounded-2xl max-w-lg w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-mystic-700 flex items-center justify-between bg-mystic-900/50">
+                <div>
+                    <h3 id="modal-cung-title" class="font-bold font-serif text-lg text-amber-400">--</h3>
+                    <p id="modal-cung-sub" class="text-xs text-gray-400">--</p>
+                </div>
+                <button onclick="closeCungModal()" class="w-8 h-8 rounded-full bg-mystic-700 hover:bg-mystic-600 flex items-center justify-center text-gray-400 hover:text-gray-100 transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="modal-cung-body" class="p-5 overflow-y-auto space-y-4 text-xs"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { generateTuViChart, calculateNgocHanhCuc, calculateTuViPosition,
+                 MENH_CHU, THAN_CHU, TU_VI_GROUP, THIEN_PHU_GROUP } from './lib/ansao.js';
+        import { getCanChiYear, getCanChiHour, convertSolarToLunar, convertLunarToSolar, CAN, CHI } from './lib/lich.js';
+        import { veDiaBan, moModalCung } from './assets/ui.js';
+
+        let currentChartData = null;
+
+        function toggleLeap() {
+            document.getElementById('leap-container').classList.toggle('hidden', document.getElementById('calendarType').value !== 'lunar');
+        }
+
+        // Thẻ một bước: số thứ tự + tiêu đề + nội dung HTML tự do
+        function veBuoc(so, tieuDe, noiDungHTML) {
+            const el = document.createElement('div');
+            el.className = 'mystic-card rounded-xl p-4 sm:p-5 flex gap-4';
+            el.innerHTML = `
+                <div class="so-buoc">${so}</div>
+                <div class="flex-1 min-w-0">
+                    <h3 class="font-serif font-bold text-white mb-1.5">${tieuDe}</h3>
+                    <div class="text-xs sm:text-sm text-gray-300 leading-relaxed space-y-1.5">${noiDungHTML}</div>
+                </div>
+            `;
+            return el;
+        }
+
+        const kq = (nhan, gia) => `<div class="flex flex-wrap items-baseline gap-x-1.5"><span class="text-gray-500">${nhan}:</span> <strong class="text-amber-300">${gia}</strong></div>`;
+
+        function handleSubmit(e) {
+            if (e) e.preventDefault();
+
+            const data = {
+                name: 'Bạn',
+                gender: document.getElementById('gender').value,
+                isSolar: document.getElementById('calendarType').value === 'solar',
+                day: parseInt(document.getElementById('day').value),
+                month: parseInt(document.getElementById('month').value),
+                year: parseInt(document.getElementById('year').value),
+                hour: parseInt(document.getElementById('hour').value),
+                minute: parseInt(document.getElementById('minute').value),
+                viewYear: new Date().getFullYear(),
+                isLeapMonth: document.getElementById('isLeapMonth').checked
+            };
+
+            currentChartData = generateTuViChart(data);
+
+            // Tính lại các bước trung gian bằng đúng những hàm thuần lib/ansao.js
+            // dùng để hiển thị công thức — không suy ra bằng cách khác, tránh
+            // lệch với kết quả cuối cùng ở bàn cờ.
+            let lunar, solar;
+            if (data.isSolar) {
+                solar = { day: data.day, month: data.month, year: data.year };
+                lunar = convertSolarToLunar(data.day, data.month, data.year);
+            } else {
+                solar = convertLunarToSolar(data.day, data.month, data.year, data.isLeapMonth);
+                lunar = convertSolarToLunar(solar.day, solar.month, solar.year);
+            }
+            const yearCanChi = getCanChiYear(lunar.year);
+            const hourCanChi = getCanChiHour(data.hour, 0); // chỉ cần chi giờ, không cần can ngày ở đây
+            const isYangYear = yearCanChi.canIdx % 2 === 0;
+            const isMale = parseInt(data.gender) === 1;
+            const isThuanLy = (isYangYear && isMale) || (!isYangYear && !isMale);
+
+            const { userInfo, grid } = currentChartData;
+            const menhCell = grid.find(c => c.isMenh), thanCell = grid.find(c => c.isThan);
+            const menhChiIdx = menhCell.chiIdx;
+            const tuViCell = grid.find(c => c.chinhTinh.some(s => s.name === 'Tử Vi'));
+            const thienPhuCell = grid.find(c => c.chinhTinh.some(s => s.name === 'Thiên Phủ'));
+
+            const chang1 = document.getElementById('chang-1');
+            chang1.innerHTML = '';
+
+            chang1.appendChild(veBuoc(1, 'Âm Dương', `
+                ${kq('Năm sinh', `${yearCanChi.can} ${yearCanChi.chi} (${data.year})`)}
+                ${kq('Can', `${yearCanChi.can} → thuộc ${isYangYear ? 'Dương' : 'Âm'}`)}
+                ${kq('Kết hợp giới tính', userInfo.amDuongNamNu)}
+                ${kq('Chiều an vòng sao', `${isThuanLy ? 'Thuận' : 'Nghịch'} (Dương Nam / Âm Nữ đi thuận, còn lại đi nghịch)`)}
+            `));
+
+            chang1.appendChild(veBuoc(2, 'Cung Mệnh & Cung Thân', `
+                <p class="text-gray-400">Công thức: từ tháng sinh (âm lịch) đếm nghịch theo giờ sinh ra Cung Mệnh; đếm thuận theo giờ sinh ra Cung Thân.</p>
+                ${kq('Tháng sinh (âm lịch)', lunar.month)}
+                ${kq('Giờ sinh', `${hourCanChi.chi} (chi thứ ${hourCanChi.chiIdx})`)}
+                ${kq('→ Cung Mệnh', `tại ${menhCell.chiName} (${menhCell.palaceName})`)}
+                ${kq('→ Cung Thân', `tại ${thanCell.chiName} (${thanCell.palaceName})`)}
+            `));
+
+            chang1.appendChild(veBuoc(3, 'Cục', `
+                <p class="text-gray-400">Công thức: Can năm sinh xác định Can của cung Dần, cộng dồn tới cung Mệnh ra Can-Chi cung Mệnh, tra Nạp Âm của cặp Can-Chi đó ra ngũ hành Cục.</p>
+                ${kq('Can-Chi cung Mệnh', userInfo.cuc.canChi)}
+                ${kq('Nạp Âm cung Mệnh', userInfo.cuc.napAm)}
+                ${kq('→ Cục', `${userInfo.cuc.name} (số ${userInfo.cuc.num}, hành ${userInfo.cuc.element})`)}
+            `));
+
+            chang1.appendChild(veBuoc(4, 'Chủ Mệnh & Chủ Thân', `
+                <p class="text-gray-400">Tra bảng: Chủ Mệnh theo Chi của cung Mệnh; Chủ Thân theo Chi năm sinh.</p>
+                ${kq('Cung Mệnh tại', menhCell.chiName)}
+                ${kq('→ Chủ Mệnh', MENH_CHU[menhChiIdx])}
+                ${kq('Năm sinh, Chi', yearCanChi.chi)}
+                ${kq('→ Chủ Thân', THAN_CHU[yearCanChi.chiIdx])}
+            `));
+
+            const chang2 = document.getElementById('chang-2');
+            chang2.innerHTML = '';
+
+            chang2.appendChild(veBuoc(5, 'Vị trí Tử Vi', `
+                <p class="text-gray-400">Công thức dựa trên ngày sinh (âm lịch) và số Cục — thuật toán trong <code class="text-amber-300/90">calculateTuViPosition()</code>, tương đương cách "mò X" thủ công trong sách (X lẻ thì tiến, chẵn thì lùi).</p>
+                ${kq('Ngày sinh (âm lịch)', lunar.day)}
+                ${kq('Cục', userInfo.cuc.num)}
+                ${kq('→ Tử Vi an tại', `${tuViCell.chiName} (${tuViCell.palaceName})`)}
+            `));
+
+            chang2.appendChild(veBuoc(6, 'Vị trí Thiên Phủ', `
+                <p class="text-gray-400">Thiên Phủ luôn đối xứng Tử Vi qua trục Dần - Thân.</p>
+                ${kq('Tử Vi tại', tuViCell.chiName)}
+                ${kq('→ Thiên Phủ an tại', `${thienPhuCell.chiName} (${thienPhuCell.palaceName})`)}
+            `));
+
+            const veVong = (nhomSao, goc, chieu) => {
+                const rows = nhomSao.map(s => {
+                    const cell = grid.find(c => c.chinhTinh.some(x => x.name === s.name));
+                    return `<tr class="border-t border-mystic-700/60">
+                        <td class="py-1 pr-3 text-gray-500 font-mono">${s.offset >= 0 ? '+' : ''}${s.offset}</td>
+                        <td class="py-1 pr-3 font-semibold ${cellHanhClass(s.el)}">${s.name}</td>
+                        <td class="py-1 text-amber-300">${cell.chiName} (${cell.palaceName})</td>
+                    </tr>`;
+                }).join('');
+                return `<p class="text-gray-400">Đi ${chieu} từ ${goc}, mỗi sao lệch một số cung cố định (offset).</p>
+                    <table class="w-full text-xs mt-2"><tbody>${rows}</tbody></table>`;
+            };
+            function cellHanhClass(el) {
+                return { Kim: 'hanh-kim', Mộc: 'hanh-moc', Thủy: 'hanh-thuy', Hỏa: 'hanh-hoa', Thổ: 'hanh-tho' }[el] || 'hanh-tho';
+            }
+
+            chang2.appendChild(veBuoc(7, 'Vòng Tử Vi — 6 sao, đi nghịch', veVong(TU_VI_GROUP, 'Tử Vi', 'nghịch')));
+            chang2.appendChild(veBuoc(8, 'Vòng Thiên Phủ — 8 sao, đi thuận', veVong(THIEN_PHU_GROUP, 'Thiên Phủ', 'thuận')));
+
+            veDiaBan(document.getElementById('dia-ban'), currentChartData, { onCungClick: openCungModal, rutGon: true });
+
+            document.getElementById('ket-qua').classList.remove('hidden');
+            if (e) document.getElementById('ket-qua').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function openCungModal(gridIdx) {
+            if (!currentChartData) return;
+            const cell = currentChartData.grid[gridIdx];
+            document.getElementById('modal-cung-title').textContent = `Cung ${cell.palaceName} - Vị Trí Cung ${cell.chiName}`;
+            document.getElementById('modal-cung-sub').textContent = `Địa Chi: ${cell.chiName}${cell.isMenh ? ' • Cung Mệnh' : ''}${cell.isThan ? ' • Cung Thân' : ''}`;
+            const body = document.getElementById('modal-cung-body');
+            body.innerHTML = '';
+            body.appendChild(moModalCung(cell));
+            document.getElementById('cungModal').classList.remove('hidden');
+        }
+        function closeCungModal() {
+            document.getElementById('cungModal').classList.add('hidden');
+        }
+
+        document.getElementById('form-sinh').addEventListener('submit', handleSubmit);
+        window.addEventListener('load', () => handleSubmit());
+
+        // <script type="module"> có scope riêng; onclick/onchange trong HTML
+        // nên phải gắn tay lên window.
+        Object.assign(window, { toggleLeap, closeCungModal });
+    </script>
+</body>
+</html>
