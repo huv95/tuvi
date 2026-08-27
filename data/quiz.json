@@ -53,5 +53,170 @@
     ],
     "dapAn": 2,
     "giaiThich": "Cự Môn là Ám Tinh, chủ về che lấp và thị phi. Đóng ở các cung tình cảm gia đạo dễ gây ngờ vực, tranh cãi và ly tán."
+  },
+  {
+    "hoi": "Thiên Tướng tượng trưng cho khuôn mặt và danh dự. Sao này đại kỵ gặp cặp sao nào, vì sẽ gây 'mất mặt', gãy đổ công danh?",
+    "luaChon": [
+      "Hỏa Tinh, Linh Tinh",
+      "Tuần, Triệt",
+      "Kình Dương, Đà La",
+      "Địa Không, Địa Kiếp"
+    ],
+    "dapAn": 1,
+    "giaiThich": "Thiên Tướng là Ấn Tinh chủ về danh dự, khuôn mặt. Gặp Tuần, Triệt án ngữ dễ bị 'mất mặt', công danh gãy đổ hoặc tai hại."
+  },
+  {
+    "hoi": "Liêm Trinh mang Âm Hỏa dồn nén bên trong. Đóng tại cung Tật Ách, Liêm Trinh dễ khiến đương số gặp vấn đề sức khỏe nào?",
+    "luaChon": [
+      "Bệnh về xương khớp",
+      "Bệnh máu mủ, tim mạch hoặc tai nạn mổ xẻ",
+      "Bệnh về mắt",
+      "Bệnh về đường tiêu hóa"
+    ],
+    "dapAn": 1,
+    "giaiThich": "Ngọn lửa Âm Hỏa dồn nén của Liêm Trinh khi đóng Tật Ách dễ bộc phát bệnh máu mủ, tim mạch hoặc tai nạn mổ xẻ dữ dội."
+  },
+  {
+    "hoi": "Thất Sát mang sát khí và tính cô độc rất mạnh. Ngôi sao này chủ về sự hình khắc, ly tán nặng nề nhất khi đóng ở nhóm cung nào?",
+    "luaChon": [
+      "Mệnh, Quan Lộc",
+      "Tài Bạch, Điền Trạch",
+      "Phu Thê, Phụ Mẫu, Tử Tức, Huynh Đệ",
+      "Thiên Di, Nô Bộc"
+    ],
+    "dapAn": 2,
+    "giaiThich": "Thất Sát đắc dụng nhất ở Mệnh, Quan Lộc (dũng mãnh lập công) nhưng khi đóng các cung Lục thân lại chủ hình khắc nặng, gia đình ly tán, khó nương tựa người thân."
+  },
+  {
+    "hoi": "Phá Quân là 'Hao Tinh'. Khi hãm địa đóng tại cung Tài Bạch, sao này gây ảnh hưởng gì?",
+    "luaChon": [
+      "Tài lộc dồi dào, ổn định",
+      "Tiền bạc ra vào thất thường, dễ phá sản",
+      "Giỏi tích lũy bất động sản",
+      "Được quý nhân giúp đỡ về tài chính"
+    ],
+    "dapAn": 1,
+    "giaiThich": "Phá Quân hãm địa tại Tài Bạch chủ về tiền bạc ra vào thất thường, biến động đột ngột, dễ dẫn tới phá sản."
+  },
+  {
+    "hoi": "Thiên Cơ được ví như dây leo Âm Mộc, là một 'Động tinh'. Đóng tại cung Điền Trạch hãm địa (như tại Dậu), Thiên Cơ dễ gây ra điều gì?",
+    "luaChon": [
+      "Tích lũy được nhiều đất đai",
+      "Phá sản, lìa bỏ tổ nghiệp, phải chuyển nhà thường xuyên",
+      "Gia đạo yên ấm lâu dài",
+      "Được thừa kế nhà cửa lớn"
+    ],
+    "dapAn": 1,
+    "giaiThich": "Tính uyển chuyển, hay biến động của Thiên Cơ khi đóng Điền Trạch hãm địa dễ gây phá sản, lìa bỏ tổ nghiệp, nhà đất ít và phải chuyển nhà thường xuyên."
+  },
+  {
+    "hoi": "Thái Âm hãm địa đóng tại cung Tật Ách thường liên quan đến loại bệnh nào?",
+    "luaChon": [
+      "Bệnh về xương khớp",
+      "Bệnh sinh lý nữ hoặc đau mắt",
+      "Bệnh tim mạch",
+      "Bệnh hô hấp"
+    ],
+    "dapAn": 1,
+    "giaiThich": "Thái Âm hãm địa đóng Tật Ách dễ gây các bệnh sinh lý nữ hoặc đau mắt; hãm địa thủ Mệnh còn khiến đương số đa sầu đa cảm, tiêu cực."
+  },
+  {
+    "hoi": "Thiên Đồng là Phúc Tinh, gặp hung hóa cát. Nhược điểm lớn nhất khiến sao này trì trệ khi đóng Quan Lộc, Tài Bạch hãm địa là gì?",
+    "luaChon": [
+      "Quá nóng nảy, hấp tấp",
+      "Lười biếng, thiếu kiên nhẫn, dễ thỏa hiệp",
+      "Quá đa nghi, hay tranh cãi",
+      "Quá cứng nhắc, bảo thủ"
+    ],
+    "dapAn": 1,
+    "giaiThich": "Thiên Đồng an nhàn, dễ thỏa hiệp và thiếu kiên nhẫn. Nếu Quan, Tài hãm địa mà không được sát tinh kích phát, đương số thiếu ý chí tiến thủ, làm việc đầu voi đuôi chuột."
+  },
+  {
+    "hoi": "Thiên Lương được xem là 'đệ nhất sao cứu giải'. Đóng tại cung nào thì phát huy tối đa khả năng hóa giải tai ương, bệnh tật nan y?",
+    "luaChon": [
+      "Tài Bạch",
+      "Tật Ách",
+      "Nô Bộc",
+      "Thiên Di"
+    ],
+    "dapAn": 1,
+    "giaiThich": "Thiên Lương đóng tại Tật Ách là đệ nhất cứu giải, giúp hóa giải mọi bệnh tật, tai ương nan y."
+  },
+  {
+    "hoi": "Thái Dương tượng trưng cho người cha, người chồng. Khi hãm địa (đóng ở các cung ban đêm, từ Thân đến Tý), sao này gây bất lợi lớn nhất cho ai trong nhà?",
+    "luaChon": [
+      "Nam giới (cha, chồng)",
+      "Nữ giới (mẹ, vợ)",
+      "Con cái",
+      "Anh chị em"
+    ],
+    "dapAn": 0,
+    "giaiThich": "Thái Dương hãm địa khiến ánh sáng lu mờ, chủ bất lợi cho nam giới trong nhà (cha/chồng dễ đoản thọ, yếu nhược) và dễ thu hút thị phi, bôi nhọ danh dự."
+  },
+  {
+    "hoi": "Theo thứ tự Mộc - Hỏa - Thổ - Kim - Thủy, hai hành cách nhau bao nhiêu bậc thì tương khắc?",
+    "luaChon": [
+      "1 bậc",
+      "2 bậc",
+      "3 bậc",
+      "4 bậc"
+    ],
+    "dapAn": 1,
+    "giaiThich": "Cách 1 bậc là tương sinh (Mộc sinh Hỏa, Hỏa sinh Thổ...), cách 2 bậc là tương khắc (Mộc khắc Thổ, Thổ khắc Thủy...)."
+  },
+  {
+    "hoi": "Cách cục 'Cơ Nguyệt Đồng Lương' được ghép từ chữ đầu của bốn chính tinh nào?",
+    "luaChon": [
+      "Thiên Cơ, Thái Âm, Thiên Đồng, Thiên Lương",
+      "Thiên Cơ, Thái Dương, Thiên Đồng, Thiên Lương",
+      "Tử Vi, Thái Âm, Thiên Đồng, Thiên Lương",
+      "Thiên Cơ, Thái Âm, Thiên Phủ, Thiên Lương"
+    ],
+    "dapAn": 0,
+    "giaiThich": "Cơ Nguyệt Đồng Lương ghép từ Cơ (Thiên Cơ), Nguyệt (Thái Âm), Đồng (Thiên Đồng), Lương (Thiên Lương) — bộ tứ tinh thiên về trí tuệ, hoạch định và phò tá."
+  },
+  {
+    "hoi": "Ba sao Thất Sát, Phá Quân, Tham Lang luôn ở quan hệ nào với nhau trên lá số?",
+    "luaChon": [
+      "Luôn đồng cung",
+      "Luôn xung chiếu từng đôi một",
+      "Luôn ở thế tam hợp, cùng một nhóm 3 cung cách đều nhau",
+      "Không có quan hệ cố định"
+    ],
+    "dapAn": 2,
+    "giaiThich": "Thất Sát, Phá Quân, Tham Lang luôn cách nhau đúng 4 cung — tức luôn thuộc cùng một nhóm tam hợp, dù Thất Sát đóng ở cung nào thì hai sao kia cũng theo đúng quy luật đó."
+  },
+  {
+    "hoi": "Vị trí của Thiên Phủ trên lá số luôn tuân theo quy luật nào so với Tử Vi?",
+    "luaChon": [
+      "Luôn đồng cung với Tử Vi",
+      "Luôn xung chiếu Tử Vi (cách 6 cung)",
+      "Đối xứng Tử Vi qua trục Dần - Thân",
+      "Luôn cách Tử Vi đúng 3 cung"
+    ],
+    "dapAn": 2,
+    "giaiThich": "Thiên Phủ luôn đối xứng Tử Vi qua trục Dần - Thân: Tử Vi ở Dần thì Thiên Phủ cũng ở Dần, Tử Vi lệch khỏi trục bao nhiêu cung thì Thiên Phủ lệch ngược lại bấy nhiêu."
+  },
+  {
+    "hoi": "Tuần và Triệt có điểm chung nào trong cách an sao, khác với đa số phụ tinh khác?",
+    "luaChon": [
+      "Chỉ an vào đúng 1 cung duy nhất",
+      "Luôn khoanh vào 2 cung liền nhau",
+      "An theo giờ sinh",
+      "Chỉ xuất hiện nếu sinh ban đêm"
+    ],
+    "dapAn": 1,
+    "giaiThich": "Tuần và Triệt đều 'khoanh' vào 2 cung liền nhau (Triệt cố định theo Can năm sinh, Tuần theo tuần Giáp của Can-Chi năm sinh) chứ không an vào một cung đơn lẻ như đa số phụ tinh."
+  },
+  {
+    "hoi": "Ngũ hành Cục (Thủy Nhị Cục, Mộc Tam Cục...) của một lá số được xác định dựa trên điều gì?",
+    "luaChon": [
+      "Ngũ hành của năm sinh",
+      "Nạp Âm của cặp Can-Chi tại cung Mệnh",
+      "Ngũ hành của sao thủ Mệnh",
+      "Giờ sinh của đương số"
+    ],
+    "dapAn": 1,
+    "giaiThich": "Từ Can năm sinh suy ra Can của cung Mệnh, ghép với Chi cung Mệnh ra một cặp Can-Chi, tra Nạp Âm của cặp đó sẽ ra ngũ hành Cục — khác với Nạp Âm của năm sinh (đó là Bản Mệnh, một khái niệm riêng)."
   }
 ]
