@@ -97,7 +97,10 @@ for (const C of LA_SO_MAU) {
         `${chi}: [${g.chinhTinh.map(s => s.name)}]≠[${r.chinh}]`);
     const h = {}; [...g.chinhTinh, ...g.phuTinhTot, ...g.phuTinhXau].forEach(s => { if (s.tuHoa) h[s.name] = HOA[s.tuHoa]; });
     put('Tứ Hóa', norm(h) === norm(r.hoa || {}), `${chi}: ${norm(h)}≠${norm(r.hoa || {})}`);
-    const got = new Set([...g.phuTinhTot, ...g.phuTinhXau].map(s => s.name));
+    // tuvivietnam.vn vẽ Tuần/Triệt riêng (viền chéo trên ô), không liệt trong
+    // danh sách phụ tinh — nên loại 2 sao này khỏi phép so khớp ở đây; có bộ
+    // test riêng theo bảng tra ở mục C.
+    const got = new Set([...g.phuTinhTot, ...g.phuTinhXau].map(s => s.name).filter(n => n !== 'Tuần' && n !== 'Triệt'));
     const miss = r.phu.filter(n => !got.has(n)), ex = [...got].filter(n => !r.phu.includes(n));
     put('phụ tinh', !miss.length && !ex.length,
         `${chi}:${miss.length ? ' thiếu ' + miss.join(',') : ''}${ex.length ? ' thừa ' + ex.join(',') : ''}`);
@@ -114,6 +117,8 @@ head('C. Quy tắc an sao theo bảng tra');
 const chartOf = o => generateTuViChart(Object.assign(
   { name:'t', gender:1, isSolar:true, day:20, month:6, year:1990, hour:10, minute:0, viewYear:2026, isLeapMonth:false }, o));
 const at = (grid, star) => nm(grid.findIndex(c => [...c.chinhTinh, ...c.phuTinhTot, ...c.phuTinhXau].some(s => s.name === star)));
+const atAll = (grid, star) => grid.filter(c => [...c.chinhTinh, ...c.phuTinhTot, ...c.phuTinhXau].some(s => s.name === star))
+  .map(c => c.chiName).sort();
 const yearOfCan = can => 1984 + CAN.indexOf(can);   // 1984 = Giáp Tý
 
 // Giáp Mậu Ngưu Dương | Ất Kỷ Thử Hầu | Bính Đinh Trư Kê | Canh Tân Hổ Mã | Nhâm Quý Thỏ Xà
@@ -167,6 +172,24 @@ const yearOfCan = can => 1984 + CAN.indexOf(can);   // 1984 = Giáp Tý
     if (!start || start.chiName !== T[c.userInfo.cuc.name]) bad.push(c.userInfo.cuc.name);
   }
   ck(`Vòng Trường Sinh khởi đúng cung cho ${Object.keys(seen).length}/5 cục gặp được`, bad.length === 0, bad.slice(0,3).join(' ')); }
+// Triệt cố định theo can: Giáp/Kỷ Thân-Dậu | Ất/Canh Ngọ-Mùi | Bính/Tân Thìn-Tỵ
+// | Đinh/Nhâm Dần-Mão | Mậu/Quý Tý-Sửu
+{ const T = { 'Giáp':['Thân','Dậu'], 'Kỷ':['Thân','Dậu'], 'Ất':['Ngọ','Mùi'], 'Canh':['Ngọ','Mùi'],
+              'Bính':['Thìn','Tỵ'], 'Tân':['Thìn','Tỵ'], 'Đinh':['Dần','Mão'], 'Nhâm':['Dần','Mão'],
+              'Mậu':['Tý','Sửu'], 'Quý':['Tý','Sửu'] };
+  let bad = [];
+  for (const can of CAN) { const g = chartOf({ year: yearOfCan(can) }).grid;
+    const got = atAll(g, 'Triệt'), exp = [...T[can]].sort();
+    if (JSON.stringify(got) !== JSON.stringify(exp)) bad.push(`${can}:${got.join('/')}≠${exp.join('/')}`); }
+  ck('Triệt Không — 10 can', bad.length === 0, bad.join(' ')); }
+// Tuần theo tuần Giáp (lục thập hoa giáp): thử năm Giáp của cả 6 nhóm, cách nhau 10 năm
+{ const T = { 1984:['Tuất','Hợi'], 1994:['Thân','Dậu'], 2004:['Ngọ','Mùi'],
+              2014:['Thìn','Tỵ'], 2024:['Dần','Mão'], 2034:['Tý','Sửu'] };
+  let bad = [];
+  for (const y of Object.keys(T)) { const g = chartOf({ year: +y }).grid;
+    const got = atAll(g, 'Tuần'), exp = [...T[y]].sort();
+    if (JSON.stringify(got) !== JSON.stringify(exp)) bad.push(`${y}:${got.join('/')}≠${exp.join('/')}`); }
+  ck('Tuần Không — 6 nhóm lục thập hoa giáp', bad.length === 0, bad.join(' ')); }
 
 // ============================== D. BẤT BIẾN =================================
 head('D. Bất biến trên 500 lá số sinh ngẫu nhiên (1900-2100)');
