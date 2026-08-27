@@ -1,0 +1,347 @@
+{
+  "tamHop": [
+    {
+      "id": "menh-tai-quan",
+      "ten": "Tam Hợp Mệnh - Tài - Quan",
+      "loai": "Cấu Trúc Nòng Cốt Bản Thân",
+      "cung": [
+        "menh",
+        "tai-bach",
+        "quan-loc"
+      ],
+      "moTa": "Đây là cách trí trực tiếp ảnh hưởng đến nhân cách, sự nghiệp và tài chính chính yếu của bản mệnh. Mang tính chất chủ động, ganh đua, hành động quyết liệt và thích bứt phá trong cuộc sống."
+    },
+    {
+      "id": "phu-tu-no",
+      "ten": "Tam Hợp Phụ - Tử - Nô",
+      "loai": "Cấu Trúc Mối Quan Hệ Xã Hội & Đời Trước/Sau",
+      "cung": [
+        "phu-mau",
+        "tu-tuc",
+        "no-boc"
+      ],
+      "moTa": "Sát Phá Tham nằm ở vòng Phụ - Tử - Nô thể hiện các mối quan hệ xã hội, cấp dưới, bạn bè hoặc gia đạo có tính chất biến động, mạnh mẽ, năng động hoặc gặp nhiều thử thách đan xen."
+    },
+    {
+      "id": "phuc-di-phoi",
+      "ten": "Tam Hợp Phúc - Di - Phối",
+      "loai": "Cấu Trúc Tinh Thần, Môi Trường & Hôn Nhân",
+      "cung": [
+        "phuc-duc",
+        "thien-di",
+        "phu-the"
+      ],
+      "moTa": "Ảnh hưởng lớn đến tư tưởng dòng họ, xu hướng ra ngoài xông pha (Thiên Di) và đường phối ngẫu. Mệnh thường thuộc nhóm Cơ Nguyệt Đồng Lương hoặc Cự Nhật chiếu sang."
+    },
+    {
+      "id": "huynh-tat-dien",
+      "ten": "Tam Hợp Huynh - Tật - Điền",
+      "loai": "Cấu Trúc Thân Thể, Điền Sản & Anh Em",
+      "cung": [
+        "huynh-de",
+        "tat-ach",
+        "dien-trach"
+      ],
+      "moTa": "Tập trung vào khía cạnh bất động sản, tích lũy tài sản, sức khỏe thể chất và tình cảm anh em. Cho thấy tiềm lực ngầm và khả năng kiến tạo tài sản qua mạo hiểm."
+    }
+  ],
+  "theSatPhaTham": [
+    {
+      "cungThatSat": "menh",
+      "cungPhaQuan": "quan-loc",
+      "cungThamLang": "tai-bach",
+      "luanThatSat": "Mệnh Thất Sát: Bạn là người độc lập, quyết đoán, mang tác phong lãnh đạo, chịu áp lực tốt, dám nghĩ dám làm.",
+      "luanPhaQuan": "Quan Phá Quân: Sự nghiệp mang tính khai phá, thích làm mới mô hình, sẵn sàng đón nhận thử thách lớn.",
+      "luanThamLang": "Tài Tham Lang: Kiếm tiền bằng tài giao tiếp, nhạy bén cơ hội, đa dạng nguồn thu, giỏi thương lượng.",
+      "tuKhoaThatSat": [
+        "Mệnh Chủ",
+        "Quyết Đoán",
+        "Bản Lĩnh"
+      ],
+      "tuKhoaPhaQuan": [
+        "Đổi Mới",
+        "Tiên Phong",
+        "Sáng Tạo"
+      ],
+      "tuKhoaThamLang": [
+        "Ngoại Giao",
+        "Nhạy Bến",
+        "Đa Tài"
+      ],
+      "ngheNghiep": "Quản lý doanh nghiệp, lực lượng vũ trang, kỹ thuật công nghiệp, khởi nghiệp, đầu tư thương mại.",
+      "loiKhuyen": "Nên phát huy sự kiên trì, kiểm soát cái tôi nóng nảy để giữ vững thành quả bền vững."
+    },
+    {
+      "cungThatSat": "phu-mau",
+      "cungPhaQuan": "no-boc",
+      "cungThamLang": "tu-tuc",
+      "luanThatSat": "Phụ Mẫu Thất Sát: Cha mẹ nghiêm khắc, tính cách mạnh mẽ, có kỷ luật cao hoặc công tác ngành vũ trang/kỹ thuật.",
+      "luanPhaQuan": "Nô Bộc Phá Quân: Bạn bè, cấp dưới năng động, hay thay đổi, có sự cạnh tranh hoặc tính sàng lọc cao.",
+      "luanThamLang": "Tử Tức Tham Lang: Con cái thông minh, đa tài, khéo léo, thích nghệ thuật hoặc giao tiếp tốt.",
+      "tuKhoaThatSat": [
+        "Nghiêm Khắc",
+        "Kỷ Luật",
+        "Độc Lập"
+      ],
+      "tuKhoaPhaQuan": [
+        "Sàng Lọc",
+        "Năng Động",
+        "Biến Động"
+      ],
+      "tuKhoaThamLang": [
+        "Thông Minh",
+        "Nghệ Thuật",
+        "Khéo Léo"
+      ],
+      "ngheNghiep": "Hợp làm việc trong các tổ chức có tính kỷ luật cao, giáo dục, tư vấn gia đình.",
+      "loiKhuyen": "Nên lắng nghe tôn trọng ý kiến cha mẹ và định hướng con cái đa dạng."
+    },
+    {
+      "cungThatSat": "phuc-duc",
+      "cungPhaQuan": "thien-di",
+      "cungThamLang": "phu-the",
+      "luanThatSat": "Phúc Đức Thất Sát: Dòng họ có nhiều người thành đạt về quân sự, kinh doanh, tư tưởng ông bà kiên cường.",
+      "luanPhaQuan": "Thiên Di Phá Quân: Ra ngoài hay xông pha, môi trường bên ngoài nhiều biến động, đòi hỏi khả năng thích nghi và khai phá cao.",
+      "luanThamLang": "Phu Thê Tham Lang: Người phối ngẫu khéo léo, duyên dáng, lãng mạn, tài hoa và giỏi giao thiệp.",
+      "tuKhoaThatSat": [
+        "Dòng Họ Cương Trực",
+        "Gia Phong",
+        "Bản Lĩnh"
+      ],
+      "tuKhoaPhaQuan": [
+        "Xông Pha",
+        "Khai Phá",
+        "Biến Động"
+      ],
+      "tuKhoaThamLang": [
+        "Duyên Dáng",
+        "Khéo Léo",
+        "Lãng Mạn"
+      ],
+      "ngheNghiep": "Ngoại giao, đi công tác xa, thương mại quốc tế, du lịch, truyền thông.",
+      "loiKhuyen": "Học cách nhường nhịn trong đời sống vợ chồng và giữ tâm thế vững vàng khi xông pha ra bên ngoài."
+    },
+    {
+      "cungThatSat": "dien-trach",
+      "cungPhaQuan": "tat-ach",
+      "cungThamLang": "huynh-de",
+      "luanThatSat": "Điền Trạch Thất Sát: Đất đai nhà cửa đến từ sự tự lực gánh vác, có tài sản lớn nếu kiên trì.",
+      "luanPhaQuan": "Tật Ách Phá Quân: Chú ý sức khỏe hệ tiêu hóa, xương khớp hoặc hao tốn khi điều trị bệnh.",
+      "luanThamLang": "Huynh Đệ Tham Lang: Anh em trong nhà tài hoa, linh hoạt, nhiều mối quan hệ xã hội.",
+      "tuKhoaThatSat": [
+        "Tự Lực Mua Nhà",
+        "Điền Sản Bền",
+        "Nỗ Lực"
+      ],
+      "tuKhoaPhaQuan": [
+        "Sức Khỏe Biến Động",
+        "Chú Ý Điều Trị"
+      ],
+      "tuKhoaThamLang": [
+        "Anh Em Đa Tài",
+        "Vui Vẻ",
+        "Khéo Léo"
+      ],
+      "ngheNghiep": "Bất động sản, xây dựng, kiến trúc, quy hoạch không gian.",
+      "loiKhuyen": "Đầu tư bất động sản chắc chắn, rèn luyện thể thao đều đặn."
+    },
+    {
+      "cungThatSat": "quan-loc",
+      "cungPhaQuan": "tai-bach",
+      "cungThamLang": "menh",
+      "luanThatSat": "Quan Thất Sát: Trong công việc dứt khoát, muốn nắm quyền điều hành, có uy quyền, chịu khó dấn thân.",
+      "luanPhaQuan": "Tài Phá Quân: Tài chính biến động lớn, thích đầu tư quy mô, tiền vào nhanh ra nhanh rồi mới tụ.",
+      "luanThamLang": "Mệnh Tham Lang: Tính cách linh hoạt, quyến rũ, khéo léo trong ứng xử, nhạy bén thời thế và đa nghệ.",
+      "tuKhoaThatSat": [
+        "Uy Quyền",
+        "Quyết Liệt",
+        "Thực Lực"
+      ],
+      "tuKhoaPhaQuan": [
+        "Đầu Tư",
+        "Tái Thiết",
+        "Mạo Hiểm"
+      ],
+      "tuKhoaThamLang": [
+        "Khéo Ứng Xử",
+        "Duyên Dáng",
+        "Cơ Hội"
+      ],
+      "ngheNghiep": "Nghệ thuật, truyền thông, kinh doanh dịch vụ, quản lý nhân sự, tư vấn tài chính.",
+      "loiKhuyen": "Cần kỷ luật tài chính cá nhân, tránh đầu tư dàn trải khi chưa nghiên cứu kỹ."
+    },
+    {
+      "cungThatSat": "no-boc",
+      "cungPhaQuan": "tu-tuc",
+      "cungThamLang": "phu-mau",
+      "luanThatSat": "Nô Bộc Thất Sát: Bạn bè, đối tác có uy quyền, tính cách thẳng thắn, quyết đoán nhưng hơi áp đặt.",
+      "luanPhaQuan": "Tử Tức Phá Quân: Con cái hiếu động, cá tính mạnh, thích tự lập sớm và có hướng đi riêng.",
+      "luanThamLang": "Phụ Mẫu Tham Lang: Cha mẹ khéo léo, có tài giao thiệp, quan tâm đến đời sống tinh thần.",
+      "tuKhoaThatSat": [
+        "Bạn Uy Quyền",
+        "Trực Tính",
+        "Năng Nổ"
+      ],
+      "tuKhoaPhaQuan": [
+        "Tự Lập",
+        "Cá Tính",
+        "Độc Lập"
+      ],
+      "tuKhoaThamLang": [
+        "Tinh Tế",
+        "Ngoại Giao",
+        "Rộng Lượng"
+      ],
+      "ngheNghiep": "Quản lý nhân sự, hợp tác kinh doanh có hợp đồng rõ ràng, làm việc cộng đồng.",
+      "loiKhuyen": "Cần chọn lọc bạn bè uy tín, tránh tin tưởng quá mức vào cam kết miệng."
+    },
+    {
+      "cungThatSat": "thien-di",
+      "cungPhaQuan": "phu-the",
+      "cungThamLang": "phuc-duc",
+      "luanThatSat": "Thiên Di Thất Sát: Ra ngoài thể hiện sự uy nghi, dám gánh vác, thích hợp phát triển ở môi trường mới.",
+      "luanPhaQuan": "Phu Thê Phá Quân: Hôn nhân trải qua thử thách mới vững bền, bạn đời thích tự do sáng tạo.",
+      "luanThamLang": "Phúc Đức Tham Lang: Tư tưởng tâm linh, yêu thích văn hóa nghệ thuật, đời sống tinh thần phong phú.",
+      "tuKhoaThatSat": [
+        "Xông Pha",
+        "Uy Nghi",
+        "Tự Lập Xa Nhà"
+      ],
+      "tuKhoaPhaQuan": [
+        "Thử Thách",
+        "Sáng Tạo",
+        "Vững Vàng"
+      ],
+      "tuKhoaThamLang": [
+        "Tâm Linh",
+        "Nghệ Thuật",
+        "Đa Dạng"
+      ],
+      "ngheNghiep": "Làm việc ở thị trường nước ngoài, điều hành chi nhánh, phát triển dự án xa.",
+      "loiKhuyen": "Tự tin xông pha ra bên ngoài nhưng nhớ giữ mối liên kết với gia đình."
+    },
+    {
+      "cungThatSat": "tat-ach",
+      "cungPhaQuan": "huynh-de",
+      "cungThamLang": "dien-trach",
+      "luanThatSat": "Tật Ách Thất Sát: Sức khỏe tốt, tính cách kiên cường vượt qua bệnh tật, cần chú ý phẫu thuật nhẹ.",
+      "luanPhaQuan": "Huynh Đệ Phá Quân: Tình cảm anh em có lúc thăng trầm, mỗi người một cá tính riêng biệt.",
+      "luanThamLang": "Điền Trạch Tham Lang: Đất đai trang trí đẹp mắt, có duyên sở hữu nhà ở nơi sầm uất.",
+      "tuKhoaThatSat": [
+        "Sức Đề Kháng Tốt",
+        "Bản Lĩnh Bệnh Tật"
+      ],
+      "tuKhoaPhaQuan": [
+        "Anh Em Độc Lập",
+        "Cá Tính Trái Ngược"
+      ],
+      "tuKhoaThamLang": [
+        "Nhà Cửa Đẹp",
+        "Nơi Sầm Uất",
+        "Thẩm Mỹ"
+      ],
+      "ngheNghiep": "Y khoa, phẫu thuật, thẩm mỹ, thiết kế nội thất nhà ở.",
+      "loiKhuyen": "Chăm sóc bản thân kỹ lưỡng, giữ gìn hòa khí anh em."
+    },
+    {
+      "cungThatSat": "tai-bach",
+      "cungPhaQuan": "menh",
+      "cungThamLang": "quan-loc",
+      "luanThatSat": "Tài Thất Sát: Cách kiếm tiền quyết liệt, dứt khoát, thích đánh nhanh thắng nhanh, chấp nhận rủi ro lớn.",
+      "luanPhaQuan": "Mệnh Phá Quân: Cá tính mạnh mẽ, không thích gò bó, cá tính độc đáo, hay làm mới bản thân.",
+      "luanThamLang": "Quan Tham Lang: Công việc cần năng lực giao tiếp, mở rộng mạng lưới quan hệ, làm việc trong môi trường năng động.",
+      "tuKhoaThatSat": [
+        "Quyết Đoán",
+        "Đánh Nhanh",
+        "Táo Bạo"
+      ],
+      "tuKhoaPhaQuan": [
+        "Cá Tính",
+        "Tự Do",
+        "Bứt Phá"
+      ],
+      "tuKhoaThamLang": [
+        "Kết Nối",
+        "Nhiều Mối",
+        "Linh Hoạt"
+      ],
+      "ngheNghiep": "Kinh doanh tự do, phát triển thị trường mới, giải trí, xuất nhập khẩu, mạo hiểm tài chính.",
+      "loiKhuyen": "Cần xây dựng kế hoạch quản trị rủi ro kĩ càng, kiềm chế tính bồng bột."
+    },
+    {
+      "cungThatSat": "tu-tuc",
+      "cungPhaQuan": "phu-mau",
+      "cungThamLang": "no-boc",
+      "luanThatSat": "Tử Tức Thất Sát: Con cái cá tính dũng cảm, kiên cường, thích làm thủ lĩnh, cần sự định hướng từ nhỏ.",
+      "luanPhaQuan": "Phụ Mẫu Phá Quân: Cha mẹ hay thay đổi môi trường sống hoặc có tư tưởng tân tiến, đổi mới.",
+      "luanThamLang": "Nô Bộc Tham Lang: Mạng lưới bạn bè rộng rãi, nhiều tầng lớp, giỏi giao lưu hỗ trợ công việc.",
+      "tuKhoaThatSat": [
+        "Con Dũng Cảm",
+        "Lãnh Đạo",
+        "Kiên Cường"
+      ],
+      "tuKhoaPhaQuan": [
+        "Tân Tiến",
+        "Đổi Mới",
+        "Mở Đường"
+      ],
+      "tuKhoaThamLang": [
+        "Bạn Rộng Rãi",
+        "Hỗ Trợ",
+        "Giao Tiếp"
+      ],
+      "ngheNghiep": "Giáo dục tài năng trẻ, xây dựng cộng đồng, phát triển hệ thống đại lý.",
+      "loiKhuyen": "Dành thời gian đồng hành cùng con cái, kiên nhẫn chia sẻ."
+    },
+    {
+      "cungThatSat": "phu-the",
+      "cungPhaQuan": "phuc-duc",
+      "cungThamLang": "thien-di",
+      "luanThatSat": "Phu Thê Thất Sát: Người phối ngẫu quyết đoán, gánh vác gia đình, có năng lực quản lý tốt.",
+      "luanPhaQuan": "Phúc Đức Phá Quân: Dòng họ có sự biến động, nhiều người đi xa lập nghiệp.",
+      "luanThamLang": "Thiên Di Tham Lang: Khi ra ngoài rất thu hút, được nhiều người yêu mến, giỏi nắm bắt xu hướng.",
+      "tuKhoaThatSat": [
+        "Bạn Đời Độc Lập",
+        "Gánh Vác",
+        "Cương Trực"
+      ],
+      "tuKhoaPhaQuan": [
+        "Xa Lập Nghiệp",
+        "Biến Động",
+        "Đổi Mới"
+      ],
+      "tuKhoaThamLang": [
+        "Thu Hút",
+        "Nhiều Mối Duyên",
+        "Xu Hướng"
+      ],
+      "ngheNghiep": "Hợp tác vợ chồng trong kinh doanh, ngoại giao, truyền thông.",
+      "loiKhuyen": "Tôn trọng không gian riêng của nửa kia, phân công trách nhiệm rõ ràng."
+    },
+    {
+      "cungThatSat": "huynh-de",
+      "cungPhaQuan": "dien-trach",
+      "cungThamLang": "tat-ach",
+      "luanThatSat": "Huynh Đệ Thất Sát: Anh em trong nhà có người làm quản lý hoặc ngành lực lượng, thẳng thắn.",
+      "luanPhaQuan": "Điền Trạch Phá Quân: Nhà cửa dễ sửa sang, cải tạo nhiều lần hoặc thay đổi nơi ở.",
+      "luanThamLang": "Tật Ách Tham Lang: Chú ý chăm sóc sức khỏe tinh thần, tránh thức khuya hay sinh hoạt thất thường.",
+      "tuKhoaThatSat": [
+        "Anh Em Uy Quyền",
+        "Thẳng Thắn",
+        "Giúp Đỡ"
+      ],
+      "tuKhoaPhaQuan": [
+        "Cải Tạo Nhà",
+        "Sửa Sang",
+        "Đổi Mới"
+      ],
+      "tuKhoaThamLang": [
+        "Thói Quên Sống",
+        "Tâm Lý",
+        "Dưỡng Sinh"
+      ],
+      "ngheNghiep": "Kinh doanh cùng người thân, sửa chữa cải tạo bất động sản.",
+      "loiKhuyen": "Chú trọng cân bằng giữa làm việc và nghỉ ngơi hợp lý."
+    }
+  ]
+}

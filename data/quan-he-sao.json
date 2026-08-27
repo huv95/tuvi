@@ -1,0 +1,47 @@
+[
+  {
+    "sao": "Thiên Cơ",
+    "quanHe": "lục hại",
+    "voiSao": "Thiên Tướng",
+    "luan": [
+      "Thiên Tướng hơi nói nhiều nhưng hay nói quá",
+      "Thiên Cơ suy nghĩ và hỏi vặn lại nội dung"
+    ]
+  },
+  {
+    "sao": "Thiên Tướng",
+    "quanHe": "lục hại",
+    "voiSao": "Thiên Cơ",
+    "luan": [
+      "Thiên Cơ có địa vị bằng cấp và có nhóm ủng hộ",
+      "Thiên Tướng nói Thiên Cơ nghĩ quá nhiều"
+    ]
+  },
+  {
+    "sao": "Thiên Lương",
+    "quanHe": "nhị hợp",
+    "voiSao": "Liêm Trinh",
+    "luan": [
+      "Thiên Lương đạo đức xây dựng kỷ luật cho Liêm Trinh",
+      "Kỷ luật của Liêm Trinh giữ gìn đạo đức cho Thiên Lương"
+    ]
+  },
+  {
+    "sao": "Thiên Đồng",
+    "quanHe": "tam hợp",
+    "voiSao": "Thiên Cơ",
+    "luan": [
+      " "
+    ]
+  },
+  {
+    "sao": "Thái Dương",
+    "quanHe": "lục hại",
+    "voiSao": "Thất Sát",
+    "luan": [
+      "Dương Hoả khắc Dương Kim",
+      "Tính cách khắc nhau",
+      "Thất Sát hình khắc không làm cho Thái Dương toả sáng"
+    ]
+  }
+]
