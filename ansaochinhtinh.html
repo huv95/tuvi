@@ -95,7 +95,8 @@
 <body class="celestial-bg min-h-screen">
     <div id="root"></div>
 
-    <script type="text/babel">
+    <script type="text/babel" data-type="module">
+        import { O_LUOI } from './assets/ui.js';
         const { useState, useEffect, useMemo } = React;
 
         // Custom Safe Inline SVG Icon Component to bypass external DOM manipulation problems
@@ -509,24 +510,12 @@
                 return calculatedStars.positions[starName];
             };
 
-            // Grid mapping to traditional layout coordinates (4x4 layout)
+            // Vị trí lưới của mỗi Chi lấy từ O_LUOI dùng chung (assets/ui.js):
+            // Chi 5 (Tỵ) rơi vào góc trên-trái của O_LUOI nên quy đổi id -> k
+            // bằng offset -5.
             const getGridStyle = (id) => {
-                // Returns custom CSS grid Row & Col based on traditional Earthly Branch index
-                switch(id) {
-                    case 5: return { gridRow: 1, gridColumn: 1 }; // Tỵ (Top-Left)
-                    case 6: return { gridRow: 1, gridColumn: 2 }; // Ngọ
-                    case 7: return { gridRow: 1, gridColumn: 3 }; // Mùi
-                    case 8: return { gridRow: 1, gridColumn: 4 }; // Thân (Top-Right)
-                    case 9: return { gridRow: 2, gridColumn: 4 }; // Dậu
-                    case 10: return { gridRow: 3, gridColumn: 4 }; // Tuất
-                    case 11: return { gridRow: 4, gridColumn: 4 }; // Hợi (Bottom-Right)
-                    case 0: return { gridRow: 4, gridColumn: 3 }; // Tý
-                    case 1: return { gridRow: 4, gridColumn: 2 }; // Sửu
-                    case 2: return { gridRow: 4, gridColumn: 1 }; // Dần (Bottom-Left)
-                    case 3: return { gridRow: 3, gridColumn: 1 }; // Mão
-                    case 4: return { gridRow: 2, gridColumn: 1 }; // Thìn
-                    default: return {};
-                }
+                const [r, c] = O_LUOI[(id - 5 + 12) % 12];
+                return { gridRow: r + 1, gridColumn: c + 1 };
             };
 
             const currentLayoutInfo = LAYOUTS_INFO[ziweiPos] || { title: "Đồ Hình Tử Vi", description: "" };

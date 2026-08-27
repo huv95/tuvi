@@ -256,76 +256,8 @@
           <div class="absolute bottom-1 left-1 text-amber-700/25 text-xl pointer-events-none">☯</div>
           <div class="absolute bottom-1 right-1 text-amber-700/25 text-xl pointer-events-none">☯</div>
 
-          <div class="grid grid-cols-4 grid-rows-4 gap-1.5 md:gap-2 aspect-square md:aspect-auto min-h-[700px] text-slate-200 text-xs">
-            
-            <!-- Row 1: Tỵ (3), Ngọ (4), Mùi (5), Thân (6) -->
-            <div id="cung-3" onclick="openCungModal(3)" class="cung-box bg-slate-900/90 border border-slate-800 rounded-lg p-2 flex flex-col justify-between hover:border-amber-500/80 cursor-pointer transition-all overflow-hidden"></div>
-            <div id="cung-4" onclick="openCungModal(4)" class="cung-box bg-slate-900/90 border border-slate-800 rounded-lg p-2 flex flex-col justify-between hover:border-amber-500/80 cursor-pointer transition-all overflow-hidden"></div>
-            <div id="cung-5" onclick="openCungModal(5)" class="cung-box bg-slate-900/90 border border-slate-800 rounded-lg p-2 flex flex-col justify-between hover:border-amber-500/80 cursor-pointer transition-all overflow-hidden"></div>
-            <div id="cung-6" onclick="openCungModal(6)" class="cung-box bg-slate-900/90 border border-slate-800 rounded-lg p-2 flex flex-col justify-between hover:border-amber-500/80 cursor-pointer transition-all overflow-hidden"></div>
-
-            <!-- Row 2: Thìn (2) | CENTER BOX | Dậu (7) -->
-            <div id="cung-2" onclick="openCungModal(2)" class="cung-box bg-slate-900/90 border border-slate-800 rounded-lg p-2 flex flex-col justify-between hover:border-amber-500/80 cursor-pointer transition-all overflow-hidden"></div>
-            
-            <!-- CENTER BOX (Thiên Bàn) -->
-            <div id="thien-ban" class="col-span-2 row-span-2 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 border-2 border-amber-500/60 rounded-xl p-3 flex flex-col justify-between items-center text-center shadow-inner relative overflow-y-auto">
-              <div class="space-y-1 w-full border-b border-amber-500/20 pb-2">
-                <div class="text-amber-400 font-serif font-bold text-base md:text-xl tracking-wider">LÁ SỐ TỬ VI</div>
-                <div id="tb-fullname" class="text-slate-100 font-bold text-sm md:text-base">--</div>
-                <div id="tb-basic" class="text-[11px] text-amber-200/90 font-semibold">--</div>
-              </div>
-
-              <!-- Thông tin ngày giờ sinh -->
-              <div class="w-full my-1.5 py-1.5 border-y border-amber-500/20 text-[11px] space-y-1 bg-slate-900/70 rounded-lg px-2 text-left">
-                <div class="flex justify-between items-center">
-                  <span class="text-slate-400">Dương lịch:</span> 
-                  <span id="tb-solar" class="text-slate-100 font-semibold">--</span>
-                </div>
-                <div class="flex justify-between items-center">
-                  <span class="text-slate-400">Âm lịch:</span> 
-                  <span id="tb-lunar" class="text-amber-300 font-semibold">--</span>
-                </div>
-                <div class="flex justify-between items-center">
-                  <span class="text-slate-400">Giờ sinh:</span> 
-                  <span id="tb-gio" class="text-amber-200 font-medium">--</span>
-                </div>
-              </div>
-
-              <!-- Cục, Mệnh, Thân, Tương Sinh -->
-              <div class="w-full text-[11px] space-y-1 text-left">
-                <div class="flex justify-between items-center bg-slate-800/50 px-2 py-1 rounded">
-                  <span class="text-slate-300">Bản Mệnh: <strong id="tb-mang" class="text-emerald-400">--</strong></span>
-                  <span class="text-slate-300">Cục: <strong id="tb-cuc" class="text-amber-400">--</strong></span>
-                </div>
-                <div class="flex justify-between items-center bg-slate-800/30 px-2 py-0.5 rounded">
-                  <span class="text-slate-300">Âm Dương Mệnh: <strong id="tb-amduong" class="text-slate-100">--</strong></span>
-                  <span class="text-slate-300">Mệnh / Cục: <strong id="tb-tuongsinh" class="text-amber-300">--</strong></span>
-                </div>
-                <div class="flex justify-between items-center bg-slate-800/50 px-2 py-1 rounded">
-                  <span class="text-slate-300">Mệnh Chủ: <strong id="tb-menhchu" class="text-amber-300">--</strong></span>
-                  <span class="text-slate-300">Thân Chủ: <strong id="tb-thanchu" class="text-amber-300">--</strong></span>
-                </div>
-              </div>
-
-              <div class="text-[10px] text-slate-400 mt-1 border-t border-slate-800 pt-1 w-full flex justify-between">
-                <span>Xem Hạn Năm: <strong id="tb-viewyear" class="text-amber-400">--</strong></span>
-                <span id="tb-viewyear-canchi" class="text-amber-300 font-bold">--</span>
-              </div>
-            </div>
-
-            <div id="cung-7" onclick="openCungModal(7)" class="cung-box bg-slate-900/90 border border-slate-800 rounded-lg p-2 flex flex-col justify-between hover:border-amber-500/80 cursor-pointer transition-all overflow-hidden"></div>
-
-            <!-- Row 3: Mão (1) | Tuất (8) -->
-            <div id="cung-1" onclick="openCungModal(1)" class="cung-box bg-slate-900/90 border border-slate-800 rounded-lg p-2 flex flex-col justify-between hover:border-amber-500/80 cursor-pointer transition-all overflow-hidden"></div>
-            <div id="cung-8" onclick="openCungModal(8)" class="cung-box bg-slate-900/90 border border-slate-800 rounded-lg p-2 flex flex-col justify-between hover:border-amber-500/80 cursor-pointer transition-all overflow-hidden"></div>
-
-            <!-- Row 4: Dần (0), Sửu (11), Tý (10), Hợi (9) -->
-            <div id="cung-0" onclick="openCungModal(0)" class="cung-box bg-slate-900/90 border border-slate-800 rounded-lg p-2 flex flex-col justify-between hover:border-amber-500/80 cursor-pointer transition-all overflow-hidden"></div>
-            <div id="cung-11" onclick="openCungModal(11)" class="cung-box bg-slate-900/90 border border-slate-800 rounded-lg p-2 flex flex-col justify-between hover:border-amber-500/80 cursor-pointer transition-all overflow-hidden"></div>
-            <div id="cung-10" onclick="openCungModal(10)" class="cung-box bg-slate-900/90 border border-slate-800 rounded-lg p-2 flex flex-col justify-between hover:border-amber-500/80 cursor-pointer transition-all overflow-hidden"></div>
-            <div id="cung-9" onclick="openCungModal(9)" class="cung-box bg-slate-900/90 border border-slate-800 rounded-lg p-2 flex flex-col justify-between hover:border-amber-500/80 cursor-pointer transition-all overflow-hidden"></div>
-
-          </div>
+          <!-- 12 cung + Thiên Bàn giữa: vẽ bằng veDiaBan(), xem assets/ui.js -->
+          <div id="dia-ban" class="grid grid-cols-4 grid-rows-4 gap-1.5 md:gap-2 aspect-square md:aspect-auto min-h-[700px] text-slate-200 text-xs"></div>
         </div>
       </div>
 
@@ -428,6 +360,7 @@
 
     <script type="module">
       import { generateTuViChart } from './lib/ansao.js';
+      import { veDiaBan, moModalCung } from './assets/ui.js';
 
         let currentChartData = null;
 
@@ -460,74 +393,8 @@
           `;
         }
 
-        const EL_CLASS = { "Kim": "hanh-kim", "Mộc": "hanh-moc", "Thủy": "hanh-thuy", "Hỏa": "hanh-hoa", "Thổ": "hanh-tho" };
-        const elClass = (el) => EL_CLASS[el] || "hanh-tho";
-
         function renderChartUI(chartPackage) {
-          let { userInfo, grid } = chartPackage;
-
-          // Fill Thiên Bàn Center Box
-          document.getElementById('tb-fullname').textContent = userInfo.name;
-          document.getElementById('tb-basic').textContent = `${userInfo.gender} Mạng • ${userInfo.amDuongNamNu} • Âm Dương ${userInfo.amDuongThuanLy ? 'thuận lý' : 'nghịch lý'}`;
-          document.getElementById('tb-solar').textContent = userInfo.solarStr;
-          document.getElementById('tb-lunar').textContent = userInfo.lunarStr;
-          document.getElementById('tb-gio').textContent = userInfo.hourStr;
-          document.getElementById('tb-mang').textContent = userInfo.napAm;
-          document.getElementById('tb-cuc').textContent = userInfo.cuc.name;
-          document.getElementById('tb-amduong').textContent = userInfo.amDuongNamNu;
-          document.getElementById('tb-tuongsinh').textContent = userInfo.tuongSinhText;
-          document.getElementById('tb-menhchu').textContent = userInfo.menhChu;
-          document.getElementById('tb-thanchu').textContent = userInfo.thanChu;
-          document.getElementById('tb-viewyear').textContent = userInfo.viewYear;
-          document.getElementById('tb-viewyear-canchi').textContent = `Năm ${userInfo.viewYearCanChi}`;
-
-          // Render 12 Palaces
-          grid.forEach(cell => {
-            let el = document.getElementById(`cung-${cell.gridIdx}`);
-            if (!el) return;
-
-            let chinhTinhHTML = cell.chinhTinh.map(s => `
-              <div class="font-bold text-[11px] ${elClass(s.el)} flex items-center justify-between">
-                <span>${s.name}<span class="star-tuhoa">${s.tuHoa || ''}</span></span>
-                <span class="text-[9px] text-slate-500 font-mono">(${s.el})</span>
-              </div>
-            `).join('') || '<div class="text-[10px] text-slate-500 italic">Vô Chính Diệu</div>';
-
-            // Cột trái = cát tinh, cột phải = hung tinh; màu chữ = ngũ hành của sao
-            // Hiện đủ sao, không cắt bớt. Cung dày nhất trên 11 lá số chuẩn có 10 cát / 7 hung.
-            const phuTag = (list) => list.map(s =>
-              `<span class="${elClass(s.el)} mr-1 inline-block">${s.name}<span class="star-tuhoa">${s.tuHoa || ''}</span></span>`).join('');
-            let phuTotHTML = phuTag(cell.phuTinhTot);
-            let phuXauHTML = phuTag(cell.phuTinhXau);
-
-            el.innerHTML = `
-              <!-- Header -->
-              <div class="flex items-center justify-between border-b border-slate-800 pb-1">
-                <span class="font-serif font-bold text-xs ${cell.isMenh ? 'text-amber-400 underline decoration-amber-500' : 'text-slate-100'}">
-                  ${cell.palaceName} ${cell.isThan ? '<span class="text-[9px] bg-amber-500/20 text-amber-300 px-1 rounded ml-0.5">Thân</span>' : ''}
-                </span>
-                <span class="text-[10px] text-slate-400 font-mono font-semibold">${cell.chiName}</span>
-              </div>
-
-              <!-- Main Stars -->
-              <div class="my-1.5 space-y-0.5">
-                ${chinhTinhHTML}
-              </div>
-
-              <!-- Secondary Stars: cát tinh | hung tinh -->
-              <div class="text-[9px] leading-tight my-1 grid grid-cols-2 gap-x-1 overflow-hidden">
-                <div>${phuTotHTML}</div>
-                <div class="text-right">${phuXauHTML}</div>
-              </div>
-
-              <!-- Footer Age Limits -->
-              <div class="border-t border-slate-800/80 pt-1 flex justify-between items-center text-[9px] text-slate-400 font-mono">
-                <span>Đ.Hạn: <strong class="text-slate-200">${cell.daiHan}</strong></span>
-                <span class="text-slate-500">${cell.trangSinh}</span>
-                <span>T.Hạn: <strong class="text-amber-400">${cell.tieuHan}</strong></span>
-              </div>
-            `;
-          });
+          veDiaBan(document.getElementById('dia-ban'), chartPackage, { onCungClick: openCungModal });
         }
 
         function renderConverterUI(chartPackage) {
@@ -576,29 +443,9 @@
           document.getElementById('modal-cung-title').textContent = `Cung ${cell.palaceName} - Vị Trí Cung ${cell.chiName}`;
           document.getElementById('modal-cung-sub').textContent = `Địa Chi: ${cell.chiName} • Đại Hạn: ${cell.daiHan} tuổi • Tiểu Hạn: Năm ${cell.tieuHan} • ${cell.trangSinh}`;
 
-          const starChip = (s) => `<span class="bg-slate-800/70 border border-slate-700 px-2 py-0.5 rounded text-[11px] ${elClass(s.el)}">${s.name}${s.tuHoa || ''}</span>`;
-          let chinhStarsText = cell.chinhTinh.map(s => `<li class="font-bold ${elClass(s.el)}">${s.name} (${s.el})${s.tuHoa || ''}</li>`).join('') || '<li class="text-slate-500">Vô Chính Diệu</li>';
-          let phuTotText = cell.phuTinhTot.map(starChip).join(' ') || '<span class="text-slate-500">Không có</span>';
-          let phuXauText = cell.phuTinhXau.map(starChip).join(' ') || '<span class="text-slate-500">Không có</span>';
-
-          document.getElementById('modal-cung-body').innerHTML = `
-            <div class="space-y-3">
-              <div>
-                <h4 class="text-amber-400 font-semibold mb-1">Chính Tinh Tọa Thủ:</h4>
-                <ul class="list-disc list-inside space-y-1 pl-1">
-                  ${chinhStarsText}
-                </ul>
-              </div>
-              <div>
-                <h4 class="text-emerald-400 font-semibold mb-1">Cát Tinh & Phụ Tinh Cát:</h4>
-                <div class="flex flex-wrap gap-1.5">${phuTotText}</div>
-              </div>
-              <div>
-                <h4 class="text-rose-400 font-semibold mb-1">Hung Tinh & Sát Tinh:</h4>
-                <div class="flex flex-wrap gap-1.5">${phuXauText}</div>
-              </div>
-            </div>
-          `;
+          let body = document.getElementById('modal-cung-body');
+          body.innerHTML = '';
+          body.appendChild(moModalCung(cell));
 
           modal.classList.remove('hidden');
         }

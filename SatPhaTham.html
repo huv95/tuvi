@@ -413,6 +413,7 @@
 
     <script type="module">
         import { getCung, getCachCuc } from './lib/repo.js';
+        import { veKhungLuoi } from './assets/ui.js';
 
         // Tên cung lấy từ data/cung.json theo đúng thứ tự 0..11 của bàn cờ.
         // Viết tắt là chuyện trình bày, giữ tại trang.
@@ -422,22 +423,8 @@
         let HOUSES = [], TRIAD_GROUPS = [], SCENARIOS = {};
 
         // Data structure for the 12 Functional Houses in Zi Wei Dou Shu order
-        
-        // Grid positions in 4x4 matrix representation (0-indexed [row, col])
-        const GRID_LAYOUT = [
-            { houseIdx: 0, r: 0, c: 0 },  // Mệnh
-            { houseIdx: 1, r: 0, c: 1 },  // Phụ Mẫu
-            { houseIdx: 2, r: 0, c: 2 },  // Phúc Đức
-            { houseIdx: 3, r: 0, c: 3 },  // Điền Trạch
-            { houseIdx: 4, r: 1, c: 3 },  // Quan Lộc
-            { houseIdx: 5, r: 2, c: 3 },  // Nô Bộc
-            { houseIdx: 6, r: 3, c: 3 },  // Thiên Di
-            { houseIdx: 7, r: 3, c: 2 },  // Tật Ách
-            { houseIdx: 8, r: 3, c: 1 },  // Tài Bạch
-            { houseIdx: 9, r: 3, c: 0 },  // Tử Tức
-            { houseIdx: 10, r: 2, c: 0 }, // Phu Thê
-            { houseIdx: 11, r: 1, c: 0 }  // Huynh Đệ
-        ];
+        // houseIdx 0 (Mệnh) đứng ở góc trên-trái của O_LUOI nên quy đổi thẳng
+        // houseIdx -> k khi vẽ khung, xem assets/ui.js.
 
         // Group definitions (4 Tam Hợp Groups)
         
@@ -527,41 +514,23 @@
 
         // Render standard 4x4 perimeter grid
         function renderChartGrid() {
-            const gridEl = document.getElementById('chart-grid');
-            gridEl.innerHTML = '';
-
-            // Create 16 cells (4x4)
-            for (let r = 0; r < 4; r++) {
-                for (let c = 0; c < 4; c++) {
-                    const isCenter = (r === 1 || r === 2) && (c === 1 || c === 2);
-
-                    if (isCenter) {
-                        // Render central element once for (1,1)
-                        if (r === 1 && c === 1) {
-                            const centerCell = document.createElement('div');
-                            centerCell.className = "col-span-2 row-span-2 bg-mystic-900/90 border border-mystic-700/60 rounded-xl flex flex-col items-center justify-center p-2 text-center shadow-inner z-20";
-                            centerCell.innerHTML = `
-                                <div class="text-2xl font-serif text-amber-400 font-bold mb-1">☯</div>
-                                <div id="center-title" class="text-xs font-serif font-bold text-amber-200">Tam Hợp Sát Phá Tham</div>
-                                <div id="center-subtitle" class="text-[10px] text-gray-400 mt-1">Sát (Kim) • Phá (Thủy) • Tham (Thủy/Mộc)</div>
-                            `;
-                            gridEl.appendChild(centerCell);
-                        }
-                        continue;
-                    }
-
-                    // Find corresponding house
-                    const item = GRID_LAYOUT.find(g => g.r === r && g.c === c);
-                    if (!item) continue;
-
-                    const house = HOUSES[item.houseIdx];
+            veKhungLuoi(document.getElementById('chart-grid'), {
+                taoTam: () => {
+                    const el = document.createElement('div');
+                    el.className = "col-span-2 row-span-2 bg-mystic-900/90 border border-mystic-700/60 rounded-xl flex flex-col items-center justify-center p-2 text-center shadow-inner z-20";
+                    el.innerHTML = `
+                        <div class="text-2xl font-serif text-amber-400 font-bold mb-1">☯</div>
+                        <div id="center-title" class="text-xs font-serif font-bold text-amber-200">Tam Hợp Sát Phá Tham</div>
+                        <div id="center-subtitle" class="text-[10px] text-gray-400 mt-1">Sát (Kim) • Phá (Thủy) • Tham (Thủy/Mộc)</div>
+                    `;
+                    return el;
+                },
+                taoO: (k) => {
+                    const house = HOUSES[k];
                     const cell = document.createElement('div');
                     cell.id = `house-cell-${house.id}`;
-                    cell.setAttribute('onclick', `onHouseClick(${house.id})`);
+                    cell.addEventListener('click', () => onHouseClick(house.id));
                     cell.className = "mystic-card rounded-xl p-1.5 flex flex-col justify-between items-center border border-mystic-700/50 hover:border-amber-400/60 cursor-pointer transition relative overflow-hidden text-center";
-                    cell.style.gridRowStart = r + 1;
-                    cell.style.gridColumnStart = c + 1;
-
                     cell.innerHTML = `
                         <span class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">${house.name}</span>
                         <div id="stars-badge-container-${house.id}" class="my-auto flex flex-col gap-1 items-center w-full min-h-[32px] justify-center">
@@ -569,9 +538,9 @@
                         </div>
                         <span class="text-[9px] text-mystic-500 font-mono">Cung #${house.id + 1}</span>
                     `;
-                    gridEl.appendChild(cell);
-                }
-            }
+                    return cell;
+                },
+            });
         }
 
         // Click house to jump
