@@ -1,0 +1,68 @@
+[
+  {
+    "id": "menh",
+    "ten": "Mệnh",
+    "moTa": "Tinh thần cốt lõi, khí chất, tính cách và định hướng vận mệnh cả đời.",
+    "gomCung": [
+      "menh"
+    ]
+  },
+  {
+    "id": "quan-loc",
+    "ten": "Quan Lộc",
+    "moTa": "Công danh, sự nghiệp, môi trường làm việc và năng lực quản lý.",
+    "gomCung": [
+      "quan-loc"
+    ]
+  },
+  {
+    "id": "tai-bach",
+    "ten": "Tài Bạch",
+    "moTa": "Tư duy tài chính, khả năng kiếm tiền, dòng tiền và quản lý của cải.",
+    "gomCung": [
+      "tai-bach"
+    ]
+  },
+  {
+    "id": "dien-trach",
+    "ten": "Điền Trạch",
+    "moTa": "Bất động sản, điền sản, nhà cửa, gia phong và tích lũy gia sản.",
+    "gomCung": [
+      "dien-trach"
+    ]
+  },
+  {
+    "id": "phu-the",
+    "ten": "Phu Thê",
+    "moTa": "Tình cảm lứa đôi, mối quan hệ vợ chồng, hôn nhân và gia đạo.",
+    "gomCung": [
+      "phu-the"
+    ]
+  },
+  {
+    "id": "luc-than",
+    "ten": "Lục Thân (Bào, Phụ, Tử)",
+    "moTa": "Mối quan hệ với cha mẹ, anh chị em và con cái trong gia đình.",
+    "gomCung": [
+      "huynh-de",
+      "phu-mau",
+      "tu-tuc"
+    ]
+  },
+  {
+    "id": "tat-ach",
+    "ten": "Tật Ách",
+    "moTa": "Sức khỏe, bệnh tật nội tạng, tai ương nguy hiểm và khả năng cứu giải.",
+    "gomCung": [
+      "tat-ach"
+    ]
+  },
+  {
+    "id": "phuc-duc",
+    "ten": "Phúc Đức",
+    "moTa": "Tâm tính, tư tưởng, phúc đức tổ tiên, tuổi thọ và sự an lạc.",
+    "gomCung": [
+      "phuc-duc"
+    ]
+  }
+]

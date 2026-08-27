@@ -1,0 +1,158 @@
+[
+  {
+    "id": "menh",
+    "ten": "Mệnh",
+    "nguHanh": "Hỏa",
+    "cungXungChieu": "thien-di",
+    "moTa": "Cung cốt lõi quản hạt bản tính, tài năng, chí hướng và số phận tổng quan cả đời.",
+    "phamVi": [
+      "Tính cách",
+      "Tài năng",
+      "Năng lực cốt lõi",
+      "Vận mệnh tổng quan"
+    ]
+  },
+  {
+    "id": "phu-mau",
+    "ten": "Phụ Mẫu",
+    "nguHanh": "Hỏa",
+    "cungXungChieu": "tat-ach",
+    "moTa": "Thể hiện mối quan hệ với cha mẹ, sự nâng đỡ của cấp trên, thầy cô và gia phong gia đình.",
+    "phamVi": [
+      "Cha mẹ",
+      "Cấp trên",
+      "Gia giáo",
+      "Sự hỗ trợ từ thế hệ trước"
+    ]
+  },
+  {
+    "id": "phuc-duc",
+    "ten": "Phúc Đức",
+    "nguHanh": "Thổ",
+    "cungXungChieu": "tai-bach",
+    "moTa": "Quản hạt đời sống tâm linh, tư tưởng, phúc đức tổ tiên tích tụ và tuổi thọ.",
+    "phamVi": [
+      "Đời sống tinh thần",
+      "Phúc đức dòng họ",
+      "Gốc rễ may mắn",
+      "Khả năng chịu đựng"
+    ]
+  },
+  {
+    "id": "dien-trach",
+    "ten": "Điền Trạch",
+    "nguHanh": "Mộc",
+    "cungXungChieu": "tu-tuc",
+    "moTa": "Bất động sản, đất đai, nhà cửa, môi trường sống và khả năng tích lũy tài sản cố định.",
+    "phamVi": [
+      "Nhà cửa",
+      "Bất động sản",
+      "Gia đạo",
+      "Môi trường làm việc/sống"
+    ]
+  },
+  {
+    "id": "quan-loc",
+    "ten": "Quan Lộc",
+    "nguHanh": "Mộc",
+    "cungXungChieu": "phu-the",
+    "moTa": "Con đường sự nghiệp, công danh, trình độ học vấn và thái độ đối với công việc.",
+    "phamVi": [
+      "Sự nghiệp",
+      "Địa vị",
+      "Học vấn",
+      "Khả năng lãnh đạo"
+    ]
+  },
+  {
+    "id": "no-boc",
+    "ten": "Nô Bộc",
+    "nguHanh": "Thổ",
+    "cungXungChieu": "huynh-de",
+    "moTa": "Mối quan hệ với bạn bè, đồng nghiệp, cấp dưới, khách hàng và người giúp việc.",
+    "phamVi": [
+      "Cấp dưới",
+      "Bạn bè",
+      "Xã giao",
+      "Nhân sự hỗ trợ"
+    ]
+  },
+  {
+    "id": "thien-di",
+    "ten": "Thiên Di",
+    "nguHanh": "Thủy",
+    "cungXungChieu": "menh",
+    "moTa": "Môi trường bên ngoài, việc đi xa, du học, định cư, giao tiếp xã hội ngoại giao.",
+    "phamVi": [
+      "Đi xa",
+      "Môi trường ngoài",
+      "Ngoại giao",
+      "Cơ hội xã hội"
+    ]
+  },
+  {
+    "id": "tat-ach",
+    "ten": "Tật Ách",
+    "nguHanh": "Thủy",
+    "cungXungChieu": "phu-mau",
+    "moTa": "Tình trạng sức khỏe, nguy cơ tai họa, bệnh tật và khả năng hóa giải nguy cơ.",
+    "phamVi": [
+      "Sức khỏe",
+      "Bệnh tật",
+      "Họa tai",
+      "Khả năng tự chữa lành"
+    ]
+  },
+  {
+    "id": "tai-bach",
+    "ten": "Tài Bạch",
+    "nguHanh": "Thổ",
+    "cungXungChieu": "phuc-duc",
+    "moTa": "Tiền tài, năng lực kiếm tiền, tư duy quản lý tài chính và nguồn thu nhập.",
+    "phamVi": [
+      "Dòng tiền",
+      "Cách kiếm tiền",
+      "Tài chính",
+      "Khả năng đầu tư"
+    ]
+  },
+  {
+    "id": "tu-tuc",
+    "ten": "Tử Tức",
+    "nguHanh": "Kim",
+    "cungXungChieu": "dien-trach",
+    "moTa": "Mối quan hệ với con cái, số lượng, tính cách và sự thành đạt của thế hệ sau.",
+    "phamVi": [
+      "Con cái",
+      "Hậu duệ",
+      "Học trò/học đệ",
+      "Duyên con cái"
+    ]
+  },
+  {
+    "id": "phu-the",
+    "ten": "Phu Thê",
+    "nguHanh": "Kim",
+    "cungXungChieu": "quan-loc",
+    "moTa": "Tình duyên, hôn nhân, tính cách và sự tương trợ của người phối ngẫu (vợ/chồng).",
+    "phamVi": [
+      "Hôn nhân",
+      "Người phối ngẫu",
+      "Tình duyên",
+      "Gia đình nhỏ"
+    ]
+  },
+  {
+    "id": "huynh-de",
+    "ten": "Huynh Đệ",
+    "nguHanh": "Thổ",
+    "cungXungChieu": "no-boc",
+    "moTa": "Tình cảm anh chị em ruột, bạn bè tri kỷ như ruột thịt và khả năng hợp tác.",
+    "phamVi": [
+      "Anh chị em",
+      "Bạn thân",
+      "Tương trợ nội bộ",
+      "Hợp tác kinh doanh"
+    ]
+  }
+]

@@ -325,9 +325,26 @@
         <p>© Tử Vi Đẩu Số - Hệ Thống Luận Giải Tương Tác 14 Chính Tinh & Cung Chức Năng</p>
     </footer>
 
-    <script src="data.js"></script>
-    <script>
-        /* Data (starsData, palacesData, quizQuestions) now lives in data.js */
+    <script type="module">
+        import { getSao, getNhomCung, getQuiz } from './lib/repo.js';
+
+        // Dữ liệu nạp một lần lúc khởi động; giao diện bên dưới đọc từ ba biến này.
+        let starsData = [], palacesData = [], quizQuestions = [];
+
+        // Màu suy ra từ ngũ hành — dữ liệu không mang class CSS nữa.
+        const MAU_HANH = {
+          'Kim':  { chu: 'text-slate-300',   vien: 'border-slate-400/30'  },
+          'Mộc':  { chu: 'text-emerald-400', vien: 'border-emerald-500/30' },
+          'Thủy': { chu: 'text-sky-400',     vien: 'border-sky-500/30'    },
+          'Hỏa':  { chu: 'text-rose-400',    vien: 'border-rose-500/30'   },
+          'Thổ':  { chu: 'text-amber-400',   vien: 'border-amber-500/30'  },
+        };
+        const mau  = (s) => (MAU_HANH[s.nguHanh] || MAU_HANH['Thổ']).chu;
+        const vien = (s) => (MAU_HANH[s.nguHanh] || MAU_HANH['Thổ']).vien;
+
+        /** Tên cung dạng đọc được, từ danh sách id trong dữ liệu. */
+        const tenCung = (ids) => ids.map(id =>
+          (palacesData.find(n => n.gomCung.includes(id)) || {}).ten || id).filter((v,i,a)=>a.indexOf(v)===i);
         // Global State variables
         let selectedGroupFilter = 'all';
         let currentPalaceMode = 'byPalace';
@@ -337,7 +354,18 @@
         /* ----------------------------------------------------
            STREAMING_CHUNK:Initializing Application UI logic...
            ---------------------------------------------------- */
-        window.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                [starsData, palacesData, quizQuestions] =
+                    await Promise.all([getSao(), getNhomCung(), getQuiz()]);
+            } catch (e) {
+                document.body.insertAdjacentHTML('afterbegin',
+                    `<div class="bg-rose-900/80 text-rose-100 text-sm p-3 text-center">
+                       Không tải được dữ liệu: ${e.message}. Trang cần chạy qua server tĩnh
+                       (<code>npm run dev</code>), không mở trực tiếp bằng file://
+                     </div>`);
+                return;
+            }
             renderStarGrid();
             populatePalaceSelect();
             populateCompareSelects();
@@ -381,12 +409,12 @@
             const elementVal = document.getElementById('elementFilter').value;
 
             const filtered = starsData.filter(star => {
-                const matchesGroup = (selectedGroupFilter === 'all') || (star.group === selectedGroupFilter);
-                const matchesElement = (elementVal === 'all') || (star.elementCategory === elementVal);
-                const matchesSearch = star.name.toLowerCase().includes(searchText) ||
-                                      star.summary.toLowerCase().includes(searchText) ||
-                                      star.essence.toLowerCase().includes(searchText) ||
-                                      star.keywords.some(k => k.toLowerCase().includes(searchText));
+                const matchesGroup = (selectedGroupFilter === 'all') || (star.bo === selectedGroupFilter);
+                const matchesElement = (elementVal === 'all') || (star.nguHanh === elementVal);
+                const matchesSearch = star.ten.toLowerCase().includes(searchText) ||
+                                      star.tomTat.toLowerCase().includes(searchText) ||
+                                      star.loaiTinh.toLowerCase().includes(searchText) ||
+                                      star.tuKhoa.some(k => k.toLowerCase().includes(searchText));
                 return matchesGroup && matchesElement && matchesSearch;
             });
 
@@ -406,35 +434,35 @@
             }
 
             grid.innerHTML = list.map(star => `
-                <div onclick="openStarModal('${star.id}')" class="glass-card rounded-2xl p-5 cursor-pointer transition-all hover:-translate-y-1 group flex flex-col justify-between border ${star.borderBg}">
+                <div onclick="openStarModal('${star.id}')" class="glass-card rounded-2xl p-5 cursor-pointer transition-all hover:-translate-y-1 group flex flex-col justify-between border ${vien(star)}">
                     <div class="space-y-3">
                         <div class="flex justify-between items-start">
                             <div>
-                                <span class="text-[10px] uppercase font-bold tracking-wider text-purple-300/70 block">${star.group}</span>
-                                <h3 class="text-xl font-bold font-serif ${star.color} group-hover:underline">${star.name}</h3>
+                                <span class="text-[10px] uppercase font-bold tracking-wider text-purple-300/70 block">${star.bo}</span>
+                                <h3 class="text-xl font-bold font-serif ${mau(star)} group-hover:underline">${star.ten}</h3>
                             </div>
                             <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-tuvi-darkBg border border-tuvi-border text-gold-300">
-                                ${star.element}
+                                ${star.nguHanh}
                             </span>
                         </div>
 
                         <div class="text-xs font-medium text-amber-200/90 flex items-center gap-1.5">
-                            <i class="fa-solid fa-gem text-tuvi-gold"></i> ${star.essence}
+                            <i class="fa-solid fa-gem text-tuvi-gold"></i> ${star.loaiTinh}
                         </div>
 
                         <p class="text-xs text-purple-200/70 line-clamp-2 leading-relaxed">
-                            ${star.summary}
+                            ${star.tomTat}
                         </p>
                     </div>
 
                     <div class="mt-4 pt-3 border-t border-tuvi-border/50 space-y-1.5">
                         <div class="text-[11px] flex items-center justify-between">
                             <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-circle-check"></i> Tốt:</span>
-                            <span class="text-purple-200 truncate max-w-[140px]">${star.bestPositions.join(', ')}</span>
+                            <span class="text-purple-200 truncate max-w-[140px]">${tenCung(star.cungTot).join(', ')}</span>
                         </div>
                         <div class="text-[11px] flex items-center justify-between">
                             <span class="text-rose-400 font-semibold"><i class="fa-solid fa-triangle-exclamation"></i> Xấu:</span>
-                            <span class="text-purple-200 truncate max-w-[140px]">${star.worstPositions.join(', ')}</span>
+                            <span class="text-purple-200 truncate max-w-[140px]">${tenCung(star.cungXau).join(', ')}</span>
                         </div>
                     </div>
                 </div>
@@ -453,19 +481,19 @@
                 <div class="space-y-4">
                     <div class="border-b border-tuvi-border pb-3 flex justify-between items-end">
                         <div>
-                            <span class="text-xs font-bold text-tuvi-gold uppercase tracking-wider">${star.group}</span>
-                            <h2 class="text-3xl font-bold font-serif ${star.color}">${star.name}</h2>
+                            <span class="text-xs font-bold text-tuvi-gold uppercase tracking-wider">${star.bo}</span>
+                            <h2 class="text-3xl font-bold font-serif ${mau(star)}">${star.ten}</h2>
                         </div>
                         <div class="text-right">
                             <span class="text-xs px-3 py-1 rounded-full bg-tuvi-purple border border-tuvi-gold/40 text-amber-200 font-semibold">
-                                ${star.element}
+                                ${star.nguHanh}
                             </span>
-                            <div class="text-xs text-purple-300 mt-1">${star.essence}</div>
+                            <div class="text-xs text-purple-300 mt-1">${star.loaiTinh}</div>
                         </div>
                     </div>
 
                     <p class="text-sm text-purple-100 italic bg-tuvi-darkBg/60 p-3 rounded-xl border border-tuvi-border">
-                        "${star.summary}"
+                        "${star.tomTat}"
                     </p>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -475,10 +503,10 @@
                                 <i class="fa-solid fa-circle-check"></i> Vị Trí Tốt Nhất (Đắc Vị)
                             </h4>
                             <div class="text-xs font-semibold text-emerald-200">
-                                ${star.bestPositions.join(', ')}
+                                ${tenCung(star.cungTot).join(', ')}
                             </div>
                             <p class="text-xs text-emerald-100/80 leading-relaxed">
-                                ${star.bestDetail}
+                                ${star.luanCungTot}
                             </p>
                         </div>
 
@@ -488,10 +516,10 @@
                                 <i class="fa-solid fa-triangle-exclamation"></i> Vị Trí Xấu Nhất (Hãm/Kỵ)
                             </h4>
                             <div class="text-xs font-semibold text-rose-200">
-                                ${star.worstPositions.join(', ')}
+                                ${tenCung(star.cungXau).join(', ')}
                             </div>
                             <p class="text-xs text-rose-100/80 leading-relaxed">
-                                ${star.worstDetail}
+                                ${star.luanCungXau}
                             </p>
                         </div>
                     </div>
@@ -499,7 +527,7 @@
                     <div class="pt-2">
                         <span class="text-xs text-purple-300 font-semibold block mb-2">Từ khóa cốt lõi:</span>
                         <div class="flex flex-wrap gap-1.5">
-                            ${star.keywords.map(k => `<span class="text-xs px-2.5 py-1 bg-tuvi-darkBg border border-tuvi-border rounded-lg text-amber-200/90"># ${k}</span>`).join('')}
+                            ${star.tuKhoa.map(k => `<span class="text-xs px-2.5 py-1 bg-tuvi-darkBg border border-tuvi-border rounded-lg text-amber-200/90"># ${k}</span>`).join('')}
                         </div>
                     </div>
                 </div>
@@ -537,12 +565,12 @@
 
         function populatePalaceSelect() {
             const select = document.getElementById('palaceSelect');
-            select.innerHTML = palacesData.map(p => `<option value="${p.id}">${p.name} - ${p.desc.substring(0, 35)}...</option>`).join('');
+            select.innerHTML = palacesData.map(p => `<option value="${p.id}">${p.ten} - ${p.moTa.substring(0, 35)}...</option>`).join('');
         }
 
         function populateStarSelect() {
             const select = document.getElementById('palaceSelect');
-            select.innerHTML = starsData.map(s => `<option value="${s.id}">${s.name} (${s.element} - ${s.group})</option>`).join('');
+            select.innerHTML = starsData.map(s => `<option value="${s.id}">${s.ten} (${s.nguHanh} - ${s.bo})</option>`).join('');
         }
 
         function renderPalaceAnalysis() {
@@ -555,24 +583,24 @@
                 if (!palace) return;
 
                 // Filter best and worst stars for this palace
-                const bestStars = starsData.filter(s => s.bestPositions.some(p => p.toLowerCase().includes(palace.name.toLowerCase())));
-                const worstStars = starsData.filter(s => s.worstPositions.some(p => p.toLowerCase().includes(palace.name.toLowerCase()) || (palace.id === 'luc-than' && p.includes('Lục thân'))));
+                const bestStars = starsData.filter(s => s.cungTot.some(id => palace.gomCung.includes(id)));
+                const worstStars = starsData.filter(s => s.cungXau.some(id => palace.gomCung.includes(id)));
 
                 resultBox.innerHTML = `
                     <!-- Best Stars -->
                     <div class="bg-tuvi-darkBg/90 border border-emerald-500/40 rounded-2xl p-5 space-y-4">
                         <div class="border-b border-emerald-500/30 pb-3">
                             <span class="text-xs text-emerald-400 font-bold uppercase tracking-wider">CÁT VỊ - ĐẮC ĐỊA</span>
-                            <h3 class="text-lg font-bold text-emerald-300 font-serif">Các Sao Tốt Nhất Tại Cung ${palace.name}</h3>
-                            <p class="text-xs text-purple-300/70 mt-0.5">${palace.desc}</p>
+                            <h3 class="text-lg font-bold text-emerald-300 font-serif">Các Sao Tốt Nhất Tại Cung ${palace.ten}</h3>
+                            <p class="text-xs text-purple-300/70 mt-0.5">${palace.moTa}</p>
                         </div>
                         ${bestStars.length > 0 ? bestStars.map(s => `
                             <div class="p-3 bg-tuvi-cardBg/80 border border-emerald-500/20 rounded-xl space-y-1">
                                 <div class="flex justify-between items-center">
-                                    <span class="font-bold text-sm text-emerald-300 cursor-pointer hover:underline" onclick="openStarModal('${s.id}')">${s.name} (${s.element})</span>
-                                    <span class="text-[10px] px-2 py-0.5 bg-emerald-950 border border-emerald-500/40 text-emerald-200 rounded">${s.group}</span>
+                                    <span class="font-bold text-sm text-emerald-300 cursor-pointer hover:underline" onclick="openStarModal('${s.id}')">${s.ten} (${s.nguHanh})</span>
+                                    <span class="text-[10px] px-2 py-0.5 bg-emerald-950 border border-emerald-500/40 text-emerald-200 rounded">${s.bo}</span>
                                 </div>
-                                <p class="text-xs text-purple-200/80 leading-relaxed">${s.bestDetail}</p>
+                                <p class="text-xs text-purple-200/80 leading-relaxed">${s.luanCungTot}</p>
                             </div>
                         `).join('') : '<p class="text-xs text-purple-300/60 italic">Không có chính tinh nào coi vị trí này là tốt duy nhất, phụ thuộc vào đắc/hãm địa.</p>'}
                     </div>
@@ -581,16 +609,16 @@
                     <div class="bg-tuvi-darkBg/90 border border-rose-500/40 rounded-2xl p-5 space-y-4">
                         <div class="border-b border-rose-500/30 pb-3">
                             <span class="text-xs text-rose-400 font-bold uppercase tracking-wider">HUNG VỊ - HÃM KỊ</span>
-                            <h3 class="text-lg font-bold text-rose-300 font-serif">Các Sao Kỵ Nhất Tại Cung ${palace.name}</h3>
-                            <p class="text-xs text-purple-300/70 mt-0.5">${palace.desc}</p>
+                            <h3 class="text-lg font-bold text-rose-300 font-serif">Các Sao Kỵ Nhất Tại Cung ${palace.ten}</h3>
+                            <p class="text-xs text-purple-300/70 mt-0.5">${palace.moTa}</p>
                         </div>
                         ${worstStars.length > 0 ? worstStars.map(s => `
                             <div class="p-3 bg-tuvi-cardBg/80 border border-rose-500/20 rounded-xl space-y-1">
                                 <div class="flex justify-between items-center">
-                                    <span class="font-bold text-sm text-rose-300 cursor-pointer hover:underline" onclick="openStarModal('${s.id}')">${s.name} (${s.element})</span>
-                                    <span class="text-[10px] px-2 py-0.5 bg-rose-950 border border-rose-500/40 text-rose-200 rounded">${s.group}</span>
+                                    <span class="font-bold text-sm text-rose-300 cursor-pointer hover:underline" onclick="openStarModal('${s.id}')">${s.ten} (${s.nguHanh})</span>
+                                    <span class="text-[10px] px-2 py-0.5 bg-rose-950 border border-rose-500/40 text-rose-200 rounded">${s.bo}</span>
                                 </div>
-                                <p class="text-xs text-purple-200/80 leading-relaxed">${s.worstDetail}</p>
+                                <p class="text-xs text-purple-200/80 leading-relaxed">${s.luanCungXau}</p>
                             </div>
                         `).join('') : '<p class="text-xs text-purple-300/60 italic">Cung này ít gặp hình khắc tuyệt đối từ chính tinh hãm địa đơn lẻ.</p>'}
                     </div>
@@ -604,22 +632,22 @@
                     <div class="bg-tuvi-darkBg/90 border border-emerald-500/40 rounded-2xl p-5 space-y-4">
                         <div class="border-b border-emerald-500/30 pb-3">
                             <span class="text-xs text-emerald-400 font-bold uppercase tracking-wider">ĐẮC VỊ NỔI BẬT</span>
-                            <h3 class="text-lg font-bold text-emerald-300 font-serif">Vị Trí Tốt Nhất Của ${star.name}</h3>
-                            <p class="text-xs text-purple-200/80 mt-1">Cung: <strong class="text-amber-300">${star.bestPositions.join(', ')}</strong></p>
+                            <h3 class="text-lg font-bold text-emerald-300 font-serif">Vị Trí Tốt Nhất Của ${star.ten}</h3>
+                            <p class="text-xs text-purple-200/80 mt-1">Cung: <strong class="text-amber-300">${tenCung(star.cungTot).join(', ')}</strong></p>
                         </div>
                         <p class="text-xs text-purple-100 leading-relaxed bg-tuvi-cardBg/60 p-3 rounded-xl border border-tuvi-border">
-                            ${star.bestDetail}
+                            ${star.luanCungTot}
                         </p>
                     </div>
 
                     <div class="bg-tuvi-darkBg/90 border border-rose-500/40 rounded-2xl p-5 space-y-4">
                         <div class="border-b border-rose-500/30 pb-3">
                             <span class="text-xs text-rose-400 font-bold uppercase tracking-wider">HÃM / HÌNH KHẮC</span>
-                            <h3 class="text-lg font-bold text-rose-300 font-serif">Vị Trí Xấu Nhất Của ${star.name}</h3>
-                            <p class="text-xs text-purple-200/80 mt-1">Cung: <strong class="text-rose-300">${star.worstPositions.join(', ')}</strong></p>
+                            <h3 class="text-lg font-bold text-rose-300 font-serif">Vị Trí Xấu Nhất Của ${star.ten}</h3>
+                            <p class="text-xs text-purple-200/80 mt-1">Cung: <strong class="text-rose-300">${tenCung(star.cungXau).join(', ')}</strong></p>
                         </div>
                         <p class="text-xs text-purple-100 leading-relaxed bg-tuvi-cardBg/60 p-3 rounded-xl border border-tuvi-border">
-                            ${star.worstDetail}
+                            ${star.luanCungXau}
                         </p>
                     </div>
                 `;
@@ -632,7 +660,7 @@
         function populateCompareSelects() {
             const s1 = document.getElementById('compareStar1');
             const s2 = document.getElementById('compareStar2');
-            const options = starsData.map(s => `<option value="${s.id}">${s.name} (${s.group})</option>`).join('');
+            const options = starsData.map(s => `<option value="${s.id}">${s.ten} (${s.bo})</option>`).join('');
             s1.innerHTML = options;
             s2.innerHTML = options;
             s2.selectedIndex = 1; // Default select second star
@@ -653,45 +681,45 @@
                     <thead>
                         <tr class="border-b border-tuvi-border bg-tuvi-purple/40">
                             <th class="p-3 text-purple-300 font-semibold w-1/4">Tiêu Chí So Sánh</th>
-                            <th class="p-3 font-bold font-serif text-lg ${star1.color} w-3/8">${star1.name}</th>
-                            <th class="p-3 font-bold font-serif text-lg ${star2.color} w-3/8">${star2.name}</th>
+                            <th class="p-3 font-bold font-serif text-lg ${mau(star1)} w-3/8">${star1.ten}</th>
+                            <th class="p-3 font-bold font-serif text-lg ${mau(star2)} w-3/8">${star2.ten}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-tuvi-border/40">
                         <tr>
                             <td class="p-3 text-purple-300 font-semibold">Bộ Sao</td>
-                            <td class="p-3 text-purple-100">${star1.group}</td>
-                            <td class="p-3 text-purple-100">${star2.group}</td>
+                            <td class="p-3 text-purple-100">${star1.bo}</td>
+                            <td class="p-3 text-purple-100">${star2.bo}</td>
                         </tr>
                         <tr>
                             <td class="p-3 text-purple-300 font-semibold">Ngũ Hành</td>
-                            <td class="p-3 text-amber-300 font-semibold">${star1.element}</td>
-                            <td class="p-3 text-amber-300 font-semibold">${star2.element}</td>
+                            <td class="p-3 text-amber-300 font-semibold">${star1.amDuong} ${star1.nguHanh}</td>
+                            <td class="p-3 text-amber-300 font-semibold">${star2.amDuong} ${star2.nguHanh}</td>
                         </tr>
                         <tr>
                             <td class="p-3 text-purple-300 font-semibold">Hóa Khí & Cốt Lõi</td>
-                            <td class="p-3 text-purple-200">${star1.essence}</td>
-                            <td class="p-3 text-purple-200">${star2.essence}</td>
+                            <td class="p-3 text-purple-200">${star1.loaiTinh}</td>
+                            <td class="p-3 text-purple-200">${star2.loaiTinh}</td>
                         </tr>
                         <tr>
                             <td class="p-3 text-purple-300 font-semibold">Vị Trí Tốt Nhất</td>
-                            <td class="p-3 text-emerald-400 font-semibold">${star1.bestPositions.join(', ')}</td>
-                            <td class="p-3 text-emerald-400 font-semibold">${star2.bestPositions.join(', ')}</td>
+                            <td class="p-3 text-emerald-400 font-semibold">${tenCung(star1.cungTot).join(', ')}</td>
+                            <td class="p-3 text-emerald-400 font-semibold">${tenCung(star2.cungTot).join(', ')}</td>
                         </tr>
                         <tr>
                             <td class="p-3 text-purple-300 font-semibold">Vị Trí Xấu Nhất</td>
-                            <td class="p-3 text-rose-400 font-semibold">${star1.worstPositions.join(', ')}</td>
-                            <td class="p-3 text-rose-400 font-semibold">${star2.worstPositions.join(', ')}</td>
+                            <td class="p-3 text-rose-400 font-semibold">${tenCung(star1.cungXau).join(', ')}</td>
+                            <td class="p-3 text-rose-400 font-semibold">${tenCung(star2.cungXau).join(', ')}</td>
                         </tr>
                         <tr>
                             <td class="p-3 text-purple-300 font-semibold">Luận Đoán Cát Vị</td>
-                            <td class="p-3 text-purple-200 leading-relaxed">${star1.bestDetail}</td>
-                            <td class="p-3 text-purple-200 leading-relaxed">${star2.bestDetail}</td>
+                            <td class="p-3 text-purple-200 leading-relaxed">${star1.luanCungTot}</td>
+                            <td class="p-3 text-purple-200 leading-relaxed">${star2.luanCungTot}</td>
                         </tr>
                         <tr>
                             <td class="p-3 text-purple-300 font-semibold">Luận Đoán Hung Vị</td>
-                            <td class="p-3 text-purple-200 leading-relaxed">${star1.worstDetail}</td>
-                            <td class="p-3 text-purple-200 leading-relaxed">${star2.worstDetail}</td>
+                            <td class="p-3 text-purple-200 leading-relaxed">${star1.luanCungXau}</td>
+                            <td class="p-3 text-purple-200 leading-relaxed">${star2.luanCungXau}</td>
                         </tr>
                     </tbody>
                 </table>

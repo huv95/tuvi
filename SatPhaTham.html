@@ -414,23 +414,18 @@
 
     </main>
 
-    <script>
-        // Data structure for the 12 Functional Houses in Zi Wei Dou Shu order
-        const HOUSES = [
-            { id: 0, name: "Mệnh", short: "Mệnh", pos: "top-left" },
-            { id: 1, name: "Phụ Mẫu", short: "Phụ", pos: "top-mid1" },
-            { id: 2, name: "Phúc Đức", short: "Phúc", pos: "top-mid2" },
-            { id: 3, name: "Điền Trạch", short: "Điền", pos: "top-right" },
-            { id: 4, name: "Quan Lộc", short: "Quan", pos: "right-mid1" },
-            { id: 5, name: "Nô Bộc", short: "Nô", pos: "right-mid2" },
-            { id: 6, name: "Thiên Di", short: "Di", pos: "bottom-right" },
-            { id: 7, name: "Tật Ách", short: "Tật", pos: "bottom-mid2" },
-            { id: 8, name: "Tài Bạch", short: "Tài", pos: "bottom-mid1" },
-            { id: 9, name: "Tử Tức", short: "Tử", pos: "bottom-left" },
-            { id: 10, name: "Phu Thê", short: "Phê", pos: "left-mid2" },
-            { id: 11, name: "Huynh Đệ", short: "Huynh", pos: "left-mid1" }
-        ];
+    <script type="module">
+        import { getCung, getCachCuc } from './lib/repo.js';
 
+        // Tên cung lấy từ data/cung.json theo đúng thứ tự 0..11 của bàn cờ.
+        // Viết tắt là chuyện trình bày, giữ tại trang.
+        const VIET_TAT = ['Mệnh','Phụ','Phúc','Điền','Quan','Nô','Di','Tật','Tài','Tử','Phu','Bào'];
+        const THU_TU = ['menh','phu-mau','phuc-duc','dien-trach','quan-loc','no-boc',
+                        'thien-di','tat-ach','tai-bach','tu-tuc','phu-the','huynh-de'];
+        let HOUSES = [], TRIAD_GROUPS = [], SCENARIOS = {};
+
+        // Data structure for the 12 Functional Houses in Zi Wei Dou Shu order
+        
         // Grid positions in 4x4 matrix representation (0-indexed [row, col])
         const GRID_LAYOUT = [
             { houseIdx: 0, r: 0, c: 0 },  // Mệnh
@@ -448,172 +443,26 @@
         ];
 
         // Group definitions (4 Tam Hợp Groups)
-        const TRIAD_GROUPS = [
-            {
-                id: "menh-tai-quan",
-                name: "Tam Hợp Mệnh - Tài - Quan",
-                type: "Cấu Trúc Nòng Cốt Bản Thân",
-                houses: [0, 8, 4], // Mệnh (0), Tài Bạch (8), Quan Lộc (4)
-                description: "Đây là cách trí trực tiếp ảnh hưởng đến nhân cách, sự nghiệp và tài chính chính yếu của bản mệnh. Mang tính chất chủ động, ganh đua, hành động quyết liệt và thích bứt phá trong cuộc sống."
-            },
-            {
-                id: "phu-tu-no",
-                name: "Tam Hợp Phụ - Tử - Nô",
-                type: "Cấu Trúc Mối Quan Hệ Xã Hội & Đời Trước/Sau",
-                houses: [1, 9, 5], // Phụ Mẫu (1), Tử Tức (9), Nô Bộc (5)
-                description: "Sát Phá Tham nằm ở vòng Phụ - Tử - Nô thể hiện các mối quan hệ xã hội, cấp dưới, bạn bè hoặc gia đạo có tính chất biến động, mạnh mẽ, năng động hoặc gặp nhiều thử thách đan xen."
-            },
-            {
-                id: "phuc-di-phoi",
-                name: "Tam Hợp Phúc - Di - Phối",
-                type: "Cấu Trúc Tinh Thần, Môi Trường & Hôn Nhân",
-                houses: [2, 6, 10], // Phúc Đức (2), Thiên Di (6), Phu Thê (10)
-                description: "Ảnh hưởng lớn đến tư tưởng dòng họ, xu hướng ra ngoài xông pha (Thiên Di) và đường phối ngẫu. Mệnh thường thuộc nhóm Cơ Nguyệt Đồng Lương hoặc Cự Nhật chiếu sang."
-            },
-            {
-                id: "huynh-tat-dien",
-                name: "Tam Hợp Huynh - Tật - Điền",
-                type: "Cấu Trúc Thân Thể, Điền Sản & Anh Em",
-                houses: [11, 7, 3], // Huynh Đệ (11), Tật Ách (7), Điền Trạch (3)
-                description: "Tập trung vào khía cạnh bất động sản, tích lũy tài sản, sức khỏe thể chất và tình cảm anh em. Cho thấy tiềm lực ngầm và khả năng kiến tạo tài sản qua mạo hiểm."
-            }
-        ];
-
+        
         // Dynamic scenarios based on where Thất Sát resides
         // Note: Phá Quân = (ShatIdx + 4) % 12, Tham Lang = (ShatIdx + 8) % 12
-        const SCENARIOS = {
-            0: { // Thất Sát at Mệnh (0) -> Phá Quân at Quan Lộc (4) -> Tham Lang at Tài Bạch (8)
-                shatRole: "Mệnh Thất Sát: Bạn là người độc lập, quyết đoán, mang tác phong lãnh đạo, chịu áp lực tốt, dám nghĩ dám làm.",
-                phaRole: "Quan Phá Quân: Sự nghiệp mang tính khai phá, thích làm mới mô hình, sẵn sàng đón nhận thử thách lớn.",
-                thamRole: "Tài Tham Lang: Kiếm tiền bằng tài giao tiếp, nhạy bén cơ hội, đa dạng nguồn thu, giỏi thương lượng.",
-                shatTags: ["Mệnh Chủ", "Quyết Đoán", "Bản Lĩnh"],
-                phaTags: ["Đổi Mới", "Tiên Phong", "Sáng Tạo"],
-                thamTags: ["Ngoại Giao", "Nhạy Bến", "Đa Tài"],
-                career: "Quản lý doanh nghiệp, lực lượng vũ trang, kỹ thuật công nghiệp, khởi nghiệp, đầu tư thương mại.",
-                action: "Nên phát huy sự kiên trì, kiểm soát cái tôi nóng nảy để giữ vững thành quả bền vững."
-            },
-            4: { // Thất Sát at Quan Lộc (4) -> Phá Quân at Tài Bạch (8) -> Tham Lang at Mệnh (0)
-                shatRole: "Quan Thất Sát: Trong công việc dứt khoát, muốn nắm quyền điều hành, có uy quyền, chịu khó dấn thân.",
-                phaRole: "Tài Phá Quân: Tài chính biến động lớn, thích đầu tư quy mô, tiền vào nhanh ra nhanh rồi mới tụ.",
-                thamRole: "Mệnh Tham Lang: Tính cách linh hoạt, quyến rũ, khéo léo trong ứng xử, nhạy bén thời thế và đa nghệ.",
-                shatTags: ["Uy Quyền", "Quyết Liệt", "Thực Lực"],
-                phaTags: ["Đầu Tư", "Tái Thiết", "Mạo Hiểm"],
-                thamTags: ["Khéo Ứng Xử", "Duyên Dáng", "Cơ Hội"],
-                career: "Nghệ thuật, truyền thông, kinh doanh dịch vụ, quản lý nhân sự, tư vấn tài chính.",
-                action: "Cần kỷ luật tài chính cá nhân, tránh đầu tư dàn trải khi chưa nghiên cứu kỹ."
-            },
-            8: { // Thất Sát at Tài Bạch (8) -> Phá Quân at Mệnh (0) -> Tham Lang at Quan Lộc (4)
-                shatRole: "Tài Thất Sát: Cách kiếm tiền quyết liệt, dứt khoát, thích đánh nhanh thắng nhanh, chấp nhận rủi ro lớn.",
-                phaRole: "Mệnh Phá Quân: Cá tính mạnh mẽ, không thích gò bó, cá tính độc đáo, hay làm mới bản thân.",
-                thamRole: "Quan Tham Lang: Công việc cần năng lực giao tiếp, mở rộng mạng lưới quan hệ, làm việc trong môi trường năng động.",
-                shatTags: ["Quyết Đoán", "Đánh Nhanh", "Táo Bạo"],
-                phaTags: ["Cá Tính", "Tự Do", "Bứt Phá"],
-                thamTags: ["Kết Nối", "Nhiều Mối", "Linh Hoạt"],
-                career: "Kinh doanh tự do, phát triển thị trường mới, giải trí, xuất nhập khẩu, mạo hiểm tài chính.",
-                action: "Cần xây dựng kế hoạch quản trị rủi ro kĩ càng, kiềm chế tính bồng bột."
-            },
-
-            // Phụ - Tử - Nô scenarios
-            1: { // Thất Sát at Phụ Mẫu (1)
-                shatRole: "Phụ Mẫu Thất Sát: Cha mẹ nghiêm khắc, tính cách mạnh mẽ, có kỷ luật cao hoặc công tác ngành vũ trang/kỹ thuật.",
-                phaRole: "Nô Bộc Phá Quân: Bạn bè, cấp dưới năng động, hay thay đổi, có sự cạnh tranh hoặc tính sàng lọc cao.",
-                thamRole: "Tử Tức Tham Lang: Con cái thông minh, đa tài, khéo léo, thích nghệ thuật hoặc giao tiếp tốt.",
-                shatTags: ["Nghiêm Khắc", "Kỷ Luật", "Độc Lập"],
-                phaTags: ["Sàng Lọc", "Năng Động", "Biến Động"],
-                thamTags: ["Thông Minh", "Nghệ Thuật", "Khéo Léo"],
-                career: "Hợp làm việc trong các tổ chức có tính kỷ luật cao, giáo dục, tư vấn gia đình.",
-                action: "Nên lắng nghe tôn trọng ý kiến cha mẹ và định hướng con cái đa dạng."
-            },
-            5: { // Thất Sát at Nô Bộc (5)
-                shatRole: "Nô Bộc Thất Sát: Bạn bè, đối tác có uy quyền, tính cách thẳng thắn, quyết đoán nhưng hơi áp đặt.",
-                phaRole: "Tử Tức Phá Quân: Con cái hiếu động, cá tính mạnh, thích tự lập sớm và có hướng đi riêng.",
-                thamRole: "Phụ Mẫu Tham Lang: Cha mẹ khéo léo, có tài giao thiệp, quan tâm đến đời sống tinh thần.",
-                shatTags: ["Bạn Uy Quyền", "Trực Tính", "Năng Nổ"],
-                phaTags: ["Tự Lập", "Cá Tính", "Độc Lập"],
-                thamTags: ["Tinh Tế", "Ngoại Giao", "Rộng Lượng"],
-                career: "Quản lý nhân sự, hợp tác kinh doanh có hợp đồng rõ ràng, làm việc cộng đồng.",
-                action: "Cần chọn lọc bạn bè uy tín, tránh tin tưởng quá mức vào cam kết miệng."
-            },
-            9: { // Thất Sát at Tử Tức (9)
-                shatRole: "Tử Tức Thất Sát: Con cái cá tính dũng cảm, kiên cường, thích làm thủ lĩnh, cần sự định hướng từ nhỏ.",
-                phaRole: "Phụ Mẫu Phá Quân: Cha mẹ hay thay đổi môi trường sống hoặc có tư tưởng tân tiến, đổi mới.",
-                thamRole: "Nô Bộc Tham Lang: Mạng lưới bạn bè rộng rãi, nhiều tầng lớp, giỏi giao lưu hỗ trợ công việc.",
-                shatTags: ["Con Dũng Cảm", "Lãnh Đạo", "Kiên Cường"],
-                phaTags: ["Tân Tiến", "Đổi Mới", "Mở Đường"],
-                thamTags: ["Bạn Rộng Rãi", "Hỗ Trợ", "Giao Tiếp"],
-                career: "Giáo dục tài năng trẻ, xây dựng cộng đồng, phát triển hệ thống đại lý.",
-                action: "Dành thời gian đồng hành cùng con cái, kiên nhẫn chia sẻ."
-            },
-
-            // Phúc - Di - Phối scenarios
-            2: { // Thất Sát at Phúc Đức (2) -> Phá Quân at Thiên Di (6) -> Tham Lang at Phu Thê (10)
-                shatRole: "Phúc Đức Thất Sát: Dòng họ có nhiều người thành đạt về quân sự, kinh doanh, tư tưởng ông bà kiên cường.",
-                phaRole: "Thiên Di Phá Quân: Ra ngoài hay xông pha, môi trường bên ngoài nhiều biến động, đòi hỏi khả năng thích nghi và khai phá cao.",
-                thamRole: "Phu Thê Tham Lang: Người phối ngẫu khéo léo, duyên dáng, lãng mạn, tài hoa và giỏi giao thiệp.",
-                shatTags: ["Dòng Họ Cương Trực", "Gia Phong", "Bản Lĩnh"],
-                phaTags: ["Xông Pha", "Khai Phá", "Biến Động"],
-                thamTags: ["Duyên Dáng", "Khéo Léo", "Lãng Mạn"],
-                career: "Ngoại giao, đi công tác xa, thương mại quốc tế, du lịch, truyền thông.",
-                action: "Học cách nhường nhịn trong đời sống vợ chồng và giữ tâm thế vững vàng khi xông pha ra bên ngoài."
-            },
-            6: { // Thất Sát at Thiên Di (6)
-                shatRole: "Thiên Di Thất Sát: Ra ngoài thể hiện sự uy nghi, dám gánh vác, thích hợp phát triển ở môi trường mới.",
-                phaRole: "Phu Thê Phá Quân: Hôn nhân trải qua thử thách mới vững bền, bạn đời thích tự do sáng tạo.",
-                thamRole: "Phúc Đức Tham Lang: Tư tưởng tâm linh, yêu thích văn hóa nghệ thuật, đời sống tinh thần phong phú.",
-                shatTags: ["Xông Pha", "Uy Nghi", "Tự Lập Xa Nhà"],
-                phaTags: ["Thử Thách", "Sáng Tạo", "Vững Vàng"],
-                thamTags: ["Tâm Linh", "Nghệ Thuật", "Đa Dạng"],
-                career: "Làm việc ở thị trường nước ngoài, điều hành chi nhánh, phát triển dự án xa.",
-                action: "Tự tin xông pha ra bên ngoài nhưng nhớ giữ mối liên kết với gia đình."
-            },
-
-            10: { // Thất Sát at Phu Thê (10)
-                shatRole: "Phu Thê Thất Sát: Người phối ngẫu quyết đoán, gánh vác gia đình, có năng lực quản lý tốt.",
-                phaRole: "Phúc Đức Phá Quân: Dòng họ có sự biến động, nhiều người đi xa lập nghiệp.",
-                thamRole: "Thiên Di Tham Lang: Khi ra ngoài rất thu hút, được nhiều người yêu mến, giỏi nắm bắt xu hướng.",
-                shatTags: ["Bạn Đời Độc Lập", "Gánh Vác", "Cương Trực"],
-                phaTags: ["Xa Lập Nghiệp", "Biến Động", "Đổi Mới"],
-                thamTags: ["Thu Hút", "Nhiều Mối Duyên", "Xu Hướng"],
-                career: "Hợp tác vợ chồng trong kinh doanh, ngoại giao, truyền thông.",
-                action: "Tôn trọng không gian riêng của nửa kia, phân công trách nhiệm rõ ràng."
-            },
-
-            // Huynh - Tật - Điền scenarios
-            3: { // Thất Sát at Điền Trạch (3)
-                shatRole: "Điền Trạch Thất Sát: Đất đai nhà cửa đến từ sự tự lực gánh vác, có tài sản lớn nếu kiên trì.",
-                phaRole: "Tật Ách Phá Quân: Chú ý sức khỏe hệ tiêu hóa, xương khớp hoặc hao tốn khi điều trị bệnh.",
-                thamRole: "Huynh Đệ Tham Lang: Anh em trong nhà tài hoa, linh hoạt, nhiều mối quan hệ xã hội.",
-                shatTags: ["Tự Lực Mua Nhà", "Điền Sản Bền", "Nỗ Lực"],
-                phaTags: ["Sức Khỏe Biến Động", "Chú Ý Điều Trị"],
-                thamTags: ["Anh Em Đa Tài", "Vui Vẻ", "Khéo Léo"],
-                career: "Bất động sản, xây dựng, kiến trúc, quy hoạch không gian.",
-                action: "Đầu tư bất động sản chắc chắn, rèn luyện thể thao đều đặn."
-            },
-            7: { // Thất Sát at Tật Ách (7)
-                shatRole: "Tật Ách Thất Sát: Sức khỏe tốt, tính cách kiên cường vượt qua bệnh tật, cần chú ý phẫu thuật nhẹ.",
-                phaRole: "Huynh Đệ Phá Quân: Tình cảm anh em có lúc thăng trầm, mỗi người một cá tính riêng biệt.",
-                thamRole: "Điền Trạch Tham Lang: Đất đai trang trí đẹp mắt, có duyên sở hữu nhà ở nơi sầm uất.",
-                shatTags: ["Sức Đề Kháng Tốt", "Bản Lĩnh Bệnh Tật"],
-                phaTags: ["Anh Em Độc Lập", "Cá Tính Trái Ngược"],
-                thamTags: ["Nhà Cửa Đẹp", "Nơi Sầm Uất", "Thẩm Mỹ"],
-                career: "Y khoa, phẫu thuật, thẩm mỹ, thiết kế nội thất nhà ở.",
-                action: "Chăm sóc bản thân kỹ lưỡng, giữ gìn hòa khí anh em."
-            },
-            11: { // Thất Sát at Huynh Đệ (11)
-                shatRole: "Huynh Đệ Thất Sát: Anh em trong nhà có người làm quản lý hoặc ngành lực lượng, thẳng thắn.",
-                phaRole: "Điền Trạch Phá Quân: Nhà cửa dễ sửa sang, cải tạo nhiều lần hoặc thay đổi nơi ở.",
-                thamRole: "Tật Ách Tham Lang: Chú ý chăm sóc sức khỏe tinh thần, tránh thức khuya hay sinh hoạt thất thường.",
-                shatTags: ["Anh Em Uy Quyền", "Thẳng Thắn", "Giúp Đỡ"],
-                phaTags: ["Cải Tạo Nhà", "Sửa Sang", "Đổi Mới"],
-                thamTags: ["Thói Quên Sống", "Tâm Lý", "Dưỡng Sinh"],
-                career: "Kinh doanh cùng người thân, sửa chữa cải tạo bất động sản.",
-                action: "Chú trọng cân bằng giữa làm việc và nghỉ ngơi hợp lý."
-            }
-        };
-
+        
         let currentShatIdx = 0; // Default Mệnh
 
-        window.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const [cung, cachCuc] = await Promise.all([getCung(), getCachCuc()]);
+                const ten = Object.fromEntries(cung.map(c => [c.id, c.ten]));
+                HOUSES = THU_TU.map((id, i) => ({ id: i, name: ten[id], short: VIET_TAT[i] }));
+                TRIAD_GROUPS = cachCuc.tamHop.map(t => ({ ...t, cungIdx: t.cung.map(x => THU_TU.indexOf(x)) }));
+                SCENARIOS = Object.fromEntries(cachCuc.theSatPhaTham.map(t => [THU_TU.indexOf(t.cungThatSat), t]));
+            } catch (e) {
+                document.body.insertAdjacentHTML('afterbegin',
+                    `<div style="background:#7f1d1d;color:#fee;padding:12px;text-align:center;font-size:14px">
+                       Không tải được dữ liệu: ${e.message}. Trang cần chạy qua server tĩnh
+                       (npm run dev), không mở trực tiếp bằng file://</div>`);
+                return;
+            }
             populateSelectOptions();
             renderChartGrid();
             updateAllViews();
@@ -662,7 +511,7 @@
         // Handle Presets
         function setPreset(triadGroupIdx) {
             const group = TRIAD_GROUPS[triadGroupIdx];
-            currentShatIdx = group.houses[0]; // Set Shat to first house in group
+            currentShatIdx = group.cungIdx[0]; // Set Shat to first house in group
             document.getElementById('select-shat-position').value = currentShatIdx;
             updateAllViews();
         }
@@ -676,7 +525,7 @@
 
         // Identify active Triad Group
         function getActiveTriadGroup(shatIdx) {
-            return TRIAD_GROUPS.find(g => g.houses.includes(shatIdx));
+            return TRIAD_GROUPS.find(g => g.cungIdx.includes(shatIdx));
         }
 
         // Render standard 4x4 perimeter grid
@@ -777,30 +626,30 @@
             drawTriadPolygon(shatIdx, phaIdx, thamIdx);
 
             // 3. Update Center Text
-            document.getElementById('center-title').textContent = activeGroup.name;
-            document.getElementById('tamhap-group-badge').textContent = activeGroup.type;
+            document.getElementById('center-title').textContent = activeGroup.ten;
+            document.getElementById('tamhap-group-badge').textContent = activeGroup.loai;
 
             // 4. Update Header Details
-            document.getElementById('detail-group-title').textContent = `${activeGroup.name}`;
-            document.getElementById('detail-triad-type').textContent = activeGroup.type;
-            document.getElementById('detail-group-desc').textContent = activeGroup.description;
+            document.getElementById('detail-group-title').textContent = `${activeGroup.ten}`;
+            document.getElementById('detail-triad-type').textContent = activeGroup.loai;
+            document.getElementById('detail-group-desc').textContent = activeGroup.moTa;
 
             // 5. Update Star Cards
             document.getElementById('shat-house-name').textContent = `Cung ${HOUSES[shatIdx].name}`;
-            document.getElementById('shat-role-text').textContent = scenario.shatRole;
-            renderTags('shat-tags', scenario.shatTags, 'bg-red-950/80 text-red-300 border-red-800');
+            document.getElementById('shat-role-text').textContent = scenario.luanThatSat;
+            renderTags('shat-tags', scenario.tuKhoaThatSat, 'bg-red-950/80 text-red-300 border-red-800');
 
             document.getElementById('pha-house-name').textContent = `Cung ${HOUSES[phaIdx].name}`;
-            document.getElementById('pha-role-text').textContent = scenario.phaRole;
-            renderTags('pha-tags', scenario.phaTags, 'bg-cyan-950/80 text-cyan-300 border-cyan-800');
+            document.getElementById('pha-role-text').textContent = scenario.luanPhaQuan;
+            renderTags('pha-tags', scenario.tuKhoaPhaQuan, 'bg-cyan-950/80 text-cyan-300 border-cyan-800');
 
             document.getElementById('tham-house-name').textContent = `Cung ${HOUSES[thamIdx].name}`;
-            document.getElementById('tham-role-text').textContent = scenario.thamRole;
-            renderTags('tham-tags', scenario.thamTags, 'bg-purple-950/80 text-purple-300 border-purple-800');
+            document.getElementById('tham-role-text').textContent = scenario.luanThamLang;
+            renderTags('tham-tags', scenario.tuKhoaThamLang, 'bg-purple-950/80 text-purple-300 border-purple-800');
 
             // 6. Update Advice Text
-            document.getElementById('career-advice-text').textContent = scenario.career;
-            document.getElementById('action-advice-text').textContent = scenario.action;
+            document.getElementById('career-advice-text').textContent = scenario.ngheNghiep;
+            document.getElementById('action-advice-text').textContent = scenario.loiKhuyen;
         }
 
         // Draw connecting SVG Polygon
@@ -853,7 +702,7 @@
             if (!container || container.children.length > 0) return; // Avoid re-render if populated
 
             TRIAD_GROUPS.forEach(group => {
-                group.houses.forEach(shatPos => {
+                group.cungIdx.forEach(shatPos => {
                     const { shatIdx, phaIdx, thamIdx } = getStarIndices(shatPos);
                     const card = document.createElement('div');
                     card.className = "mystic-card p-4 rounded-xl hover:border-amber-400/60 cursor-pointer transition flex flex-col justify-between";
@@ -866,7 +715,7 @@
                     card.innerHTML = `
                         <div>
                             <div class="flex items-center justify-between mb-2">
-                                <span class="text-xs font-bold text-amber-300 font-serif">${group.name}</span>
+                                <span class="text-xs font-bold text-amber-300 font-serif">${group.ten}</span>
                                 <span class="text-[10px] bg-mystic-800 text-gray-300 px-2 py-0.5 rounded">Thất Sát ở ${HOUSES[shatIdx].name}</span>
                             </div>
                             <div class="grid grid-cols-3 gap-2 text-center text-xs my-3">
@@ -892,6 +741,10 @@
                 });
             });
         }
+
+        // <script type="module"> có scope riêng; các hàm dưới đây được gọi
+        // từ thuộc tính onclick/onchange trong HTML nên phải nằm trên window.
+        Object.assign(window, { onSelectShatPosition, setPreset, switchTab });
     </script>
 </body>
 </html>

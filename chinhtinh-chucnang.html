@@ -13,7 +13,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Alpine.js -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -225,7 +224,7 @@
                                 
                                 <!-- Top Bar: Palace Name & Earthly Branch -->
                                 <div class="flex justify-between items-start border-b border-gray-800/80 pb-1">
-                                    <span class="text-xs sm:text-sm font-bold text-amber-300 group-hover:text-amber-200" x-text="palace.name"></span>
+                                    <span class="text-xs sm:text-sm font-bold text-amber-300 group-hover:text-amber-200" x-text="palace.ten"></span>
                                     <span class="text-[10px] font-serif text-gray-500 uppercase px-1.5 py-0.5 bg-gray-800/50 rounded" x-text="palace.chi"></span>
                                 </div>
 
@@ -233,8 +232,8 @@
                                 <div class="my-1.5 space-y-1 min-h-[42px] flex flex-col justify-center">
                                     <template x-for="starKey in boardPlacements[key]" :key="starKey">
                                         <div class="flex items-center justify-between text-xs px-1.5 py-0.5 rounded"
-                                             :class="starsData[starKey]?.elementClass || 'bg-gray-800 text-gray-200'">
-                                            <span class="font-medium text-[11px] sm:text-xs truncate" x-text="starsData[starKey]?.name"></span>
+                                             :class="starsData[starKey]?.nguHanhClass || 'bg-gray-800 text-gray-200'">
+                                            <span class="font-medium text-[11px] sm:text-xs truncate" x-text="starsData[starKey]?.ten"></span>
                                             <span class="text-[9px] font-bold uppercase px-1 rounded bg-black/40"
                                                   :class="getBrightnessBadgeClass(getStarBrightness(starKey, key))"
                                                   x-text="getStarBrightness(starKey, key)"></span>
@@ -247,7 +246,7 @@
 
                                 <!-- Bottom Bar: Element & Direction info -->
                                 <div class="flex justify-between items-center text-[10px] text-gray-500 pt-1 border-t border-gray-800/50">
-                                    <span x-text="palace.element" class="text-gray-400"></span>
+                                    <span x-text="palace.nguHanh" class="text-gray-400"></span>
                                     <span class="text-amber-500/80 group-hover:translate-x-0.5 transition-transform">
                                         Chi tiết <i class="fa-solid fa-chevron-right text-[8px]"></i>
                                     </span>
@@ -270,7 +269,7 @@
                                 <div class="my-2 p-2 bg-cosmic-900/80 rounded-lg border border-gray-800 text-left w-full text-xs space-y-1">
                                     <div class="text-gray-400 flex justify-between">
                                         <span>Đang chọn:</span>
-                                        <span class="text-amber-300 font-semibold" x-text="palacesData[selectedPalaceKey]?.name || 'Chưa chọn'"></span>
+                                        <span class="text-amber-300 font-semibold" x-text="palacesData[selectedPalaceKey]?.ten || 'Chưa chọn'"></span>
                                     </div>
                                     <div class="text-gray-400 flex justify-between">
                                         <span>Chính tinh:</span>
@@ -295,23 +294,23 @@
                         <div class="flex items-center justify-between border-b border-gray-700/60 pb-3 mb-4">
                             <div>
                                 <span class="text-xs text-amber-400 font-medium uppercase tracking-wider">Chi Tiết Cung Chức Năng</span>
-                                <h3 class="text-xl font-bold font-serif text-white flex items-center gap-2" x-text="palacesData[selectedPalaceKey]?.name">
+                                <h3 class="text-xl font-bold font-serif text-white flex items-center gap-2" x-text="palacesData[selectedPalaceKey]?.ten">
                                 </h3>
                             </div>
                             <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/30"
-                                  x-text="`Cung ${palacesData[selectedPalaceKey]?.chi} (${palacesData[selectedPalaceKey]?.element})`"></span>
+                                  x-text="`Cung ${palacesData[selectedPalaceKey]?.chi} (${palacesData[selectedPalaceKey]?.nguHanh})`"></span>
                         </div>
 
                         <!-- Palace Description -->
                         <p class="text-xs sm:text-sm text-gray-300 leading-relaxed mb-4 bg-cosmic-900/60 p-3 rounded-xl border border-gray-800"
-                           x-text="palacesData[selectedPalaceKey]?.description">
+                           x-text="palacesData[selectedPalaceKey]?.moTa">
                         </p>
 
                         <!-- Key Domains -->
                         <div class="mb-4">
                             <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Lĩnh Vực Quản Hạt Chính:</h4>
                             <div class="flex flex-wrap gap-1.5">
-                                <template x-for="domain in (palacesData[selectedPalaceKey]?.domains || [])" :key="domain">
+                                <template x-for="domain in (palacesData[selectedPalaceKey]?.phamVi || [])" :key="domain">
                                     <span class="text-xs bg-gray-800 text-amber-200/90 px-2.5 py-1 rounded-lg border border-gray-700/50" x-text="domain"></span>
                                 </template>
                             </div>
@@ -325,12 +324,12 @@
                                     <div class="bg-cosmic-900 p-3 rounded-xl border border-gray-800 hover:border-amber-500/40 transition">
                                         <div class="flex justify-between items-center mb-1">
                                             <div class="flex items-center space-x-2">
-                                                <span class="font-bold text-sm text-white" x-text="starsData[starKey]?.name"></span>
+                                                <span class="font-bold text-sm text-white" x-text="starsData[starKey]?.ten"></span>
                                                 <span class="text-[10px] px-2 py-0.5 rounded text-white font-semibold"
                                                       :class="getBrightnessBadgeClass(getStarBrightness(starKey, selectedPalaceKey))"
                                                       x-text="getStarBrightness(starKey, selectedPalaceKey)"></span>
                                             </div>
-                                            <span class="text-xs text-gray-400" x-text="starsData[starKey]?.element"></span>
+                                            <span class="text-xs text-gray-400" x-text="starsData[starKey]?.nguHanh"></span>
                                         </div>
                                         <p class="text-xs text-gray-300 mt-1" x-text="getStarInPalaceSummary(starKey, selectedPalaceKey)"></p>
                                         <button @click="openCellModal(starKey, selectedPalaceKey)"
@@ -355,7 +354,7 @@
                         <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                             <i class="fa-solid fa-sliders"></i> Tùy Chọn Gán Sao Vào Cung
                         </h4>
-                        <p class="text-xs text-gray-400 mb-3">Tích chọn các chính tinh bạn muốn thử nghiệm an vào <strong class="text-white" x-text="palacesData[selectedPalaceKey]?.name"></strong>:</p>
+                        <p class="text-xs text-gray-400 mb-3">Tích chọn các chính tinh bạn muốn thử nghiệm an vào <strong class="text-white" x-text="palacesData[selectedPalaceKey]?.ten"></strong>:</p>
                         
                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-48 overflow-y-auto pr-1">
                             <template x-for="(star, sKey) in starsData" :key="sKey">
@@ -365,7 +364,7 @@
                                            :checked="isStarInSelectedPalace(sKey)" 
                                            @change="toggleStarInPalace(sKey)"
                                            class="rounded border-gray-700 text-amber-500 focus:ring-amber-500/30 bg-cosmic-800">
-                                    <span class="truncate" x-text="star.name"></span>
+                                    <span class="truncate" x-text="star.ten"></span>
                                 </label>
                             </template>
                         </div>
@@ -420,7 +419,7 @@
                                 <template x-for="(palace, pKey) in palacesData" :key="pKey">
                                     <th class="p-3 text-xs font-bold text-gray-300 text-center min-w-[130px] border-r border-gray-800/50 hover:bg-cosmic-800 cursor-pointer"
                                         @click="selectedPalaceKey = pKey; activeTab = 'board'">
-                                        <div class="text-amber-300 font-serif" x-text="palace.name"></div>
+                                        <div class="text-amber-300 font-serif" x-text="palace.ten"></div>
                                         <div class="text-[10px] text-gray-500 font-normal" x-text="`Cung ${palace.chi}`"></div>
                                     </th>
                                 </template>
@@ -433,10 +432,10 @@
                                     <td class="p-3 font-semibold sticky left-0 bg-cosmic-900 z-10 border-r border-gray-800 shadow-r">
                                         <div class="flex items-center space-x-2">
                                             <span class="w-2.5 h-2.5 rounded-full"
-                                                  :class="getElementColorDot(star.element)"></span>
+                                                  :class="getElementColorDot(star.nguHanh)"></span>
                                             <div>
-                                                <div class="text-sm font-bold text-white" x-text="star.name"></div>
-                                                <div class="text-[10px] text-gray-400" x-text="`${star.element} • ${star.group}`"></div>
+                                                <div class="text-sm font-bold text-white" x-text="star.ten"></div>
+                                                <div class="text-[10px] text-gray-400" x-text="`${star.nguHanh} • ${star.vongSao}`"></div>
                                             </div>
                                         </div>
                                     </td>
@@ -487,8 +486,8 @@
                             <button @click="inspectorStarKey = sKey"
                                     :class="inspectorStarKey === sKey ? 'bg-amber-500/20 border-amber-500 text-amber-300 ring-2 ring-amber-500/30' : 'bg-cosmic-900 border-gray-800 text-gray-300 hover:border-gray-700'"
                                     class="p-2.5 rounded-xl border text-left text-xs transition flex flex-col justify-between">
-                                <span class="font-bold text-sm" x-text="star.name"></span>
-                                <span class="text-[10px] text-gray-400 mt-1" x-text="`${star.element} • ${star.type}`"></span>
+                                <span class="font-bold text-sm" x-text="star.ten"></span>
+                                <span class="text-[10px] text-gray-400 mt-1" x-text="`${star.nguHanh} • ${star.loaiTinh}`"></span>
                             </button>
                         </template>
                     </div>
@@ -502,7 +501,7 @@
                             <button @click="inspectorPalaceKey = pKey"
                                     :class="inspectorPalaceKey === pKey ? 'bg-amber-500/20 border-amber-500 text-amber-300 ring-2 ring-amber-500/30' : 'bg-cosmic-900 border-gray-800 text-gray-300 hover:border-gray-700'"
                                     class="p-2.5 rounded-xl border text-left text-xs transition flex flex-col justify-between">
-                                <span class="font-bold text-sm font-serif" x-text="palace.name"></span>
+                                <span class="font-bold text-sm font-serif" x-text="palace.ten"></span>
                                 <span class="text-[10px] text-gray-400 mt-1" x-text="`Cung ${palace.chi}`"></span>
                             </button>
                         </template>
@@ -515,12 +514,12 @@
                 <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-gray-800 pb-4 mb-6 gap-4">
                     <div class="flex items-center space-x-4">
                         <div class="w-14 h-14 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 font-serif font-bold text-2xl shadow-inner">
-                            <span x-text="starsData[inspectorStarKey]?.name[0]"></span>
+                            <span x-text="starsData[inspectorStarKey]?.ten[0]"></span>
                         </div>
                         <div>
                             <div class="text-xs text-amber-400 uppercase tracking-widest font-semibold">Kết Hợp Tử Vi</div>
                             <h3 class="text-2xl font-bold font-serif text-white">
-                                Sao <span class="text-amber-300" x-text="starsData[inspectorStarKey]?.name"></span> tọa thủ <span class="text-amber-300" x-text="palacesData[inspectorPalaceKey]?.name"></span>
+                                Sao <span class="text-amber-300" x-text="starsData[inspectorStarKey]?.ten"></span> tọa thủ <span class="text-amber-300" x-text="palacesData[inspectorPalaceKey]?.ten"></span>
                             </h3>
                         </div>
                     </div>
@@ -603,7 +602,7 @@
                         <div class="space-y-1.5 min-h-[60px]">
                             <template x-for="sKey in simResults[chi]" :key="sKey">
                                 <div class="flex justify-between items-center text-xs px-2 py-1 rounded bg-cosmic-900 border border-gray-800">
-                                    <span class="font-bold" :class="starsData[sKey]?.group === 'Vòng Tử Vi' ? 'text-purple-300' : 'text-amber-300'" x-text="starsData[sKey]?.name"></span>
+                                    <span class="font-bold" :class="starsData[sKey]?.vongSao === 'Vòng Tử Vi' ? 'text-purple-300' : 'text-amber-300'" x-text="starsData[sKey]?.ten"></span>
                                     <span class="text-[9px] px-1 rounded text-white font-semibold"
                                           :class="getBrightnessBadgeClass(getStarBrightness(sKey, getPalaceKeyByChi(chi)))"
                                           x-text="getStarBrightness(sKey, getPalaceKeyByChi(chi))"></span>
@@ -698,7 +697,7 @@
                     <span>Luận Giải Tương Tác Chi Tiết</span>
                 </div>
                 <h3 class="text-2xl font-serif font-bold text-white">
-                    Sao <span class="text-amber-300" x-text="starsData[modalStarKey]?.name"></span> ở <span class="text-amber-300" x-text="palacesData[modalPalaceKey]?.name"></span>
+                    Sao <span class="text-amber-300" x-text="starsData[modalStarKey]?.ten"></span> ở <span class="text-amber-300" x-text="palacesData[modalPalaceKey]?.ten"></span>
                 </h3>
             </div>
 
@@ -706,7 +705,7 @@
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
                 <div class="bg-cosmic-900 p-2.5 rounded-lg border border-gray-800">
                     <span class="text-gray-500 block">Ngũ Hành</span>
-                    <span class="font-bold text-gray-200" x-text="starsData[modalStarKey]?.element"></span>
+                    <span class="font-bold text-gray-200" x-text="starsData[modalStarKey]?.nguHanh"></span>
                 </div>
                 <div class="bg-cosmic-900 p-2.5 rounded-lg border border-gray-800">
                     <span class="text-gray-500 block">Độ Sáng</span>
@@ -715,11 +714,11 @@
                 </div>
                 <div class="bg-cosmic-900 p-2.5 rounded-lg border border-gray-800">
                     <span class="text-gray-500 block">Phân Loại</span>
-                    <span class="font-bold text-gray-200" x-text="starsData[modalStarKey]?.type"></span>
+                    <span class="font-bold text-gray-200" x-text="starsData[modalStarKey]?.loaiTinh"></span>
                 </div>
                 <div class="bg-cosmic-900 p-2.5 rounded-lg border border-gray-800">
                     <span class="text-gray-500 block">Thuộc Vòng</span>
-                    <span class="font-bold text-gray-200" x-text="starsData[modalStarKey]?.group"></span>
+                    <span class="font-bold text-gray-200" x-text="starsData[modalStarKey]?.vongSao"></span>
                 </div>
             </div>
 
@@ -751,20 +750,26 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { getSao, getCung, getDoSang } from './lib/repo.js';
+
+        // Địa chi mặc định của 12 cung khi mở trang (Mệnh an tại Ngọ).
+        // Đây là thế cờ khởi đầu của trình giả lập, không phải thuộc tính của cung.
+        const CHI_MAC_DINH = {"menh": "Ngọ", "phu-mau": "Tị", "phuc-duc": "Thìn", "dien-trach": "Mão", "quan-loc": "Dần", "no-boc": "Sửu", "thien-di": "Tý", "tat-ach": "Hợi", "tai-bach": "Tuất", "tu-tuc": "Dậu", "phu-the": "Thân", "huynh-de": "Mùi"};
+
         function tuViApp() {
             return {
                 activeTab: 'board',
                 presetSelect: 'standard',
                 selectedPalaceKey: 'menh',
-                inspectorStarKey: 'tuvi',
+                inspectorStarKey: 'tu-vi',
                 inspectorPalaceKey: 'menh',
                 matrixSearch: '',
                 elementFilter: 'ALL',
 
                 // Modal state
                 isModalOpen: false,
-                modalStarKey: 'tuvi',
+                modalStarKey: 'tu-vi',
                 modalPalaceKey: 'menh',
 
                 // Simulator state
@@ -774,74 +779,48 @@
 
                 // Board placements (Map palace key -> array of star keys)
                 boardPlacements: {
-                    menh: ['tuvi'],
-                    phumu: ['thienco'],
-                    phucduc: ['thaiduong'],
-                    dientrach: ['vukhuc'],
-                    quanloc: ['thiendong'],
-                    noboc: ['liemtrinh'],
-                    thieni: ['thienphu'],
-                    tatach: ['thaiam'],
-                    taibach: ['thamlang'],
-                    tutuc: ['cumon'],
-                    phuthe: ['thientuong'],
-                    huynhde: ['thienluong']
+                    menh: ['tu-vi'],
+                    'phu-mau': ['thien-co'],
+                    'phuc-duc': ['thai-duong'],
+                    'dien-trach': ['vu-khuc'],
+                    'quan-loc': ['thien-dong'],
+                    'no-boc': ['liem-trinh'],
+                    'thien-di': ['thien-phu'],
+                    'tat-ach': ['thai-am'],
+                    'tai-bach': ['tham-lang'],
+                    'tu-tuc': ['cu-mon'],
+                    'phu-the': ['thien-tuong'],
+                    'huynh-de': ['thien-luong']
                 },
 
                 // 12 Functional Palaces Data
-                palacesData: {
-                    menh: { name: 'Cung Mệnh', chi: 'Ngọ', element: 'Hỏa', opposite: 'Thiên Di', description: 'Cung cốt lõi quản hạt bản tính, tài năng, chí hướng và số phận tổng quan cả đời.', domains: ['Tính cách', 'Tài năng', 'Năng lực cốt lõi', 'Vận mệnh tổng quan'] },
-                    phumu: { name: 'Cung Phụ Mẫu', chi: 'Tị', element: 'Hỏa', opposite: 'Tật Ách', description: 'Thể hiện mối quan hệ với cha mẹ, sự nâng đỡ của cấp trên, thầy cô và gia phong gia đình.', domains: ['Cha mẹ', 'Cấp trên', 'Gia giáo', 'Sự hỗ trợ từ thế hệ trước'] },
-                    phucduc: { name: 'Cung Phúc Đức', chi: 'Thìn', element: 'Thổ', opposite: 'Tài Bạch', description: 'Quản hạt đời sống tâm linh, tư tưởng, phúc đức tổ tiên tích tụ và tuổi thọ.', domains: ['Đời sống tinh thần', 'Phúc đức dòng họ', 'Gốc rễ may mắn', 'Khả năng chịu đựng'] },
-                    dientrach: { name: 'Cung Điền Trạch', chi: 'Mão', element: 'Mộc', opposite: 'Tử Tức', description: 'Bất động sản, đất đai, nhà cửa, môi trường sống và khả năng tích lũy tài sản cố định.', domains: ['Nhà cửa', 'Bất động sản', 'Gia đạo', 'Môi trường làm việc/sống'] },
-                    quanloc: { name: 'Cung Quan Lộc', chi: 'Dần', element: 'Mộc', opposite: 'Thê Thiếp', description: 'Con đường sự nghiệp, công danh, trình độ học vấn và thái độ đối với công việc.', domains: ['Sự nghiệp', 'Địa vị', 'Học vấn', 'Khả năng lãnh đạo'] },
-                    noboc: { name: 'Cung Nô Bộc', chi: 'Sửu', element: 'Thổ', opposite: 'Huynh Đệ', description: 'Mối quan hệ với bạn bè, đồng nghiệp, cấp dưới, khách hàng và người giúp việc.', domains: ['Cấp dưới', 'Bạn bè', 'Xã giao', 'Nhân sự hỗ trợ'] },
-                    thieni: { name: 'Cung Thiên Di', chi: 'Tý', element: 'Thủy', opposite: 'Mệnh', description: 'Môi trường bên ngoài, việc đi xa, du học, định cư, giao tiếp xã hội ngoại giao.', domains: ['Đi xa', 'Môi trường ngoài', 'Ngoại giao', 'Cơ hội xã hội'] },
-                    tatach: { name: 'Cung Tật Ách', chi: 'Hợi', element: 'Thủy', opposite: 'Phụ Mẫu', description: 'Tình trạng sức khỏe, nguy cơ tai họa, bệnh tật và khả năng hóa giải nguy cơ.', domains: ['Sức khỏe', 'Bệnh tật', 'Họa tai', 'Khả năng tự chữa lành'] },
-                    taibach: { name: 'Cung Tài Bạch', chi: 'Tuất', element: 'Thổ', opposite: 'Phúc Đức', description: 'Tiền tài, năng lực kiếm tiền, tư duy quản lý tài chính và nguồn thu nhập.', domains: ['Dòng tiền', 'Cách kiếm tiền', 'Tài chính', 'Khả năng đầu tư'] },
-                    tutuc: { name: 'Cung Tử Tức', chi: 'Dậu', element: 'Kim', opposite: 'Điền Trạch', description: 'Mối quan hệ với con cái, số lượng, tính cách và sự thành đạt của thế hệ sau.', domains: ['Con cái', 'Hậu duệ', 'Học trò/học đệ', 'Duyên con cái'] },
-                    phuthe: { name: 'Cung Phu Thê', chi: 'Thân', element: 'Kim', opposite: 'Quan Lộc', description: 'Tình duyên, hôn nhân, tính cách và sự tương trợ của người phối ngẫu (vợ/chồng).', domains: ['Hôn nhân', 'Người phối ngẫu', 'Tình duyên', 'Gia đình nhỏ'] },
-                    huynhde: { name: 'Cung Huynh Đệ', chi: 'Mùi', element: 'Thổ', opposite: 'Nô Bộc', description: 'Tình cảm anh chị em ruột, bạn bè tri kỷ như ruột thịt và khả năng hợp tác.', domains: ['Anh chị em', 'Bạn thân', 'Tương trợ nội bộ', 'Hợp tác kinh doanh'] }
-                },
-
+                
                 // 14 Major Stars Data
-                starsData: {
-                    tuvi: { name: 'Tử Vi', element: 'Thổ', group: 'Vòng Tử Vi', type: 'Đế Tinh', elementClass: 'element-tho', desc: 'Chủ tọa Mệnh/Phúc, tượng trưng cho uy quyền, tài lãnh đạo và sự bao dung.' },
-                    thienco: { name: 'Thiên Cơ', element: 'Mộc', group: 'Vòng Tử Vi', type: 'Ích Thọ Tinh', elementClass: 'element-moc', desc: 'Chủ về trí tuệ, mưu lược, tính toán linh hoạt và sự thích ứng.' },
-                    thaiduong: { name: 'Thái Dương', element: 'Hỏa', group: 'Vòng Tử Vi', type: 'Nhật Tinh', elementClass: 'element-hoa', desc: 'Tượng trưng cho mặt trời, sự quang minh, danh tiếng, cho đi và quyền lực.' },
-                    vukhuc: { name: 'Vũ Khúc', element: 'Kim', group: 'Vòng Tử Vi', type: 'Tài Tinh', elementClass: 'element-kim', desc: 'Chủ về tiền tài, sự quả quyết, cô độc tích cực và tính thực tế cao.' },
-                    thiendong: { name: 'Thiên Đồng', element: 'Thủy', group: 'Vòng Tử Vi', type: 'Phúc Tinh', elementClass: 'element-thuy', desc: 'Chủ về sự ôn hòa, hưởng thụ, biến động tích cực và lòng nhân ái.' },
-                    liemtrinh: { name: 'Liêm Trinh', element: 'Hỏa', group: 'Vòng Tử Vi', type: 'Tù Tinh / Đào Hoa', elementClass: 'element-hoa', desc: 'Chủ về nguyên tắc, sự nóng tính, chính trực và sức hút cá nhân.' },
-                    thienphu: { name: 'Thiên Phủ', element: 'Thổ', group: 'Vòng Thiên Phủ', type: 'Kho Tinh', elementClass: 'element-tho', desc: 'Chủ về kho tiền, tính cẩn trọng, ổn định và tài quản lý tài sản.' },
-                    thaiam: { name: 'Thái Âm', element: 'Thủy', group: 'Vòng Thiên Phủ', type: 'Nguyệt Tinh', elementClass: 'element-thuy', desc: 'Tượng trưng cho mặt trăng, sự dịu dàng, điền sản và của cải ẩn.' },
-                    thamlang: { name: 'Tham Lang', element: 'Thủy', group: 'Vòng Thiên Phủ', type: 'Dục Tinh', elementClass: 'element-thuy', desc: 'Chủ về ham muốn, giao tiếp, nghệ thuật, tham vọng và sự năng động.' },
-                    cumon: { name: 'Cự Môn', element: 'Thủy', group: 'Vòng Thiên Phủ', type: 'Ám Tinh', elementClass: 'element-thuy', desc: 'Chủ về ngôn từ, biện luận, sự nghi vấn và khả năng phản biện sâu sắc.' },
-                    thientuong: { name: 'Thiên Tướng', element: 'Thủy', group: 'Vòng Thiên Phủ', type: 'Ấn Tinh', elementClass: 'element-thuy', desc: 'Chủ về quyền uy, sự cứu giúp, công bằng và vẻ đẹp phong nhã.' },
-                    thienluong: { name: 'Thiên Lương', element: 'Mộc', group: 'Vòng Thiên Phủ', type: 'Ấm Tinh', elementClass: 'element-moc', desc: 'Chủ về sự trường thọ, y thuật, che chở và tinh thần trượng nghĩa.' },
-                    thattsat: { name: 'Thất Sát', element: 'Kim', group: 'Vòng Thiên Phủ', type: 'Tướng Tinh', elementClass: 'element-kim', desc: 'Chủ về sự dũng cảm, dột phá, độc lập và tính sát phạt tiên phong.' },
-                    phaquan: { name: 'Phá Quân', element: 'Thủy', group: 'Vòng Thiên Phủ', type: 'Hao Tinh', elementClass: 'element-thuy', desc: 'Chủ về phá cũ lập mới, sự sáng tạo đột phá, mạo hiểm và cải cách.' }
-                },
-
+                
                 // Brightness Matrix Table (Star -> PalaceChi -> Brightness code)
-                brightnessMatrix: {
-                    tuvi: { Tý: 'V', Sửu: 'M', Dần: 'M', Mão: 'Đ', Thìn: 'V', Tị: 'M', Ngọ: 'M', Mùi: 'M', Thân: 'M', Dậu: 'Đ', Tuất: 'V', Hợi: 'M' },
-                    thienco: { Tý: 'M', Sửu: 'H', Dần: 'V', Mão: 'M', Thìn: 'Đ', Tị: 'V', Ngọ: 'M', Mùi: 'H', Thân: 'V', Dậu: 'M', Tuất: 'Đ', Hợi: 'V' },
-                    thaiduong: { Tý: 'H', Sửu: 'Đ', Dần: 'V', Mão: 'M', Thìn: 'V', Tị: 'M', Ngọ: 'M', Mùi: 'Đ', Thân: 'H', Dậu: 'H', Tuất: 'H', Hợi: 'H' },
-                    vukhuc: { Tý: 'V', Sửu: 'M', Dần: 'M', Mão: 'H', Thìn: 'M', Tị: 'V', Ngọ: 'V', Mùi: 'M', Thân: 'M', Dậu: 'H', Tuất: 'M', Hợi: 'V' },
-                    thiendong: { Tý: 'M', Sửu: 'H', Dần: 'Đ', Mão: 'M', Thìn: 'H', Tị: 'M', Ngọ: 'H', Mùi: 'H', Thân: 'Đ', Dậu: 'H', Tuất: 'H', Hợi: 'M' },
-                    liemtrinh: { Tý: 'V', Sửu: 'M', Dần: 'M', Mão: 'H', Thìn: 'V', Tị: 'H', Ngọ: 'M', Mùi: 'M', Thân: 'M', Dậu: 'H', Tuất: 'V', Hợi: 'H' },
-                    thienphu: { Tý: 'M', Sửu: 'M', Dần: 'M', Mão: 'V', Thìn: 'M', Tị: 'M', Ngọ: 'M', Mùi: 'M', Thân: 'M', Dậu: 'V', Tuất: 'M', Hợi: 'M' },
-                    thaiam: { Tý: 'M', Sửu: 'V', Dần: 'H', Mão: 'H', Thìn: 'H', Tị: 'H', Ngọ: 'H', Mùi: 'Đ', Thân: 'Đ', Dậu: 'V', Tuất: 'M', Hợi: 'M' },
-                    thamlang: { Tý: 'V', Sửu: 'M', Dần: 'H', Mão: 'H', Thìn: 'M', Tị: 'H', Ngọ: 'V', Mùi: 'M', Thân: 'H', Dậu: 'H', Tuất: 'M', Hợi: 'H' },
-                    cumon: { Tý: 'M', Sửu: 'H', Dần: 'V', Mão: 'M', Thìn: 'H', Tị: 'H', Ngọ: 'M', Mùi: 'H', Thân: 'V', Dậu: 'M', Tuất: 'H', Hợi: 'M' },
-                    thientuong: { Tý: 'V', Sửu: 'M', Dần: 'M', Mão: 'H', Thìn: 'V', Tị: 'V', Ngọ: 'V', Mùi: 'M', Thân: 'M', Dậu: 'H', Tuất: 'V', Hợi: 'V' },
-                    thienluong: { Tý: 'M', Sửu: 'V', Dần: 'M', Mão: 'M', Thìn: 'V', Tị: 'H', Ngọ: 'M', Mùi: 'V', Thân: 'M', Dậu: 'M', Tuất: 'V', Hợi: 'H' },
-                    thattsat: { Tý: 'V', Sửu: 'M', Dần: 'M', Mão: 'H', Thìn: 'M', Tị: 'V', Ngọ: 'V', Mùi: 'M', Thân: 'M', Dậu: 'H', Tuất: 'M', Hợi: 'V' },
-                    phaquan: { Tý: 'M', Sửu: 'H', Dần: 'H', Mão: 'V', Thìn: 'M', Tị: 'H', Ngọ: 'M', Mùi: 'H', Thân: 'H', Dậu: 'V', Tuất: 'M', Hợi: 'H' }
-                },
-
+                
                 // Initialization
-                initApp() {
+                // Nạp từ data/ lúc khởi động, xem initApp() bên dưới.
+                palacesData: {}, starsData: {}, brightnessMatrix: {},
+
+                async initApp() {
+                    try {
+                        const [sao, cung, doSang] =
+                            await Promise.all([getSao(), getCung(), getDoSang()]);
+                        // data/ lưu dạng mảng; Alpine ở trang này tra theo id nên chuyển
+                        // thành object có khoá. Chi của cung lấy từ thế cờ mặc định.
+                        this.starsData  = Object.fromEntries(sao.map(x => [x.id, x]));
+                        this.palacesData = Object.fromEntries(
+                            cung.map(c => [c.id, { ...c, chi: CHI_MAC_DINH[c.id] }]));
+                        this.brightnessMatrix = doSang;
+                    } catch (e) {
+                        document.body.insertAdjacentHTML('afterbegin',
+                            `<div class="bg-rose-900/80 text-rose-100 text-sm p-3 text-center">
+                               Không tải được dữ liệu: ${e.message}. Trang cần chạy qua server tĩnh
+                               (<code>npm run dev</code>), không mở trực tiếp bằng file://
+                             </div>`);
+                        return;
+                    }
                     this.calculateStarPlacement();
                 },
 
@@ -849,10 +828,10 @@
                 get filteredStars() {
                     return Object.keys(this.starsData).reduce((acc, key) => {
                         const star = this.starsData[key];
-                        const matchElement = this.elementFilter === 'ALL' || star.element === this.elementFilter;
+                        const matchElement = this.elementFilter === 'ALL' || star.nguHanh === this.elementFilter;
                         const matchSearch = !this.matrixSearch || 
-                                           star.name.toLowerCase().includes(this.matrixSearch.toLowerCase()) ||
-                                           star.type.toLowerCase().includes(this.matrixSearch.toLowerCase());
+                                           star.ten.toLowerCase().includes(this.matrixSearch.toLowerCase()) ||
+                                           star.loaiTinh.toLowerCase().includes(this.matrixSearch.toLowerCase());
                         if (matchElement && matchSearch) {
                             acc[key] = star;
                         }
@@ -906,11 +885,11 @@
                     const b = this.getStarBrightness(starKey, palaceKey);
 
                     if (b === 'M' || b === 'V') {
-                        return `${star.name} đắc lực tại ${palace.name}, hưng phát mạnh mẽ.`;
+                        return `${star.ten} đắc lực tại ${palace.ten}, hưng phát mạnh mẽ.`;
                     } else if (b === 'Đ') {
-                        return `${star.name} hòa hợp tại ${palace.name}, vẹn toàn ổn định.`;
+                        return `${star.ten} hòa hợp tại ${palace.ten}, vẹn toàn ổn định.`;
                     } else {
-                        return `${star.name} bị hãm tại ${palace.name}, cần chú ý hóa giải.`;
+                        return `${star.ten} bị hãm tại ${palace.ten}, cần chú ý hóa giải.`;
                     }
                 },
 
@@ -920,20 +899,20 @@
                     const palace = this.palacesData[palaceKey];
                     const b = this.getStarBrightness(starKey, palaceKey);
 
-                    let nature = `Khi sao ${star.name} (${star.element}) nhập vào ${palace.name} (${palace.element}), sao mang đặc tính ${star.type} kết hợp với năng lượng quản hạt ${palace.domains.join(', ')}.`;
+                    let nature = `Khi sao ${star.ten} (${star.nguHanh}) nhập vào ${palace.ten} (${palace.nguHanh}), sao mang đặc tính ${star.loaiTinh} kết hợp với năng lượng quản hạt ${palace.phamVi.join(', ')}.`;
                     
                     let pros = "";
                     let cons = "";
 
                     if (b === 'M' || b === 'V') {
-                        pros = `Trạng thái sáng chiếu (${b === 'M' ? 'Miếu Địa' : 'Vượng Địa'}): Tăng cường năng lượng lãnh đạo, sự thông tuệ và tài lộc. Thể hiện rõ nét tài năng trong ${palace.domains[0]} và mang lại nhiều cơ hội phát triển đột phá.`;
+                        pros = `Trạng thái sáng chiếu (${b === 'M' ? 'Miếu Địa' : 'Vượng Địa'}): Tăng cường năng lượng lãnh đạo, sự thông tuệ và tài lộc. Thể hiện rõ nét tài năng trong ${palace.phamVi[0]} và mang lại nhiều cơ hội phát triển đột phá.`;
                         cons = `Cần duy trì sự khiêm tốn, tránh tự tin quá mức dẫn đến kiêu ngạo hoặc gánh vác quá nhiều trách nhiệm.`;
                     } else if (b === 'Đ') {
-                        pros = `Trạng thái Đắc Địa: Giúp mọi việc diễn ra suôn sẻ, hài hòa. Năng lượng ${star.name} phát huy vừa đủ, mang lại sự bình an và hanh thông vững chắc.`;
+                        pros = `Trạng thái Đắc Địa: Giúp mọi việc diễn ra suôn sẻ, hài hòa. Năng lượng ${star.ten} phát huy vừa đủ, mang lại sự bình an và hanh thông vững chắc.`;
                         cons = `Sự phát triển ở mức trung bình vững, cần thêm sự quyết đoán nếu muốn bứt phá quy mô lớn.`;
                     } else {
                         pros = `Trợ lực bất ngờ: Dù hãm địa nhưng nếu rèn luyện bản lĩnh qua thử thách, cá nhân sẽ tích lũy được vốn sống và kinh nghiệm thực chiến phong phú.`;
-                        cons = `Trạng thái Hãm Địa: Dễ phát sinh biến động, mâu thuẫn hoặc hao tốn tài lực trong lĩnh vực ${palace.domains[0]}. Khuyên nên giữ nguyên tắc và hành sự cẩn trọng.`;
+                        cons = `Trạng thái Hãm Địa: Dễ phát sinh biến động, mâu thuẫn hoặc hao tốn tài lực trong lĩnh vực ${palace.phamVi[0]}. Khuyên nên giữ nguyên tắc và hành sự cẩn trọng.`;
                     }
 
                     return { nature, pros, cons };
@@ -942,13 +921,13 @@
                 getSelectedPalaceStarsText() {
                     const stars = this.boardPlacements[this.selectedPalaceKey] || [];
                     if (stars.length === 0) return 'Vô Chính Diệu';
-                    return stars.map(s => this.starsData[s]?.name).join(', ');
+                    return stars.map(s => this.starsData[s]?.ten).join(', ');
                 },
 
                 getStarInPalaceSummary(starKey, palaceKey) {
                     const b = this.getStarBrightness(starKey, palaceKey);
                     const star = this.starsData[starKey];
-                    return `${star.desc} (Trạng thái: ${b})`;
+                    return `${star.moTa} (Trạng thái: ${b})`;
                 },
 
                 selectPalace(key) {
@@ -989,49 +968,49 @@
                         for (let k in this.boardPlacements) this.boardPlacements[k] = [];
                     } else if (this.presetSelect === 'vukhue') {
                         this.boardPlacements = {
-                            menh: ['vukhuc', 'thientuong'],
-                            phumu: ['thaiduong'],
-                            phucduc: ['thienco'],
-                            dientrach: ['thienphu'],
-                            quanloc: ['liemtrinh'],
-                            noboc: ['thamlang'],
-                            thieni: ['phaquan'],
-                            tatach: ['cumon'],
-                            taibach: ['thattsat'],
-                            tutuc: ['thiendong'],
-                            phuthe: ['thaiam'],
-                            huynhde: ['thienluong']
+                            menh: ['vu-khuc', 'thien-tuong'],
+                            'phu-mau': ['thai-duong'],
+                            'phuc-duc': ['thien-co'],
+                            'dien-trach': ['thien-phu'],
+                            'quan-loc': ['liem-trinh'],
+                            'no-boc': ['tham-lang'],
+                            'thien-di': ['pha-quan'],
+                            'tat-ach': ['cu-mon'],
+                            'tai-bach': ['that-sat'],
+                            'tu-tuc': ['thien-dong'],
+                            'phu-the': ['thai-am'],
+                            'huynh-de': ['thien-luong']
                         };
                     } else if (this.presetSelect === 'thatchat') {
                         this.boardPlacements = {
-                            menh: ['thattsat'],
-                            phumu: ['thienluong'],
-                            phucduc: ['liemtrinh', 'thientuong'],
-                            dientrach: ['cumon'],
-                            quanloc: ['thamlang'],
-                            noboc: ['thaiduong'],
-                            thieni: ['thienphu'],
-                            tatach: ['thienco'],
-                            taibach: ['phaquan'],
-                            tutuc: ['vukhuc'],
-                            phuthe: ['tuvi'],
-                            huynhde: ['thiendong', 'thaiam']
+                            menh: ['that-sat'],
+                            'phu-mau': ['thien-luong'],
+                            'phuc-duc': ['liem-trinh', 'thien-tuong'],
+                            'dien-trach': ['cu-mon'],
+                            'quan-loc': ['tham-lang'],
+                            'no-boc': ['thai-duong'],
+                            'thien-di': ['thien-phu'],
+                            'tat-ach': ['thien-co'],
+                            'tai-bach': ['pha-quan'],
+                            'tu-tuc': ['vu-khuc'],
+                            'phu-the': ['tu-vi'],
+                            'huynh-de': ['thien-dong', 'thai-am']
                         };
                     } else {
                         // Standard default
                         this.boardPlacements = {
-                            menh: ['tuvi'],
-                            phumu: ['thienco'],
-                            phucduc: ['thaiduong'],
-                            dientrach: ['vukhuc'],
-                            quanloc: ['thiendong'],
-                            noboc: ['liemtrinh'],
-                            thieni: ['thienphu'],
-                            tatach: ['thaiam'],
-                            taibach: ['thamlang'],
-                            tutuc: ['cumon'],
-                            phuthe: ['thientuong'],
-                            huynhde: ['thienluong']
+                            menh: ['tu-vi'],
+                            'phu-mau': ['thien-co'],
+                            'phuc-duc': ['thai-duong'],
+                            'dien-trach': ['vu-khuc'],
+                            'quan-loc': ['thien-dong'],
+                            'no-boc': ['liem-trinh'],
+                            'thien-di': ['thien-phu'],
+                            'tat-ach': ['thai-am'],
+                            'tai-bach': ['tham-lang'],
+                            'tu-tuc': ['cu-mon'],
+                            'phu-the': ['thien-tuong'],
+                            'huynh-de': ['thien-luong']
                         };
                     }
                 },
@@ -1053,12 +1032,12 @@
                         return branches[idx];
                     };
 
-                    res[getBranch(0)].push('tuvi');
-                    res[getBranch(-1)].push('thienco');
-                    res[getBranch(-3)].push('thaiduong');
-                    res[getBranch(-4)].push('vukhuc');
-                    res[getBranch(-5)].push('thiendong');
-                    res[getBranch(-8)].push('liemtrinh');
+                    res[getBranch(0)].push('tu-vi');
+                    res[getBranch(-1)].push('thien-co');
+                    res[getBranch(-3)].push('thai-duong');
+                    res[getBranch(-4)].push('vu-khuc');
+                    res[getBranch(-5)].push('thien-dong');
+                    res[getBranch(-8)].push('liem-trinh');
 
                     // Vòng Thiên Phủ (Đối xứng Tử Vi qua trục Dần - Thân):
                     // Công thức vị trí Thiên Phủ = (4 - tuViIndex) % 12
@@ -1073,19 +1052,27 @@
 
                     // Vòng Thiên Phủ an thuận chiều kim đồng hồ:
                     // Thiên Phủ (+0), Thái Âm (+1), Tham Lang (+2), Cự Môn (+3), Thiên Tướng (+4), Thiên Lương (+5), Thất Sát (+6), Phá Quân (+10)
-                    res[getPhuBranch(0)].push('thienphu');
-                    res[getPhuBranch(1)].push('thaiam');
-                    res[getPhuBranch(2)].push('thamlang');
-                    res[getPhuBranch(3)].push('cumon');
-                    res[getPhuBranch(4)].push('thientuong');
-                    res[getPhuBranch(5)].push('thienluong');
-                    res[getPhuBranch(6)].push('thattsat');
-                    res[getPhuBranch(10)].push('phaquan');
+                    res[getPhuBranch(0)].push('thien-phu');
+                    res[getPhuBranch(1)].push('thai-am');
+                    res[getPhuBranch(2)].push('tham-lang');
+                    res[getPhuBranch(3)].push('cu-mon');
+                    res[getPhuBranch(4)].push('thien-tuong');
+                    res[getPhuBranch(5)].push('thien-luong');
+                    res[getPhuBranch(6)].push('that-sat');
+                    res[getPhuBranch(10)].push('pha-quan');
 
                     this.simResults = res;
                 }
             }
         }
+
+        // <script type="module"> có scope riêng; Alpine đọc x-data="tuViApp()"
+        // từ thuộc tính HTML nên hàm phải nằm trên window.
+        window.tuViApp = tuViApp;
     </script>
+
+    <!-- Alpine nạp sau module: module là nơi gắn window.tuViApp, mà Alpine đọc
+         tuViApp ngay khi khởi động qua thuộc tính x-data. -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </body>
 </html>

@@ -1,0 +1,57 @@
+[
+  {
+    "hoi": "Chính tinh nào được mệnh danh là 'Lộc khố' (kho tiền của trời) và rất kỵ gặp các sao Không (Địa Không, Địa Kiếp, Tuần, Triệt)?",
+    "luaChon": [
+      "Tử Vi",
+      "Thiên Phủ",
+      "Vũ Khúc",
+      "Thái Âm"
+    ],
+    "dapAn": 1,
+    "giaiThich": "Thiên Phủ là Lộc Khố. Khi gặp Không Vong sẽ bị thủng kho thành 'Không khố', gây túng thiếu đột ngột."
+  },
+  {
+    "hoi": "Vũ Khúc có hóa khí là 'Tù' và 'Cô độc' (Âm Kim), ngôi sao này xấu nhất khi tọa thủ tại các cung nào?",
+    "luaChon": [
+      "Quan Lộc & Tài Bạch",
+      "Mệnh & Thân",
+      "Phu Thê & Tử Tức",
+      "Điền Trạch & Tật Ách"
+    ],
+    "dapAn": 2,
+    "giaiThich": "Tính thu liễm lạnh lùng của Âm Kim làm Vũ Khúc kỵ nhất đóng tại Phu Thê hoặc Tử Tức, chủ về hình khắc và đơn độc."
+  },
+  {
+    "hoi": "Tại sao Tử Vi – ngôi sao tôn quý nhất – lại được cho là xấu nhất khi đóng ở các cung Lục Thân (Bào, Phụ, Tử)?",
+    "luaChon": [
+      "Vì Tử Vi không có năng lực lãnh đạo",
+      "Do bản chất Đế Tinh cái tôi cao, sĩ diện, lấn át người thân hoặc gánh nặng quá lớn",
+      "Vì Tử Vi thuộc hành Dương Thủy gây ngập lụt",
+      "Vì Tử Vi luôn biến thành hao tinh ở Lục thân"
+    ],
+    "dapAn": 1,
+    "giaiThich": "Tử Vi là Đế Tinh có khí chất lấn át và cái tôi lớn, đóng ở Lục Thân gây cô khắc, đơn độc hoặc gánh vác trách nhiệm gia đình quá mệt mỏi."
+  },
+  {
+    "hoi": "Tham Lang đạt cách cục hoạnh phát tài lộc rực rỡ nhất khi tọa thủ Mệnh/Tài Bạch hội cùng các sao nào tại Thìn Tuất Sửu Mùi?",
+    "luaChon": [
+      "Tuần, Triệt",
+      "Địa Không, Địa Kiếp",
+      "Hỏa Tinh hoặc Linh Tinh",
+      "Kình Dương, Đà La"
+    ],
+    "dapAn": 2,
+    "giaiThich": "Tham Lang gặp Hỏa Tinh hoặc Linh Tinh tạo thành cách cục 'Hỏa Tham' hoặc 'Linh Tham' hoạnh phát tài lộc rực rỡ."
+  },
+  {
+    "hoi": "Cự Môn mang hóa khí là gì và kỵ nhất khi đóng ở nhóm cung nào?",
+    "luaChon": [
+      "Hóa khí 'Ấn', kỵ Quan Lộc",
+      "Hóa khí 'Tù', kỵ Tật Ách",
+      "Hóa khí 'Ám' (thị phi), kỵ Phu Thê, Phúc Đức, Phụ Mẫu",
+      "Hóa khí 'Phúc', kỵ Điền Trạch"
+    ],
+    "dapAn": 2,
+    "giaiThich": "Cự Môn là Ám Tinh, chủ về che lấp và thị phi. Đóng ở các cung tình cảm gia đạo dễ gây ngờ vực, tranh cãi và ly tán."
+  }
+]
