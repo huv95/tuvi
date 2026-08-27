@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Âm Dương Ngũ Hành - Tử Vi Đẩu Số</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        mystic: {
+                            900: 'var(--nen)',
+                            800: '#140f26',
+                            700: '#1e1738',
+                            600: '#2d2252',
+                            500: '#4c3a85',
+                            accent: '#d97706',
+                            gold: '#fbbf24',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="./assets/theme.css">
+    <style>
+        body {
+            background-color: var(--nen);
+            color: #f3f4f6;
+            font-family: var(--font-chu);
+        }
+        .mystic-card {
+            background: rgba(30, 23, 56, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(251, 191, 36, 0.15);
+        }
+        .mystic-card:hover {
+            border-color: rgba(251, 191, 36, 0.4);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--nen); }
+        ::-webkit-scrollbar-thumb { background: #2d2252; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #fbbf24; }
+
+        .taiji-glow {
+            text-shadow: 0 0 40px rgba(212, 175, 55, 0.5), 0 0 80px rgba(139, 92, 246, 0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-16 flex flex-col">
+
+    <!-- Header -->
+    <header class="border-b border-mystic-700/60 bg-mystic-900/80 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-purple-800 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                    <i class="fa-solid font-serif">☯</i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold font-serif tracking-wide gold-gradient-text">ÂM DƯƠNG NGŨ HÀNH</h1>
+                    <p class="text-xs text-gray-400">Nền Tảng Cốt Lõi Của Tử Vi Đẩu Số</p>
+                </div>
+            </div>
+            <a href="index.html" class="text-xs sm:text-sm text-gray-300 hover:text-amber-300 transition flex items-center gap-1.5">
+                <i class="fa-solid fa-arrow-left"></i> Mục lục
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full space-y-12">
+
+        <!-- ================= ÂM DƯƠNG ================= -->
+        <section>
+            <div class="mystic-card rounded-2xl p-6 sm:p-8 mb-6">
+                <span class="text-xs uppercase tracking-widest text-amber-400 font-semibold">Nguyên Lý Cân Bằng</span>
+                <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white mt-1 mb-3">Âm — Dương</h2>
+                <p class="text-sm text-gray-300 leading-relaxed max-w-4xl">
+                    Hai dạng năng lượng đối lập nhưng luôn chuyển hoá lẫn nhau, không tồn tại độc lập tuyệt đối —
+                    <strong class="text-amber-300">trong Dương có Âm, trong Âm có Dương</strong>. Mọi chính tinh, địa
+                    chi, cung vị trong lá số đều mang một phần tính Âm hoặc Dương, chi phối cách sao đó bộc lộ ra
+                    ngoài hay ẩn giấu vào trong.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-6 items-center">
+
+                <!-- DƯƠNG -->
+                <div class="mystic-card rounded-2xl p-6 border-t-4 border-t-amber-400">
+                    <h3 class="text-xl font-serif font-bold text-amber-300 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-sun"></i> Dương
+                    </h3>
+                    <div class="flex flex-wrap gap-1.5 mb-3">
+                        <span class="text-xs px-2.5 py-1 rounded-lg bg-amber-950/60 text-amber-200 border border-amber-800/60">Cứng</span>
+                        <span class="text-xs px-2.5 py-1 rounded-lg bg-amber-950/60 text-amber-200 border border-amber-800/60">Lớn</span>
+                        <span class="text-xs px-2.5 py-1 rounded-lg bg-amber-950/60 text-amber-200 border border-amber-800/60">Cao</span>
+                        <span class="text-xs px-2.5 py-1 rounded-lg bg-amber-950/60 text-amber-200 border border-amber-800/60">Nhanh</span>
+                    </div>
+                    <p class="text-sm text-gray-300 leading-relaxed">Động, nóng, sắc bén. Bề nổi — lộ ra ngoài, dễ nhận thấy ngay.</p>
+                    <div class="mt-4 pt-3 border-t border-mystic-700/60 text-xs text-gray-400 flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-right-long text-amber-500"></i>
+                        Thái Dương cực thịnh sẽ sinh Thiếu Âm — dương đến cùng cực lại quay về gốc âm.
+                    </div>
+                </div>
+
+                <!-- TAIJI -->
+                <div class="flex justify-center py-2 lg:py-0">
+                    <span class="text-6xl lg:text-7xl taiji-glow select-none" aria-hidden="true">☯</span>
+                </div>
+
+                <!-- ÂM -->
+                <div class="mystic-card rounded-2xl p-6 border-t-4 border-t-indigo-400">
+                    <h3 class="text-xl font-serif font-bold text-indigo-300 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-moon"></i> Âm
+                    </h3>
+                    <div class="flex flex-wrap gap-1.5 mb-3">
+                        <span class="text-xs px-2.5 py-1 rounded-lg bg-indigo-950/60 text-indigo-200 border border-indigo-800/60">Mềm</span>
+                        <span class="text-xs px-2.5 py-1 rounded-lg bg-indigo-950/60 text-indigo-200 border border-indigo-800/60">Nhỏ</span>
+                        <span class="text-xs px-2.5 py-1 rounded-lg bg-indigo-950/60 text-indigo-200 border border-indigo-800/60">Thấp</span>
+                        <span class="text-xs px-2.5 py-1 rounded-lg bg-indigo-950/60 text-indigo-200 border border-indigo-800/60">Chậm</span>
+                    </div>
+                    <p class="text-sm text-gray-300 leading-relaxed">Tĩnh, lạnh, nhu hoà. Chiều sâu — ẩn vào trong, phải quan sát kỹ mới thấy.</p>
+                    <div class="mt-4 pt-3 border-t border-mystic-700/60 text-xs text-gray-400 flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-right-long text-indigo-400"></i>
+                        Thái Âm cực thịnh sẽ sinh Thiếu Dương — âm đến cùng cực lại quay về gốc dương.
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= NGŨ HÀNH ================= -->
+        <section>
+            <div class="mystic-card rounded-2xl p-6 sm:p-8 mb-6">
+                <span class="text-xs uppercase tracking-widest text-amber-400 font-semibold">5 Trạng Thái Vận Hành Năng Lượng</span>
+                <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white mt-1 mb-3">Ngũ Hành</h2>
+                <p class="text-sm text-gray-300 leading-relaxed max-w-4xl">
+                    Đi theo thứ tự <strong class="hanh-moc">Mộc</strong> → <strong class="hanh-hoa">Hỏa</strong> →
+                    <strong class="hanh-tho">Thổ</strong> → <strong class="hanh-kim">Kim</strong> →
+                    <strong class="hanh-thuy">Thủy</strong>: cách nhau <strong class="text-emerald-400">1 bậc thì
+                    Sinh</strong> (nuôi dưỡng, thúc đẩy), cách nhau <strong class="text-rose-400">2 bậc thì
+                    Khắc</strong> (kiềm chế, chế ngự). Ứng dụng trong phong thuỷ và đời sống hằng ngày để nhận biết
+                    yếu tố nào đang quá vượng và ảnh hưởng đến bản thân.
+                </p>
+            </div>
+
+            <!-- Sơ đồ sinh khắc -->
+            <div class="mystic-card rounded-2xl p-6 mb-6 flex flex-col items-center">
+                <svg viewBox="-15 -15 330 330" class="w-full max-w-sm" role="img" aria-label="Sơ đồ Ngũ Hành tương sinh tương khắc">
+                    <defs>
+                        <marker id="muiTenSinh" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                            <path d="M0,0 L10,5 L0,10 Z" fill="var(--cat)" />
+                        </marker>
+                        <marker id="muiTenKhac" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                            <path d="M0,0 L10,5 L0,10 Z" fill="var(--hung)" />
+                        </marker>
+                    </defs>
+
+                    <!-- Vòng Khắc: nét đứt, ngôi sao 5 cánh bên trong -->
+                    <g stroke="var(--hung)" stroke-width="2" stroke-dasharray="5,4" fill="none" marker-end="url(#muiTenKhac)" opacity="0.85">
+                        <line x1="159.9" y1="70.4"  x2="204.8" y2="208.6" /> <!-- Mộc khắc Thổ -->
+                        <line x1="188.8" y1="220.2" x2="71.3"  y2="134.8" /> <!-- Thổ khắc Thủy -->
+                        <line x1="77.4"  y1="116.0" x2="222.6" y2="116.0" /> <!-- Thủy khắc Hỏa -->
+                        <line x1="228.7" y1="134.8" x2="111.2" y2="220.2" /> <!-- Hỏa khắc Kim -->
+                        <line x1="95.2"  y1="208.6" x2="140.1" y2="70.4"  /> <!-- Kim khắc Mộc -->
+                    </g>
+
+                    <!-- Vòng Sinh: nét liền theo viền ngũ giác -->
+                    <g stroke="var(--cat)" stroke-width="3" fill="none" marker-end="url(#muiTenSinh)">
+                        <line x1="175.9" y1="58.8"  x2="228.7" y2="97.2"  /> <!-- Mộc sinh Hỏa -->
+                        <line x1="244.7" y1="146.4" x2="224.6" y2="208.6" /> <!-- Hỏa sinh Thổ -->
+                        <line x1="182.7" y1="239.0" x2="117.3" y2="239.0" /> <!-- Thổ sinh Kim -->
+                        <line x1="75.4"  y1="208.6" x2="55.3"  y2="146.4" /> <!-- Kim sinh Thủy -->
+                        <line x1="71.3"  y1="97.2"  x2="124.1" y2="58.8"  /> <!-- Thủy sinh Mộc -->
+                    </g>
+
+                    <!-- 5 nút -->
+                    <g font-family="var(--font-nhan)" font-weight="700" font-size="17" text-anchor="middle">
+                        <g><circle cx="150.0" cy="40.0"  r="26" fill="var(--nen-noi)" stroke="var(--hanh-moc)" stroke-width="2.5" /><text x="150.0" y="46.5" fill="var(--hanh-moc)">Mộc</text></g>
+                        <g><circle cx="254.6" cy="116.0" r="26" fill="var(--nen-noi)" stroke="var(--hanh-hoa)" stroke-width="2.5" /><text x="254.6" y="122.5" fill="var(--hanh-hoa)">Hỏa</text></g>
+                        <g><circle cx="214.7" cy="239.0" r="26" fill="var(--nen-noi)" stroke="var(--hanh-tho)" stroke-width="2.5" /><text x="214.7" y="245.5" fill="var(--hanh-tho)">Thổ</text></g>
+                        <g><circle cx="85.3"  cy="239.0" r="26" fill="var(--nen-noi)" stroke="var(--hanh-kim)" stroke-width="2.5" /><text x="85.3"  y="245.5" fill="var(--hanh-kim)">Kim</text></g>
+                        <g><circle cx="45.4"  cy="116.0" r="26" fill="var(--nen-noi)" stroke="var(--hanh-thuy)" stroke-width="2.5" /><text x="45.4" y="122.5" fill="var(--hanh-thuy)">Thủy</text></g>
+                    </g>
+                </svg>
+                <div class="flex items-center gap-6 mt-4 text-xs text-gray-400">
+                    <span class="flex items-center gap-1.5"><span class="w-4 h-0.5 rounded" style="background:var(--cat)"></span> Tương sinh</span>
+                    <span class="flex items-center gap-1.5"><span class="w-4 h-0.5 rounded border-t border-dashed" style="border-color:var(--hung)"></span> Tương khắc</span>
+                </div>
+            </div>
+
+            <!-- 5 the ngu hanh -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4" id="the-ngu-hanh">
+                <!-- JS điền -->
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-mystic-700/40 py-4 text-center text-xs text-purple-400/60">
+        <p>© Tử Vi Đẩu Số</p>
+    </footer>
+
+    <script type="module">
+        import { getSao } from './lib/repo.js';
+
+        // Nội dung Âm Dương / Ngũ Hành là kiến thức nền tham khảo, không phải
+        // dữ liệu vận hành lá số nên khai trực tiếp tại đây (giống cách
+        // conguyetdongluong.html khai LAYOUTS_INFO), không đưa vào data/*.json.
+        const NGU_HANH = [
+            { id: 'moc', ten: 'Mộc', lop: 'hanh-moc', hinhTuong: 'Cây cối — sự sinh trưởng',
+              dacDiem: 'Sự khởi đầu, sinh sôi, dẻo dai. Nhân từ, vị tha, che chở, ý chí.',
+              thaiQua: 'Bướng bỉnh, cứng nhắc.' },
+            { id: 'hoa', ten: 'Hỏa', lop: 'hanh-hoa', hinhTuong: 'Lửa — sự nhiệt huyết',
+              dacDiem: 'Sự chuyển động, nhiệt huyết, ấm áp. Hướng ngoại, đam mê, quyết đoán.',
+              thaiQua: 'Thiếu kiên nhẫn, bốc đồng.' },
+            { id: 'tho', ten: 'Thổ', lop: 'hanh-tho', hinhTuong: 'Đất — vững chãi, bao dung. Nền nâng đỡ và chuyển hoá 4 hành còn lại',
+              dacDiem: 'Tích tụ, vững chắc, tiếp nhận, nuôi dưỡng, chuyển hoá. Trầm ổn, bao dung, đáng tin cậy.',
+              thaiQua: 'Chậm chạp, bảo thủ, ngại thay đổi.' },
+            { id: 'kim', ten: 'Kim', lop: 'hanh-kim', hinhTuong: 'Kim loại — sắc bén, thu liễm',
+              dacDiem: 'Sắc sảo, có giá trị, lạnh lùng, thu liễm, sát phạt. Đầu óc tổ chức, tư duy sắc sảo, kỷ luật cao.',
+              thaiQua: 'Độc đoán, lạnh lùng, quá nghiêm khắc.' },
+            { id: 'thuy', ten: 'Thủy', lop: 'hanh-thuy', hinhTuong: 'Nước — uyển chuyển, trí tuệ',
+              dacDiem: 'Thông minh, thích ứng, mềm mại, uyển chuyển, hướng xuống, che giấu. Trí tuệ sâu sắc, khả năng giao tiếp tốt, giàu lòng trắc ẩn.',
+              thaiQua: 'Tâm tư khó đoán, dễ nhạy cảm, lo âu.' },
+        ];
+
+        function veTheNguHanh(h, saoCungHanh) {
+            const el = document.createElement('div');
+            el.className = `the-hanh ${h.lop} rounded-2xl p-5`;
+            const list = saoCungHanh.length
+                ? saoCungHanh.map(s => s.ten).join(', ')
+                : '—';
+            el.innerHTML = `
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-lg font-serif font-bold ${h.lop}">${h.ten}</h3>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-mystic-900/60 border border-current font-semibold">${saoCungHanh.length}/14 chính tinh</span>
+                </div>
+                <p class="text-xs text-gray-300 leading-relaxed mb-2">${h.hinhTuong}</p>
+                <p class="text-xs text-gray-400 leading-relaxed mb-3">${h.dacDiem}</p>
+                <div class="text-xs text-rose-300/90 leading-relaxed border-t border-mystic-700/60 pt-2 mb-3">
+                    <i class="fa-solid fa-triangle-exclamation mr-1"></i>Thái quá: ${h.thaiQua}
+                </div>
+                <p class="text-[11px] text-gray-500 leading-relaxed">${list}</p>
+            `;
+            return el;
+        }
+
+        async function initApp() {
+            const container = document.getElementById('the-ngu-hanh');
+            let sao = [];
+            try {
+                sao = await getSao();
+            } catch (e) {
+                document.body.insertAdjacentHTML('afterbegin',
+                    `<div style="background:#7f1d1d;color:#fee;padding:12px;text-align:center;font-size:14px">
+                       Không tải được dữ liệu: ${e.message}. Trang cần chạy qua server tĩnh
+                       (npm run dev), không mở trực tiếp bằng file://</div>`);
+            }
+            NGU_HANH.forEach(h => {
+                const saoCungHanh = sao.filter(s => s.nguHanh === h.ten);
+                container.appendChild(veTheNguHanh(h, saoCungHanh));
+            });
+        }
+        initApp();
+    </script>
+</body>
+</html>
