@@ -174,16 +174,24 @@
                     </p>
                 </div>
                 
-                <!-- Quick Filter & Actions -->
-                <div class="flex flex-wrap items-center gap-2">
-                    <label class="text-xs text-gray-400">Chọn cấu hình nhanh:</label>
-                    <select x-model="presetSelect" @change="applyPreset()" class="bg-cosmic-900 border border-gray-700 text-xs text-amber-300 rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500">
-                        <option value="standard">Lá Số Mẫu 1: Tử Vi cư Mệnh (Ngọ)</option>
-                        <option value="vukhue">Lá Số Mẫu 2: Vũ Khúc - Thiên Tướng (Thân)</option>
-                        <option value="thatchat">Lá Số Mẫu 3: Thất Sát Triều Đẩu (Dần)</option>
-                        <option value="thainhat">Lá Số Mẫu 4: Thái Dương - Thái Âm Tỵ Hợi</option>
-                        <option value="empty">Bàn Cờ Trống (Tự do sắp xếp)</option>
-                    </select>
+                <!-- Chọn Cung Mệnh + vị trí Tử Vi, phần còn lại suy ra bằng quy tắc an sao thật -->
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="flex items-center gap-1.5">
+                        <label class="text-xs text-gray-400">Cung Mệnh tại:</label>
+                        <select x-model="boardMenhChi" class="bg-cosmic-900 border border-gray-700 text-xs text-amber-300 rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500">
+                            <template x-for="chi in earthlyBranches" :key="chi">
+                                <option :value="chi" x-text="chi"></option>
+                            </template>
+                        </select>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <label class="text-xs text-gray-400">Tử Vi tại:</label>
+                        <select x-model="boardTuViChi" class="bg-cosmic-900 border border-gray-700 text-xs text-amber-300 rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500">
+                            <template x-for="chi in earthlyBranches" :key="chi">
+                                <option :value="chi" x-text="chi"></option>
+                            </template>
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -196,14 +204,14 @@
                         
                         <!-- 12 Earthly Branches Cells -->
                         <template x-for="(palace, key) in palacesData" :key="key">
-                            <div :style="getPalaceGridStyle(palace.chi)"
+                            <div :style="getPalaceGridStyle(chiCuaCung(key))"
                                  :class="`palace-cell bg-cosmic-900 border ${selectedPalaceKey === key ? 'border-amber-400 ring-2 ring-amber-500/30' : 'border-gray-800 hover:border-amber-500/50'} rounded-xl p-2 flex flex-col justify-between cursor-pointer relative overflow-hidden group`"
                                  @click="selectPalace(key)">
                                 
                                 <!-- Top Bar: Palace Name & Earthly Branch -->
                                 <div class="flex justify-between items-start border-b border-gray-800/80 pb-1">
                                     <span class="text-xs sm:text-sm font-bold text-amber-300 group-hover:text-amber-200" x-text="palace.ten"></span>
-                                    <span class="text-[10px] font-serif text-gray-500 uppercase px-1.5 py-0.5 bg-gray-800/50 rounded" x-text="palace.chi"></span>
+                                    <span class="text-[10px] font-serif text-gray-500 uppercase px-1.5 py-0.5 bg-gray-800/50 rounded" x-text="chiCuaCung(key)"></span>
                                 </div>
 
                                 <!-- Middle: Placed Main Stars list -->
@@ -224,7 +232,7 @@
 
                                 <!-- Bottom Bar: Element & Direction info -->
                                 <div class="flex justify-between items-center text-[10px] text-gray-500 pt-1 border-t border-gray-800/50">
-                                    <span x-text="palace.nguHanh" class="text-gray-400"></span>
+                                    <span x-text="getBranchElement(chiCuaCung(key))" class="text-gray-400"></span>
                                     <span class="text-amber-500/80 group-hover:translate-x-0.5 transition-transform">
                                         Chi tiết <i class="fa-solid fa-chevron-right text-[8px]"></i>
                                     </span>
@@ -274,9 +282,10 @@
                                 <span class="text-xs text-amber-400 font-medium uppercase tracking-wider">Chi Tiết Cung Chức Năng</span>
                                 <h3 class="text-xl font-bold font-serif text-white flex items-center gap-2" x-text="palacesData[selectedPalaceKey]?.ten">
                                 </h3>
+                                <p class="text-[11px] text-gray-500 italic" x-text="palacesData[selectedPalaceKey]?.khiaCanh"></p>
                             </div>
                             <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/30"
-                                  x-text="`Cung ${palacesData[selectedPalaceKey]?.chi} (${palacesData[selectedPalaceKey]?.nguHanh})`"></span>
+                                  x-text="`Cung ${chiCuaCung(selectedPalaceKey)} (${getBranchElement(chiCuaCung(selectedPalaceKey))})`"></span>
                         </div>
 
                         <!-- Palace Description -->
@@ -320,31 +329,10 @@
 
                                 <template x-if="!boardPlacements[selectedPalaceKey] || boardPlacements[selectedPalaceKey].length === 0">
                                     <div class="p-4 bg-cosmic-900/40 rounded-xl border border-dashed border-gray-700 text-center text-xs text-gray-400">
-                                        Cung này đang <strong>Vô Chính Diệu</strong> (Không có chính tinh tọa thủ). Ảnh hưởng lớn bởi Cung Xung Chiếu (<span x-text="palacesData[selectedPalaceKey]?.opposite"></span>).
+                                        Cung này đang <strong>Vô Chính Diệu</strong> (Không có chính tinh tọa thủ). Ảnh hưởng lớn bởi Cung Xung Chiếu (<span x-text="getOppositePalaceName(selectedPalaceKey)"></span>).
                                     </div>
                                 </template>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Add/Remove Stars Selector to Current Palace -->
-                    <div class="bg-cosmic-800/80 border border-gray-800 rounded-2xl p-4 shadow-xl">
-                        <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                            <i class="fa-solid fa-sliders"></i> Tùy Chọn Gán Sao Vào Cung
-                        </h4>
-                        <p class="text-xs text-gray-400 mb-3">Tích chọn các chính tinh bạn muốn thử nghiệm an vào <strong class="text-white" x-text="palacesData[selectedPalaceKey]?.ten"></strong>:</p>
-                        
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-48 overflow-y-auto pr-1">
-                            <template x-for="(star, sKey) in starsData" :key="sKey">
-                                <label class="flex items-center space-x-2 p-2 rounded-lg border text-xs cursor-pointer transition"
-                                       :class="isStarInSelectedPalace(sKey) ? 'bg-amber-500/20 border-amber-500/50 text-amber-200' : 'bg-cosmic-900 border-gray-800 text-gray-400 hover:border-gray-700'">
-                                    <input type="checkbox" 
-                                           :checked="isStarInSelectedPalace(sKey)" 
-                                           @change="toggleStarInPalace(sKey)"
-                                           class="rounded border-gray-700 text-amber-500 focus:ring-amber-500/30 bg-cosmic-800">
-                                    <span class="truncate" x-text="star.ten"></span>
-                                </label>
-                            </template>
                         </div>
                     </div>
 
@@ -398,7 +386,7 @@
                                     <th class="p-3 text-xs font-bold text-gray-300 text-center min-w-[130px] border-r border-gray-800/50 hover:bg-cosmic-800 cursor-pointer"
                                         @click="selectedPalaceKey = pKey; activeTab = 'board'">
                                         <div class="text-amber-300 font-serif" x-text="palace.ten"></div>
-                                        <div class="text-[10px] text-gray-500 font-normal" x-text="`Cung ${palace.chi}`"></div>
+                                        <div class="text-[10px] text-gray-500 font-normal" x-text="`Cung ${chiCuaCung(pKey)}`"></div>
                                     </th>
                                 </template>
                             </tr>
@@ -480,7 +468,7 @@
                                     :class="inspectorPalaceKey === pKey ? 'bg-amber-500/20 border-amber-500 text-amber-300 ring-2 ring-amber-500/30' : 'bg-cosmic-900 border-gray-800 text-gray-300 hover:border-gray-700'"
                                     class="p-2.5 rounded-xl border text-left text-xs transition flex flex-col justify-between">
                                 <span class="font-bold text-sm font-serif" x-text="palace.ten"></span>
-                                <span class="text-[10px] text-gray-400 mt-1" x-text="`Cung ${palace.chi}`"></span>
+                                <span class="text-[10px] text-gray-400 mt-1" x-text="`Cung ${chiCuaCung(pKey)}`"></span>
                             </button>
                         </template>
                     </div>
@@ -582,8 +570,8 @@
                                 <div class="flex justify-between items-center text-xs px-2 py-1 rounded bg-cosmic-900 border border-gray-800">
                                     <span class="font-bold" :class="starsData[sKey]?.vongSao === 'Vòng Tử Vi' ? 'text-purple-300' : 'text-amber-300'" x-text="starsData[sKey]?.ten"></span>
                                     <span class="text-[9px] px-1 rounded text-white font-semibold"
-                                          :class="getBrightnessBadgeClass(getStarBrightness(sKey, getPalaceKeyByChi(chi)))"
-                                          x-text="getStarBrightness(sKey, getPalaceKeyByChi(chi))"></span>
+                                          :class="getBrightnessBadgeClass(getStarBrightnessByChi(sKey, chi))"
+                                          x-text="getStarBrightnessByChi(sKey, chi)"></span>
                                 </div>
                             </template>
 
@@ -732,14 +720,18 @@
         import { getSao, getCung, getDoSang } from './lib/repo.js';
         import { O_LUOI } from './assets/ui.js';
 
-        // Địa chi mặc định của 12 cung khi mở trang (Mệnh an tại Ngọ).
-        // Đây là thế cờ khởi đầu của trình giả lập, không phải thuộc tính của cung.
-        const CHI_MAC_DINH = {"menh": "Ngọ", "phu-mau": "Tỵ", "phuc-duc": "Thìn", "dien-trach": "Mão", "quan-loc": "Dần", "no-boc": "Sửu", "thien-di": "Tý", "tat-ach": "Hợi", "tai-bach": "Tuất", "tu-tuc": "Dậu", "phu-the": "Thân", "huynh-de": "Mùi"};
+        // Thứ tự 12 cung kể từ Mệnh, đúng theo CUNG_NAMES trong lib/ansao.js:
+        // đi theo chiều Chi tăng dần, Mệnh trước rồi tới Huynh Đệ, Phu Thê...
+        // Dùng để suy vị trí Chi thật của từng cung từ vị trí Cung Mệnh do
+        // người dùng chọn — không còn cố định một thế cờ mẫu như trước.
+        const THU_TU_TU_MENH = ['menh', 'huynh-de', 'phu-the', 'tu-tuc', 'tai-bach', 'tat-ach',
+                                 'thien-di', 'no-boc', 'quan-loc', 'dien-trach', 'phuc-duc', 'phu-mau'];
 
         function tuViApp() {
             return {
                 activeTab: 'board',
-                presetSelect: 'standard',
+                boardMenhChi: 'Ngọ',
+                boardTuViChi: 'Ngọ',
                 selectedPalaceKey: 'menh',
                 inspectorStarKey: 'tu-vi',
                 inspectorPalaceKey: 'menh',
@@ -756,22 +748,6 @@
                 earthlyBranches: ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'],
                 simResults: {},
 
-                // Board placements (Map palace key -> array of star keys)
-                boardPlacements: {
-                    menh: ['tu-vi'],
-                    'phu-mau': ['thien-co'],
-                    'phuc-duc': ['thai-duong'],
-                    'dien-trach': ['vu-khuc'],
-                    'quan-loc': ['thien-dong'],
-                    'no-boc': ['liem-trinh'],
-                    'thien-di': ['thien-phu'],
-                    'tat-ach': ['thai-am'],
-                    'tai-bach': ['tham-lang'],
-                    'tu-tuc': ['cu-mon'],
-                    'phu-the': ['thien-tuong'],
-                    'huynh-de': ['thien-luong']
-                },
-
                 // 12 Functional Palaces Data
                 
                 // 14 Major Stars Data
@@ -787,10 +763,10 @@
                         const [sao, cung, doSang] =
                             await Promise.all([getSao(), getCung(), getDoSang()]);
                         // data/ lưu dạng mảng; Alpine ở trang này tra theo id nên chuyển
-                        // thành object có khoá. Chi của cung lấy từ thế cờ mặc định.
+                        // thành object có khoá. Chi của từng cung giờ suy ra động từ
+                        // boardMenhChi (xem chiCuaCung()), không gán cứng ở đây nữa.
                         this.starsData  = Object.fromEntries(sao.map(x => [x.id, x]));
-                        this.palacesData = Object.fromEntries(
-                            cung.map(c => [c.id, { ...c, chi: CHI_MAC_DINH[c.id] }]));
+                        this.palacesData = Object.fromEntries(cung.map(c => [c.id, c]));
                         this.brightnessMatrix = doSang;
                     } catch (e) {
                         document.body.insertAdjacentHTML('afterbegin',
@@ -820,7 +796,12 @@
 
                 // Helper to get brightness (Miếu, Vượng, Đắc, Hãm)
                 getStarBrightness(starKey, palaceKey) {
-                    const chi = this.palacesData[palaceKey]?.chi || 'Ngọ';
+                    return this.getStarBrightnessByChi(starKey, this.chiCuaCung(palaceKey));
+                },
+
+                // Dùng thẳng khi đã có sẵn Chi (vd tab Mô Phỏng An Sao), không
+                // qua cung — tránh vòng qua chiCuaCung rồi lại tra ngược lại.
+                getStarBrightnessByChi(starKey, chi) {
                     return this.brightnessMatrix[starKey]?.[chi] || 'Đ';
                 },
 
@@ -845,11 +826,21 @@
                     }
                 },
 
-                getPalaceKeyByChi(chiName) {
-                    for (let pKey in this.palacesData) {
-                        if (this.palacesData[pKey].chi === chiName) return pKey;
-                    }
-                    return 'menh';
+                // cungXungChieu lưu id (vd "thien-di"), không phải tên hiển thị
+                // — phải tra ngược qua palacesData mới ra "Thiên Di".
+                getOppositePalaceName(palaceKey) {
+                    const doiId = this.palacesData[palaceKey]?.cungXungChieu;
+                    return this.palacesData[doiId]?.ten || '';
+                },
+
+                // Chi thật của một cung, suy từ vị trí Cung Mệnh người dùng chọn.
+                // Thứ tự 12 cung kể từ Mệnh cố định (THU_TU_TU_MENH); cung đứng
+                // thứ k kể từ Mệnh thì luôn cách Mệnh đúng k Chi theo chiều tăng
+                // dần — đúng công thức palaceNameIdx trong lib/ansao.js.
+                chiCuaCung(palaceKey) {
+                    const menhChiIdx = this.earthlyBranches.indexOf(this.boardMenhChi);
+                    const k = THU_TU_TU_MENH.indexOf(palaceKey);
+                    return this.earthlyBranches[(menhChiIdx - k + 24) % 12];
                 },
 
                 // Vị trí lưới của một Chi trên bàn cờ 12 cung, lấy từ O_LUOI
@@ -886,8 +877,9 @@
                     const star = this.starsData[starKey];
                     const palace = this.palacesData[palaceKey];
                     const b = this.getStarBrightness(starKey, palaceKey);
+                    const hanhCung = this.getBranchElement(this.chiCuaCung(palaceKey));
 
-                    let nature = `Khi sao ${star.ten} (${star.nguHanh}) nhập vào ${palace.ten} (${palace.nguHanh}), sao mang đặc tính ${star.loaiTinh} kết hợp với năng lượng quản hạt ${palace.phamVi.join(', ')}.`;
+                    let nature = `Khi sao ${star.ten} (${star.nguHanh}) nhập vào ${palace.ten} (${hanhCung}), sao mang đặc tính ${star.loaiTinh} kết hợp với năng lượng quản hạt ${palace.phamVi.join(', ')}.`;
                     
                     let pros = "";
                     let cons = "";
@@ -922,24 +914,6 @@
                     this.selectedPalaceKey = key;
                 },
 
-                isStarInSelectedPalace(starKey) {
-                    const list = this.boardPlacements[this.selectedPalaceKey] || [];
-                    return list.includes(starKey);
-                },
-
-                toggleStarInPalace(starKey) {
-                    if (!this.boardPlacements[this.selectedPalaceKey]) {
-                        this.boardPlacements[this.selectedPalaceKey] = [];
-                    }
-                    const list = this.boardPlacements[this.selectedPalaceKey];
-                    const index = list.indexOf(starKey);
-                    if (index > -1) {
-                        list.splice(index, 1);
-                    } else {
-                        list.push(starKey);
-                    }
-                },
-
                 openCellModal(starKey, palaceKey) {
                     this.modalStarKey = starKey;
                     this.modalPalaceKey = palaceKey;
@@ -950,106 +924,57 @@
                     this.isModalOpen = false;
                 },
 
-                // Preset loader
-                applyPreset() {
-                    if (this.presetSelect === 'empty') {
-                        for (let k in this.boardPlacements) this.boardPlacements[k] = [];
-                    } else if (this.presetSelect === 'vukhue') {
-                        this.boardPlacements = {
-                            menh: ['vu-khuc', 'thien-tuong'],
-                            'phu-mau': ['thai-duong'],
-                            'phuc-duc': ['thien-co'],
-                            'dien-trach': ['thien-phu'],
-                            'quan-loc': ['liem-trinh'],
-                            'no-boc': ['tham-lang'],
-                            'thien-di': ['pha-quan'],
-                            'tat-ach': ['cu-mon'],
-                            'tai-bach': ['that-sat'],
-                            'tu-tuc': ['thien-dong'],
-                            'phu-the': ['thai-am'],
-                            'huynh-de': ['thien-luong']
-                        };
-                    } else if (this.presetSelect === 'thatchat') {
-                        this.boardPlacements = {
-                            menh: ['that-sat'],
-                            'phu-mau': ['thien-luong'],
-                            'phuc-duc': ['liem-trinh', 'thien-tuong'],
-                            'dien-trach': ['cu-mon'],
-                            'quan-loc': ['tham-lang'],
-                            'no-boc': ['thai-duong'],
-                            'thien-di': ['thien-phu'],
-                            'tat-ach': ['thien-co'],
-                            'tai-bach': ['pha-quan'],
-                            'tu-tuc': ['vu-khuc'],
-                            'phu-the': ['tu-vi'],
-                            'huynh-de': ['thien-dong', 'thai-am']
-                        };
-                    } else {
-                        // Standard default
-                        this.boardPlacements = {
-                            menh: ['tu-vi'],
-                            'phu-mau': ['thien-co'],
-                            'phuc-duc': ['thai-duong'],
-                            'dien-trach': ['vu-khuc'],
-                            'quan-loc': ['thien-dong'],
-                            'no-boc': ['liem-trinh'],
-                            'thien-di': ['thien-phu'],
-                            'tat-ach': ['thai-am'],
-                            'tai-bach': ['tham-lang'],
-                            'tu-tuc': ['cu-mon'],
-                            'phu-the': ['thien-tuong'],
-                            'huynh-de': ['thien-luong']
-                        };
-                    }
-                },
-
-                // Simulator Star placement calculation algorithm
-                calculateStarPlacement() {
+                // An 14 chính tinh theo đúng quy tắc thật (vòng Tử Vi 6 sao đi
+                // nghịch, vòng Thiên Phủ 8 sao đi thuận, offset khớp
+                // TU_VI_GROUP/THIEN_PHU_GROUP trong lib/ansao.js) — trả về map
+                // Chi -> [id sao]. Dùng chung cho cả bàn cờ và tab Mô Phỏng, chỉ
+                // khác Chi khởi đầu (tuViChi) nên tách hàm thuần, không đụng state.
+                tinhVongSao(tuViChi) {
                     const branches = this.earthlyBranches;
-                    const tuViIndex = branches.indexOf(this.simTuViChi);
-
-                    // Reset results
+                    const tuViIndex = branches.indexOf(tuViChi);
                     let res = {};
                     branches.forEach(b => res[b] = []);
 
-                    // Vòng Tử Vi (An ngược chiều kim đồng hồ từ Tử Vi):
-                    // Tử Vi -> (0), Thiên Cơ (-1), Thái Dương (-3), Vũ Khúc (-4), Thiên Đồng (-5), Liêm Trinh (-8)
-                    const getBranch = (offset) => {
-                        let idx = (tuViIndex + offset) % 12;
-                        if (idx < 0) idx += 12;
-                        return branches[idx];
-                    };
+                    const layChi = (goc, offset) => branches[((goc + offset) % 12 + 12) % 12];
 
-                    res[getBranch(0)].push('tu-vi');
-                    res[getBranch(-1)].push('thien-co');
-                    res[getBranch(-3)].push('thai-duong');
-                    res[getBranch(-4)].push('vu-khuc');
-                    res[getBranch(-5)].push('thien-dong');
-                    res[getBranch(-8)].push('liem-trinh');
+                    // Vòng Tử Vi (đi nghịch): Tử Vi(0), Thiên Cơ(-1), Thái Dương(-3),
+                    // Vũ Khúc(-4), Thiên Đồng(-5), Liêm Trinh(-8)
+                    res[layChi(tuViIndex, 0)].push('tu-vi');
+                    res[layChi(tuViIndex, -1)].push('thien-co');
+                    res[layChi(tuViIndex, -3)].push('thai-duong');
+                    res[layChi(tuViIndex, -4)].push('vu-khuc');
+                    res[layChi(tuViIndex, -5)].push('thien-dong');
+                    res[layChi(tuViIndex, -8)].push('liem-trinh');
 
-                    // Vòng Thiên Phủ (Đối xứng Tử Vi qua trục Dần - Thân):
-                    // Công thức vị trí Thiên Phủ = (4 - tuViIndex) % 12
-                    let phuIndex = (4 - tuViIndex) % 12;
-                    if (phuIndex < 0) phuIndex += 12;
+                    // Thiên Phủ đối xứng Tử Vi qua trục Dần - Thân: vị trí = (4 - tuViIndex) % 12
+                    const phuIndex = ((4 - tuViIndex) % 12 + 12) % 12;
 
-                    const getPhuBranch = (offset) => {
-                        let idx = (phuIndex + offset) % 12;
-                        if (idx < 0) idx += 12;
-                        return branches[idx];
-                    };
+                    // Vòng Thiên Phủ (đi thuận): Thiên Phủ(0), Thái Âm(+1), Tham Lang(+2),
+                    // Cự Môn(+3), Thiên Tướng(+4), Thiên Lương(+5), Thất Sát(+6), Phá Quân(+10)
+                    res[layChi(phuIndex, 0)].push('thien-phu');
+                    res[layChi(phuIndex, 1)].push('thai-am');
+                    res[layChi(phuIndex, 2)].push('tham-lang');
+                    res[layChi(phuIndex, 3)].push('cu-mon');
+                    res[layChi(phuIndex, 4)].push('thien-tuong');
+                    res[layChi(phuIndex, 5)].push('thien-luong');
+                    res[layChi(phuIndex, 6)].push('that-sat');
+                    res[layChi(phuIndex, 10)].push('pha-quan');
 
-                    // Vòng Thiên Phủ an thuận chiều kim đồng hồ:
-                    // Thiên Phủ (+0), Thái Âm (+1), Tham Lang (+2), Cự Môn (+3), Thiên Tướng (+4), Thiên Lương (+5), Thất Sát (+6), Phá Quân (+10)
-                    res[getPhuBranch(0)].push('thien-phu');
-                    res[getPhuBranch(1)].push('thai-am');
-                    res[getPhuBranch(2)].push('tham-lang');
-                    res[getPhuBranch(3)].push('cu-mon');
-                    res[getPhuBranch(4)].push('thien-tuong');
-                    res[getPhuBranch(5)].push('thien-luong');
-                    res[getPhuBranch(6)].push('that-sat');
-                    res[getPhuBranch(10)].push('pha-quan');
+                    return res;
+                },
 
-                    this.simResults = res;
+                // Bàn Cờ 12 Cung: gộp vị trí cung (chiCuaCung, suy từ boardMenhChi)
+                // với vòng sao (tinhVongSao, suy từ boardTuViChi) — getter nên tự
+                // tính lại mỗi khi một trong hai đổi, không cần nút áp dụng.
+                get boardPlacements() {
+                    const saoTheoChi = this.tinhVongSao(this.boardTuViChi);
+                    const out = {};
+                    THU_TU_TU_MENH.forEach(id => { out[id] = saoTheoChi[this.chiCuaCung(id)] || []; });
+                    return out;
+                },
+
+                calculateStarPlacement() {
+                    this.simResults = this.tinhVongSao(this.simTuViChi);
                 }
             }
         }
