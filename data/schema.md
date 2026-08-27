@@ -43,7 +43,10 @@ trong trang (giai đoạn 3 sẽ gom về token trong `theme.css`).
 
 ## `cung.json` — 12 cung chức
 
-`id` · `ten` · `nguHanh` · `cungXungChieu` (id) · `moTa` · `phamVi` (string[])
+`id` · `ten` · `khiaCanh` (tagline ngắn, vd "Bản Ngã & Nền Tảng") · `nguHanh` ·
+`cungXungChieu` (id) · `moTa` · `phamVi` (string[])
+
+`khiaCanh` và `moTa` lấy từ note/Kiến thức nền.html, mục "Cung".
 
 ## `nhom-cung.json` — 8 nhóm tra cứu
 
