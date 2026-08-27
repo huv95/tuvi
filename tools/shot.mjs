@@ -71,7 +71,10 @@ const winTmp = execSync('cmd.exe /c "echo %TEMP%"', { cwd: '/mnt/c' }).toString(
 const winShot = `${winTmp}\\__tuvi_shot.png`;
 const wslShot = '/mnt/c' + winShot.slice(2).replace(/\\/g, '/');
 
-const args = ['--headless', '--disable-gpu', '--hide-scrollbars', `--window-size=${w},${h}`];
+// --virtual-time-budget: chờ trang tải xong (kể cả font ngoài) rồi chốt, thay
+// vì để Chrome giữ kết nối mở mãi.
+const args = ['--headless', '--disable-gpu', '--hide-scrollbars',
+              '--virtual-time-budget=8000', '--no-sandbox', `--window-size=${w},${h}`];
 args.push(domOnly ? '--dump-dom' : `--screenshot=${winShot}`, url);
 
 const out = await new Promise((ok, no) => {
@@ -91,3 +94,5 @@ await mkdir(join(ROOT, 'tools', 'shots'), { recursive: true });
 await copyFile(wslShot, outPath);
 const kb = Math.round((await readFile(outPath)).length / 1024);
 console.log(`${outPath.replace(ROOT + '/', '')}  ${w}×${h}  ${kb} KB`);
+// Chrome đôi khi còn giữ kết nối mạng khiến Node không tự thoát.
+process.exit(0);

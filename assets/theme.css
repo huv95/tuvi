@@ -1,0 +1,130 @@
+/* ============================================================================
+   assets/theme.css — Bộ token dùng chung cho toàn project
+   ============================================================================
+   Mọi màu và font của phần Tử Vi khai báo một lần tại đây. Trang không viết
+   mã màu trực tiếp nữa mà dùng biến hoặc lớp tiện ích bên dưới.
+
+   Hai mặt nền:
+     - mặc định  : nền tối, dùng cho khung ứng dụng
+     - .giay     : nền giấy sáng, dùng cho vùng lá số (in ra giấy được)
+   Cùng một lớp .hanh-thuy đọc đúng trên cả hai mặt, vì token đổi theo ngữ
+   cảnh chứ tên lớp thì không.
+   Hai bộ chữ dùng chung được nạp bằng <link> ở từng trang chứ không @import
+   tại đây: @import trong CSS phải tải xong mới render tiếp, làm trang trắng
+   lâu hơn hẳn.
+   ========================================================================= */
+
+:root {
+  /* --- chữ ------------------------------------------------------------ */
+  /* Cả hai bộ đều có sẵn dấu tiếng Việt. Trước đây Cinzel và Marcellus
+     không có, nên dấu bị rơi về font dự phòng và chữ hiện lệch nhau. */
+  --font-nhan: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
+  --font-chu:  'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-so:   ui-monospace, 'SF Mono', 'Cascadia Mono', Consolas, monospace;
+
+  /* --- nền tối (mặc định) --------------------------------------------- */
+  --nen:        #0F0817;
+  --nen-noi:    #1A1028;
+  --nen-noi-2:  #241733;
+  --vien:       #33244A;
+  --vien-mo:    #241733;
+  --chu:        #E8E3F0;
+  --chu-mo:     #A99EBC;
+  --chu-nhat:   #7A6E92;
+  --nhan:       #D4AF37;
+  --nhan-mo:    #8A6510;
+  --nhan-nen:   rgba(212, 175, 55, 0.12);
+
+  /* --- ngũ hành trên nền tối ------------------------------------------ */
+  --hanh-kim:   #94A3B8;
+  --hanh-moc:   #4ADE80;
+  --hanh-thuy:  #60A5FA;
+  --hanh-hoa:   #F87171;
+  --hanh-tho:   #FBBF24;
+
+  /* --- cát / hung ------------------------------------------------------ */
+  --cat:  #34D399;
+  --hung: #F87171;
+  --tu-hoa: #C084FC;
+
+  /* --- độ sáng của sao: miếu / vượng / đắc / hãm ----------------------- */
+  --sang-mieu:  #9333EA;
+  --sang-vuong: #2563EB;
+  --sang-dac:   #16A34A;
+  --sang-ham:   #DC2626;
+}
+
+/* Mặt giấy: chỉ định nghĩa lại token, không đụng tên lớp.
+   Các giá trị dưới đây đều đạt tương phản WCAG AA trên nền #FAF7EF. */
+.giay {
+  --nen:        #EBE5D6;
+  --nen-noi:    #FAF7EF;
+  --nen-noi-2:  #F1EDE1;
+  --vien:       #D8D0BC;
+  --vien-mo:    #DCD4C0;
+  --chu:        #2B2419;
+  --chu-mo:     #6E6455;
+  --chu-nhat:   #948A78;
+  --nhan:       #8A6510;
+  --nhan-mo:    #B8912F;
+  --nhan-nen:   #F3E6C6;
+
+  --hanh-kim:   #5A6675;
+  --hanh-moc:   #15803D;
+  --hanh-thuy:  #000000;
+  --hanh-hoa:   #B4231C;
+  --hanh-tho:   #926A08;
+
+  --cat:  #15803D;
+  --hung: #B4231C;
+  --tu-hoa: #6D28D9;
+}
+
+/* --- lớp tiện ích ------------------------------------------------------ */
+.hanh-kim  { color: var(--hanh-kim); }
+.hanh-moc  { color: var(--hanh-moc); }
+.hanh-thuy { color: var(--hanh-thuy); }
+.hanh-hoa  { color: var(--hanh-hoa); }
+.hanh-tho  { color: var(--hanh-tho); }
+
+/* Thẻ có gạch màu bên trái, dùng cho danh sách sao theo ngũ hành */
+.the-hanh {
+  border-left: 4px solid currentColor;
+  background: color-mix(in srgb, currentColor 13%, transparent);
+}
+
+/* Chấm tròn nhỏ chỉ ngũ hành */
+.cham-hanh {
+  display: inline-block; width: .5rem; height: .5rem;
+  border-radius: 9999px; background: currentColor;
+}
+
+/* Các trang đều dùng lớp font-serif / font-sans của Tailwind để phân vai chữ.
+   Bọc bằng `html` để thắng utility một lớp của Tailwind CDN, vốn được chèn vào
+   head lúc chạy nên luôn đứng sau file này. */
+html .font-serif { font-family: var(--font-nhan); }
+html .font-sans  { font-family: var(--font-chu); }
+body             { font-family: var(--font-chu); }
+
+/* Chữ vàng chuyển sắc, trước đây mỗi trang một biến thể khác nhau */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #FFF5C0 0%, var(--nhan) 50%, #AA7C11 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Nhãn độ sáng */
+.badge-mieu  { background: var(--sang-mieu);  color: #fff; }
+.badge-vuong { background: var(--sang-vuong); color: #fff; }
+.badge-dac   { background: var(--sang-dac);   color: #fff; }
+.badge-ham   { background: var(--sang-ham);   color: #fff; }
+
+.font-nhan { font-family: var(--font-nhan); }
+.font-chu  { font-family: var(--font-chu); }
+.font-so   { font-family: var(--font-so); font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

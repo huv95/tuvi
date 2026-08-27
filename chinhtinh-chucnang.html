@@ -9,9 +9,7 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts Inter & Playfair Display -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <!-- Alpine.js -->
 
     <script>
@@ -25,7 +23,7 @@
                             850: '#78350f',
                         },
                         cosmic: {
-                            900: '#0b0f19',
+                            900: 'var(--nen)',
                             800: '#111827',
                             700: '#1f2937',
                             gold: '#dfb25d',
@@ -42,6 +40,9 @@
         }
     </script>
 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="./assets/theme.css">
     <style>
         /* Custom scrollbar for matrix table */
         ::-webkit-scrollbar {
@@ -59,12 +60,6 @@
             background: #d97706;
         }
 
-        .gold-gradient-text {
-            background: linear-gradient(135deg, #fff2a3 0%, #dfb25d 50%, #b8860b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
         .gold-border {
             border-color: rgba(223, 178, 93, 0.3);
         }
@@ -74,16 +69,8 @@
             box-shadow: 0 0 15px rgba(223, 178, 93, 0.25);
         }
 
-        .element-kim { background-color: rgba(243, 244, 246, 0.15); border-left: 4px solid #e5e7eb; color: #f3f4f6; }
-        .element-moc { background-color: rgba(16, 185, 129, 0.15); border-left: 4px solid #10b981; color: #34d399; }
-        .element-thuy { background-color: rgba(59, 130, 246, 0.15); border-left: 4px solid #3b82f6; color: #60a5fa; }
-        .element-hoa { background-color: rgba(239, 68, 68, 0.15); border-left: 4px solid #ef4444; color: #f87171; }
-        .element-tho { background-color: rgba(245, 158, 11, 0.15); border-left: 4px solid #f59e0b; color: #fbbf24; }
-
-        .badge-mieu { background-color: #9333ea; color: #ffffff; }
-        .badge-vuong { background-color: #2563eb; color: #ffffff; }
-        .badge-dac { background-color: #16a34a; color: #ffffff; }
-        .badge-ham { background-color: #dc2626; color: #ffffff; }
+        /* Ngũ hành lấy từ assets/theme.css: .hanh-* cho màu chữ,
+           .the-hanh cho nền mờ và gạch màu bên trái. */
 
         /* Chart 12 Palaces Grid Layout */
         .tuvi-board {
@@ -857,11 +844,11 @@
 
                 getElementColorDot(element) {
                     switch (element) {
-                        case 'Kim': return 'bg-gray-300';
-                        case 'Mộc': return 'bg-emerald-400';
-                        case 'Thủy': return 'bg-blue-400';
-                        case 'Hỏa': return 'bg-red-400';
-                        case 'Thổ': return 'bg-amber-400';
+                        case 'Kim': return 'cham-hanh hanh-kim';
+                        case 'Mộc': return 'cham-hanh hanh-moc';
+                        case 'Thủy': return 'cham-hanh hanh-thuy';
+                        case 'Hỏa': return 'cham-hanh hanh-hoa';
+                        case 'Thổ': return 'cham-hanh hanh-tho';
                         default: return 'bg-gray-400';
                     }
                 },

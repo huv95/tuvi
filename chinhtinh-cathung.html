@@ -15,7 +15,7 @@
                             gold: '#D4AF37',
                             goldHover: '#F3E5AB',
                             purple: '#2A0845',
-                            darkBg: '#0F0817',
+                            darkBg: 'var(--nen)',
                             cardBg: '#1A1028',
                             border: '#3D255A',
                             fire: '#E53E3E',
@@ -33,22 +33,19 @@
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="./assets/theme.css">
     <style>
         body {
-            background-color: #0F0817;
+            background-color: var(--nen);
             color: #E2E8F0;
-            font-family: 'Be Vietnam Pro', sans-serif;
+            font-family: var(--font-chu);
             background-image: 
                 radial-gradient(circle at 10% 20%, rgba(88, 28, 135, 0.25) 0%, transparent 40%),
                 radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 40%);
             background-attachment: fixed;
-        }
-        .gold-gradient-text {
-            background: linear-gradient(135deg, #FFF5C0 0%, #D4AF37 50%, #AA7C11 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
         .gold-border {
             border-image: linear-gradient(to bottom right, #D4AF37, #3D255A, #AA7C11) 1;
@@ -81,7 +78,7 @@
 <body class="min-h-screen flex flex-col justify-between scrollbar-thin">
 
     <!-- HEADER -->
-    <header class="sticky top-0 z-40 bg-[#0F0817]/90 backdrop-blur-md border-b border-tuvi-border/50">
+    <header class="sticky top-0 z-40 bg-[var(--nen)]/90 backdrop-blur-md border-b border-tuvi-border/50">
         <div class="max-w-7xl mx-mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-tuvi-gold to-purple-900 flex items-center justify-center text-slate-900 font-bold text-xl shadow-lg border border-tuvi-gold/50">
@@ -321,7 +318,7 @@
     </div>
 
     <!-- FOOTER -->
-    <footer class="border-t border-tuvi-border/40 bg-[#0F0817]/90 py-4 text-center text-xs text-purple-400/60">
+    <footer class="border-t border-tuvi-border/40 bg-[var(--nen)]/90 py-4 text-center text-xs text-purple-400/60">
         <p>© Tử Vi Đẩu Số - Hệ Thống Luận Giải Tương Tác 14 Chính Tinh & Cung Chức Năng</p>
     </footer>
 
@@ -331,16 +328,12 @@
         // Dữ liệu nạp một lần lúc khởi động; giao diện bên dưới đọc từ ba biến này.
         let starsData = [], palacesData = [], quizQuestions = [];
 
-        // Màu suy ra từ ngũ hành — dữ liệu không mang class CSS nữa.
-        const MAU_HANH = {
-          'Kim':  { chu: 'text-slate-300',   vien: 'border-slate-400/30'  },
-          'Mộc':  { chu: 'text-emerald-400', vien: 'border-emerald-500/30' },
-          'Thủy': { chu: 'text-sky-400',     vien: 'border-sky-500/30'    },
-          'Hỏa':  { chu: 'text-rose-400',    vien: 'border-rose-500/30'   },
-          'Thổ':  { chu: 'text-amber-400',   vien: 'border-amber-500/30'  },
-        };
-        const mau  = (s) => (MAU_HANH[s.nguHanh] || MAU_HANH['Thổ']).chu;
-        const vien = (s) => (MAU_HANH[s.nguHanh] || MAU_HANH['Thổ']).vien;
+        // Màu ngũ hành lấy từ assets/theme.css; viền dùng currentColor nên
+        // luôn khớp màu chữ, không phải khai báo lần hai.
+        const HANH_LOP = { 'Kim':'hanh-kim', 'Mộc':'hanh-moc', 'Thủy':'hanh-thuy',
+                           'Hỏa':'hanh-hoa', 'Thổ':'hanh-tho' };
+        const mau  = (s) => HANH_LOP[s.nguHanh] || 'hanh-tho';
+        const vien = (s) => (HANH_LOP[s.nguHanh] || 'hanh-tho') + ' border-current/40';
 
         /** Tên cung dạng đọc được, từ danh sách id trong dữ liệu. */
         const tenCung = (ids) => ids.map(id =>
