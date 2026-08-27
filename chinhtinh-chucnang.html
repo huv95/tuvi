@@ -87,19 +87,9 @@
             transition: all 0.2s ease-in-out;
         }
 
-        /* Palace positioning in traditional 12 Earthly Branches clockwise */
-        .pos-Ty { grid-column: 2; grid-row: 4; }
-        .pos-Suu { grid-column: 1; grid-row: 4; }
-        .pos-Dan { grid-column: 1; grid-row: 3; }
-        .pos-Mao { grid-column: 1; grid-row: 2; }
-        .pos-Thin { grid-column: 1; grid-row: 1; }
-        .pos-Ti { grid-column: 2; grid-row: 1; }
-        .pos-Ngo { grid-column: 3; grid-row: 1; }
-        .pos-Mui { grid-column: 4; grid-row: 1; }
-        .pos-Than { grid-column: 4; grid-row: 2; }
-        .pos-Dau { grid-column: 4; grid-row: 3; }
-        .pos-Tuat { grid-column: 4; grid-row: 4; }
-        .pos-Hoi { grid-column: 3; grid-row: 4; }
+        /* Vị trí 12 cung lấy từ O_LUOI (assets/ui.js) qua :style, xem
+           getPalaceGridStyle() trong <script type="module">. Chỉ còn khối
+           giữa là vị trí cố định, khai ở đây vì không phụ thuộc Chi. */
         .pos-Center { grid-column: 2 / span 2; grid-row: 2 / span 2; }
     </style>
 </head>
@@ -191,7 +181,7 @@
                         <option value="standard">Lá Số Mẫu 1: Tử Vi cư Mệnh (Ngọ)</option>
                         <option value="vukhue">Lá Số Mẫu 2: Vũ Khúc - Thiên Tướng (Thân)</option>
                         <option value="thatchat">Lá Số Mẫu 3: Thất Sát Triều Đẩu (Dần)</option>
-                        <option value="thainhat">Lá Số Mẫu 4: Thái Dương - Thái Âm Tị Hợi</option>
+                        <option value="thainhat">Lá Số Mẫu 4: Thái Dương - Thái Âm Tỵ Hợi</option>
                         <option value="empty">Bàn Cờ Trống (Tự do sắp xếp)</option>
                     </select>
                 </div>
@@ -206,7 +196,8 @@
                         
                         <!-- 12 Earthly Branches Cells -->
                         <template x-for="(palace, key) in palacesData" :key="key">
-                            <div :class="`pos-${palace.chi} palace-cell bg-cosmic-900 border ${selectedPalaceKey === key ? 'border-amber-400 ring-2 ring-amber-500/30' : 'border-gray-800 hover:border-amber-500/50'} rounded-xl p-2 flex flex-col justify-between cursor-pointer relative overflow-hidden group`"
+                            <div :style="getPalaceGridStyle(palace.chi)"
+                                 :class="`palace-cell bg-cosmic-900 border ${selectedPalaceKey === key ? 'border-amber-400 ring-2 ring-amber-500/30' : 'border-gray-800 hover:border-amber-500/50'} rounded-xl p-2 flex flex-col justify-between cursor-pointer relative overflow-hidden group`"
                                  @click="selectPalace(key)">
                                 
                                 <!-- Top Bar: Palace Name & Earthly Branch -->
@@ -739,10 +730,11 @@
 
     <script type="module">
         import { getSao, getCung, getDoSang } from './lib/repo.js';
+        import { O_LUOI } from './assets/ui.js';
 
         // Địa chi mặc định của 12 cung khi mở trang (Mệnh an tại Ngọ).
         // Đây là thế cờ khởi đầu của trình giả lập, không phải thuộc tính của cung.
-        const CHI_MAC_DINH = {"menh": "Ngọ", "phu-mau": "Tị", "phuc-duc": "Thìn", "dien-trach": "Mão", "quan-loc": "Dần", "no-boc": "Sửu", "thien-di": "Tý", "tat-ach": "Hợi", "tai-bach": "Tuất", "tu-tuc": "Dậu", "phu-the": "Thân", "huynh-de": "Mùi"};
+        const CHI_MAC_DINH = {"menh": "Ngọ", "phu-mau": "Tỵ", "phuc-duc": "Thìn", "dien-trach": "Mão", "quan-loc": "Dần", "no-boc": "Sửu", "thien-di": "Tý", "tat-ach": "Hợi", "tai-bach": "Tuất", "tu-tuc": "Dậu", "phu-the": "Thân", "huynh-de": "Mùi"};
 
         function tuViApp() {
             return {
@@ -761,7 +753,7 @@
 
                 // Simulator state
                 simTuViChi: 'Ngọ',
-                earthlyBranches: ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tị', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'],
+                earthlyBranches: ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'],
                 simResults: {},
 
                 // Board placements (Map palace key -> array of star keys)
@@ -860,8 +852,17 @@
                     return 'menh';
                 },
 
+                // Vị trí lưới của một Chi trên bàn cờ 12 cung, lấy từ O_LUOI
+                // dùng chung (assets/ui.js). Chi Tỵ rơi vào góc trên-trái của
+                // O_LUOI nên quy đổi bằng offset -5.
+                getPalaceGridStyle(chi) {
+                    const k = (this.earthlyBranches.indexOf(chi) - 5 + 12) % 12;
+                    const [r, c] = O_LUOI[k];
+                    return { gridColumn: c + 1, gridRow: r + 1 };
+                },
+
                 getBranchElement(chi) {
-                    const elements = { Tý: 'Thủy', Sửu: 'Thổ', Dần: 'Mộc', Mão: 'Mộc', Thìn: 'Thổ', Tị: 'Hỏa', Ngọ: 'Hỏa', Mùi: 'Thổ', Thân: 'Kim', Dậu: 'Kim', Tuất: 'Thổ', Hợi: 'Thủy' };
+                    const elements = { Tý: 'Thủy', Sửu: 'Thổ', Dần: 'Mộc', Mão: 'Mộc', Thìn: 'Thổ', Tỵ: 'Hỏa', Ngọ: 'Hỏa', Mùi: 'Thổ', Thân: 'Kim', Dậu: 'Kim', Tuất: 'Thổ', Hợi: 'Thủy' };
                     return elements[chi] || 'Thổ';
                 },
 
