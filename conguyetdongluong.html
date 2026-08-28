@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi" class="dark">
 <head>
+    <script>if (localStorage.getItem('tuvi-giao-dien') === 'sang') document.documentElement.classList.add('giay');</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cơ Nguyệt Đồng Lương - Tử Vi Myn 001</title>
@@ -19,17 +20,17 @@
                     colors: {
                         mystic: {
                             900: 'var(--nen)',
-                            800: '#140f26',
-                            700: '#1e1738',
-                            600: '#2d2252',
-                            500: '#4c3a85',
+                            800: 'var(--nen-noi)',
+                            700: 'var(--vien-mo)',
+                            600: 'var(--vien)',
+                            500: 'var(--chu-nhat)',
                             accent: '#d97706',
                             gold: '#fbbf24',
                         },
-                        co: '#34d399',      /* Thiên Cơ - Lục / Mộc */
-                        nguyet: '#818cf8',  /* Thái Âm - Chàm / Thủy */
-                        dong: '#38bdf8',    /* Thiên Đồng - Xanh da trời / Thủy */
-                        luong: '#fbbf24'    /* Thiên Lương - Vàng / Dương Mộc (không dùng lục để tránh trùng Thiên Cơ) */
+                        co: 'var(--mau-co)',          /* Thiên Cơ - Lục / Mộc */
+                        nguyet: 'var(--mau-nguyet)',  /* Thái Âm - Chàm / Thủy */
+                        dong: 'var(--mau-dong)',      /* Thiên Đồng - Xanh da trời / Thủy */
+                        luong: 'var(--mau-luong)'     /* Thiên Lương - Vàng / Dương Mộc (không dùng lục để tránh trùng Thiên Cơ) */
                     }
                 }
             }
@@ -39,9 +40,23 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="./assets/theme.css">
     <style>
+        /* Màu riêng 4 sao của cách cục — tối cho nền tối, đậm hơn cho nền giấy
+           (đủ tương phản khi dùng làm text-co/text-nguyet/... trên nền sáng). */
+        :root {
+            --mau-co:     #34d399;
+            --mau-nguyet: #818cf8;
+            --mau-dong:   #38bdf8;
+            --mau-luong:  #fbbf24;
+        }
+        .giay {
+            --mau-co:     #047857;
+            --mau-nguyet: #4338CA;
+            --mau-dong:   #0369A1;
+            --mau-luong:  var(--nhan);
+        }
         body {
             background-color: var(--nen);
-            color: #f3f4f6;
+            color: var(--chu);
             font-family: var(--font-chu);
         }
         .mystic-card {
@@ -72,9 +87,12 @@
                     <p class="text-xs text-gray-400">Bộ Tứ Chính Tinh Thiên Về Trí Tuệ, Hoạch Định & Phò Tá</p>
                 </div>
             </div>
-            <a href="index.html" class="text-xs sm:text-sm text-gray-300 hover:text-amber-300 transition flex items-center gap-1.5">
-                <i class="fa-solid fa-arrow-left"></i> Mục lục
-            </a>
+            <div class="flex items-center gap-3">
+                <button id="nutChuyenGiaoDien" class="nut-giao-dien"></button>
+                <a href="index.html" class="text-xs sm:text-sm text-gray-300 hover:text-amber-300 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-arrow-left"></i> Mục lục
+                </a>
+            </div>
         </div>
     </header>
 
@@ -219,6 +237,8 @@
 
     <script type="module">
         import { getSao } from './lib/repo.js';
+        import { initThemeToggle } from './assets/theme-toggle.js';
+        initThemeToggle();
 
         // Biểu tượng và màu là trình bày, giữ tại trang.
         // Mọi dữ kiện về sao lấy từ data/sao.json, không viết tay trong markup nữa.

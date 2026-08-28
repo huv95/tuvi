@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="vi" class="h-full bg-slate-900 text-slate-100">
+<html lang="vi" class="h-full">
 <head>
+  <script>if (localStorage.getItem('tuvi-giao-dien') === 'sang') document.documentElement.classList.add('giay');</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ứng Dụng Chuyển Lịch Âm Dương & Lập Lá Số Tử Vi - Tử Vi Myn 001</title>
@@ -27,10 +28,14 @@
     }
   </script>
   <style>
+    html, body { background-color: var(--nen); color: var(--chu); }
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: #0f172a; }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    .giay ::-webkit-scrollbar-track { background: var(--nen); }
+    .giay ::-webkit-scrollbar-thumb { background: var(--vien); }
+    .giay ::-webkit-scrollbar-thumb:hover { background: var(--nhan-mo); }
 
     /* Màu ngũ hành lấy từ assets/theme.css, tự đổi theo mặt nền (tối / giấy). */
 
@@ -113,17 +118,20 @@
         </div>
       </div>
 
-      <nav class="flex items-center space-x-1 bg-slate-900 p-1 rounded-xl border border-slate-800 text-sm">
-        <button id="nav-chart" onclick="switchTab('chart')" class="px-4 py-2 rounded-lg font-medium transition-all bg-amber-500 text-slate-950 shadow-md">
-          <i class="fa-solid fa-compass mr-1.5"></i>Lá Số Tử Vi
-        </button>
-        <button id="nav-convert" onclick="switchTab('convert')" class="px-4 py-2 rounded-lg font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800">
-          <i class="fa-solid fa-calendar-days mr-1.5"></i>Đổi Âm Dương
-        </button>
-        <button id="nav-ai" onclick="switchTab('ai')" class="px-4 py-2 rounded-lg font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800">
-          <i class="fa-solid fa-wand-magic-sparkles mr-1.5 text-amber-400"></i>Luận Giải AI
-        </button>
-      </nav>
+      <div class="flex items-center gap-3">
+        <nav class="flex items-center space-x-1 bg-slate-900 p-1 rounded-xl border border-slate-800 text-sm">
+          <button id="nav-chart" onclick="switchTab('chart')" class="px-4 py-2 rounded-lg font-medium transition-all bg-amber-500 text-slate-950 shadow-md">
+            <i class="fa-solid fa-compass mr-1.5"></i>Lá Số Tử Vi
+          </button>
+          <button id="nav-convert" onclick="switchTab('convert')" class="px-4 py-2 rounded-lg font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800">
+            <i class="fa-solid fa-calendar-days mr-1.5"></i>Đổi Âm Dương
+          </button>
+          <button id="nav-ai" onclick="switchTab('ai')" class="px-4 py-2 rounded-lg font-medium transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800">
+            <i class="fa-solid fa-wand-magic-sparkles mr-1.5 text-amber-400"></i>Luận Giải AI
+          </button>
+        </nav>
+        <button id="nutChuyenGiaoDien" class="nut-giao-dien"></button>
+      </div>
     </div>
   </header>
 
@@ -361,6 +369,8 @@
     <script type="module">
       import { generateTuViChart } from './lib/ansao.js';
       import { veDiaBan, moModalCung } from './assets/ui.js';
+      import { initThemeToggle } from './assets/theme-toggle.js';
+      initThemeToggle();
 
         let currentChartData = null;
 

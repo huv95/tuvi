@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi" class="h-full">
 <head>
+    <script>if (localStorage.getItem('tuvi-giao-dien') === 'sang') document.documentElement.classList.add('giay');</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tra Cứu & Tương Tác 14 Chính Tinh với Các Cung Chức Năng - Tử Vi Myn 001</title>
@@ -24,10 +25,10 @@
                         },
                         cosmic: {
                             900: 'var(--nen)',
-                            800: '#111827',
-                            700: '#1f2937',
-                            gold: '#dfb25d',
-                            goldHover: '#c89a42',
+                            800: 'var(--nen-noi)',
+                            700: 'var(--nen-noi-2)',
+                            gold: 'var(--nhan)',
+                            goldHover: 'var(--nhan-mo)',
                             accent: '#8b5cf6'
                         }
                     },
@@ -59,6 +60,9 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #d97706;
         }
+        .giay ::-webkit-scrollbar-track { background: var(--nen); }
+        .giay ::-webkit-scrollbar-thumb { background: var(--vien); }
+        .giay ::-webkit-scrollbar-thumb:hover { background: var(--nhan-mo); }
 
         .gold-border {
             border-color: rgba(223, 178, 93, 0.3);
@@ -114,6 +118,7 @@
                 </div>
 
                 <!-- Navigation Tabs -->
+                <div class="flex items-center gap-2">
                 <nav class="flex space-x-1 sm:space-x-2">
                     <button @click="activeTab = 'board'" 
                             :class="activeTab === 'board' ? 'bg-amber-500/20 text-amber-300 border-amber-500' : 'text-gray-400 hover:text-gray-200 border-transparent'"
@@ -154,6 +159,8 @@
                         <span class="hidden lg:inline">Cẩm Nang</span>
                     </button>
                 </nav>
+                <button id="nutChuyenGiaoDien" class="nut-giao-dien flex-shrink-0"></button>
+                </div>
             </div>
         </div>
     </header>
@@ -719,6 +726,8 @@
     <script type="module">
         import { getSao, getCung, getDoSang } from './lib/repo.js';
         import { O_LUOI } from './assets/ui.js';
+        import { initThemeToggle } from './assets/theme-toggle.js';
+        initThemeToggle();
 
         // Thứ tự 12 cung kể từ Mệnh, đúng theo CUNG_NAMES trong lib/ansao.js:
         // đi theo chiều Chi tăng dần, Mệnh trước rồi tới Huynh Đệ, Phu Thê...

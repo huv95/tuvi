@@ -128,3 +128,190 @@ body             { font-family: var(--font-chu); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+/* ============================================================================
+   GIAO DIỆN SÁNG TOÀN TRANG
+   ============================================================================
+   .giay ở trên vốn chỉ đổi token cho khung lá số in giấy (ansaotudong.html).
+   Nay dùng class đó luôn cho toàn bộ trang khi bấm nút chuyển giao diện
+   (assets/theme-toggle.js đặt/xoá "giay" trên <html>). Token đã tự chảy tới
+   mọi chỗ dùng var(--nen), var(--chu)... — khối dưới đây chỉ vá thêm những
+   nơi từng trang viết thẳng màu Tailwind cứng (bg-slate-900, text-amber-300…)
+   thay vì dùng token, nên bản thân chúng không tự đổi theo .giay được.
+
+   Quy ước đổi màu (khớp với cách ansaotudong.html từng làm riêng cho
+   .la-so-giay, nay áp dụng chung cho mọi trang):
+     - Nền tối (slate/gray 600-950)   -> var(--nen-noi) / var(--nen-noi-2)
+     - Chữ sáng (slate/gray 100-500)  -> var(--chu) / var(--chu-mo) / var(--chu-nhat)
+     - Viền tối (slate/gray 500-800)  -> var(--vien) / var(--vien-mo)
+     - Chữ vàng (amber 100-500)       -> var(--nhan) / var(--nhan-mo)
+     - Nền/viền "thẻ nhãn" mỗi màu (bg-*-950 + text-*-300 + border-*-800, kiểu
+       cát/hung/tứ hoá) -> đảo ngược: nền nhạt, chữ đậm, viền vừa.
+   Chữ đậm cố định trên nền sáng rực (vd text-slate-950 trên nút bg-amber-500)
+   không đổi — hai bên đã tương phản tốt sẵn, đổi thêm sẽ ngược lại. Lớp phủ
+   modal (bg-slate-950/80 trên fixed inset-0) cũng giữ nguyên, vì màn che tối
+   là quy ước chung, không phụ thuộc giao diện trang. */
+
+.giay body { background-color: var(--nen); }
+
+/* --- nền tối -> nền giấy ------------------------------------------------- */
+.giay .bg-slate-600,
+.giay .bg-slate-700,
+.giay .bg-slate-700\/20,
+.giay .bg-slate-800,
+.giay .bg-slate-800\/50,
+.giay .bg-slate-800\/60,
+.giay .bg-slate-800\/80,
+.giay .bg-gray-800,
+.giay .bg-gray-800\/50 { background-color: var(--nen-noi-2); }
+
+.giay .bg-slate-900,
+.giay .bg-slate-900\/80,
+.giay .bg-slate-950,
+.giay .bg-slate-950\/90 { background-color: var(--nen-noi); }
+
+/* --- chữ sáng -> chữ giấy ------------------------------------------------- */
+.giay .text-white,
+.giay .text-slate-100,
+.giay .text-slate-200,
+.giay .text-gray-100,
+.giay .text-gray-200 { color: var(--chu); }
+
+.giay .text-slate-300,
+.giay .text-gray-300 { color: var(--chu-mo); }
+
+.giay .text-slate-400,
+.giay .text-gray-400 { color: var(--chu-mo); }
+
+.giay .text-slate-500,
+.giay .text-gray-500,
+.giay .text-gray-600 { color: var(--chu-nhat); }
+
+/* --- viền tối -> viền giấy ------------------------------------------------ */
+.giay .border-slate-500\/30,
+.giay .border-slate-700,
+.giay .border-slate-700\/50,
+.giay .border-slate-700\/60,
+.giay .border-slate-800,
+.giay .border-gray-700,
+.giay .border-gray-700\/50,
+.giay .border-gray-700\/60,
+.giay .border-gray-700\/80,
+.giay .border-gray-800,
+.giay .border-gray-800\/40,
+.giay .border-gray-800\/50,
+.giay .border-gray-800\/80 { border-color: var(--vien-mo); }
+
+/* --- vàng (accent chính) -> vàng giấy ------------------------------------- */
+.giay [class*="text-amber-1"],
+.giay [class*="text-amber-2"],
+.giay [class*="text-amber-3"],
+.giay [class*="text-amber-4"],
+.giay [class*="text-amber-5"] { color: var(--nhan); }
+
+.giay [class*="bg-amber-950"],
+.giay [class*="bg-amber-900"] { background-color: var(--nhan-nen); }
+
+.giay [class*="border-amber-800"],
+.giay [class*="border-amber-600"] { border-color: var(--nhan-mo); }
+
+/* --- tím "mystic" dùng làm chữ phụ, không phải nhãn màu ------------------- */
+.giay [class*="text-purple-1"],
+.giay [class*="text-purple-2"],
+.giay [class*="text-purple-3"],
+.giay [class*="text-purple-4"] { color: var(--chu-mo); }
+
+/* --- các thẻ-nhãn màu (nền đậm 900/950 + chữ nhạt 200-400 + viền 700/800):
+   đảo ngược thành nền nhạt, chữ đậm, viền vừa cho từng màu ----------------- */
+.giay [class*="bg-emerald-9"] { background-color: #ECFDF5; }
+.giay [class*="text-emerald-1"],
+.giay [class*="text-emerald-2"],
+.giay [class*="text-emerald-3"],
+.giay [class*="text-emerald-4"] { color: #047857; }
+.giay [class*="border-emerald-7"],
+.giay [class*="border-emerald-8"] { border-color: #A7F3D0; }
+
+.giay [class*="bg-rose-9"] { background-color: #FFF1F2; }
+.giay [class*="text-rose-1"],
+.giay [class*="text-rose-2"],
+.giay [class*="text-rose-3"],
+.giay [class*="text-rose-4"] { color: #BE123C; }
+.giay [class*="border-rose-7"],
+.giay [class*="border-rose-8"] { border-color: #FECDD3; }
+
+.giay [class*="bg-indigo-9"] { background-color: #EEF2FF; }
+.giay [class*="text-indigo-2"],
+.giay [class*="text-indigo-3"],
+.giay [class*="text-indigo-4"] { color: #4338CA; }
+.giay [class*="border-indigo-7"],
+.giay [class*="border-indigo-8"] { border-color: #C7D2FE; }
+
+.giay [class*="bg-sky-9"] { background-color: #F0F9FF; }
+.giay [class*="text-sky-3"] { color: #0369A1; }
+.giay [class*="border-sky-7"],
+.giay [class*="border-sky-8"] { border-color: #BAE6FD; }
+
+.giay [class*="bg-pink-9"] { background-color: #FDF2F8; }
+.giay [class*="text-pink-2"],
+.giay [class*="text-pink-3"],
+.giay [class*="text-pink-4"] { color: #BE185D; }
+
+.giay [class*="bg-red-9"] { background-color: #FEF2F2; }
+.giay [class*="text-red-2"],
+.giay [class*="text-red-3"],
+.giay [class*="text-red-4"] { color: #B91C1C; }
+.giay [class*="border-red-9"],
+.giay [class*="border-red-5"] { border-color: #FECACA; }
+
+.giay [class*="bg-purple-9"] { background-color: #F5F3FF; }
+.giay [class*="border-purple-9"],
+.giay [class*="border-purple-5"],
+.giay [class*="border-purple-4"],
+.giay [class*="border-purple-3"] { border-color: #DDD6FE; }
+
+/* --- thẻ kính (mystic-card / glass-card) và ô "chưa có" ------------------- */
+.giay .mystic-card,
+.giay .glass-card {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: var(--vien-mo);
+}
+.giay .mystic-card:hover,
+.giay .glass-card:hover {
+  border-color: var(--nhan-mo);
+}
+/* Gradient chữ vàng có điểm dừng #FFF5C0 gần trắng — hợp nền tối nhưng biến
+   mất trên nền giấy sáng màu. Trên giấy, dùng thẳng màu vàng đặc cho chắc
+   tương phản thay vì dò lại từng điểm dừng gradient. */
+.giay .gold-gradient-text {
+  background: none;
+  -webkit-text-fill-color: var(--nhan);
+  color: var(--nhan);
+}
+
+.giay .thanh-phan.chua-co {
+  background: rgba(148, 163, 184, 0.12);
+  border-color: var(--vien-mo);
+  color: var(--chu-nhat);
+}
+.giay a.thanh-phan {
+  background: var(--nhan-nen);
+  border-color: var(--vien-mo);
+  color: var(--chu);
+}
+.giay a.thanh-phan:hover {
+  border-color: var(--nhan-mo);
+}
+
+.giay ::-webkit-scrollbar-track { background: var(--nen); }
+.giay ::-webkit-scrollbar-thumb { background: var(--vien); }
+.giay ::-webkit-scrollbar-thumb:hover { background: var(--nhan-mo); }
+
+/* --- nút chuyển giao diện, dùng chung mọi trang (assets/theme-toggle.js) -- */
+.nut-giao-dien {
+  width: 2.25rem; height: 2.25rem; border-radius: 9999px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--vien-mo); color: var(--nhan);
+  background: var(--nhan-nen); cursor: pointer; transition: all .15s ease;
+  flex-shrink: 0;
+}
+.nut-giao-dien:hover { border-color: var(--nhan-mo); transform: scale(1.06); }
