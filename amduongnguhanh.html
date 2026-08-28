@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi" class="dark">
 <head>
+    <script>if (localStorage.getItem('tuvi-giao-dien') === 'sang') document.documentElement.classList.add('giay');</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Âm Dương Ngũ Hành - Tử Vi Myn 001</title>
@@ -37,7 +38,7 @@
     <style>
         body {
             background-color: var(--nen);
-            color: #f3f4f6;
+            color: var(--chu);
             font-family: var(--font-chu);
         }
         .mystic-card {
@@ -72,9 +73,12 @@
                     <p class="text-xs text-gray-400">Nền Tảng Cốt Lõi Của Tử Vi Đẩu Số</p>
                 </div>
             </div>
-            <a href="index.html" class="text-xs sm:text-sm text-gray-300 hover:text-amber-300 transition flex items-center gap-1.5">
-                <i class="fa-solid fa-arrow-left"></i> Mục lục
-            </a>
+            <div class="flex items-center gap-3">
+                <button id="nutChuyenGiaoDien" class="nut-giao-dien"></button>
+                <a href="index.html" class="text-xs sm:text-sm text-gray-300 hover:text-amber-300 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-arrow-left"></i> Mục lục
+                </a>
+            </div>
         </div>
     </header>
 
@@ -213,6 +217,7 @@
 
     <script type="module">
         import { getSao } from './lib/repo.js';
+        import { initThemeToggle } from './assets/theme-toggle.js';
 
         // Nội dung Âm Dương / Ngũ Hành là kiến thức nền tham khảo, không phải
         // dữ liệu vận hành lá số nên khai trực tiếp tại đây (giống cách
@@ -273,6 +278,7 @@
             });
         }
         initApp();
+        initThemeToggle();
     </script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi" class="dark">
 <head>
+    <script>if (localStorage.getItem('tuvi-giao-dien') === 'sang') document.documentElement.classList.add('giay');</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>An Sao Thủ Công - Tử Vi Myn 001</title>
@@ -19,10 +20,10 @@
                     colors: {
                         mystic: {
                             900: 'var(--nen)',
-                            800: '#140f26',
-                            700: '#1e1738',
-                            600: '#2d2252',
-                            500: '#4c3a85',
+                            800: 'var(--nen-noi)',
+                            700: 'var(--vien-mo)',
+                            600: 'var(--vien)',
+                            500: 'var(--chu-nhat)',
                             accent: '#d97706',
                             gold: '#fbbf24',
                         }
@@ -37,7 +38,7 @@
     <style>
         body {
             background-color: var(--nen);
-            color: #f3f4f6;
+            color: var(--chu);
             font-family: var(--font-chu);
         }
         .mystic-card {
@@ -76,9 +77,12 @@
                     <p class="text-xs text-gray-400">Tự Tay Lập Lá Số — Từng Bước Một</p>
                 </div>
             </div>
-            <a href="index.html" class="text-xs sm:text-sm text-gray-300 hover:text-amber-300 transition flex items-center gap-1.5">
-                <i class="fa-solid fa-arrow-left"></i> Mục lục
-            </a>
+            <div class="flex items-center gap-3">
+                <button id="nutChuyenGiaoDien" class="nut-giao-dien"></button>
+                <a href="index.html" class="text-xs sm:text-sm text-gray-300 hover:text-amber-300 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-arrow-left"></i> Mục lục
+                </a>
+            </div>
         </div>
     </header>
 
@@ -207,6 +211,8 @@
                  MENH_CHU, THAN_CHU, TU_VI_GROUP, THIEN_PHU_GROUP } from './lib/ansao.js';
         import { getCanChiYear, getCanChiHour, convertSolarToLunar, convertLunarToSolar, CAN, CHI } from './lib/lich.js';
         import { veDiaBan, moModalCung } from './assets/ui.js';
+        import { initThemeToggle } from './assets/theme-toggle.js';
+        initThemeToggle();
 
         let currentChartData = null;
 

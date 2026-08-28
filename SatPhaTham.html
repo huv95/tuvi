@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi" class="dark">
 <head>
+    <script>if (localStorage.getItem('tuvi-giao-dien') === 'sang') document.documentElement.classList.add('giay');</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Khám Phá Tam Hợp Sát Phá Tham - Tử Vi Myn 001</title>
@@ -19,16 +20,16 @@
                     colors: {
                         mystic: {
                             900: 'var(--nen)',
-                            800: '#140f26',
-                            700: '#1e1738',
-                            600: '#2d2252',
-                            500: '#4c3a85',
+                            800: 'var(--nen-noi)',
+                            700: 'var(--vien-mo)',
+                            600: 'var(--vien)',
+                            500: 'var(--chu-nhat)',
                             accent: '#d97706',
                             gold: '#fbbf24',
                         },
-                        shat: '#ef4444',   /* Thất Sát - Đỏ / Kim Sát */
-                        pha: '#06b6d4',    /* Phá Quân - Xanh lam / Thủy Phá */
-                        tham: '#a855f7'    /* Tham Lang - Tím / Mộc Dục */
+                        shat: 'var(--mau-shat)',  /* Thất Sát - Đỏ / Kim Sát */
+                        pha: 'var(--mau-pha)',    /* Phá Quân - Xanh lam / Thủy Phá */
+                        tham: 'var(--mau-tham)'   /* Tham Lang - Tím / Mộc Dục */
                     }
                 }
             }
@@ -38,9 +39,20 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="./assets/theme.css">
     <style>
+        /* Màu riêng 3 sao Sát Phá Tham — tối cho nền tối, đậm hơn cho nền giấy. */
+        :root {
+            --mau-shat: #ef4444;
+            --mau-pha:  #06b6d4;
+            --mau-tham: #a855f7;
+        }
+        .giay {
+            --mau-shat: #B91C1C;
+            --mau-pha:  #0E7490;
+            --mau-tham: #7E22CE;
+        }
         body {
             background-color: var(--nen);
-            color: #f3f4f6;
+            color: var(--chu);
             font-family: var(--font-chu);
         }
         .mystic-card {
@@ -97,6 +109,7 @@
                     <h1 class="text-xl font-bold font-serif tracking-wide gold-gradient-text">SÁT PHÁ THAM INTERACTIVE</h1>
                     <p class="text-xs text-gray-400">Khám Phá Vị Trí & Bí Mật Tam Hợp Cung Chức Năng</p>
                 </div>
+                <button id="nutChuyenGiaoDien" class="nut-giao-dien"></button>
             </div>
 
             <!-- Navigation Tabs -->
@@ -414,6 +427,8 @@
     <script type="module">
         import { getCung, getCachCuc } from './lib/repo.js';
         import { veKhungLuoi } from './assets/ui.js';
+        import { initThemeToggle } from './assets/theme-toggle.js';
+        initThemeToggle();
 
         // Tên cung lấy từ data/cung.json theo đúng thứ tự 0..11 của bàn cờ.
         // Viết tắt là chuyện trình bày, giữ tại trang.

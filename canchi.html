@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <script>if (localStorage.getItem('tuvi-giao-dien') === 'sang') document.documentElement.classList.add('giay');</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Can Chi - Tử Vi Myn 001</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        mystic: {
+                            900: 'var(--nen)',
+                            800: '#140f26',
+                            700: '#1e1738',
+                            600: '#2d2252',
+                            500: '#4c3a85',
+                            accent: '#d97706',
+                            gold: '#fbbf24',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="./assets/theme.css">
+    <style>
+        body {
+            background-color: var(--nen);
+            color: var(--chu);
+            font-family: var(--font-chu);
+        }
+        .mystic-card {
+            background: rgba(30, 23, 56, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(251, 191, 36, 0.15);
+        }
+        .mystic-card:hover {
+            border-color: rgba(251, 191, 36, 0.4);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--nen); }
+        ::-webkit-scrollbar-thumb { background: #2d2252; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #fbbf24; }
+
+        /* Vòng địa bàn 12 Chi cố định — dùng chung O_LUOI của assets/ui.js */
+        .vong-chi {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-rows: repeat(4, minmax(0, 1fr));
+            gap: 0.4rem;
+            aspect-ratio: 1;
+            max-width: 20rem;
+            margin: 0 auto;
+        }
+        .o-chi {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border-radius: 0.6rem; font-family: var(--font-nhan); font-weight: 700;
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            background: rgba(15, 8, 23, 0.5);
+            color: #64748B;
+            position: relative;
+            transition: all .15s ease;
+        }
+        .o-chi.noi-bat {
+            color: #fff;
+            border-color: currentColor;
+            background: color-mix(in srgb, currentColor 18%, rgba(15,8,23,0.6));
+        }
+        .o-chi .nhan-nhom {
+            position: absolute; top: -6px; right: -6px;
+            width: 1.1rem; height: 1.1rem; border-radius: 9999px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.6rem; font-family: var(--font-chu); font-weight: 700;
+            background: currentColor; color: var(--nen);
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-16 flex flex-col">
+
+    <!-- Header -->
+    <header class="border-b border-mystic-700/60 bg-mystic-900/80 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-purple-800 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                    <i class="fa-solid font-serif">☯</i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold font-serif tracking-wide gold-gradient-text">CAN CHI</h1>
+                    <p class="text-xs text-gray-400">10 Thiên Can · 12 Địa Chi và các mối quan hệ giữa Địa Chi</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="nutChuyenGiaoDien" class="nut-giao-dien"></button>
+                <a href="index.html" class="text-xs sm:text-sm text-gray-300 hover:text-amber-300 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-arrow-left"></i> Mục lục
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full space-y-12">
+
+        <!-- ================= THIÊN CAN ================= -->
+        <section>
+            <div class="mystic-card rounded-2xl p-6 sm:p-8 mb-6">
+                <span class="text-xs uppercase tracking-widest text-amber-400 font-semibold">Dòng Năng Lượng Của Trời</span>
+                <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white mt-1 mb-3">10 Thiên Can</h2>
+                <p class="text-sm text-gray-300 leading-relaxed max-w-4xl">
+                    Thiên Can là dòng năng lượng của trời khi hướng xuống đất, gồm
+                    <strong class="text-amber-300">2 (Âm Dương) × 5 (Ngũ Hành) = 10 Can</strong>: Giáp, Ất, Bính, Đinh,
+                    Mậu, Kỷ, Canh, Tân, Nhâm, Quý — mỗi hành có một Can Dương (đứng trước) và một Can Âm (đứng sau).
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3" id="the-thien-can"></div>
+        </section>
+
+        <!-- ================= ĐỊA CHI ================= -->
+        <section>
+            <div class="mystic-card rounded-2xl p-6 sm:p-8 mb-6">
+                <span class="text-xs uppercase tracking-widest text-amber-400 font-semibold">Dòng Năng Lượng Của Đất</span>
+                <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white mt-1 mb-3">12 Địa Chi</h2>
+                <p class="text-sm text-gray-300 leading-relaxed max-w-4xl">
+                    Địa Chi là vòng tuần hoàn khép kín của đất, mang cả ba lớp ý nghĩa
+                    <strong class="text-amber-300">thời gian</strong> (giờ trong ngày, tháng trong năm),
+                    <strong class="text-amber-300">không gian</strong> (hướng, mùa) và <strong class="text-amber-300">chu
+                    kỳ</strong> (ngày + năm ghép với Thiên Can tạo thành chu kỳ 60 Hoa Giáp). Chính 12 Địa Chi này —
+                    chứ không phải Thiên Can — mới là thứ dùng để định vị 12 cung trên lá số, nên các mối quan hệ giữa
+                    chúng (Tam Hợp, Lục Xung, Nhị Hợp, Tứ Mộ Khố ở các mục dưới) chi phối trực tiếp cách luận đoán.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3" id="the-dia-chi"></div>
+        </section>
+
+        <!-- ================= TAM HỢP ================= -->
+        <section>
+            <h2 class="text-lg font-serif font-bold text-amber-300 mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-timeline"></i> Tam Hợp — 4 Cục Ngũ Hành
+            </h2>
+            <p class="text-xs text-gray-400 mb-5 max-w-3xl leading-relaxed">
+                Cứ cách đều 4 vị trí trên vòng 12 Chi lại gặp một nhóm 3 Chi tạo thành thế chân vạc — đây là quan hệ
+                hỗ trợ mạnh nhất, nền tảng của <em>tam phương</em> trong "tam phương tứ chính" khi xem lá số. Ba Chi
+                trong một nhóm luôn ứng đúng ba mốc <strong class="text-emerald-400">Trường Sinh → Đế Vượng → Mộ</strong>
+                của vòng Tràng Sinh, và cùng sinh ra một Cục ngũ hành duy nhất.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="tam-hop"></div>
+        </section>
+
+        <!-- ================= LỤC XUNG ================= -->
+        <section>
+            <h2 class="text-lg font-serif font-bold text-amber-300 mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-arrows-left-right"></i> Lục Xung — 6 Cặp Đối 180°
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-6 items-center mystic-card rounded-2xl p-6">
+                <div id="vong-luc-xung"></div>
+                <div class="text-sm text-gray-300 leading-relaxed space-y-3">
+                    <p>
+                        Mỗi Chi cách Chi đối diện của nó đúng 6 vị trí (180° trên vòng địa bàn):
+                        <strong class="text-rose-300">Tý–Ngọ, Sửu–Mùi, Dần–Thân, Mão–Dậu, Thìn–Tuất, Tỵ–Hợi</strong>.
+                    </p>
+                    <p>
+                        Đây chính là mối quan hệ <strong class="text-rose-300">xung chiếu</strong> dùng suốt trong lá
+                        số Tử Vi — mỗi cung luôn xung chiếu với cung nằm đối diện nó (ví dụ Mệnh luôn xung chiếu Thiên
+                        Di, Quan Lộc luôn xung chiếu Phu Thê). Tính chất: đối lập, va chạm trực diện, bộc lộ rõ ràng ra
+                        bên ngoài — khác với Lục Hại vốn là loại quan hệ âm thầm, không đối xứng.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= NHỊ HỢP ================= -->
+        <section>
+            <h2 class="text-lg font-serif font-bold text-amber-300 mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-link"></i> Nhị Hợp — 6 Cặp Hợp
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-6 items-center mystic-card rounded-2xl p-6">
+                <div id="vong-nhi-hop"></div>
+                <div class="text-sm text-gray-300 leading-relaxed">
+                    <p class="mb-3">
+                        Khác với Tam Hợp (hợp tác theo nhóm 3, ở thế tam phương), Nhị Hợp là quan hệ hỗ trợ riêng tư
+                        giữa từng cặp hai Chi liền kề đối xứng qua trục Sửu–Dần:
+                    </p>
+                    <ul class="space-y-1.5" id="danh-sach-nhi-hop"></ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TỨ MỘ KHỐ ================= -->
+        <section>
+            <h2 class="text-lg font-serif font-bold text-amber-300 mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-vault"></i> Tứ Mộ Khố — Thìn, Tuất, Sửu, Mùi
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-6 items-center mystic-card rounded-2xl p-6">
+                <div id="vong-tu-mo-kho"></div>
+                <div class="text-sm text-gray-300 leading-relaxed space-y-3">
+                    <p>
+                        Bốn Chi này đều thuộc hành <strong class="hanh-tho">Thổ</strong> và đều là vị trí
+                        <strong class="text-amber-300">Mộ</strong> — chặng cuối cùng của một trong bốn nhóm Tam Hợp ở
+                        trên, nơi năng lượng sau khi Sinh rồi Vượng thì thu về tàng trữ trước khi bước sang chu kỳ mới:
+                    </p>
+                    <ul class="space-y-1 text-xs sm:text-sm" id="danh-sach-tu-mo-kho"></ul>
+                    <p class="text-xs text-gray-400">
+                        Vì mang tính thu liễm, tàng trữ nên bốn cung này thường được xem là kho chứa — hay gắn với ý
+                        nghĩa tích luỹ, bất động sản khi luận cung Điền Trạch.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-mystic-700/40 py-4 text-center text-xs text-purple-400/60">
+        <p>© Tử Vi Myn 001</p>
+    </footer>
+
+    <script type="module">
+        import { O_LUOI } from './assets/ui.js';
+        import { initThemeToggle } from './assets/theme-toggle.js';
+
+        // Nội dung Can Chi là kiến thức nền tham khảo, không phải dữ liệu vận
+        // hành lá số nên khai trực tiếp tại đây (giống cách amduongnguhanh.html
+        // khai NGU_HANH), không đưa vào data/*.json.
+
+        const THIEN_CAN = [
+            { ten: 'Giáp', amDuong: 'Dương', hanh: 'Mộc', hinhTuong: 'Cây to', dacDiem: 'Tiên phong, che chở, cứng cỏi', thaiQua: 'Cứng nhắc, bảo thủ, dễ gãy' },
+            { ten: 'Ất',   amDuong: 'Âm',   hanh: 'Mộc', hinhTuong: 'Dây leo', dacDiem: 'Linh hoạt, nhẫn nại, khéo léo', thaiQua: 'Nhu nhược, dựa dẫm, ba phải' },
+            { ten: 'Bính', amDuong: 'Dương', hanh: 'Hỏa', hinhTuong: 'Lửa mặt trời', dacDiem: 'Nhiệt tình, thẳng thắn, lan toả', thaiQua: 'Nóng nảy, hấp tấp, hiếu thắng' },
+            { ten: 'Đinh', amDuong: 'Âm',   hanh: 'Hỏa', hinhTuong: 'Ngọn nến', dacDiem: 'Cẩn trọng, nhạy cảm, sâu sắc', thaiQua: 'Đa sầu đa cảm, tiêu cực, đa nghi' },
+            { ten: 'Mậu',  amDuong: 'Dương', hanh: 'Thổ', hinhTuong: 'Đất núi cao', dacDiem: 'Vững vàng, chín chắn, đáng tin', thaiQua: 'Trì trệ, chậm chạp, ngại thay đổi' },
+            { ten: 'Kỷ',   amDuong: 'Âm',   hanh: 'Thổ', hinhTuong: 'Đất phù sa tích tụ', dacDiem: 'Bao dung, vị tha, chăm chỉ', thaiQua: 'Cam chịu, dễ ôm đồm' },
+            { ten: 'Canh', amDuong: 'Dương', hanh: 'Kim', hinhTuong: 'Vũ khí', dacDiem: 'Dũng cảm, rạch ròi, khốc liệt', thaiQua: 'Tàn nhẫn, thích kiểm soát' },
+            { ten: 'Tân',  amDuong: 'Âm',   hanh: 'Kim', hinhTuong: 'Trang sức', dacDiem: 'Sang trọng, tinh tế, độc lập', thaiQua: 'Xa cách, thực dụng' },
+            { ten: 'Nhâm', amDuong: 'Dương', hanh: 'Thủy', hinhTuong: 'Biển', dacDiem: 'Phóng khoáng, hùng dũng, cuốn hút', thaiQua: 'Vô định, thích thao túng' },
+            { ten: 'Quý',  amDuong: 'Âm',   hanh: 'Thủy', hinhTuong: 'Sương sớm', dacDiem: 'Thấu cảm, dịu dàng, uyển chuyển', thaiQua: 'Yếu đuối, mưu mẹo' },
+        ];
+
+        const DIA_CHI = [
+            { ten: 'Tý',   amDuong: 'Dương', hanh: 'Thủy', hinhTuong: 'Chuột ăn đêm muộn', gio: '23–01h', thang: '11', huong: 'Chính Bắc', mua: 'Đông' },
+            { ten: 'Sửu',  amDuong: 'Âm',   hanh: 'Thổ', hinhTuong: 'Trâu nhai lại thức ăn', gio: '01–03h', thang: '12', huong: 'Bắc chếch Đông', mua: 'Giao Mùa' },
+            { ten: 'Dần',  amDuong: 'Dương', hanh: 'Mộc', hinhTuong: 'Hổ rình mồi về đêm', gio: '03–05h', thang: '1', huong: 'Đông chếch Bắc', mua: 'Xuân' },
+            { ten: 'Mão',  amDuong: 'Âm',   hanh: 'Mộc', hinhTuong: 'Mèo rình mồi rạng sáng', gio: '05–07h', thang: '2', huong: 'Chính Đông', mua: 'Xuân' },
+            { ten: 'Thìn', amDuong: 'Dương', hanh: 'Thổ', hinhTuong: 'Rồng biến hoá trong mây', gio: '07–09h', thang: '3', huong: 'Trung', mua: 'Giao Mùa' },
+            { ten: 'Tỵ',   amDuong: 'Âm',   hanh: 'Hỏa', hinhTuong: 'Rắn ẩn mình thầm lặng', gio: '09–11h', thang: '4', huong: 'Nam chếch Đông', mua: 'Hạ' },
+            { ten: 'Ngọ',  amDuong: 'Dương', hanh: 'Hỏa', hinhTuong: 'Ngựa phi nước đại', gio: '11–13h', thang: '5', huong: 'Chính Nam', mua: 'Hạ' },
+            { ten: 'Mùi',  amDuong: 'Âm',   hanh: 'Thổ', hinhTuong: 'Dê ăn cỏ ở sườn núi', gio: '13–15h', thang: '6', huong: 'Trung', mua: 'Giao Mùa' },
+            { ten: 'Thân', amDuong: 'Dương', hanh: 'Kim', hinhTuong: 'Khỉ leo trèo', gio: '15–17h', thang: '7', huong: 'Chính Tây', mua: 'Thu' },
+            { ten: 'Dậu',  amDuong: 'Âm',   hanh: 'Kim', hinhTuong: 'Gà gáy lên chuồng', gio: '17–19h', thang: '8', huong: 'Chính Tây', mua: 'Thu' },
+            { ten: 'Tuất', amDuong: 'Dương', hanh: 'Thổ', hinhTuong: 'Chó giữ nhà', gio: '19–21h', thang: '9', huong: 'Trung', mua: 'Giao Mùa' },
+            { ten: 'Hợi',  amDuong: 'Âm',   hanh: 'Thủy', hinhTuong: 'Lợn ngủ say', gio: '21–23h', thang: '10', huong: 'Bắc', mua: 'Đông' },
+        ];
+
+        // 4 cục Tam Hợp: mỗi cục 3 Chi cách đều nhau, đúng thứ tự Trường Sinh
+        // → Đế Vượng → Mộ của vòng Tràng Sinh.
+        const TAM_HOP = [
+            { cuc: 'Thủy Cục', chi: ['Thân', 'Tý', 'Thìn'], hanh: 'hanh-thuy' },
+            { cuc: 'Kim Cục',  chi: ['Tỵ', 'Dậu', 'Sửu'],  hanh: 'hanh-kim' },
+            { cuc: 'Hỏa Cục',  chi: ['Dần', 'Ngọ', 'Tuất'], hanh: 'hanh-hoa' },
+            { cuc: 'Mộc Cục',  chi: ['Hợi', 'Mão', 'Mùi'], hanh: 'hanh-moc' },
+        ];
+
+        const LUC_XUNG = [['Tý', 'Ngọ'], ['Sửu', 'Mùi'], ['Dần', 'Thân'], ['Mão', 'Dậu'], ['Thìn', 'Tuất'], ['Tỵ', 'Hợi']];
+
+        const NHI_HOP = [
+            { cap: ['Tý', 'Sửu'], hoaHanh: 'Thổ' },
+            { cap: ['Dần', 'Hợi'], hoaHanh: 'Mộc' },
+            { cap: ['Mão', 'Tuất'], hoaHanh: 'Hỏa' },
+            { cap: ['Thìn', 'Dậu'], hoaHanh: 'Kim' },
+            { cap: ['Tỵ', 'Thân'], hoaHanh: 'Thủy' },
+            { cap: ['Ngọ', 'Mùi'], hoaHanh: 'Nhật Nguyệt hợp — không hoá hành mới' },
+        ];
+
+        // Tứ Mộ Khố suy trực tiếp từ chi cuối (Mộ) của mỗi cục Tam Hợp ở trên.
+        const TU_MO_KHO = [
+            { chi: 'Thìn', moCua: 'Thủy Cục' },
+            { chi: 'Tuất', moCua: 'Hỏa Cục' },
+            { chi: 'Sửu', moCua: 'Kim Cục' },
+            { chi: 'Mùi', moCua: 'Mộc Cục' },
+        ];
+
+        const EL_CLASS = { Kim: 'hanh-kim', Mộc: 'hanh-moc', Thủy: 'hanh-thuy', Hỏa: 'hanh-hoa', Thổ: 'hanh-tho' };
+
+        function veTheCan(c) {
+            const el = document.createElement('div');
+            el.className = `the-hanh ${EL_CLASS[c.hanh]} rounded-2xl p-4`;
+            el.innerHTML = `
+                <div class="flex items-center justify-between mb-1.5">
+                    <h3 class="text-lg font-serif font-bold ${EL_CLASS[c.hanh]}">${c.ten}</h3>
+                    <span class="text-[9px] px-2 py-0.5 rounded-full bg-mystic-900/60 border border-current font-semibold">${c.amDuong} ${c.hanh}</span>
+                </div>
+                <p class="text-xs text-gray-300 leading-relaxed mb-2">${c.hinhTuong}</p>
+                <p class="text-xs text-gray-400 leading-relaxed mb-2">${c.dacDiem}</p>
+                <p class="text-[11px] text-rose-300/80 leading-relaxed border-t border-mystic-700/60 pt-2">
+                    <i class="fa-solid fa-triangle-exclamation mr-1"></i>${c.thaiQua}
+                </p>
+            `;
+            return el;
+        }
+
+        function veTheChi(c) {
+            const el = document.createElement('div');
+            el.className = `the-hanh ${EL_CLASS[c.hanh]} rounded-2xl p-4`;
+            el.innerHTML = `
+                <div class="flex items-center justify-between mb-1.5">
+                    <h3 class="text-lg font-serif font-bold ${EL_CLASS[c.hanh]}">${c.ten}</h3>
+                    <span class="text-[9px] px-2 py-0.5 rounded-full bg-mystic-900/60 border border-current font-semibold">${c.amDuong} ${c.hanh}</span>
+                </div>
+                <p class="text-xs text-gray-300 leading-relaxed mb-2">${c.hinhTuong}</p>
+                <div class="grid grid-cols-2 gap-x-2 gap-y-1 text-[11px] text-gray-400 border-t border-mystic-700/60 pt-2">
+                    <span><i class="fa-regular fa-clock mr-1"></i>${c.gio}</span>
+                    <span><i class="fa-solid fa-compass mr-1"></i>${c.huong}</span>
+                    <span>Tháng ${c.thang}</span>
+                    <span>${c.mua}</span>
+                </div>
+            `;
+            return el;
+        }
+
+        // Vòng địa bàn 12 Chi cố định, dùng chung O_LUOI (assets/ui.js). Vị trí
+        // trên vòng KHÔNG đổi theo lá số nào cả — khác với chinhtinh-chucnang.html
+        // phải quy đổi qua Cung Mệnh, ở đây Chi tự nó đã là toạ độ.
+        const THU_TU_CHI = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'];
+        function toaDoChi(chi) {
+            // O_LUOI[0] rơi vào Tỵ (offset -5), xem chú thích trong assets/ui.js.
+            const k = (THU_TU_CHI.indexOf(chi) - 5 + 12) % 12;
+            return O_LUOI[k];
+        }
+
+        // nhomList: mảng các nhóm Chi (mỗi nhóm 2 hoặc 3 Chi) cùng một mối quan
+        // hệ; mauSac: lớp màu áp cho mọi ô được đánh dấu (vd 'text-rose-400').
+        function veVongChi(nhomList, mauSac) {
+            const vong = document.createElement('div');
+            vong.className = 'vong-chi';
+            const viTri = {};
+            nhomList.forEach((nhom, idx) => nhom.forEach(chi => { viTri[chi] = idx + 1; }));
+
+            THU_TU_CHI.forEach(chi => {
+                const [r, c] = toaDoChi(chi);
+                const o = document.createElement('div');
+                const noiBat = viTri[chi] != null;
+                o.className = `o-chi ${noiBat ? `noi-bat ${mauSac}` : ''}`;
+                o.style.gridRowStart = r + 1;
+                o.style.gridColumnStart = c + 1;
+                o.innerHTML = `<span class="text-sm">${chi}</span>${noiBat ? `<span class="nhan-nhom">${viTri[chi]}</span>` : ''}`;
+                vong.appendChild(o);
+            });
+            return vong;
+        }
+
+        function initApp() {
+            const canEl = document.getElementById('the-thien-can');
+            THIEN_CAN.forEach(c => canEl.appendChild(veTheCan(c)));
+
+            const chiEl = document.getElementById('the-dia-chi');
+            DIA_CHI.forEach(c => chiEl.appendChild(veTheChi(c)));
+
+            // Tam Hợp: một vòng riêng cho mỗi cục, chỉ nổi bật 3 Chi của cục đó.
+            const tamHopEl = document.getElementById('tam-hop');
+            TAM_HOP.forEach(cuc => {
+                const the = document.createElement('div');
+                the.className = 'mystic-card rounded-2xl p-4 flex flex-col items-center text-center';
+                const vong = veVongChi([cuc.chi], cuc.hanh);
+                vong.style.maxWidth = '10rem';
+                the.appendChild(vong);
+                const nhan = document.createElement('div');
+                nhan.className = 'mt-3';
+                nhan.innerHTML = `
+                    <h3 class="font-serif font-bold ${cuc.hanh}">${cuc.cuc}</h3>
+                    <p class="text-xs text-gray-400 mt-1">${cuc.chi.join(' → ')}</p>
+                    <p class="text-[10px] text-gray-500 mt-0.5">Trường Sinh → Đế Vượng → Mộ</p>
+                `;
+                the.appendChild(nhan);
+                tamHopEl.appendChild(the);
+            });
+
+            // Lục Xung: một vòng duy nhất, 6 cặp đánh số 1-6 để phân biệt.
+            document.getElementById('vong-luc-xung').appendChild(veVongChi(LUC_XUNG, 'text-rose-400'));
+
+            // Nhị Hợp: một vòng + danh sách hoá hành từng cặp.
+            document.getElementById('vong-nhi-hop').appendChild(veVongChi(NHI_HOP.map(x => x.cap), 'text-emerald-400'));
+            const dsNhiHop = document.getElementById('danh-sach-nhi-hop');
+            NHI_HOP.forEach((n, idx) => {
+                const li = document.createElement('li');
+                li.className = 'flex items-start gap-2';
+                li.innerHTML = `
+                    <span class="w-4 h-4 mt-0.5 flex-shrink-0 rounded-full bg-emerald-500/20 border border-emerald-400/60 text-emerald-300 text-[9px] font-bold flex items-center justify-center">${idx + 1}</span>
+                    <span><strong class="text-emerald-300">${n.cap.join(' – ')}</strong> — ${n.hoaHanh}</span>
+                `;
+                dsNhiHop.appendChild(li);
+            });
+
+            // Tứ Mộ Khố: 4 Chi Thổ, mỗi Chi là Mộ của một cục Tam Hợp.
+            document.getElementById('vong-tu-mo-kho').appendChild(veVongChi(TU_MO_KHO.map(x => [x.chi]), 'hanh-tho'));
+            const dsMoKho = document.getElementById('danh-sach-tu-mo-kho');
+            TU_MO_KHO.forEach((m, idx) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span class="hanh-tho font-semibold">${m.chi}</span> — Mộ của ${m.moCua}`;
+                dsMoKho.appendChild(li);
+            });
+        }
+        initApp();
+        initThemeToggle();
+    </script>
+</body>
+</html>

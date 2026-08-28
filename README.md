@@ -32,6 +32,7 @@ Chrome/Edge cài sẵn ở chế độ headless, ví dụ trên macOS:
 | `chinhtinh-cathung.html` | 14 chính tinh & quy luật cát hung |
 | `conguyetdongluong.html` | Cơ Nguyệt Đồng Lương |
 | `amduongnguhanh.html` | Âm Dương Ngũ Hành — kiến thức nền |
+| `canchi.html` | Can Chi — 10 Thiên Can, 12 Địa Chi, Tam Hợp/Lục Xung/Nhị Hợp/Tứ Mộ Khố |
 | `thiepcuoi-nhagai.html` / `thiepcuoi-nhatrai.html` | Thiệp cưới, ngoài phạm vi lá số |
 
 ## Ba tầng

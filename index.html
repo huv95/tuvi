@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi" class="dark">
 <head>
+    <script>if (localStorage.getItem('tuvi-giao-dien') === 'sang') document.documentElement.classList.add('giay');</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tử Vi Myn 001 - Roadmap</title>
@@ -12,7 +13,7 @@
     <style>
         body {
             background-color: var(--nen);
-            color: #E2E8F0;
+            color: var(--chu);
             font-family: var(--font-chu);
             background-image:
                 radial-gradient(circle at 10% 20%, rgba(88, 28, 135, 0.25) 0%, transparent 40%),
@@ -101,6 +102,8 @@
 </head>
 <body class="min-h-screen">
 
+    <button id="nutChuyenGiaoDien" class="nut-giao-dien" style="position: fixed; top: 1rem; right: 1rem; z-index: 45;"></button>
+
     <header class="max-w-5xl mx-auto px-4 sm:px-6 pt-16 pb-10 text-center">
         <div class="w-14 h-14 mx-auto rounded-full bg-gradient-to-tr from-amber-400 to-purple-900 flex items-center justify-center text-slate-950 text-2xl font-bold shadow-lg border border-amber-400/50 mb-4">
             ☯
@@ -143,7 +146,7 @@
                     <p class="text-xs text-purple-200/70 mb-3 leading-relaxed">Âm Dương - Ngũ Hành - Can Chi: ngôn ngữ biểu tượng bắt buộc phải nắm trước khi chạm vào một lá số cụ thể.</p>
                     <div class="grid sm:grid-cols-2 gap-2">
                         <a href="amduongnguhanh.html" class="thanh-phan"><span>Âm Dương - Ngũ Hành, vòng Tràng Sinh</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
-                        <div class="thanh-phan chua-co"><span>Can Chi, Lục xung - Tam hợp - Nhị hợp</span><span class="text-[9px] uppercase">Chưa có</span></div>
+                        <a href="canchi.html" class="thanh-phan"><span>Can Chi, Lục xung - Tam hợp - Nhị hợp</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
                         <div class="thanh-phan chua-co"><span>Nạp Âm Ngũ Hành</span><span class="text-[9px] uppercase">Chưa có</span></div>
                         <a href="ansaothucong.html" class="thanh-phan"><span>Nguyên tắc lập lá số (An Sao)</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
                     </div>
@@ -300,6 +303,8 @@
 
     <script type="module">
         import { getQuiz } from './lib/repo.js';
+        import { initThemeToggle } from './assets/theme-toggle.js';
+        initThemeToggle();
 
         let quizCauHoi = [];
         let quizChiSo = 0;

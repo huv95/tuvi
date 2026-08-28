@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi" class="dark">
 <head>
+    <script>if (localStorage.getItem('tuvi-giao-dien') === 'sang') document.documentElement.classList.add('giay');</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>14 Chính Tinh & Quy Luật Cát Hung - Tử Vi Myn 001</title>
@@ -12,17 +13,17 @@
                 extend: {
                     colors: {
                         tuvi: {
-                            gold: '#D4AF37',
-                            goldHover: '#F3E5AB',
-                            purple: '#2A0845',
+                            gold: 'var(--nhan)',
+                            goldHover: 'var(--nhan-mo)',
+                            purple: 'var(--nen-noi-2)',
                             darkBg: 'var(--nen)',
-                            cardBg: '#1A1028',
-                            border: '#3D255A',
-                            fire: '#E53E3E',
-                            water: '#3182CE',
-                            wood: '#38A169',
-                            metal: '#CBD5E0',
-                            earth: '#D69E2E'
+                            cardBg: 'var(--nen-noi)',
+                            border: 'var(--vien-mo)',
+                            fire: 'var(--hanh-hoa)',
+                            water: 'var(--hanh-thuy)',
+                            wood: 'var(--hanh-moc)',
+                            metal: 'var(--hanh-kim)',
+                            earth: 'var(--hanh-tho)'
                         }
                     },
                     fontFamily: {
@@ -40,7 +41,7 @@
     <style>
         body {
             background-color: var(--nen);
-            color: #E2E8F0;
+            color: var(--chu);
             font-family: var(--font-chu);
             background-image: 
                 radial-gradient(circle at 10% 20%, rgba(88, 28, 135, 0.25) 0%, transparent 40%),
@@ -73,6 +74,9 @@
         .scrollbar-thin::-webkit-scrollbar-thumb:hover {
             background: #D4AF37;
         }
+        .giay .scrollbar-thin::-webkit-scrollbar-track { background: var(--nen); }
+        .giay .scrollbar-thin::-webkit-scrollbar-thumb { background: var(--vien); }
+        .giay .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: var(--nhan-mo); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between scrollbar-thin">
@@ -108,6 +112,8 @@
                     <i class="fa-solid fa-graduation-cap"></i> Thử Tài
                 </button>
             </nav>
+
+            <button id="nutChuyenGiaoDien" class="nut-giao-dien"></button>
         </div>
     </header>
 
@@ -324,6 +330,8 @@
 
     <script type="module">
         import { getSao, getNhomCung, getQuiz } from './lib/repo.js';
+        import { initThemeToggle } from './assets/theme-toggle.js';
+        initThemeToggle();
 
         // Dữ liệu nạp một lần lúc khởi động; giao diện bên dưới đọc từ ba biến này.
         let starsData = [], palacesData = [], quizQuestions = [];
