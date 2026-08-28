@@ -28,7 +28,7 @@ Chrome/Edge cài sẵn ở chế độ headless, ví dụ trên macOS:
 | `ansaotudong.html` | Lập lá số đầy đủ (đại/tiểu hạn, luận giải AI) |
 | `SatPhaTham.html` | Khám phá tam hợp Sát Phá Tham |
 | `ansaothucong.html` | Tự tay lập lá số từng bước, an 14 chính tinh |
-| `chinhtinh-chucnang.html` | Tra cứu 14 chính tinh với 12 cung chức năng |
+| `chinhtinh-chucnang.html` | Tra cứu 14 chính tinh với các cung chức năng |
 | `chinhtinh-cathung.html` | 14 chính tinh & quy luật cát hung |
 | `conguyetdongluong.html` | Cơ Nguyệt Đồng Lương |
 | `amduongnguhanh.html` | Âm Dương Ngũ Hành — kiến thức nền |
