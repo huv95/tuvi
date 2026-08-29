@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <script>if (localStorage.getItem('tuvi-giao-dien') === 'sang') document.documentElement.classList.add('giay');</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luận Giải Lá Số Tĩnh - Tử Vi Myn 001</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        mystic: {
+                            900: 'var(--nen)',
+                            800: 'var(--nen-noi)',
+                            700: 'var(--vien-mo)',
+                            600: 'var(--vien)',
+                            500: 'var(--chu-nhat)',
+                            accent: '#d97706',
+                            gold: '#fbbf24',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="./assets/theme.css">
+    <style>
+        body {
+            background-color: var(--nen);
+            color: var(--chu);
+            font-family: var(--font-chu);
+        }
+        .mystic-card {
+            background: rgba(30, 23, 56, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(251, 191, 36, 0.15);
+        }
+        .mystic-card:hover { border-color: rgba(251, 191, 36, 0.4); }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--nen); }
+        ::-webkit-scrollbar-thumb { background: #2d2252; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #fbbf24; }
+
+        /* Số thứ tự bước trong quy trình 8 bước */
+        .buoc-so {
+            width: 2.25rem; height: 2.25rem; flex-shrink: 0;
+            border-radius: 9999px; display: flex; align-items: center; justify-content: center;
+            font-family: 'Cormorant Garamond', serif; font-weight: 700;
+            background: linear-gradient(135deg, #fbbf24, #7e22ce); color: #0F0817;
+        }
+        .buoc-noi { width: 2px; flex: 1; background: linear-gradient(to bottom, rgba(168,85,247,.4), rgba(168,85,247,.08)); margin-top: .5rem; }
+
+        /* Ô "chưa có" — dùng chung phong cách với index.html */
+        .chua-co {
+            background: rgba(51, 65, 85, 0.25); border: 1px dashed rgba(100, 116, 139, 0.4); color: #94A3B8;
+        }
+
+        /* Chip dữ liệu thật lấy từ lá số vừa lập — gắn dưới mỗi bước */
+        .du-lieu-la-so {
+            margin-top: .75rem; padding-top: .75rem; border-top: 1px dashed rgba(251,191,36,.2);
+            font-size: .72rem; display: flex; flex-wrap: wrap; gap: .4rem .9rem; color: var(--nhan);
+        }
+        .du-lieu-la-so strong { color: var(--chu); font-weight: 600; }
+        .du-lieu-la-so .text-gray-400 { color: var(--chu-mo); }
+
+        /* Bảng ví dụ 3 cột: Thông tin lá số | Đánh giá | Luận giải */
+        .khung-luan table { width: 100%; border-collapse: collapse; }
+        .khung-luan th {
+            text-align: left; font-size: .65rem; text-transform: uppercase; letter-spacing: .05em;
+            color: #fbbf24; padding: .5rem .75rem; border-bottom: 1px solid rgba(251,191,36,.25);
+        }
+        .khung-luan td {
+            font-size: .78rem; line-height: 1.5; padding: .6rem .75rem; vertical-align: top;
+            border-bottom: 1px solid rgba(148,116,255,.08); color: var(--chu-mo, #cbd5e1);
+        }
+        .khung-luan tr:last-child td { border-bottom: none; }
+        .khung-luan td.nhom { color: #fbbf24; font-weight: 600; white-space: nowrap; }
+
+        /* ---- Lá số nhúng: buộc màu theo token theme.css thay vì Tailwind cứng,
+           để tự đổi đúng giữa nền tối / nền giấy (xem ansaotudong.html). ---- */
+        .la-so-giay   { background: var(--nen-noi); border-color: var(--nhan-mo); }
+        #cungModal .la-so-giay { background: var(--nen-noi); border-color: var(--vien); }
+        .la-so-giay #thien-ban { background: var(--nen-noi-2); background-image: none; border-color: var(--nhan-mo); }
+        .la-so-giay .cung-box  { background: var(--nen-noi-2); border-color: var(--vien); }
+        .la-so-giay .cung-box:hover { border-color: var(--nhan-mo); }
+
+        .la-so-giay .text-slate-100,
+        .la-so-giay .text-slate-200 { color: var(--chu); }
+        .la-so-giay .text-slate-300 { color: var(--chu-mo); }
+        .la-so-giay .text-slate-400 { color: var(--chu-mo); }
+        .la-so-giay .text-slate-500 { color: var(--chu-nhat); }
+        .la-so-giay .text-amber-200,
+        .la-so-giay .text-amber-200\/90,
+        .la-so-giay .text-amber-300,
+        .la-so-giay .text-amber-400,
+        .la-so-giay .text-amber-500 { color: var(--nhan); }
+        .la-so-giay .text-emerald-400 { color: var(--hanh-moc); }
+
+        .la-so-giay .border-slate-700,
+        .la-so-giay .border-slate-700\/50,
+        .la-so-giay .border-slate-700\/60,
+        .la-so-giay .border-slate-800,
+        .la-so-giay .border-slate-800\/80 { border-color: var(--vien-mo); }
+        .la-so-giay .border-amber-500\/20,
+        .la-so-giay .border-amber-500\/30,
+        .la-so-giay .border-amber-500\/60,
+        .la-so-giay .border-amber-600\/50 { border-color: var(--nhan-mo); }
+
+        .la-so-giay .bg-slate-800\/30,
+        .la-so-giay .bg-slate-800\/50,
+        .la-so-giay .bg-slate-800\/60,
+        .la-so-giay .bg-slate-800\/70,
+        .la-so-giay .bg-slate-800\/80 { background: var(--nen-noi-2); }
+        .la-so-giay .bg-slate-900,
+        .la-so-giay .bg-slate-900\/70,
+        .la-so-giay .bg-slate-900\/90,
+        .la-so-giay .bg-slate-950,
+        .la-so-giay .bg-slate-950\/90 { background: var(--nen-noi); }
+        .la-so-giay .bg-amber-500\/10,
+        .la-so-giay .bg-amber-500\/20 { background: var(--nhan-nen); }
+
+        .la-so-giay .decoration-amber-500 { text-decoration-color: var(--nhan-mo); }
+        .star-tuhoa { color: var(--tu-hoa); font-weight: 600; }
+    </style>
+</head>
+<body class="min-h-screen pb-16 flex flex-col">
+
+    <!-- Header -->
+    <header class="border-b border-mystic-700/60 bg-mystic-900/80 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500 to-purple-800 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                    <i class="fa-solid font-serif">☯</i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold font-serif tracking-wide gold-gradient-text">LUẬN GIẢI LÁ SỐ TĨNH</h1>
+                    <p class="text-xs text-gray-400">Tiên Thiên Định Số — Giai Đoạn 4</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="nutChuyenGiaoDien" class="nut-giao-dien"></button>
+                <a href="index.html" class="text-xs sm:text-sm text-gray-300 hover:text-amber-300 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-arrow-left"></i> Mục lục
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-1 w-full space-y-6">
+
+        <!-- CẢNH BÁO TRẠNG THÁI -->
+        <div class="flex items-start gap-3 rounded-xl border border-dashed border-rose-400/30 bg-rose-400/5 px-4 py-3">
+            <i class="fa-solid fa-triangle-exclamation text-rose-300 mt-0.5"></i>
+            <p class="text-xs text-rose-200/90 leading-relaxed">
+                Cô giáo <strong>chưa dạy chính thức</strong> giai đoạn này (mới báo sắp kiểm tra). Trang này chỉ hệ thống lại đúng
+                khung luận giải và ví dụ đã có sẵn trong ghi chú thật (<code class="text-[11px]">note/Cấu trúc luận.html</code>,
+                <code class="text-[11px]">note/Luận chill chill.html</code>) — chưa phải nội dung đã được cô chốt.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+            <!-- CỘT TRÁI: NHẬP THÔNG TIN + LÁ SỐ, DÍNH KHI CUỘN -->
+            <section class="lg:col-span-5 lg:sticky lg:top-20 space-y-4">
+
+                <div class="mystic-card rounded-2xl p-5">
+                    <h2 class="text-sm font-bold font-serif text-amber-400 border-b border-mystic-700 pb-2.5 mb-3.5 flex items-center gap-2">
+                        <i class="fa-solid fa-user-pen"></i> Nhập Thông Tin Đương Số
+                    </h2>
+                    <form id="tuviForm" onsubmit="handleFormSubmit(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-[11px] font-semibold text-gray-400 mb-1">Họ và Tên</label>
+                            <input type="text" id="fullname" value="Nguyễn Văn An" required
+                                class="w-full bg-mystic-900 border border-mystic-700 rounded-lg px-3 py-1.5 text-sm text-gray-100 focus:outline-none focus:border-amber-500 transition-colors">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2.5">
+                            <div>
+                                <label class="block text-[11px] font-semibold text-gray-400 mb-1">Giới Tính</label>
+                                <select id="gender" class="w-full bg-mystic-900 border border-mystic-700 rounded-lg px-2.5 py-1.5 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+                                    <option value="1">Nam</option>
+                                    <option value="0">Nữ</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-semibold text-gray-400 mb-1">Loại Lịch</label>
+                                <select id="calendarType" onchange="toggleCalendarType()" class="w-full bg-mystic-900 border border-mystic-700 rounded-lg px-2.5 py-1.5 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+                                    <option value="solar">Dương Lịch</option>
+                                    <option value="lunar">Âm Lịch</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div>
+                                <label class="block text-[11px] text-gray-500 mb-1">Ngày</label>
+                                <input type="number" id="day" min="1" max="31" value="17" required
+                                    class="w-full bg-mystic-900 border border-mystic-700 rounded-lg px-2.5 py-1.5 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-gray-500 mb-1">Tháng</label>
+                                <input type="number" id="month" min="1" max="12" value="3" required
+                                    class="w-full bg-mystic-900 border border-mystic-700 rounded-lg px-2.5 py-1.5 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-gray-500 mb-1">Năm</label>
+                                <input type="number" id="year" min="1900" max="2100" value="1995" required
+                                    class="w-full bg-mystic-900 border border-mystic-700 rounded-lg px-2.5 py-1.5 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2.5">
+                            <div>
+                                <label class="block text-[11px] font-semibold text-gray-400 mb-1">Giờ Sinh</label>
+                                <div class="flex items-center gap-1">
+                                    <input type="number" id="hour" min="0" max="23" value="4" placeholder="Giờ" required
+                                        class="w-full bg-mystic-900 border border-mystic-700 rounded-lg px-2 py-1.5 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+                                    <span class="text-xs text-gray-500 font-bold">:</span>
+                                    <input type="number" id="minute" min="0" max="59" value="30" placeholder="Phút" required
+                                        class="w-full bg-mystic-900 border border-mystic-700 rounded-lg px-2 py-1.5 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-semibold text-gray-400 mb-1">Xem Năm (Bước 7)</label>
+                                <input type="number" id="viewYear" min="1950" max="2100" value="2026" required
+                                    class="w-full bg-mystic-900 border border-mystic-700 rounded-lg px-2.5 py-1.5 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+                            </div>
+                        </div>
+                        <div id="leapOptionContainer" class="hidden">
+                            <label class="inline-flex items-center text-xs text-amber-300 cursor-pointer">
+                                <input type="checkbox" id="isLeapMonth" class="rounded bg-mystic-900 border-mystic-700 text-amber-500 focus:ring-amber-500 mr-2">
+                                Là Tháng Nhuận (Âm Lịch)
+                            </label>
+                        </div>
+                        <button type="submit"
+                            class="w-full mt-1 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 hover:from-amber-500 hover:to-yellow-400 text-slate-950 font-bold py-2 px-4 rounded-xl shadow-lg shadow-amber-500/20 transition-all flex items-center justify-center gap-2 text-sm">
+                            <i class="fa-solid fa-scroll"></i> Lập Lá Số &amp; Đối Chiếu
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Lá số 12 cung + Thiên Bàn -->
+                <div class="flex items-center justify-between px-1">
+                    <span class="text-xs font-semibold text-gray-400">Lá số của: <span id="chartOwner" class="text-amber-300 font-bold">Chưa tạo</span></span>
+                    <span class="text-[10px] text-gray-500">Bấm vào một cung để xem chi tiết</span>
+                </div>
+                <div class="la-so-giay giay border-2 border-amber-600/40 rounded-2xl p-2 shadow-2xl relative overflow-hidden">
+                    <div id="dia-ban" class="grid grid-cols-4 grid-rows-4 gap-1.5 aspect-square text-gray-200 text-xs"></div>
+                </div>
+
+            </section>
+
+            <!-- CỘT PHẢI: KHUNG LUẬN GIẢI, CUỘN ĐỘC LẬP -->
+            <section class="lg:col-span-7 space-y-10">
+
+                <!-- INTRO: KHUNG 3 CỘT -->
+                <div class="mystic-card rounded-2xl p-6 sm:p-8">
+                    <span class="text-xs uppercase tracking-widest text-amber-400 font-semibold">Phương pháp luận giải</span>
+                    <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white mt-1 mb-3">Khung 3 Cột: Thông Tin — Đánh Giá — Luận Giải</h2>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-5">
+                        Mọi lần luận giải, dù ở cấp Thiên Bàn hay từng cung riêng lẻ, đều đi qua ba cột việc tách bạch — không trộn dữ kiện
+                        với nhận định, không kết luận khi chưa nêu rõ dữ kiện đứng sau nó. Lập lá số ở cột bên trái để các bước dưới đây tự
+                        điền dữ kiện thật (sao, cục, âm dương...) của đúng lá số bạn đang xét.
+                    </p>
+                    <div class="grid sm:grid-cols-3 gap-3">
+                        <div class="rounded-xl border border-purple-400/20 bg-purple-950/20 p-4">
+                            <div class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-300 flex items-center justify-center mb-2"><i class="fa-solid fa-clipboard-list text-sm"></i></div>
+                            <h3 class="font-serif font-bold text-white text-sm mb-1">1. Thông tin về lá số</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed">Dữ kiện thuần: chính tinh gì đóng cung, đắc/hãm, sao đi kèm (sát tinh, cát tinh, vòng phụ), Tuần/Triệt.</p>
+                        </div>
+                        <div class="rounded-xl border border-amber-400/20 bg-amber-950/10 p-4">
+                            <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center mb-2"><i class="fa-solid fa-scale-balanced text-sm"></i></div>
+                            <h3 class="font-serif font-bold text-white text-sm mb-1">2. Đánh giá</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed">Nhận định tổng quát rút ra thẳng từ dữ kiện ở cột 1 — một câu chốt cát/hung/trung tính cho khía cạnh đang xét.</p>
+                        </div>
+                        <div class="rounded-xl border border-rose-400/20 bg-rose-950/10 p-4">
+                            <div class="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-300 flex items-center justify-center mb-2"><i class="fa-solid fa-feather-pointed text-sm"></i></div>
+                            <h3 class="font-serif font-bold text-white text-sm mb-1">3. Luận giải</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed">Diễn giải chi tiết vì sao — ý nghĩa từng sao, tương tác giữa các sao, rồi gộp lại thành tính cách/sự nghiệp/sức khỏe/lời khuyên.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QUY TRINH 8 BUOC -->
+                <div>
+                    <h2 class="text-lg font-serif font-bold text-amber-300 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-route"></i> Trình Tự Luận Một Lá Số Tĩnh
+                    </h2>
+                    <div class="space-y-0">
+
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center"><div class="buoc-so">1</div><div class="buoc-noi"></div></div>
+                            <div class="mystic-card rounded-xl p-4 flex-1 mb-4">
+                                <h3 class="font-serif font-bold text-white text-sm">Thiên Bàn</h3>
+                                <p class="text-xs text-gray-400 mt-1 leading-relaxed">Xét thế cục tổng quát trước khi vào từng cung: Âm Dương tuổi có thuận hay nghịch lý với cung an Mệnh; Cục (ngũ hành cục) sinh hay khắc Bản Mệnh. Đây là "phông nền" chi phối toàn bộ lá số.</p>
+                                <div id="d-buoc-1" class="du-lieu-la-so hidden"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center"><div class="buoc-so">2</div><div class="buoc-noi"></div></div>
+                            <div class="mystic-card rounded-xl p-4 flex-1 mb-4">
+                                <h3 class="font-serif font-bold text-white text-sm">Bộ tứ trụ cốt lõi: Mệnh — Thân — Phúc Đức — Tật Ách</h3>
+                                <p class="text-xs text-gray-400 mt-1 leading-relaxed">Mệnh (con người bản chất), Thân (nơi dồn lực lúc trưởng thành), Phúc Đức (căn cơ tinh thần, phúc phần dòng họ), Tật Ách (sức khỏe, thể trạng) — bốn cung luận trước tiên, độc lập với các mối quan hệ bên ngoài.</p>
+                                <div id="d-buoc-2" class="du-lieu-la-so hidden"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center"><div class="buoc-so">3</div><div class="buoc-noi"></div></div>
+                            <div class="mystic-card rounded-xl p-4 flex-1 mb-4">
+                                <h3 class="font-serif font-bold text-white text-sm">Mối quan hệ gia đình</h3>
+                                <p class="text-xs text-gray-400 mt-1 leading-relaxed">Cung Phụ Mẫu (cha mẹ) và Huynh Đệ (anh chị em) — nền tảng xuất thân, người thân thế hệ trên và cùng thế hệ.</p>
+                                <div id="d-buoc-3" class="du-lieu-la-so hidden"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center"><div class="buoc-so">4</div><div class="buoc-noi"></div></div>
+                            <div class="mystic-card rounded-xl p-4 flex-1 mb-4">
+                                <h3 class="font-serif font-bold text-white text-sm">Mối quan hệ xã hội</h3>
+                                <p class="text-xs text-gray-400 mt-1 leading-relaxed">Tam hợp Quan Lộc + Tài Bạch (sự nghiệp và tiền tài, cùng thế đứng với Mệnh), xung chiếu Thiên Di (đối ngoại, ra khỏi nhà) và Nô Bộc (bạn bè, cấp dưới, đồng nghiệp).</p>
+                                <div id="d-buoc-4" class="du-lieu-la-so hidden"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center"><div class="buoc-so">5</div><div class="buoc-noi"></div></div>
+                            <div class="mystic-card rounded-xl p-4 flex-1 mb-4">
+                                <h3 class="font-serif font-bold text-white text-sm">Mối quan hệ tình cảm — hôn nhân</h3>
+                                <p class="text-xs text-gray-400 mt-1 leading-relaxed">Phu Thê (bạn đời), Tử Tức (con cái) và đối chiếu lại Tật Ách — đường tình duyên và hạnh phúc gia đình gắn với cả sức khỏe.</p>
+                                <div id="d-buoc-5" class="du-lieu-la-so hidden"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center"><div class="buoc-so">6</div><div class="buoc-noi"></div></div>
+                            <div class="mystic-card rounded-xl p-4 flex-1 mb-4">
+                                <h3 class="font-serif font-bold text-white text-sm">Tài sản — đất đai — nhà cửa</h3>
+                                <p class="text-xs text-gray-400 mt-1 leading-relaxed">Cung Điền Trạch: có dễ tạo lập/giữ được bất động sản hay không, thừa kế từ gia đình hay tự tay gây dựng.</p>
+                                <div id="d-buoc-6" class="du-lieu-la-so hidden"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center"><div class="buoc-so">7</div><div class="buoc-noi"></div></div>
+                            <div class="mystic-card rounded-xl p-4 flex-1 mb-4">
+                                <h3 class="font-serif font-bold text-white text-sm">Luận vận hạn</h3>
+                                <p class="text-xs text-gray-400 mt-1 leading-relaxed">Nhìn nhanh năm trước — hiện tại — năm sau để đối chiếu lá số tĩnh với chuyển động gần nhất, dù phần luận Động đầy đủ (Đại/Tiểu hạn, Tứ Hóa) thuộc Giai Đoạn 5.</p>
+                                <div id="d-buoc-7" class="du-lieu-la-so hidden"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center"><div class="buoc-so">8</div></div>
+                            <div class="mystic-card rounded-xl p-4 flex-1 mb-4">
+                                <h3 class="font-serif font-bold text-white text-sm">Lời khuyên tổng hợp</h3>
+                                <p class="text-xs text-gray-400 mt-1 leading-relaxed">Gộp toàn bộ 7 bước trên lại thành một lời khuyên thống nhất — không phải liệt kê lại từng cung mà đúc kết hướng đi phù hợp nhất với đương số.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- PHAM VI 9 BAC - CHUA CO -->
+                <div>
+                    <h2 class="text-lg font-serif font-bold text-amber-300 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-ranking-star"></i> Đoán Định Phẩm Vị (9 Bậc)
+                    </h2>
+                    <div class="chua-co rounded-xl p-5 flex items-start gap-3">
+                        <i class="fa-solid fa-hourglass-half mt-0.5"></i>
+                        <div>
+                            <p class="text-sm font-semibold">Chưa có — chờ cô dạy</p>
+                            <p class="text-xs mt-1 leading-relaxed">Lộ trình học có nhắc việc phối hợp Tinh cách (phẩm chất sao cư Mệnh, chủ quý khí) và Số cách (phẩm chất số của cung vị, chủ phú khí) để xếp lá số vào 1 trong 9 bậc. Ghi chú hiện có chưa nêu rõ cách chấm từng bậc, nên phần này để trống thay vì suy diễn — sẽ bổ sung khi có xác nhận.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VI DU MINH HOA -->
+                <div>
+                    <h2 class="text-lg font-serif font-bold text-amber-300 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-scroll"></i> Trích Ví Dụ Đã Luận (theo ghi chú thật)
+                    </h2>
+                    <p class="text-xs text-gray-400 mb-4">
+                        Đoạn trích dưới đây lấy nguyên văn phần đầu của một lá số đã được luận theo đúng khung 3 cột ở trên
+                        (<code class="text-[11px]">note/Luận chill chill.html</code>) — chỉ đến hết cung Mệnh và điểm qua Tài/Quan, ghi chú gốc
+                        còn tiếp tục nhưng dừng ở đó.
+                    </p>
+
+                    <div class="mystic-card rounded-2xl overflow-x-auto khung-luan">
+                        <table>
+                            <thead>
+                                <tr><th style="width:14%">Nhóm</th><th style="width:28%">Thông tin về lá số</th><th style="width:34%">Đánh giá</th><th style="width:24%">Luận giải</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="nhom" rowspan="3">Thiên Bàn</td>
+                                    <td>Âm Dương Nghịch Lý</td>
+                                    <td>Gặp nhiều trắc trở ban đầu, tự lực gánh sinh</td>
+                                    <td>Xung đột mâu thuẫn nội tâm</td>
+                                </tr>
+                                <tr>
+                                    <td>Cục Khắc Mệnh</td>
+                                    <td>Môi trường không ủng hộ, dễ hao tổn năng lượng, muốn thành công phải vượt qua chông gai</td>
+                                    <td>Hoàn cảnh xã hội khắc mình → đối diện khó khăn nhiều hơn</td>
+                                </tr>
+                                <tr>
+                                    <td class="italic opacity-70">—</td>
+                                    <td class="italic opacity-70">—</td>
+                                    <td>→ Phấn đấu cả đời, để học dần những bài học nhỏ</td>
+                                </tr>
+                                <tr>
+                                    <td class="nhom" rowspan="3">Mệnh</td>
+                                    <td>Thiên Tướng đắc, dính Triệt, có Đà La, Thiên Không, Thiếu Dương, Lực Sĩ</td>
+                                    <td>Công danh trắc trở, tiền tài khó kiếm, suốt đời khổ cực và dễ gặp tai nạn liên quan đến đầu/mặt. Có tài nhưng khó được trọng dụng, hay bị bãi chức, đổi việc ngoài ý muốn.</td>
+                                    <td>Thiên Tướng cư Mùi; có Đà La, Thiên Không; Quan Lộc có Hỏa Tinh, Đại Hao</td>
+                                </tr>
+                                <tr>
+                                    <td class="italic opacity-70">—</td>
+                                    <td class="italic opacity-70">—</td>
+                                    <td>Đà La: sát tinh chủ rắc rối, ám hại, tai nạn thân thể. Lực Sĩ: sức mạnh, quyền thế nhỏ — đi cùng Đà La thì công lao khó được thừa nhận, dễ bất mãn. Thiên Tướng gặp Đà La dễ vướng tranh chấp ngầm, thị phi, bị lừa tiền bạc.</td>
+                                </tr>
+                                <tr>
+                                    <td class="italic opacity-70">—</td>
+                                    <td class="italic opacity-70">—</td>
+                                    <td><strong class="text-gray-200">Tính cách:</strong> thông minh, tự trọng cao, nhạy bén; nhưng Đà La + Thiên Không khiến đôi khi thâm trầm, đa nghi, dễ quyết liều. <strong class="text-gray-200">Sự nghiệp:</strong> thăng trầm ("phát như lôi, bại như lôi"), hợp chuyên môn/kỹ thuật/phò tá hơn đứng đầu. <strong class="text-gray-200">Sức khỏe:</strong> chú ý đầu, mặt, bài tiết. <strong class="text-gray-200">Lời khuyên:</strong> lấy đạo đức làm trọng, tránh thủ đoạn để giữ thành quả bền vững.</td>
+                                </tr>
+                                <tr>
+                                    <td class="nhom">Tài</td>
+                                    <td>Thiên Phủ, không có sát tinh</td>
+                                    <td colspan="2">Phù hợp kinh doanh, giữ tiền</td>
+                                </tr>
+                                <tr>
+                                    <td class="nhom">Quan</td>
+                                    <td>Vũ Khúc</td>
+                                    <td colspan="2">Có thể làm đa ngành nhưng không chuyên tâm vào một ngành; nên làm ăn cùng người khác</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <footer class="text-center text-xs text-gray-500 pt-4 border-t border-mystic-700/40">
+                    <p class="mb-2">Khung luận giải và ví dụ trích từ ghi chú cá nhân (note/Cấu trúc luận.html, note/Luận chill chill.html) — chờ cô giáo xác nhận trước khi coi là kiến thức chốt.</p>
+                    <p>© Tử Vi Myn 001</p>
+                </footer>
+
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Modal chi tiết một cung — tái dùng đúng cấu trúc/hàm của ansaotudong.html -->
+    <div id="cungModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="la-so-giay giay bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-800/50">
+                <div>
+                    <h3 id="modal-cung-title" class="font-bold font-serif text-lg text-amber-400">--</h3>
+                    <p id="modal-cung-sub" class="text-xs text-slate-400">--</p>
+                </div>
+                <button onclick="closeCungModal()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-slate-100 transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="modal-cung-body" class="p-5 overflow-y-auto space-y-4 text-xs"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { generateTuViChart } from './lib/ansao.js';
+        import { veDiaBan, moModalCung } from './assets/ui.js';
+        import { initThemeToggle } from './assets/theme-toggle.js';
+        initThemeToggle();
+
+        let currentChartData = null;
+
+        const layChinhTinh = (cell) => cell.chinhTinh.length
+            ? cell.chinhTinh.map(s => s.name).join(', ')
+            : 'Vô Chính Diệu';
+        const timCung = (grid, ten) => grid.find(c => c.palaceName === ten);
+
+        function handleFormSubmit(e) {
+            if (e) e.preventDefault();
+
+            let data = {
+                name: document.getElementById('fullname').value || "Nguyễn Văn An",
+                gender: document.getElementById('gender').value,
+                isSolar: document.getElementById('calendarType').value === 'solar',
+                day: parseInt(document.getElementById('day').value) || 17,
+                month: parseInt(document.getElementById('month').value) || 3,
+                year: parseInt(document.getElementById('year').value) || 1995,
+                hour: parseInt(document.getElementById('hour').value) || 4,
+                minute: parseInt(document.getElementById('minute').value) || 30,
+                viewYear: parseInt(document.getElementById('viewYear').value) || 2026,
+                isLeapMonth: document.getElementById('isLeapMonth').checked
+            };
+
+            currentChartData = generateTuViChart(data);
+            veDiaBan(document.getElementById('dia-ban'), currentChartData, { onCungClick: openCungModal });
+            document.getElementById('chartOwner').textContent = `${data.name} (${currentChartData.userInfo.amDuongNamNu})`;
+
+            dienDuLieuTungBuoc(currentChartData);
+        }
+
+        // Điền dữ kiện THẬT (từ engine an sao, không suy diễn) vào từng bước
+        // của quy trình 8 bước, để đối chiếu trực quan với khung luận giải.
+        function dienDuLieuTungBuoc({ userInfo, grid }) {
+            const than = grid.find(c => c.isThan);
+
+            const hien = (id, html) => {
+                const el = document.getElementById(id);
+                el.innerHTML = html;
+                el.classList.remove('hidden');
+            };
+
+            hien('d-buoc-1', `
+                <span><strong>Âm Dương tuổi:</strong> ${userInfo.amDuongNamNu} — ${userInfo.amDuongThuanLy ? 'thuận lý' : 'nghịch lý'} với cung Mệnh</span>
+                <span><strong>Bản Mệnh:</strong> ${userInfo.napAm}</span>
+                <span><strong>Cục:</strong> ${userInfo.cuc.name}</span>
+                <span><strong>Cục / Mệnh:</strong> ${userInfo.tuongSinhText}</span>
+            `);
+
+            hien('d-buoc-2', `
+                <span><strong>Mệnh:</strong> ${layChinhTinh(timCung(grid, 'Mệnh'))}</span>
+                <span><strong>Thân đóng tại:</strong> ${than.palaceName} (${layChinhTinh(than)})</span>
+                <span><strong>Phúc Đức:</strong> ${layChinhTinh(timCung(grid, 'Phúc Đức'))}</span>
+                <span><strong>Tật Ách:</strong> ${layChinhTinh(timCung(grid, 'Tật Ách'))}</span>
+            `);
+
+            hien('d-buoc-3', `
+                <span><strong>Phụ Mẫu:</strong> ${layChinhTinh(timCung(grid, 'Phụ Mẫu'))}</span>
+                <span><strong>Huynh Đệ:</strong> ${layChinhTinh(timCung(grid, 'Huynh Đệ'))}</span>
+            `);
+
+            hien('d-buoc-4', `
+                <span><strong>Quan Lộc:</strong> ${layChinhTinh(timCung(grid, 'Quan Lộc'))}</span>
+                <span><strong>Tài Bạch:</strong> ${layChinhTinh(timCung(grid, 'Tài Bạch'))}</span>
+                <span><strong>Thiên Di:</strong> ${layChinhTinh(timCung(grid, 'Thiên Di'))}</span>
+                <span><strong>Nô Bộc:</strong> ${layChinhTinh(timCung(grid, 'Nô Bộc'))}</span>
+            `);
+
+            hien('d-buoc-5', `
+                <span><strong>Phu Thê:</strong> ${layChinhTinh(timCung(grid, 'Phu Thê'))}</span>
+                <span><strong>Tử Tức:</strong> ${layChinhTinh(timCung(grid, 'Tử Tức'))}</span>
+                <span><strong>Tật Ách:</strong> ${layChinhTinh(timCung(grid, 'Tật Ách'))}</span>
+            `);
+
+            hien('d-buoc-6', `
+                <span><strong>Điền Trạch:</strong> ${layChinhTinh(timCung(grid, 'Điền Trạch'))}</span>
+            `);
+
+            const menh = timCung(grid, 'Mệnh');
+            hien('d-buoc-7', `
+                <span><strong>Xem năm:</strong> ${userInfo.viewYear} (${userInfo.viewYearCanChi})</span>
+                <span><strong>Đại Hạn tại cung Mệnh:</strong> ${menh.daiHan} tuổi</span>
+                <span><strong>Tiểu Hạn tại cung Mệnh:</strong> năm ${menh.tieuHan}</span>
+                <span class="text-gray-400 not-italic">(đổi "Xem Năm" bên trái để đối chiếu năm khác)</span>
+            `);
+        }
+
+        function toggleCalendarType() {
+            let type = document.getElementById('calendarType').value;
+            let leapCont = document.getElementById('leapOptionContainer');
+            leapCont.classList.toggle('hidden', type !== 'lunar');
+        }
+
+        function openCungModal(gridIdx) {
+            if (!currentChartData) return;
+            let cell = currentChartData.grid[gridIdx];
+            let modal = document.getElementById('cungModal');
+
+            document.getElementById('modal-cung-title').textContent = `Cung ${cell.palaceName} - Vị Trí Cung ${cell.chiName}`;
+            document.getElementById('modal-cung-sub').textContent = `Địa Chi: ${cell.chiName} • Đại Hạn: ${cell.daiHan} tuổi • Tiểu Hạn: Năm ${cell.tieuHan} • ${cell.trangSinh}`;
+
+            let body = document.getElementById('modal-cung-body');
+            body.innerHTML = '';
+            body.appendChild(moModalCung(cell));
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeCungModal() {
+            document.getElementById('cungModal').classList.add('hidden');
+        }
+
+        // Lập sẵn một lá số minh hoạ để cột lá số không trống ngay khi mở trang.
+        handleFormSubmit();
+
+        Object.assign(window, {
+            handleFormSubmit,
+            toggleCalendarType,
+            openCungModal,
+            closeCungModal,
+        });
+    </script>
+</body>
+</html>
