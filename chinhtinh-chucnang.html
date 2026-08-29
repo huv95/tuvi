@@ -369,20 +369,6 @@
                 </p>
             </div>
 
-            <!-- Nút bấm xoay, thay cho kéo chuột -->
-            <div class="flex flex-wrap items-center justify-center gap-6 bg-cosmic-800/60 rounded-xl border border-gray-800 py-3">
-                <div class="flex items-center gap-2">
-                    <span class="text-xs font-bold text-amber-300 uppercase tracking-wider">Xoay Cung</span>
-                    <button @click="nhichBanhXe('cung', -1)" class="w-7 h-7 rounded-full bg-cosmic-900 border border-amber-500/40 text-amber-300 hover:bg-amber-500/20 text-xs"><i class="fa-solid fa-chevron-left"></i></button>
-                    <button @click="nhichBanhXe('cung', 1)" class="w-7 h-7 rounded-full bg-cosmic-900 border border-amber-500/40 text-amber-300 hover:bg-amber-500/20 text-xs"><i class="fa-solid fa-chevron-right"></i></button>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="text-xs font-bold text-purple-300 uppercase tracking-wider">Xoay Sao</span>
-                    <button @click="nhichBanhXe('sao', -1)" class="w-7 h-7 rounded-full bg-cosmic-900 border border-purple-500/40 text-purple-300 hover:bg-purple-500/20 text-xs"><i class="fa-solid fa-chevron-left"></i></button>
-                    <button @click="nhichBanhXe('sao', 1)" class="w-7 h-7 rounded-full bg-cosmic-900 border border-purple-500/40 text-purple-300 hover:bg-purple-500/20 text-xs"><i class="fa-solid fa-chevron-right"></i></button>
-                </div>
-            </div>
-
             <!-- Bánh xe tròn 4 vòng -->
             <div class="bg-cosmic-800/60 rounded-2xl border border-gray-800 shadow-2xl overflow-x-auto p-6 flex justify-center">
                 <div class="relative flex-shrink-0" style="width: 950px; height: 950px;" x-ref="banhXeTron">
@@ -395,6 +381,21 @@
                                 <div class="bb-tail rounded-xl px-2.5 py-2 shadow-lg" :class="'bb-' + huongBongBong(i)"
                                      style="background: var(--nen-noi-2); border: 1px solid var(--vien-mo);">
                                     <p class="text-[9px] text-gray-300 leading-tight line-clamp-5" x-text="luanGiaiBanhXe(chi)"></p>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- Vòng 1 (trong cùng): Địa Chi — cố định, Tý ở đỉnh. Vẽ
+                         trước vòng 2 để đường tam hợp (nằm trong vòng 2) đè
+                         lên trên, không bị 12 ô Chi này che khuất. -->
+                    <div class="absolute inset-0 pointer-events-none">
+                        <template x-for="(chi, i) in earthlyBranches" :key="'chi-' + chi">
+                            <div class="absolute pointer-events-none text-center" :style="viTriVongTron(i, 90, 48)">
+                                <div class="bg-cosmic-900 border border-current rounded-full w-11 h-11 flex flex-col items-center justify-center mx-auto"
+                                     :class="layLopMauHanh(getBranchElement(chi))">
+                                    <span class="text-xs font-bold" x-text="chi"></span>
+                                    <span class="text-[7px] font-mono opacity-80" x-text="getBranchElement(chi)"></span>
                                 </div>
                             </div>
                         </template>
@@ -433,6 +434,14 @@
                     <div class="absolute inset-0 pointer-events-none"
                          :class="keoLoai === 'cung' ? '' : 'transition-transform duration-150'"
                          :style="`transform: rotate(${keoLoai === 'cung' ? keoGocDelta : 0}deg)`">
+
+                        <!-- Đường tam hợp Mệnh-Tài Bạch-Quan Lộc: nằm trong cùng
+                             vòng xoay với Cung nên luôn nối đúng 3 nhãn đó dù
+                             đang ở vị trí nào. -->
+                        <svg class="absolute inset-0" viewBox="0 0 950 950" width="950" height="950">
+                            <polygon :points="tamPhuongDiem()" fill="none" stroke="rgba(239,68,68,0.35)" stroke-width="2" stroke-dasharray="5,5" />
+                        </svg>
+
                         <template x-for="(chi, i) in earthlyBranches" :key="'cung-' + chi">
                             <div class="absolute pointer-events-auto cursor-grab active:cursor-grabbing text-center"
                                  :class="keoLoai === 'cung' ? '' : 'transition-transform duration-150'"
@@ -445,17 +454,16 @@
                         </template>
                     </div>
 
-                    <!-- Vòng 1 (trong cùng): Địa Chi — cố định, Tý ở đỉnh -->
-                    <div class="absolute inset-0 pointer-events-none">
-                        <template x-for="(chi, i) in earthlyBranches" :key="'chi-' + chi">
-                            <div class="absolute pointer-events-none text-center" :style="viTriVongTron(i, 90, 48)">
-                                <div class="bg-cosmic-900 border border-current rounded-full w-11 h-11 flex flex-col items-center justify-center mx-auto"
-                                     :class="layLopMauHanh(getBranchElement(chi))">
-                                    <span class="text-xs font-bold" x-text="chi"></span>
-                                    <span class="text-[7px] font-mono opacity-80" x-text="getBranchElement(chi)"></span>
-                                </div>
-                            </div>
-                        </template>
+                    <!-- Mũi tên bấm xoay, đứng cố định ngay phía trên đỉnh vòng
+                         mà nó điều khiển (không nằm trong wrapper rotate() nên
+                         không tự xoay theo) — thay cho việc phải kéo chuột. -->
+                    <div class="absolute flex items-center gap-1 pointer-events-auto" style="left: 50%; top: calc(50% - 227px); transform: translate(-50%, -50%);">
+                        <button @click="nhichBanhXe('cung', -1)" class="w-6 h-6 rounded-full bg-cosmic-900 border border-amber-500/60 text-amber-300 hover:bg-amber-500/20 text-[10px] flex items-center justify-center shadow"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button @click="nhichBanhXe('cung', 1)" class="w-6 h-6 rounded-full bg-cosmic-900 border border-amber-500/60 text-amber-300 hover:bg-amber-500/20 text-[10px] flex items-center justify-center shadow"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                    <div class="absolute flex items-center gap-1 pointer-events-auto" style="left: 50%; top: calc(50% - 335px); transform: translate(-50%, -50%);">
+                        <button @click="nhichBanhXe('sao', -1)" class="w-6 h-6 rounded-full bg-cosmic-900 border border-purple-500/60 text-purple-300 hover:bg-purple-500/20 text-[10px] flex items-center justify-center shadow"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button @click="nhichBanhXe('sao', 1)" class="w-6 h-6 rounded-full bg-cosmic-900 border border-purple-500/60 text-purple-300 hover:bg-purple-500/20 text-[10px] flex items-center justify-center shadow"><i class="fa-solid fa-chevron-right"></i></button>
                     </div>
 
                     <!-- Tâm bánh xe -->
@@ -804,6 +812,28 @@
                     const chiIdx = this.earthlyBranches.indexOf(chi);
                     const k = (menhIdx - chiIdx + 24) % 12;
                     return THU_TU_TU_MENH[k];
+                },
+
+                // Chiều ngược lại: biết palaceKey (vd 'tai-bach') và vị trí
+                // Mệnh của bánh xe, suy ra Chi nào đang giữ cung đó — dùng để
+                // vẽ đường tam hợp Mệnh-Tài-Quan (tamPhuongDiem).
+                chiCuaCungTron(palaceKey) {
+                    const menhIdx = this.earthlyBranches.indexOf(this.wheelMenhChi);
+                    const k = THU_TU_TU_MENH.indexOf(palaceKey);
+                    return this.earthlyBranches[(menhIdx - k + 24) % 12];
+                },
+
+                // 3 điểm Mệnh - Tài Bạch - Quan Lộc trên vòng Cung (bán kính
+                // 185, tâm SVG 475,475 khớp viewBox 950x950) để vẽ tam giác
+                // tam hợp — 3 cung này luôn cách đều nhau 4 bước nên luôn ra
+                // tam giác đều, chỉ xoay theo wheelMenhChi.
+                tamPhuongDiem() {
+                    const toaDo = (palaceKey) => {
+                        const idx = this.earthlyBranches.indexOf(this.chiCuaCungTron(palaceKey));
+                        const goc = (-90 + idx * 30) * Math.PI / 180;
+                        return `${475 + 185 * Math.cos(goc)},${475 + 185 * Math.sin(goc)}`;
+                    };
+                    return `${toaDo('menh')} ${toaDo('tai-bach')} ${toaDo('quan-loc')}`;
                 },
 
                 // Chính Tinh thật tại 1 Chi theo vị trí Tử Vi đang chọn cho
