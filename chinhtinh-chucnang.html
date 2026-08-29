@@ -95,6 +95,22 @@
            getPalaceGridStyle() trong <script type="module">. Chỉ còn khối
            giữa là vị trí cố định, khai ở đây vì không phụ thuộc Chi. */
         .pos-Center { grid-column: 2 / span 2; grid-row: 2 / span 2; }
+
+        /* Bong bóng hội thoại cho vòng Luận Giải (tab Bánh Xe Cung-Sao) —
+           đuôi luôn quay vào tâm bánh xe, hướng chọn theo huongBongBong(). */
+        .bb-tail { position: relative; }
+        .bb-tail::after {
+            content: ''; position: absolute; width: 0; height: 0;
+            border: 7px solid transparent;
+        }
+        /* Bong bóng ở phía trên vòng tròn -> đuôi trỏ xuống (vào tâm) */
+        .bb-tren::after { bottom: -13px; left: 50%; margin-left: -7px; border-top: 13px solid var(--nen-noi-2); border-bottom: none; }
+        /* Bong bóng ở phía dưới -> đuôi trỏ lên */
+        .bb-duoi::after { top: -13px; left: 50%; margin-left: -7px; border-bottom: 13px solid var(--nen-noi-2); border-top: none; }
+        /* Bong bóng bên trái -> đuôi trỏ phải */
+        .bb-trai::after { right: -13px; top: 50%; margin-top: -7px; border-left: 13px solid var(--nen-noi-2); border-right: none; }
+        /* Bong bóng bên phải -> đuôi trỏ trái */
+        .bb-phai::after { left: -13px; top: 50%; margin-top: -7px; border-right: 13px solid var(--nen-noi-2); border-left: none; }
     </style>
 </head>
 <body class="bg-cosmic-900 text-gray-100 font-sans min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-black"
@@ -342,108 +358,114 @@
 
         <!-- TAB 2: MA TRẬN TƯƠNG TÁC 14 CHÍNH TINH X 12 CUNG -->
         <div x-show="activeTab === 'matrix'" x-transition class="space-y-6"
-             @pointermove.window="dangKeoBanhXe($event)" @pointerup.window="ketThucKeoBanhXe()">
+             @pointermove.window="dangKeoTron($event)" @pointerup.window="ketThucKeoTron()">
             <!-- Header -->
             <div class="bg-cosmic-800/80 p-4 rounded-xl border border-gray-800 shadow-lg">
                 <h2 class="text-xl font-bold font-serif text-amber-400 flex items-center gap-2">
                     <i class="fa-solid fa-record-vinyl text-amber-500"></i> Bánh Xe Cung — Chi — Sao
                 </h2>
                 <p class="text-xs sm:text-sm text-gray-400 mt-1">
-                    Dòng Địa Chi ở giữa luôn cố định. Kéo dòng Cung Chức Năng (trên) hoặc dòng Chính Tinh (dưới) sang trái/phải để xoay quanh vòng Chi — đúng cách 12 Cung quay theo vị trí Mệnh, còn 14 Chính Tinh quay theo vị trí Tử Vi ngoài đời thật. Kéo cả dòng Sao thì mọi Chính Tinh dịch chuyển cùng nhau vì chúng tuân theo cùng 1 quy tắc an sao.
+                    4 vòng lồng nhau, trong cùng là Địa Chi (Tý ở đỉnh) — luôn đứng im. Kéo vòng Cung Chức Năng hoặc vòng Chính Tinh để xoay quanh vòng Chi — đúng cách 12 Cung quay theo vị trí Mệnh, còn 14 Chính Tinh quay theo vị trí Tử Vi ngoài đời thật, cả bộ dịch chuyển cùng nhau vì tuân theo 1 quy tắc an sao. Vòng ngoài cùng là Luận Giải, nội dung tự đổi theo 3 vòng trong.
                 </p>
             </div>
 
-            <!-- Bánh xe 4 dòng -->
-            <div class="bg-cosmic-800/60 rounded-2xl border border-gray-800 shadow-2xl overflow-x-auto p-4">
-                <div class="min-w-[1080px]">
+            <!-- Nút bấm xoay, thay cho kéo chuột -->
+            <div class="flex flex-wrap items-center justify-center gap-6 bg-cosmic-800/60 rounded-xl border border-gray-800 py-3">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-bold text-amber-300 uppercase tracking-wider">Xoay Cung</span>
+                    <button @click="nhichBanhXe('cung', -1)" class="w-7 h-7 rounded-full bg-cosmic-900 border border-amber-500/40 text-amber-300 hover:bg-amber-500/20 text-xs"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button @click="nhichBanhXe('cung', 1)" class="w-7 h-7 rounded-full bg-cosmic-900 border border-amber-500/40 text-amber-300 hover:bg-amber-500/20 text-xs"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-bold text-purple-300 uppercase tracking-wider">Xoay Sao</span>
+                    <button @click="nhichBanhXe('sao', -1)" class="w-7 h-7 rounded-full bg-cosmic-900 border border-purple-500/40 text-purple-300 hover:bg-purple-500/20 text-xs"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button @click="nhichBanhXe('sao', 1)" class="w-7 h-7 rounded-full bg-cosmic-900 border border-purple-500/40 text-purple-300 hover:bg-purple-500/20 text-xs"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
 
-                    <!-- Dòng 1: Cung Chức Năng — kéo được -->
-                    <div class="flex items-center gap-2 mb-1">
-                        <div class="w-28 flex-shrink-0 text-[11px] font-bold text-amber-400 uppercase tracking-wider">
-                            Cung Chức Năng
-                            <div class="text-[9px] text-gray-500 normal-case font-normal">Mệnh tại: <span class="text-amber-300 font-semibold" x-text="wheelMenhChi"></span></div>
-                        </div>
-                        <button @click="nhichBanhXe('cung', -1)" class="w-6 h-6 flex-shrink-0 rounded-full bg-cosmic-900 border border-gray-700 text-gray-400 hover:text-amber-300 hover:border-amber-500 text-xs">‹</button>
-                        <div class="relative overflow-hidden flex-1" style="touch-action: none;"
-                             @pointerdown="batDauKeoBanhXe('cung', $event)">
-                            <div class="flex select-none cursor-grab active:cursor-grabbing"
-                                 :class="keoLoai === 'cung' ? '' : 'transition-transform duration-150'"
-                                 :style="`transform: translateX(${keoLoai === 'cung' ? keoDeltaPx : 0}px)`">
-                                <template x-for="chi in earthlyBranches" :key="'cung-' + chi">
-                                    <div class="w-20 flex-shrink-0 text-center px-1">
-                                        <div class="bg-amber-500/10 border border-amber-500/30 rounded-lg py-1.5 px-1">
-                                            <span class="text-[11px] font-bold text-amber-300 font-serif" x-text="palacesData[cungTaiChi(chi, wheelMenhChi)]?.ten"></span>
-                                        </div>
-                                    </div>
-                                </template>
-                            </div>
-                        </div>
-                        <button @click="nhichBanhXe('cung', 1)" class="w-6 h-6 flex-shrink-0 rounded-full bg-cosmic-900 border border-gray-700 text-gray-400 hover:text-amber-300 hover:border-amber-500 text-xs">›</button>
-                    </div>
+            <!-- Bánh xe tròn 4 vòng -->
+            <div class="bg-cosmic-800/60 rounded-2xl border border-gray-800 shadow-2xl overflow-x-auto p-6 flex justify-center">
+                <div class="relative flex-shrink-0" style="width: 950px; height: 950px;" x-ref="banhXeTron">
 
-                    <!-- Dòng 2: Địa Chi — cố định vị trí -->
-                    <div class="flex items-center gap-2 my-2">
-                        <div class="w-28 flex-shrink-0 text-[11px] font-bold text-gray-300 uppercase tracking-wider">Địa Chi</div>
-                        <div class="w-6 flex-shrink-0"></div>
-                        <div class="flex-1 flex">
-                            <template x-for="chi in earthlyBranches" :key="'chi-' + chi">
-                                <div class="w-20 flex-shrink-0 text-center px-1">
-                                    <div class="bg-cosmic-900 border border-gray-700 rounded-lg py-1.5 px-1">
-                                        <span class="text-sm font-bold text-white" x-text="chi"></span>
-                                        <span class="text-[9px] text-gray-500 font-mono ml-1" x-text="getBranchElement(chi)"></span>
-                                    </div>
+                    <!-- Vòng 4 (ngoài cùng): Luận Giải — bong bóng hội thoại, đuôi
+                         quay vào tâm; nội dung suy từ vòng 1+2+3, không tự kéo -->
+                    <div class="absolute inset-0 pointer-events-none">
+                        <template x-for="(chi, i) in earthlyBranches" :key="'luan-' + chi">
+                            <div class="absolute pointer-events-none text-center" :style="viTriVongTron(i, 400, 150)">
+                                <div class="bb-tail rounded-xl px-2.5 py-2 shadow-lg" :class="'bb-' + huongBongBong(i)"
+                                     style="background: var(--nen-noi-2); border: 1px solid var(--vien-mo);">
+                                    <p class="text-[9px] text-gray-300 leading-tight line-clamp-5" x-text="luanGiaiBanhXe(chi)"></p>
                                 </div>
-                            </template>
-                        </div>
-                        <div class="w-6 flex-shrink-0"></div>
+                            </div>
+                        </template>
                     </div>
 
-                    <!-- Dòng 3: Chính Tinh — kéo được, tuân thủ quy tắc an sao -->
-                    <div class="flex items-center gap-2 mb-1">
-                        <div class="w-28 flex-shrink-0 text-[11px] font-bold text-purple-300 uppercase tracking-wider">
-                            Chính Tinh
-                            <div class="text-[9px] text-gray-500 normal-case font-normal">Tử Vi tại: <span class="text-purple-300 font-semibold" x-text="wheelTuViChi"></span></div>
-                        </div>
-                        <button @click="nhichBanhXe('sao', -1)" class="w-6 h-6 flex-shrink-0 rounded-full bg-cosmic-900 border border-gray-700 text-gray-400 hover:text-purple-300 hover:border-purple-500 text-xs">‹</button>
-                        <div class="relative overflow-hidden flex-1" style="touch-action: none;"
-                             @pointerdown="batDauKeoBanhXe('sao', $event)">
-                            <div class="flex select-none cursor-grab active:cursor-grabbing"
+                    <!-- Vòng 3: Chính Tinh — kéo xoay được, theo vị trí Tử Vi.
+                         Cả vòng rotate() để trượt đúng vị trí, mỗi ô rotate()
+                         ngược lại độ lệch đó nên chữ trong ô luôn đứng thẳng. -->
+                    <div class="absolute inset-0 pointer-events-none"
+                         :class="keoLoai === 'sao' ? '' : 'transition-transform duration-150'"
+                         :style="`transform: rotate(${keoLoai === 'sao' ? keoGocDelta : 0}deg)`">
+                        <template x-for="(chi, i) in earthlyBranches" :key="'sao-' + chi">
+                            <div class="absolute pointer-events-auto cursor-grab active:cursor-grabbing text-center"
                                  :class="keoLoai === 'sao' ? '' : 'transition-transform duration-150'"
-                                 :style="`transform: translateX(${keoLoai === 'sao' ? keoDeltaPx : 0}px)`">
-                                <template x-for="chi in earthlyBranches" :key="'sao-' + chi">
-                                    <div class="w-20 flex-shrink-0 text-center px-1">
-                                        <div class="bg-purple-500/10 border border-purple-500/30 rounded-lg py-1.5 px-1 min-h-[34px] flex flex-col items-center justify-center gap-0.5">
-                                            <template x-for="sKey in saoTaiChiBanhXe(chi)" :key="sKey">
-                                                <div class="flex items-center gap-1">
-                                                    <span class="text-[10px] font-bold" :class="layLopMauHanh(starsData[sKey]?.nguHanh)" x-text="starsData[sKey]?.ten"></span>
-                                                    <span class="px-1 rounded text-[8px] font-bold text-white"
-                                                          :class="getBrightnessBadgeClass(getStarBrightnessByChi(sKey, chi))"
-                                                          x-text="getStarBrightnessByChi(sKey, chi)"></span>
-                                                </div>
-                                            </template>
-                                            <template x-if="saoTaiChiBanhXe(chi).length === 0">
-                                                <span class="text-[9px] text-gray-600 italic">—</span>
-                                            </template>
+                                 style="touch-action: none;" :style="viTriVongTron(i, 275, 100, keoLoai === 'sao' ? -keoGocDelta : 0)"
+                                 @pointerdown="batDauKeoTron('sao', $event)">
+                                <div class="bg-purple-500/10 border border-purple-500/30 rounded-full w-20 h-20 flex flex-col items-center justify-center gap-0.5 mx-auto select-none p-1">
+                                    <template x-for="sKey in saoTaiChiBanhXe(chi)" :key="sKey">
+                                        <div class="flex items-center gap-1">
+                                            <span class="text-[9px] font-bold" :class="layLopMauHanh(starsData[sKey]?.nguHanh)" x-text="starsData[sKey]?.ten"></span>
+                                            <span class="px-1 rounded text-[7px] font-bold text-white"
+                                                  :class="getBrightnessBadgeClass(getStarBrightnessByChi(sKey, chi))"
+                                                  x-text="getStarBrightnessByChi(sKey, chi)"></span>
                                         </div>
-                                    </div>
-                                </template>
+                                    </template>
+                                    <template x-if="saoTaiChiBanhXe(chi).length === 0">
+                                        <span class="text-[9px] text-gray-600 italic">—</span>
+                                    </template>
+                                </div>
                             </div>
-                        </div>
-                        <button @click="nhichBanhXe('sao', 1)" class="w-6 h-6 flex-shrink-0 rounded-full bg-cosmic-900 border border-gray-700 text-gray-400 hover:text-purple-300 hover:border-purple-500 text-xs">›</button>
+                        </template>
                     </div>
 
-                    <!-- Dòng 4: Luận giải ngắn gọn — suy ra từ dòng 1+2+3 hiện tại -->
-                    <div class="flex items-start gap-2 mt-3 pt-3 border-t border-gray-800">
-                        <div class="w-28 flex-shrink-0 text-[11px] font-bold text-gray-400 uppercase tracking-wider">Luận Giải</div>
-                        <div class="w-6 flex-shrink-0"></div>
-                        <div class="flex-1 flex">
-                            <template x-for="chi in earthlyBranches" :key="'luan-' + chi">
-                                <div class="w-20 flex-shrink-0 px-1">
-                                    <p class="text-[9px] text-gray-400 leading-tight line-clamp-4" x-text="luanGiaiBanhXe(chi)"></p>
+                    <!-- Vòng 2: Cung Chức Năng — kéo xoay được, theo vị trí Mệnh.
+                         Cùng cơ chế rotate() ngược lại ở mỗi ô như vòng 3. -->
+                    <div class="absolute inset-0 pointer-events-none"
+                         :class="keoLoai === 'cung' ? '' : 'transition-transform duration-150'"
+                         :style="`transform: rotate(${keoLoai === 'cung' ? keoGocDelta : 0}deg)`">
+                        <template x-for="(chi, i) in earthlyBranches" :key="'cung-' + chi">
+                            <div class="absolute pointer-events-auto cursor-grab active:cursor-grabbing text-center"
+                                 :class="keoLoai === 'cung' ? '' : 'transition-transform duration-150'"
+                                 style="touch-action: none;" :style="viTriVongTron(i, 185, 74, keoLoai === 'cung' ? -keoGocDelta : 0)"
+                                 @pointerdown="batDauKeoTron('cung', $event)">
+                                <div class="bg-amber-500/10 border border-amber-500/30 rounded-full w-16 h-16 flex items-center justify-center p-1 mx-auto select-none">
+                                    <span class="text-[8px] font-bold text-amber-300 font-serif leading-tight" x-text="palacesData[cungTaiChi(chi, wheelMenhChi)]?.ten"></span>
                                 </div>
-                            </template>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- Vòng 1 (trong cùng): Địa Chi — cố định, Tý ở đỉnh -->
+                    <div class="absolute inset-0 pointer-events-none">
+                        <template x-for="(chi, i) in earthlyBranches" :key="'chi-' + chi">
+                            <div class="absolute pointer-events-none text-center" :style="viTriVongTron(i, 90, 48)">
+                                <div class="bg-cosmic-900 border border-current rounded-full w-11 h-11 flex flex-col items-center justify-center mx-auto"
+                                     :class="layLopMauHanh(getBranchElement(chi))">
+                                    <span class="text-xs font-bold" x-text="chi"></span>
+                                    <span class="text-[7px] font-mono opacity-80" x-text="getBranchElement(chi)"></span>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- Tâm bánh xe -->
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div class="w-24 h-24 rounded-full bg-cosmic-900 border border-amber-500/40 flex flex-col items-center justify-center text-center shadow-lg">
+                            <span class="text-[9px] text-gray-500">Mệnh</span>
+                            <span class="text-xs font-bold text-amber-300" x-text="wheelMenhChi"></span>
+                            <span class="text-[9px] text-gray-500 mt-1">Tử Vi</span>
+                            <span class="text-xs font-bold text-purple-300" x-text="wheelTuViChi"></span>
                         </div>
-                        <div class="w-6 flex-shrink-0"></div>
                     </div>
 
                 </div>
@@ -652,11 +674,6 @@
         const THU_TU_TU_MENH = ['menh', 'huynh-de', 'phu-the', 'tu-tuc', 'tai-bach', 'tat-ach',
                                  'thien-di', 'no-boc', 'quan-loc', 'dien-trach', 'phuc-duc', 'phu-mau'];
 
-        // Bề rộng 1 ô trên bánh xe Cung-Chi-Sao (tab Bánh Xe Cung-Sao) — phải khớp
-        // đúng class Tailwind w-20 (5rem = 80px) gắn trên mỗi ô, để quy đổi
-        // số px đã kéo sang số ô đã lệch.
-        const DO_RONG_O_BX = 80;
-
         function tuViApp() {
             return {
                 activeTab: 'board',
@@ -664,13 +681,17 @@
                 boardTuViChi: 'Ngọ',
                 selectedPalaceKey: 'menh',
 
-                // Bánh xe Cung-Chi-Sao (tab Ma Trận): Chi luôn cố định, Cung
-                // xoay quanh theo wheelMenhChi, Sao xoay quanh theo wheelTuViChi.
+                // Bánh xe tròn Cung-Chi-Sao (tab Bánh Xe Cung-Sao): vòng Chi
+                // luôn đứng im, vòng Cung xoay theo wheelMenhChi, vòng Sao
+                // xoay theo wheelTuViChi — kéo bằng cách theo dõi góc con trỏ
+                // quanh tâm bánh xe (tronCenterX/Y, đo lúc bắt đầu kéo).
                 wheelMenhChi: 'Ngọ',
                 wheelTuViChi: 'Ngọ',
-                keoLoai: null,       // 'cung' | 'sao' | null — dòng nào đang kéo
-                keoBatDauX: 0,
-                keoDeltaPx: 0,
+                keoLoai: null,       // 'cung' | 'sao' | null — vòng nào đang kéo
+                tronCenterX: 0,
+                tronCenterY: 0,
+                keoGocBatDau: 0,
+                keoGocDelta: 0,      // độ lệch góc hiện tại khi đang kéo, dùng vẽ rotate() sống
 
                 // Modal state
                 isModalOpen: false,
@@ -813,28 +834,69 @@
                     }).join(' ');
                 },
 
-                // Kéo dòng Cung ('cung') hoặc dòng Sao ('sao'): bắt đầu ghi vị
-                // trí con trỏ, đang kéo thì cập nhật độ lệch để dòng trượt
-                // theo (transform), thả ra thì chốt về đúng số ô đã lệch.
-                batDauKeoBanhXe(loai, e) {
-                    this.keoLoai = loai;
-                    this.keoBatDauX = e.clientX;
-                    this.keoDeltaPx = 0;
-                },
-                dangKeoBanhXe(e) {
-                    if (!this.keoLoai) return;
-                    this.keoDeltaPx = e.clientX - this.keoBatDauX;
-                },
-                ketThucKeoBanhXe() {
-                    if (!this.keoLoai) return;
-                    const soO = Math.round(this.keoDeltaPx / DO_RONG_O_BX);
-                    if (soO !== 0) this.nhichBanhXe(this.keoLoai, soO);
-                    this.keoLoai = null;
-                    this.keoDeltaPx = 0;
+                // Toạ độ 1 ô trên vòng tròn: slot i=0 (Tý) ở đỉnh (-90°), đi
+                // thuận chiều kim đồng hồ mỗi ô 30°. banKinh: khoảng cách tới
+                // tâm; rongPx: bề rộng ô, canh giữa đúng điểm tính được nên
+                // không phụ thuộc kích thước nội dung bên trong.
+                // gocBu (độ, mặc định 0): xoay bù ngay tại ô này, dùng khi
+                // vòng cha đang rotate() để trượt vị trí — đặt gocBu bằng
+                // đúng -độ lệch của vòng cha thì nội dung trong ô hết xoay
+                // theo (vị trí dx/dy vẫn đúng vì rotate chỉ xoay quanh tâm
+                // của chính ô, không dịch chuyển tâm đó).
+                viTriVongTron(index, banKinh, rongPx, gocBu = 0) {
+                    const goc = (-90 + index * 30) * Math.PI / 180;
+                    const dx = banKinh * Math.cos(goc);
+                    const dy = banKinh * Math.sin(goc);
+                    return `left: calc(50% + ${dx}px); top: calc(50% + ${dy}px); transform: translate(-50%, -50%) rotate(${gocBu}deg); width: ${rongPx}px;`;
                 },
 
-                // Nhích bánh xe 'cung' hoặc 'sao' đi `buoc` ô (dương: sang
-                // phải). Dùng chung cho nút mũi tên và lúc chốt sau khi kéo.
+                // Hướng đuôi bong bóng luận giải (vòng 4) sao cho luôn chỉ
+                // vào tâm bánh xe: chia 12 ô theo 4 cung phần tư quanh trục
+                // trên/phải/dưới/trái (mỗi cung phần tư 3 ô).
+                huongBongBong(index) {
+                    const goc = ((-90 + index * 30) % 360 + 360) % 360;
+                    if (goc >= 315 || goc < 45) return 'phai';
+                    if (goc >= 45 && goc < 135) return 'duoi';
+                    if (goc >= 135 && goc < 225) return 'trai';
+                    return 'tren';
+                },
+
+                // Góc (độ) của 1 điểm màn hình so với tâm bánh xe đã đo lúc
+                // batDauKeoTron — quy ước như atan2 màn hình: 0° = bên phải,
+                // tăng dần theo chiều kim đồng hồ (vì trục y hướng xuống).
+                tinhGocTron(x, y) {
+                    return Math.atan2(y - this.tronCenterY, x - this.tronCenterX) * 180 / Math.PI;
+                },
+
+                // Kéo vòng Cung ('cung') hoặc vòng Sao ('sao'): bắt đầu đo tâm
+                // bánh xe + góc con trỏ, đang kéo cập nhật độ lệch góc để cả
+                // vòng xoay sống theo (transform: rotate), thả ra thì chốt về
+                // đúng số ô đã xoay (làm tròn theo bội số 30°).
+                batDauKeoTron(loai, e) {
+                    const rect = this.$refs.banhXeTron.getBoundingClientRect();
+                    this.tronCenterX = rect.left + rect.width / 2;
+                    this.tronCenterY = rect.top + rect.height / 2;
+                    this.keoLoai = loai;
+                    this.keoGocBatDau = this.tinhGocTron(e.clientX, e.clientY);
+                    this.keoGocDelta = 0;
+                },
+                dangKeoTron(e) {
+                    if (!this.keoLoai) return;
+                    let d = this.tinhGocTron(e.clientX, e.clientY) - this.keoGocBatDau;
+                    while (d > 180) d -= 360;
+                    while (d <= -180) d += 360;
+                    this.keoGocDelta = d;
+                },
+                ketThucKeoTron() {
+                    if (!this.keoLoai) return;
+                    const soO = Math.round(this.keoGocDelta / 30);
+                    if (soO !== 0) this.nhichBanhXe(this.keoLoai, soO);
+                    this.keoLoai = null;
+                    this.keoGocDelta = 0;
+                },
+
+                // Nhích bánh xe 'cung' hoặc 'sao' đi `buoc` ô (dương: theo
+                // chiều kim đồng hồ). Dùng chung lúc chốt sau khi kéo.
                 nhichBanhXe(loai, buoc) {
                     const chiHienTai = loai === 'cung' ? this.wheelMenhChi : this.wheelTuViChi;
                     const idxMoi = ((this.earthlyBranches.indexOf(chiHienTai) + buoc) % 12 + 12) % 12;
