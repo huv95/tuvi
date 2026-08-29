@@ -131,20 +131,12 @@
                     <button @click="activeTab = 'matrix'" 
                             :class="activeTab === 'matrix' ? 'bg-amber-500/20 text-amber-300 border-amber-500' : 'text-gray-400 hover:text-gray-200 border-transparent'"
                             class="px-3 py-2 rounded-lg text-xs sm:text-sm font-medium border transition-all flex items-center space-x-1.5">
-                        <i class="fa-solid fa-table-cells text-xs"></i>
-                        <span class="hidden md:inline">Ma Trận 14x12</span>
-                        <span class="md:hidden">Ma Trận</span>
+                        <i class="fa-solid fa-record-vinyl text-xs"></i>
+                        <span class="hidden md:inline">Bánh Xe Cung-Sao</span>
+                        <span class="md:hidden">Bánh Xe</span>
                     </button>
 
-                    <button @click="activeTab = 'inspector'" 
-                            :class="activeTab === 'inspector' ? 'bg-amber-500/20 text-amber-300 border-amber-500' : 'text-gray-400 hover:text-gray-200 border-transparent'"
-                            class="px-3 py-2 rounded-lg text-xs sm:text-sm font-medium border transition-all flex items-center space-x-1.5">
-                        <i class="fa-solid fa-magnifying-glass-chart text-xs"></i>
-                        <span class="hidden md:inline">Tra Cứu Song Hành</span>
-                        <span class="md:hidden">Tra Cứu</span>
-                    </button>
-
-                    <button @click="activeTab = 'simulator'" 
+                    <button @click="activeTab = 'simulator'"
                             :class="activeTab === 'simulator' ? 'bg-amber-500/20 text-amber-300 border-amber-500' : 'text-gray-400 hover:text-gray-200 border-transparent'"
                             class="px-3 py-2 rounded-lg text-xs sm:text-sm font-medium border transition-all flex items-center space-x-1.5">
                         <i class="fa-solid fa-wand-magic-sparkles text-xs"></i>
@@ -271,7 +263,7 @@
                                 </div>
 
                                 <button @click="activeTab = 'matrix'" class="w-full py-1.5 px-3 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-xs font-medium rounded-lg border border-amber-500/40 transition">
-                                    <i class="fa-solid fa-table-cells mr-1"></i> Xem Ma Trận Toàn Cảnh
+                                    <i class="fa-solid fa-record-vinyl mr-1"></i> Xem Bánh Xe Cung-Sao
                                 </button>
                             </div>
                         </div>
@@ -349,187 +341,111 @@
         </div>
 
         <!-- TAB 2: MA TRẬN TƯƠNG TÁC 14 CHÍNH TINH X 12 CUNG -->
-        <div x-show="activeTab === 'matrix'" x-transition class="space-y-6">
-            <!-- Header & Search Bar -->
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-cosmic-800/80 p-4 rounded-xl border border-gray-800 shadow-lg">
-                <div>
-                    <h2 class="text-xl font-bold font-serif text-amber-400 flex items-center gap-2">
-                        <i class="fa-solid fa-table-cells text-amber-500"></i> Ma Trận Tra Cứu Toàn Cảnh (14 Sao × 12 Cung)
-                    </h2>
-                    <p class="text-xs sm:text-sm text-gray-400 mt-1">
-                        Bảng tổng hợp 168 trạng thái kết hợp. Click vào từng ô bất kỳ để đọc luận giải chi tiết.
-                    </p>
-                </div>
-
-                <!-- Matrix Filters -->
-                <div class="flex flex-wrap items-center gap-3">
-                    <div class="relative min-w-[200px]">
-                        <input type="text" x-model="matrixSearch" placeholder="Lọc từ khóa (VD: Giàu, Lãnh đạo...)"
-                               class="w-full bg-cosmic-900 border border-gray-700 text-xs text-gray-200 rounded-lg pl-8 pr-3 py-2 focus:outline-none focus:border-amber-500">
-                        <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-xs text-gray-500"></i>
-                    </div>
-
-                    <select x-model="elementFilter" class="bg-cosmic-900 border border-gray-700 text-xs text-amber-300 rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500">
-                        <option value="ALL">Tất cả Ngũ Hành</option>
-                        <option value="Kim">Hành Kim</option>
-                        <option value="Mộc">Hành Mộc</option>
-                        <option value="Thủy">Hành Thủy</option>
-                        <option value="Hỏa">Hành Hỏa</option>
-                        <option value="Thổ">Hành Thổ</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Scrollable Matrix Table -->
-            <div class="bg-cosmic-800/60 rounded-2xl border border-gray-800 shadow-2xl overflow-hidden">
-                <div class="overflow-x-auto max-h-[680px]">
-                    <table class="w-full text-left border-collapse min-w-[1000px]">
-                        <thead class="sticky top-0 bg-cosmic-900/95 backdrop-blur z-20 border-b border-gray-800">
-                            <tr>
-                                <th class="p-3 text-xs font-bold text-amber-400 uppercase tracking-wider sticky left-0 bg-cosmic-900 z-30 min-w-[140px] shadow-r border-r border-gray-800">
-                                    14 Chính Tinh
-                                </th>
-                                <template x-for="(palace, pKey) in palacesData" :key="pKey">
-                                    <th class="p-3 text-xs font-bold text-gray-300 text-center min-w-[130px] border-r border-gray-800/50 hover:bg-cosmic-800 cursor-pointer"
-                                        @click="selectedPalaceKey = pKey; activeTab = 'board'">
-                                        <div class="text-amber-300 font-serif" x-text="palace.ten"></div>
-                                        <div class="text-[10px] text-gray-500 font-normal" x-text="`Cung ${chiCuaCung(pKey)}`"></div>
-                                    </th>
-                                </template>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-800/60 text-xs">
-                            <template x-for="(star, sKey) in filteredStars" :key="sKey">
-                                <tr class="hover:bg-cosmic-800/40 transition">
-                                    <!-- Star Column Header (Sticky Left) -->
-                                    <td class="p-3 font-semibold sticky left-0 bg-cosmic-900 z-10 border-r border-gray-800 shadow-r">
-                                        <div class="flex items-center space-x-2">
-                                            <span class="w-2.5 h-2.5 rounded-full"
-                                                  :class="getElementColorDot(star.nguHanh)"></span>
-                                            <div>
-                                                <div class="text-sm font-bold text-white" x-text="star.ten"></div>
-                                                <div class="text-[10px] text-gray-400" x-text="`${star.nguHanh} • ${star.vongSao}`"></div>
-                                            </div>
-                                        </div>
-                                    </td>
-
-                                    <!-- Matrix Cells for 12 Palaces -->
-                                    <template x-for="(palace, pKey) in palacesData" :key="pKey">
-                                        <td class="p-2 border-r border-gray-800/40 text-center hover:bg-amber-500/10 cursor-pointer transition group"
-                                            @click="openCellModal(sKey, pKey)">
-                                            
-                                            <!-- Brightness Badge -->
-                                            <div class="inline-block px-2 py-0.5 rounded text-[10px] font-bold mb-1 shadow-sm"
-                                                 :class="getBrightnessBadgeClass(getStarBrightness(sKey, pKey))"
-                                                 x-text="getStarBrightness(sKey, pKey)">
-                                            </div>
-
-                                            <!-- Key trait summary snippet -->
-                                            <div class="text-[11px] text-gray-300 line-clamp-2 leading-snug group-hover:text-amber-200"
-                                                 x-text="getMatrixSnippet(sKey, pKey)">
-                                            </div>
-                                        </td>
-                                    </template>
-                                </tr>
-                            </template>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 3: TRA CỨU SONG HÀNH (INSPECTOR) -->
-        <div x-show="activeTab === 'inspector'" x-transition class="space-y-6">
+        <div x-show="activeTab === 'matrix'" x-transition class="space-y-6"
+             @pointermove.window="dangKeoBanhXe($event)" @pointerup.window="ketThucKeoBanhXe()">
+            <!-- Header -->
             <div class="bg-cosmic-800/80 p-4 rounded-xl border border-gray-800 shadow-lg">
                 <h2 class="text-xl font-bold font-serif text-amber-400 flex items-center gap-2">
-                    <i class="fa-solid fa-magnifying-glass-chart text-amber-500"></i> Bộ Tra Cứu Tương Tác Song Hành
+                    <i class="fa-solid fa-record-vinyl text-amber-500"></i> Bánh Xe Cung — Chi — Sao
                 </h2>
                 <p class="text-xs sm:text-sm text-gray-400 mt-1">
-                    Tùy chọn 1 Chính Tinh và 1 Cung Chức Năng bất kỳ để xem phân tích chuyên sâu về tính cách, vận mệnh, tài lộc, sự nghiệp và lời khuyên.
+                    Dòng Địa Chi ở giữa luôn cố định. Kéo dòng Cung Chức Năng (trên) hoặc dòng Chính Tinh (dưới) sang trái/phải để xoay quanh vòng Chi — đúng cách 12 Cung quay theo vị trí Mệnh, còn 14 Chính Tinh quay theo vị trí Tử Vi ngoài đời thật. Kéo cả dòng Sao thì mọi Chính Tinh dịch chuyển cùng nhau vì chúng tuân theo cùng 1 quy tắc an sao.
                 </p>
             </div>
 
-            <!-- Dual Selectors -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Star Selection Card -->
-                <div class="bg-cosmic-800/60 p-5 rounded-2xl border border-gray-800 shadow-xl space-y-4">
-                    <label class="block text-xs font-bold text-amber-400 uppercase tracking-wider">1. Chọn Chính Tinh:</label>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                        <template x-for="(star, sKey) in starsData" :key="sKey">
-                            <button @click="inspectorStarKey = sKey"
-                                    :class="inspectorStarKey === sKey ? 'bg-amber-500/20 border-amber-500 text-amber-300 ring-2 ring-amber-500/30' : 'bg-cosmic-900 border-gray-800 text-gray-300 hover:border-gray-700'"
-                                    class="p-2.5 rounded-xl border text-left text-xs transition flex flex-col justify-between">
-                                <span class="font-bold text-sm" x-text="star.ten"></span>
-                                <span class="text-[10px] text-gray-400 mt-1" x-text="`${star.nguHanh} • ${star.loaiTinh}`"></span>
-                            </button>
-                        </template>
-                    </div>
-                </div>
+            <!-- Bánh xe 4 dòng -->
+            <div class="bg-cosmic-800/60 rounded-2xl border border-gray-800 shadow-2xl overflow-x-auto p-4">
+                <div class="min-w-[1080px]">
 
-                <!-- Palace Selection Card -->
-                <div class="bg-cosmic-800/60 p-5 rounded-2xl border border-gray-800 shadow-xl space-y-4">
-                    <label class="block text-xs font-bold text-amber-400 uppercase tracking-wider">2. Chọn Cung Chức Năng:</label>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                        <template x-for="(palace, pKey) in palacesData" :key="pKey">
-                            <button @click="inspectorPalaceKey = pKey"
-                                    :class="inspectorPalaceKey === pKey ? 'bg-amber-500/20 border-amber-500 text-amber-300 ring-2 ring-amber-500/30' : 'bg-cosmic-900 border-gray-800 text-gray-300 hover:border-gray-700'"
-                                    class="p-2.5 rounded-xl border text-left text-xs transition flex flex-col justify-between">
-                                <span class="font-bold text-sm font-serif" x-text="palace.ten"></span>
-                                <span class="text-[10px] text-gray-400 mt-1" x-text="`Cung ${chiCuaCung(pKey)}`"></span>
-                            </button>
-                        </template>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Analytical Output Panel -->
-            <div class="bg-gradient-to-br from-cosmic-800 to-cosmic-900 border border-amber-500/30 rounded-2xl p-6 shadow-2xl">
-                <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-gray-800 pb-4 mb-6 gap-4">
-                    <div class="flex items-center space-x-4">
-                        <div class="w-14 h-14 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 font-serif font-bold text-2xl shadow-inner">
-                            <span x-text="starsData[inspectorStarKey]?.ten[0]"></span>
+                    <!-- Dòng 1: Cung Chức Năng — kéo được -->
+                    <div class="flex items-center gap-2 mb-1">
+                        <div class="w-28 flex-shrink-0 text-[11px] font-bold text-amber-400 uppercase tracking-wider">
+                            Cung Chức Năng
+                            <div class="text-[9px] text-gray-500 normal-case font-normal">Mệnh tại: <span class="text-amber-300 font-semibold" x-text="wheelMenhChi"></span></div>
                         </div>
-                        <div>
-                            <div class="text-xs text-amber-400 uppercase tracking-widest font-semibold">Kết Hợp Tử Vi</div>
-                            <h3 class="text-2xl font-bold font-serif text-white">
-                                Sao <span class="text-amber-300" x-text="starsData[inspectorStarKey]?.ten"></span> tọa thủ <span class="text-amber-300" x-text="palacesData[inspectorPalaceKey]?.ten"></span>
-                            </h3>
+                        <button @click="nhichBanhXe('cung', -1)" class="w-6 h-6 flex-shrink-0 rounded-full bg-cosmic-900 border border-gray-700 text-gray-400 hover:text-amber-300 hover:border-amber-500 text-xs">‹</button>
+                        <div class="relative overflow-hidden flex-1" style="touch-action: none;"
+                             @pointerdown="batDauKeoBanhXe('cung', $event)">
+                            <div class="flex select-none cursor-grab active:cursor-grabbing"
+                                 :class="keoLoai === 'cung' ? '' : 'transition-transform duration-150'"
+                                 :style="`transform: translateX(${keoLoai === 'cung' ? keoDeltaPx : 0}px)`">
+                                <template x-for="chi in earthlyBranches" :key="'cung-' + chi">
+                                    <div class="w-20 flex-shrink-0 text-center px-1">
+                                        <div class="bg-amber-500/10 border border-amber-500/30 rounded-lg py-1.5 px-1">
+                                            <span class="text-[11px] font-bold text-amber-300 font-serif" x-text="palacesData[cungTaiChi(chi, wheelMenhChi)]?.ten"></span>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
                         </div>
+                        <button @click="nhichBanhXe('cung', 1)" class="w-6 h-6 flex-shrink-0 rounded-full bg-cosmic-900 border border-gray-700 text-gray-400 hover:text-amber-300 hover:border-amber-500 text-xs">›</button>
                     </div>
 
-                    <div class="flex items-center space-x-3">
-                        <span class="text-xs text-gray-400">Đắc hiếu đắc địa:</span>
-                        <span class="px-3 py-1.5 rounded-lg text-xs font-bold text-white shadow-md"
-                              :class="getBrightnessBadgeClass(getStarBrightness(inspectorStarKey, inspectorPalaceKey))"
-                              x-text="`Trạng thái: ${getStarBrightness(inspectorStarKey, inspectorPalaceKey)}`"></span>
-                    </div>
-                </div>
-
-                <!-- Deep Breakdown Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-cosmic-900/80 p-4 rounded-xl border border-gray-800">
-                        <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-star"></i> Bản Chất Sao & Cung
-                        </h4>
-                        <p class="text-xs text-gray-300 leading-relaxed"
-                           x-text="getCombinationDetail(inspectorStarKey, inspectorPalaceKey).nature"></p>
-                    </div>
-
-                    <div class="bg-cosmic-900/80 p-4 rounded-xl border border-gray-800">
-                        <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-circle-check"></i> Biểu Hiện Tích Cực
-                        </h4>
-                        <p class="text-xs text-gray-300 leading-relaxed"
-                           x-text="getCombinationDetail(inspectorStarKey, inspectorPalaceKey).pros"></p>
+                    <!-- Dòng 2: Địa Chi — cố định vị trí -->
+                    <div class="flex items-center gap-2 my-2">
+                        <div class="w-28 flex-shrink-0 text-[11px] font-bold text-gray-300 uppercase tracking-wider">Địa Chi</div>
+                        <div class="w-6 flex-shrink-0"></div>
+                        <div class="flex-1 flex">
+                            <template x-for="chi in earthlyBranches" :key="'chi-' + chi">
+                                <div class="w-20 flex-shrink-0 text-center px-1">
+                                    <div class="bg-cosmic-900 border border-gray-700 rounded-lg py-1.5 px-1">
+                                        <span class="text-sm font-bold text-white" x-text="chi"></span>
+                                        <span class="text-[9px] text-gray-500 font-mono ml-1" x-text="getBranchElement(chi)"></span>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="w-6 flex-shrink-0"></div>
                     </div>
 
-                    <div class="bg-cosmic-900/80 p-4 rounded-xl border border-gray-800">
-                        <h4 class="text-xs font-bold text-rose-400 uppercase tracking-wider mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-triangle-exclamation"></i> Thách Thức & Lời Khuyên
-                        </h4>
-                        <p class="text-xs text-gray-300 leading-relaxed"
-                           x-text="getCombinationDetail(inspectorStarKey, inspectorPalaceKey).cons"></p>
+                    <!-- Dòng 3: Chính Tinh — kéo được, tuân thủ quy tắc an sao -->
+                    <div class="flex items-center gap-2 mb-1">
+                        <div class="w-28 flex-shrink-0 text-[11px] font-bold text-purple-300 uppercase tracking-wider">
+                            Chính Tinh
+                            <div class="text-[9px] text-gray-500 normal-case font-normal">Tử Vi tại: <span class="text-purple-300 font-semibold" x-text="wheelTuViChi"></span></div>
+                        </div>
+                        <button @click="nhichBanhXe('sao', -1)" class="w-6 h-6 flex-shrink-0 rounded-full bg-cosmic-900 border border-gray-700 text-gray-400 hover:text-purple-300 hover:border-purple-500 text-xs">‹</button>
+                        <div class="relative overflow-hidden flex-1" style="touch-action: none;"
+                             @pointerdown="batDauKeoBanhXe('sao', $event)">
+                            <div class="flex select-none cursor-grab active:cursor-grabbing"
+                                 :class="keoLoai === 'sao' ? '' : 'transition-transform duration-150'"
+                                 :style="`transform: translateX(${keoLoai === 'sao' ? keoDeltaPx : 0}px)`">
+                                <template x-for="chi in earthlyBranches" :key="'sao-' + chi">
+                                    <div class="w-20 flex-shrink-0 text-center px-1">
+                                        <div class="bg-purple-500/10 border border-purple-500/30 rounded-lg py-1.5 px-1 min-h-[34px] flex flex-col items-center justify-center gap-0.5">
+                                            <template x-for="sKey in saoTaiChiBanhXe(chi)" :key="sKey">
+                                                <div class="flex items-center gap-1">
+                                                    <span class="text-[10px] font-bold" :class="layLopMauHanh(starsData[sKey]?.nguHanh)" x-text="starsData[sKey]?.ten"></span>
+                                                    <span class="px-1 rounded text-[8px] font-bold text-white"
+                                                          :class="getBrightnessBadgeClass(getStarBrightnessByChi(sKey, chi))"
+                                                          x-text="getStarBrightnessByChi(sKey, chi)"></span>
+                                                </div>
+                                            </template>
+                                            <template x-if="saoTaiChiBanhXe(chi).length === 0">
+                                                <span class="text-[9px] text-gray-600 italic">—</span>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                        <button @click="nhichBanhXe('sao', 1)" class="w-6 h-6 flex-shrink-0 rounded-full bg-cosmic-900 border border-gray-700 text-gray-400 hover:text-purple-300 hover:border-purple-500 text-xs">›</button>
                     </div>
+
+                    <!-- Dòng 4: Luận giải ngắn gọn — suy ra từ dòng 1+2+3 hiện tại -->
+                    <div class="flex items-start gap-2 mt-3 pt-3 border-t border-gray-800">
+                        <div class="w-28 flex-shrink-0 text-[11px] font-bold text-gray-400 uppercase tracking-wider">Luận Giải</div>
+                        <div class="w-6 flex-shrink-0"></div>
+                        <div class="flex-1 flex">
+                            <template x-for="chi in earthlyBranches" :key="'luan-' + chi">
+                                <div class="w-20 flex-shrink-0 px-1">
+                                    <p class="text-[9px] text-gray-400 leading-tight line-clamp-4" x-text="luanGiaiBanhXe(chi)"></p>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="w-6 flex-shrink-0"></div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -736,16 +652,25 @@
         const THU_TU_TU_MENH = ['menh', 'huynh-de', 'phu-the', 'tu-tuc', 'tai-bach', 'tat-ach',
                                  'thien-di', 'no-boc', 'quan-loc', 'dien-trach', 'phuc-duc', 'phu-mau'];
 
+        // Bề rộng 1 ô trên bánh xe Cung-Chi-Sao (tab Bánh Xe Cung-Sao) — phải khớp
+        // đúng class Tailwind w-20 (5rem = 80px) gắn trên mỗi ô, để quy đổi
+        // số px đã kéo sang số ô đã lệch.
+        const DO_RONG_O_BX = 80;
+
         function tuViApp() {
             return {
                 activeTab: 'board',
                 boardMenhChi: 'Ngọ',
                 boardTuViChi: 'Ngọ',
                 selectedPalaceKey: 'menh',
-                inspectorStarKey: 'tu-vi',
-                inspectorPalaceKey: 'menh',
-                matrixSearch: '',
-                elementFilter: 'ALL',
+
+                // Bánh xe Cung-Chi-Sao (tab Ma Trận): Chi luôn cố định, Cung
+                // xoay quanh theo wheelMenhChi, Sao xoay quanh theo wheelTuViChi.
+                wheelMenhChi: 'Ngọ',
+                wheelTuViChi: 'Ngọ',
+                keoLoai: null,       // 'cung' | 'sao' | null — dòng nào đang kéo
+                keoBatDauX: 0,
+                keoDeltaPx: 0,
 
                 // Modal state
                 isModalOpen: false,
@@ -788,21 +713,6 @@
                     this.calculateStarPlacement();
                 },
 
-                // Filtered stars list based on search and element
-                get filteredStars() {
-                    return Object.keys(this.starsData).reduce((acc, key) => {
-                        const star = this.starsData[key];
-                        const matchElement = this.elementFilter === 'ALL' || star.nguHanh === this.elementFilter;
-                        const matchSearch = !this.matrixSearch || 
-                                           star.ten.toLowerCase().includes(this.matrixSearch.toLowerCase()) ||
-                                           star.loaiTinh.toLowerCase().includes(this.matrixSearch.toLowerCase());
-                        if (matchElement && matchSearch) {
-                            acc[key] = star;
-                        }
-                        return acc;
-                    }, {});
-                },
-
                 // Helper to get brightness (Miếu, Vượng, Đắc, Hãm)
                 getStarBrightness(starKey, palaceKey) {
                     return this.getStarBrightnessByChi(starKey, this.chiCuaCung(palaceKey));
@@ -824,15 +734,14 @@
                     }
                 },
 
+                // Lớp màu chữ theo ngũ hành (assets/theme.css: .hanh-kim, .hanh-moc…).
+                layLopMauHanh(element) {
+                    const lop = { Kim: 'hanh-kim', Mộc: 'hanh-moc', Thủy: 'hanh-thuy', Hỏa: 'hanh-hoa', Thổ: 'hanh-tho' };
+                    return lop[element] || 'hanh-tho';
+                },
+
                 getElementColorDot(element) {
-                    switch (element) {
-                        case 'Kim': return 'cham-hanh hanh-kim';
-                        case 'Mộc': return 'cham-hanh hanh-moc';
-                        case 'Thủy': return 'cham-hanh hanh-thuy';
-                        case 'Hỏa': return 'cham-hanh hanh-hoa';
-                        case 'Thổ': return 'cham-hanh hanh-tho';
-                        default: return 'bg-gray-400';
-                    }
+                    return `cham-hanh ${this.layLopMauHanh(element)}`;
                 },
 
                 // cungXungChieu lưu id (vd "thien-di"), không phải tên hiển thị
@@ -866,42 +775,107 @@
                     return elements[chi] || 'Thổ';
                 },
 
-                // Matrix snippet text generator
-                getMatrixSnippet(starKey, palaceKey) {
-                    const star = this.starsData[starKey];
-                    const palace = this.palacesData[palaceKey];
-                    const b = this.getStarBrightness(starKey, palaceKey);
-
-                    if (b === 'M' || b === 'V') {
-                        return `${star.ten} đắc lực tại ${palace.ten}, hưng phát mạnh mẽ.`;
-                    } else if (b === 'Đ') {
-                        return `${star.ten} hòa hợp tại ${palace.ten}, vẹn toàn ổn định.`;
-                    } else {
-                        return `${star.ten} bị hãm tại ${palace.ten}, cần chú ý hóa giải.`;
-                    }
+                // Đảo ngược chiCuaCung(): biết Chi và vị trí Mệnh, suy ra Cung
+                // nào đang đóng tại Chi đó — dùng cho dòng 1 của bánh xe, vì ở
+                // đây trục cố định là Chi (dòng 2) chứ không phải Cung.
+                cungTaiChi(chi, menhChi) {
+                    const menhIdx = this.earthlyBranches.indexOf(menhChi);
+                    const chiIdx = this.earthlyBranches.indexOf(chi);
+                    const k = (menhIdx - chiIdx + 24) % 12;
+                    return THU_TU_TU_MENH[k];
                 },
 
-                // Detailed combination analytical text generator
+                // Chính Tinh thật tại 1 Chi theo vị trí Tử Vi đang chọn cho
+                // bánh xe (wheelTuViChi) — dùng cho dòng 3.
+                saoTaiChiBanhXe(chi) {
+                    return this.tinhVongSao(this.wheelTuViChi)[chi] || [];
+                },
+
+                // Luận giải ngắn cho 1 cột (1 Chi) của bánh xe — dựa vào đúng
+                // Cung (dòng 1) và Chính Tinh (dòng 3) đang thẳng hàng tại Chi
+                // đó lúc này. Ưu tiên luanCungTot/luanCungXau thật khi Cung
+                // nằm trong danh sách ghi nhận riêng cho sao, không suy diễn.
+                luanGiaiBanhXe(chi) {
+                    const palaceKey = this.cungTaiChi(chi, this.wheelMenhChi);
+                    const palace = this.palacesData[palaceKey];
+                    const saos = this.saoTaiChiBanhXe(chi);
+                    if (saos.length === 0) {
+                        return `${palace.ten}: Vô Chính Diệu, cần mượn sao cung xung chiếu để luận.`;
+                    }
+                    return saos.map(sKey => {
+                        const star = this.starsData[sKey];
+                        const b = this.getStarBrightnessByChi(sKey, chi);
+                        if (star.cungTot.includes(palaceKey)) return star.luanCungTot;
+                        if (star.cungXau.includes(palaceKey)) return star.luanCungXau;
+                        if (b === 'M' || b === 'V') return `${star.ten} sáng (${b}) tại ${palace.ten}, thuận lợi cho ${palace.phamVi[0]}.`;
+                        if (b === 'H') return `${star.ten} hãm tại ${palace.ten}, cần chú ý ${palace.phamVi[0]}.`;
+                        return `${star.ten} Đắc tại ${palace.ten}, ổn định.`;
+                    }).join(' ');
+                },
+
+                // Kéo dòng Cung ('cung') hoặc dòng Sao ('sao'): bắt đầu ghi vị
+                // trí con trỏ, đang kéo thì cập nhật độ lệch để dòng trượt
+                // theo (transform), thả ra thì chốt về đúng số ô đã lệch.
+                batDauKeoBanhXe(loai, e) {
+                    this.keoLoai = loai;
+                    this.keoBatDauX = e.clientX;
+                    this.keoDeltaPx = 0;
+                },
+                dangKeoBanhXe(e) {
+                    if (!this.keoLoai) return;
+                    this.keoDeltaPx = e.clientX - this.keoBatDauX;
+                },
+                ketThucKeoBanhXe() {
+                    if (!this.keoLoai) return;
+                    const soO = Math.round(this.keoDeltaPx / DO_RONG_O_BX);
+                    if (soO !== 0) this.nhichBanhXe(this.keoLoai, soO);
+                    this.keoLoai = null;
+                    this.keoDeltaPx = 0;
+                },
+
+                // Nhích bánh xe 'cung' hoặc 'sao' đi `buoc` ô (dương: sang
+                // phải). Dùng chung cho nút mũi tên và lúc chốt sau khi kéo.
+                nhichBanhXe(loai, buoc) {
+                    const chiHienTai = loai === 'cung' ? this.wheelMenhChi : this.wheelTuViChi;
+                    const idxMoi = ((this.earthlyBranches.indexOf(chiHienTai) + buoc) % 12 + 12) % 12;
+                    const chiMoi = this.earthlyBranches[idxMoi];
+                    if (loai === 'cung') this.wheelMenhChi = chiMoi;
+                    else this.wheelTuViChi = chiMoi;
+                },
+
+                // Detailed combination analytical text generator — cùng nguyên
+                // tắc: dùng luanCungTot/luanCungXau thật khi cung nằm trong
+                // danh sách ghi nhận riêng cho sao, chỉ suy luận chung theo độ
+                // sáng khi không có dữ liệu riêng cho tổ hợp này.
                 getCombinationDetail(starKey, palaceKey) {
                     const star = this.starsData[starKey];
                     const palace = this.palacesData[palaceKey];
                     const b = this.getStarBrightness(starKey, palaceKey);
                     const hanhCung = this.getBranchElement(this.chiCuaCung(palaceKey));
 
-                    let nature = `Khi sao ${star.ten} (${star.nguHanh}) nhập vào ${palace.ten} (${hanhCung}), sao mang đặc tính ${star.loaiTinh} kết hợp với năng lượng quản hạt ${palace.phamVi.join(', ')}.`;
-                    
-                    let pros = "";
-                    let cons = "";
+                    const nature = `Khi sao ${star.ten} (${star.nguHanh}) nhập vào ${palace.ten} (${hanhCung}), sao mang đặc tính ${star.loaiTinh} kết hợp với năng lượng quản hạt ${palace.phamVi.join(', ')}.`;
 
-                    if (b === 'M' || b === 'V') {
-                        pros = `Trạng thái sáng chiếu (${b === 'M' ? 'Miếu Địa' : 'Vượng Địa'}): Tăng cường năng lượng lãnh đạo, sự thông tuệ và tài lộc. Thể hiện rõ nét tài năng trong ${palace.phamVi[0]} và mang lại nhiều cơ hội phát triển đột phá.`;
-                        cons = `Cần duy trì sự khiêm tốn, tránh tự tin quá mức dẫn đến kiêu ngạo hoặc gánh vác quá nhiều trách nhiệm.`;
+                    const laDacViGhiNhan = star.cungTot.includes(palaceKey);
+                    const laHamViGhiNhan = star.cungXau.includes(palaceKey);
+
+                    let pros;
+                    if (laDacViGhiNhan) {
+                        pros = star.luanCungTot;
+                    } else if (b === 'M' || b === 'V') {
+                        pros = `Trạng thái sáng chiếu (${b === 'M' ? 'Miếu Địa' : 'Vượng Địa'}) tại Chi này nhìn chung thuận lợi, dù ${palace.ten} không phải vị trí được ghi nhận riêng là đắc địa nổi bật của ${star.ten}.`;
                     } else if (b === 'Đ') {
-                        pros = `Trạng thái Đắc Địa: Giúp mọi việc diễn ra suôn sẻ, hài hòa. Năng lượng ${star.ten} phát huy vừa đủ, mang lại sự bình an và hanh thông vững chắc.`;
-                        cons = `Sự phát triển ở mức trung bình vững, cần thêm sự quyết đoán nếu muốn bứt phá quy mô lớn.`;
+                        pros = `Trạng thái Đắc Địa: năng lượng phát huy vừa đủ, mọi việc hanh thông ổn định.`;
                     } else {
-                        pros = `Trợ lực bất ngờ: Dù hãm địa nhưng nếu rèn luyện bản lĩnh qua thử thách, cá nhân sẽ tích lũy được vốn sống và kinh nghiệm thực chiến phong phú.`;
-                        cons = `Trạng thái Hãm Địa: Dễ phát sinh biến động, mâu thuẫn hoặc hao tốn tài lực trong lĩnh vực ${palace.phamVi[0]}. Khuyên nên giữ nguyên tắc và hành sự cẩn trọng.`;
+                        pros = `Dù hãm địa, nếu rèn luyện bản lĩnh qua thử thách vẫn tích lũy được vốn sống và kinh nghiệm thực chiến.`;
+                    }
+
+                    let cons;
+                    if (laHamViGhiNhan) {
+                        cons = star.luanCungXau;
+                    } else if (b === 'H') {
+                        cons = `Trạng thái Hãm Địa tại Chi này dễ phát sinh biến động, hao tổn trong lĩnh vực ${palace.phamVi[0]}, cần chú ý hóa giải — dù ${palace.ten} không phải vị trí được ghi nhận riêng là hãm địa của ${star.ten}.`;
+                    } else {
+                        cons = `Cần giữ sự khiêm tốn, tránh chủ quan để không lãng phí thế thuận lợi hiện có.`;
                     }
 
                     return { nature, pros, cons };
