@@ -343,5 +343,745 @@
       "ngheNghiep": "Kinh doanh cùng người thân, sửa chữa cải tạo bất động sản.",
       "loiKhuyen": "Chú trọng cân bằng giữa làm việc và nghỉ ngơi hợp lý."
     }
+  ],
+  "cachCuc": [
+    {
+      "id": "tam-ky-giai-hoi",
+      "ten": "Tam Kỳ Giai Hội",
+      "nhom": "phú quý",
+      "dieuKien": "Bốn cung Mệnh - Tài Bạch - Quan Lộc - Thiên Di hội đủ Hóa Khoa, Hóa Quyền, Hóa Lộc, không bị Sát tinh xung phá.",
+      "luanGiai": "Đẹp nhất khi Khoa tọa Mệnh, Lộc tọa Tài, Quyền tọa Quan và chính tinh cung Mệnh miếu vượng vô sát. Tam Kỳ không nên trùng điệp (nhiều hóa tinh dồn vào một cung) vì như vậy không phải chân cách. Người hợp cách có chí hướng lớn, nhiều cơ may bất ngờ, công danh thành đạt; chính tinh mệnh cung càng vượng (như Tử Phủ Vũ Tướng Nhật Nguyệt Lương Đồng Cơ miếu vượng) thì càng đại phú đại quý.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "tam-ky-trieu-dau",
+      "ten": "Tam Kỳ Triều Đẩu",
+      "nhom": "phú quý",
+      "dieuKien": "Tử Vi tọa Mệnh, tam phương được Hóa Khoa - Hóa Quyền - Hóa Lộc hội chiếu, không bị Sát xung phá.",
+      "luanGiai": "Về bản chất giống Tam Kỳ Giai Hội, nhưng lấy Tử Vi làm chủ tinh trung tâm nên khí thế và mức phú quý càng vững.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "tu-phu-dong-cung",
+      "ten": "Tử Phủ Đồng Cung",
+      "nhom": "phú quý",
+      "dieuKien": "Tử Vi, Thiên Phủ đồng cung tại Dần hoặc Thân, có Tả Phụ - Hữu Bật thủ chiếu, không có Sát xung phá.",
+      "luanGiai": "Chủ cả đời phúc dày. Tử Vi và Tả Hữu đồng cung càng cát; nếu thiếu Tả Hữu thì không tính là hợp cách này.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "tu-phu-trieu-vien",
+      "ten": "Tử Phủ Triều Viên",
+      "nhom": "phú quý",
+      "dieuKien": "Tử Vi, Thiên Phủ ở tam phương hội chiếu, hoặc đứng hai bên kẹp cung Mệnh; chính tinh cung Mệnh phải miếu vượng, có thêm cát tinh.",
+      "luanGiai": "Không quý thì phú. Gặp nhiều cát tinh mà không có sát tinh thì chức vị đến công khanh; có thêm Sát Kị thì chỉ là người bình thường.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "tu-phu-giap-menh",
+      "ten": "Tử Phủ Giáp Mệnh",
+      "nhom": "phú quý",
+      "dieuKien": "Tử Vi, Thiên Phủ đóng ở hai cung kẹp Mệnh, Mệnh cư Dần hoặc Thân, vô Sát và có thêm cát tinh.",
+      "luanGiai": "Có phú quý; nếu không có cát tinh đi kèm thì chỉ là người bình thường.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "nhat-chieu-loi-mon",
+      "ten": "Nhật Chiếu Lôi Môn",
+      "tenKhac": ["Nhật Xuất Phù Tang"],
+      "nhom": "phú quý",
+      "dieuKien": "Thái Dương thủ Mệnh tại cung Mão, người sinh ban ngày; hoặc hội đủ lục cát tinh mà là người tuổi Giáp Ất sinh ban đêm.",
+      "luanGiai": "Có thêm Tứ Sát tuy phá cách nhưng vẫn chủ được no ấm.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "tuong-tinh-dac-dia",
+      "ten": "Tướng Tinh Đắc Địa",
+      "nhom": "phú quý",
+      "dieuKien": "Vũ Khúc miếu vượng tọa Mệnh, vô Sát mà có cát tinh.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "tu-chinh-dong-lam",
+      "ten": "Tứ Chính Đồng Lâm",
+      "nhom": "phú quý",
+      "dieuKien": "Tử Vi, Thiên Phủ tọa Mệnh, Nhật Nguyệt ở vượng cung hội tụ về cung Mệnh.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "phu-bat-cung-chu",
+      "ten": "Phụ Bật Củng Chủ",
+      "nhom": "phú quý",
+      "dieuKien": "Tử Vi tọa Mệnh, Tả Phụ - Hữu Bật ở tam phương hội chiếu hoặc kẹp hai bên cung Mệnh.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "cuc-huong-ly-minh",
+      "ten": "Cực Hướng Ly Minh",
+      "nhom": "phú quý",
+      "dieuKien": "Tử Vi tọa Mệnh tại cung Ngọ, vô Sát, có Tả Hữu Khôi Việt Khoa Quyền Lộc tọa thủ hoặc hội chiếu; người sinh năm Giáp, Đinh, Kỷ.",
+      "luanGiai": "Đại phú đại quý, có thể đến chức công khanh.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "quan-than-khanh-hoi",
+      "ten": "Quân Thần Khánh Hội",
+      "nhom": "phú quý",
+      "dieuKien": "Tử Vi và Tả Hữu đồng cung thủ Mệnh, hoặc Tử Vi tọa Mệnh mà Tả Hữu, Xương Khúc, Khôi Việt, Phủ Tướng hội đủ ở tam phương, không có Sát Kị.",
+      "luanGiai": "Đại phú đại quý; các sao trên cần đi thành đôi mới đủ lực, nếu chỉ lác đác từng sao đơn thì cách yếu, hư phù vô lực. Gặp Sát Kị thủ chiếu là phá cách, có phú quý cũng mang tính gian trá.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "nhat-nguyet-giap-menh",
+      "ten": "Nhật Nguyệt Giáp Mệnh",
+      "nhom": "phú quý",
+      "dieuKien": "Mệnh cư Sửu hoặc Mùi, Nhật Nguyệt miếu vượng kẹp hai bên cung Mệnh, chính tinh cung Mệnh vượng cát.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "nhat-nguyet-tinh-minh",
+      "ten": "Nhật Nguyệt Tịnh Minh",
+      "nhom": "phú quý",
+      "dieuKien": "Mệnh an tại Sửu, Thái Dương ở Tỵ, Thái Âm ở Dậu chiếu về; chính tinh cung Mệnh vượng cát.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "nhat-nguyet-chieu-menh",
+      "ten": "Nhật Nguyệt Chiếu Mệnh",
+      "nhom": "phú quý",
+      "dieuKien": "Mệnh an tại Sửu hoặc Mùi, Nhật Nguyệt đồng cung ở cung đối diện (Mùi hoặc Sửu) xung chiếu về Mệnh.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "nhat-le-trung-thien",
+      "ten": "Nhật Lệ Trung Thiên",
+      "nhom": "phú quý",
+      "dieuKien": "Thái Dương thủ Mệnh tại cung Ngọ, vô Sát có cát tinh; người tuổi Canh Tân sinh ban ngày.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "phu-tuong-trieu-vien",
+      "ten": "Phủ Tướng Triều Viên",
+      "nhom": "phú quý",
+      "dieuKien": "Thiên Phủ, Thiên Tướng ở tam phương củng hợp về cung Mệnh, chính tinh cung Mệnh miếu vượng, có cát vô sát. Đẹp nhất là Tướng ở Tý - Phủ ở Thân, Tướng ở Ngọ - Phủ ở Dần, Tướng ở Thân - Phủ ở Thìn.",
+      "luanGiai": "Phú quý mà nhân duyên lục thân đều hậu hĩnh.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "toa-quy-huong-quy",
+      "ten": "Tọa Quý Hướng Quý",
+      "nhom": "phú quý",
+      "dieuKien": "Thiên Khôi tọa Mệnh, Thiên Việt ở cung xung chiếu (hoặc ngược lại); hoặc Mệnh Thân mỗi cung chiếm một sao. Chính tinh cung Mệnh phải miếu vượng, thêm cát tinh.",
+      "luanGiai": "Thông minh bác học, cả đời được nhiều quý nhân giúp đỡ, gặp hung hóa cát. Nếu chính tinh cung Mệnh không tốt thì chỉ là giả cách, chủ được nhân duyên chứ không phú quý.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "thach-trung-an-ngoc",
+      "ten": "Thạch Trung Ẩn Ngọc",
+      "nhom": "phú quý",
+      "dieuKien": "Cự Môn tọa Mệnh tại Tý hoặc Ngọ, có Hóa Khoa - Hóa Quyền - Hóa Lộc (một trong ba) chiếu hội, vô Sát xung phá.",
+      "luanGiai": "Nếu chỉ có Cự Môn đơn độc không cát hóa thì chỉ tốt cho các tuổi Đinh, Kỷ, Quý, Tân; hai tuổi Bính, Mậu thì nguy khốn.",
+      "nguon": "dau-so-tinh-thanh; tu-vi-giang-minh"
+    },
+    {
+      "id": "that-sat-trieu-dau",
+      "ten": "Thất Sát Triều Đẩu",
+      "nhom": "phú quý",
+      "dieuKien": "Thất Sát tọa Mệnh tại Dần hoặc Thân, Tử Vi ở cung xung chiếu, cần có lục cát tinh hội thủ; nếu thêm Sát tinh thì không đúng cách.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "song-loc-trieu-vien",
+      "ten": "Song Lộc Triều Viên",
+      "tenKhac": ["Song Lộc Giao Hội"],
+      "nhom": "phú quý",
+      "dieuKien": "Lộc Tồn và Hóa Lộc cùng ở tam phương hội chiếu cung Mệnh; chính tinh cung Mệnh vượng cát.",
+      "luanGiai": "Dễ phát tài. Gặp ở đại hạn, lưu niên có Hóa Lộc giao hội cũng thành cách. Ở hai cung Tài - Quan gọi là Hợp Lộc, ở cung Thiên Di gọi là Củng Lộc.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "song-loc-phu-menh",
+      "ten": "Song Lộc Phụ Mệnh",
+      "nhom": "phú quý",
+      "dieuKien": "Lộc Tồn, Hóa Lộc đồng cung hoặc giáp cung Mệnh; chính tinh cung Mệnh miếu cát.",
+      "luanGiai": "Cát lực rất lớn; nếu gặp thêm niên hạn có Hóa Lộc gọi là Song Lộc Phụ Lộc, có thể biến hung cách nguyên cục thành tốt.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "loc-hop-uyen-uong",
+      "ten": "Lộc Hợp Uyên Ương",
+      "nhom": "phú quý",
+      "dieuKien": "Lộc Tồn hoặc Hóa Lộc thủ Mệnh, sao còn lại đến hợp chiếu, hoặc chia nhau thủ ở hai cung Mệnh - Thân; chính tinh cung Mệnh miếu cát.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "minh-chau-xuat-hai",
+      "ten": "Minh Châu Xuất Hải",
+      "tenKhac": ["Nguyệt Minh Thương Hải"],
+      "nhom": "phú quý",
+      "dieuKien": "Thái Dương ở Mão, Thái Âm ở Hợi, Mệnh an tại Mùi.",
+      "luanGiai": "Kỵ nhất Sát tinh xung phá, đặc biệt kỵ Kình Dương - Đà La.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "duong-luong-xuong-loc",
+      "ten": "Dương Lương Xương Lộc",
+      "nhom": "phú quý",
+      "dieuKien": "Thái Dương, Thiên Lương, Văn Xương, Lộc Tồn tụ hội ở tam phương tứ chính chiếu Mệnh.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "nguyet-lang-thien-mon",
+      "ten": "Nguyệt Lãng Thiên Môn",
+      "nhom": "phú quý",
+      "dieuKien": "Thái Âm tọa Mệnh tại cung Hợi, quý nhất là người sinh ban đêm, tam phương có cát tinh củng chiếu.",
+      "luanGiai": "Chủ đại quý. Người tuổi Bính Đinh chủ quý, tuổi Nhâm Quý chủ phú; nếu vô cát tinh chỉ làm công chức tạp vụ.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "nguyet-sinh-thuong-hai",
+      "ten": "Nguyệt Sinh Thương Hải",
+      "nhom": "phú quý",
+      "dieuKien": "Thái Âm ở cung Tý thủ cung Điền Trạch; người sinh ban đêm.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "tai-an-giap-loc",
+      "ten": "Tài Ấn Giáp Lộc",
+      "nhom": "phú quý",
+      "dieuKien": "Lộc Tồn thủ Mệnh, Vũ Khúc và Thiên Tướng kẹp hai bên, không có Sát Kị xung phá.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "van-tinh-cung-menh",
+      "ten": "Văn Tinh Củng Mệnh",
+      "nhom": "phú quý",
+      "dieuKien": "Tam phương cung Mệnh có văn tinh (Xương, Khúc, Khôi, Việt, Hóa Khoa) chiếu củng về.",
+      "luanGiai": "Coi là ngụy cách (chưa hẳn chắc chắn), cần chính tinh cung Mệnh vượng cát mới thật sự phú quý.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "cu-nhat-dong-cung",
+      "ten": "Cự Nhật Đồng Cung",
+      "nhom": "phú quý",
+      "dieuKien": "Thái Dương, Cự Môn đồng cung tại Dần hoặc Thân thủ Mệnh, có Tả Hữu Xương Khúc Khôi Việt đồng thủ hoặc củng chiếu; nếu thêm Sát tinh thì không đúng cách.",
+      "luanGiai": "Được Vũ Khúc - Thiên Tướng kẹp hai bên cung Mệnh thì càng cát.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "loc-ma-boi-an",
+      "ten": "Lộc Mã Bội Ấn",
+      "nhom": "phú quý",
+      "dieuKien": "Lộc Tồn (hoặc Hóa Lộc), Thiên Mã và Thiên Tướng đồng cung thủ Mệnh.",
+      "luanGiai": "Chủ có tài, có thế, có địa vị.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "co-nguyet-dong-luong-cach",
+      "ten": "Cơ Nguyệt Đồng Lương",
+      "nhom": "phú quý",
+      "dieuKien": "Tam phương cung Mệnh tụ hội đủ bốn chính tinh Thiên Cơ, Thái Âm, Thiên Đồng, Thiên Lương, có cát vô Sát Kị; thêm Xương Khúc là chuẩn nhất.",
+      "luanGiai": "Đa số hợp làm công tác quản lý hoặc kỹ thuật ở xí nghiệp lớn, cơ quan công vụ.",
+      "nguon": "dau-so-tinh-thanh; tu-vi-giang-minh"
+    },
+    {
+      "id": "quyen-loc-thu-tai-phuc",
+      "ten": "Quyền Lộc Thủ Tài Phúc",
+      "nhom": "phú quý",
+      "dieuKien": "Hóa Quyền, Hóa Lộc đóng ở hai cung Tài Bạch và Phúc Đức, chính tinh cung Mệnh miếu vượng có nhiều cát tinh.",
+      "luanGiai": "Chủ có vinh hoa.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "khoa-minh-loc-am",
+      "ten": "Khoa Minh Lộc Ám",
+      "nhom": "phú quý",
+      "dieuKien": "Ví dụ người tuổi Giáp an Mệnh tại Hợi có Hóa Khoa thủ Mệnh, Lộc Tồn ở Dần lục hợp với Hợi. Nói chung: Mệnh có Hóa Khoa, còn Lộc Tồn ở cung lục hợp với Mệnh, chính tinh cung Mệnh miếu vượng nhiều cát tinh.",
+      "luanGiai": "Chức vị đến Tam Công.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "tu-phu-nhat-nguyet-vuong-dia",
+      "ten": "Tử Phủ Nhật Nguyệt Cư Vượng Địa",
+      "nhom": "phú quý",
+      "dieuKien": "Tử Vi ở Ngọ, Thiên Phủ ở Tuất, Thái Dương ở Mão, Thái Âm ở Dậu, có Hóa Khoa Hóa Quyền Hóa Lộc tọa thủ Mệnh Thân; nếu thêm Sát Kị Không Vong thì không đúng cách.",
+      "luanGiai": "Vào bậc công hầu. Nếu hai cung Tài - Quan có Lộc Tồn hoặc Hóa Lộc cũng đúng cách.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "ta-huu-tu-mo",
+      "ten": "Tả Hữu Tứ Mộ",
+      "nhom": "phú quý",
+      "dieuKien": "Mệnh an tại một trong Tứ Mộ (Thìn Tuất Sửu Mùi), Tả Phụ - Hữu Bật đồng thủ; hoặc gặp ở ba cung Tài - Quan - Di cũng cát.",
+      "luanGiai": "Thông thường không tính là cách cục phú quý, chỉ chủ được trợ lực lớn; cần chính tinh miếu cát vô sát mới thật phú quý.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "nhat-nguyet-xuong-khuc-khoi-viet",
+      "ten": "Nhật Nguyệt Xương Khúc Khôi Việt",
+      "nhom": "phú quý",
+      "dieuKien": "Nhật Nguyệt vượng địa thủ Thân Mệnh, tam phương có Xương Khúc Khôi Việt đến củng; hoặc Mệnh tọa Xương Khúc mà Nhật Nguyệt ở tam phương đến củng, lại gặp Khôi Việt.",
+      "luanGiai": "Chủ phú quý.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "phu-bat-ngo-tai-quan",
+      "ten": "Phụ Bật Ngộ Tài Quan",
+      "nhom": "phú quý",
+      "dieuKien": "Cung Tài Bạch, cung Quan Lộc có Tả Phụ - Hữu Bật đến củng Mệnh.",
+      "luanGiai": "Cuộc đời y thực phong túc, không kể vượng suy của Mệnh; chính tinh cung Mệnh miếu vượng thêm cát tinh mới thật phú quý.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "cu-luong-liem-tham-uyen-uong-hop-loc",
+      "ten": "Cự Lương Liêm Tham - Uyên Ương Hợp Lộc",
+      "nhom": "phú quý",
+      "dieuKien": "Bốn sao Cự Môn, Thiên Lương, Liêm Trinh, Tham Lang hội tụ ở tam phương Thân - Mệnh, ở miếu địa gặp cát tinh; hoặc bốn sao này ở tam phương cung Phu Thê mà Mệnh hoặc Phu Thê có Lộc Tồn - Hóa Lộc thủ hợp.",
+      "luanGiai": "Đều là phú quý.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "minh-loc-am-loc",
+      "ten": "Minh Lộc Ám Lộc",
+      "nhom": "phú quý",
+      "dieuKien": "Người tuổi Giáp lập Mệnh tại Hợi được Hóa Lộc tọa thủ, lại được Lộc Tồn ở Dần đến hợp. Nói chung: Mệnh có một Lộc, phương lục hợp lại có một Lộc nữa.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "xuong-khuc-loc-co-am-duong-ta-huu",
+      "ten": "Xương Khúc Lộc Cơ - Âm Dương Tả Hữu",
+      "nhom": "phú quý",
+      "dieuKien": "Xương Khúc, Lộc Tồn, Thiên Cơ thủ Mệnh không thêm Tứ Sát; hoặc Thái Âm, Thái Dương, Tả Hữu tọa Mệnh không thêm Sát Kị.",
+      "luanGiai": "Vế đầu chủ thông minh tú lệ, cũng chủ phú quý; vế sau chủ thanh kỳ đôn hậu, độ lượng, phú quý.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "nhat-xuong-quan-loc",
+      "ten": "Nhật Xương Đồng Thủ Quan Lộc",
+      "nhom": "phú quý",
+      "dieuKien": "Thái Dương và Văn Xương đồng thủ cung Quan Lộc, gia hội cát tinh.",
+      "luanGiai": "Chủ phú quý, có thể làm đến chức thủ tướng.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "nguyet-khuc-phu-the",
+      "ten": "Nguyệt Khúc Đồng Thủ Phu Thê",
+      "nhom": "phú quý",
+      "dieuKien": "Thái Âm và Văn Khúc đồng thủ cung Phu Thê, gặp cát tinh củng chiếu.",
+      "luanGiai": "Thi cử đỗ đạt cao, nữ lấy chồng quý được phong tặng.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "loc-van-cung-menh",
+      "ten": "Lộc Văn Củng Mệnh",
+      "nhom": "phú quý",
+      "dieuKien": "Lộc Tồn ở cung Tài Bạch, Xương Khúc ở cung Quan Lộc cùng củng chiếu cung Mệnh.",
+      "luanGiai": "Phú quý mà hiền minh.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "tam-hoa-giap-menh",
+      "ten": "Tam Hóa Giáp Mệnh",
+      "nhom": "phú quý",
+      "dieuKien": "Hai trong ba sao Hóa Lộc, Hóa Quyền, Hóa Khoa đóng ở hai cung kẹp Mệnh; chính tinh cung Mệnh miếu vượng vô Sát, thêm cát tinh.",
+      "luanGiai": "Chủ đại phú.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "trieu-dau-cach",
+      "ten": "Triều Đẩu Cách",
+      "nhom": "phú quý",
+      "dieuKien": "Lộc Tồn đóng tại cung Thiên Di đối diện Mệnh an ở Tý hoặc Ngọ.",
+      "luanGiai": "Được người đời kính trọng, song toàn phú quý.",
+      "nguon": "tu-vi-giang-minh"
+    },
+    {
+      "id": "khoa-quyen-loc-chu-cach",
+      "ten": "Khoa Quyền Lộc Chủ Cách",
+      "nhom": "phú quý",
+      "dieuKien": "Hóa Lộc, Hóa Quyền cùng đóng ở cung Mệnh, hội thêm cát tinh.",
+      "luanGiai": "Đại quý, có thể đến bậc Thừa tướng (điển tích Chu Bột nhà Tây Hán).",
+      "nguon": "tu-vi-giang-minh"
+    },
+    {
+      "id": "ta-huu-trieu-vien-cach",
+      "ten": "Tả Hữu Triều Viên",
+      "nhom": "phú quý",
+      "dieuKien": "Tả Phụ, Hữu Bật chầu về cung Mệnh (ở tam phương hoặc kẹp hai bên).",
+      "luanGiai": "Thân vinh, phúc dài; văn thì làm quan lớn, võ thì lên đài tướng.",
+      "nguon": "tu-vi-giang-minh"
+    },
+    {
+      "id": "van-vu-cach",
+      "ten": "Văn Vũ Cách",
+      "nhom": "phú quý",
+      "dieuKien": "Văn Khúc, Vũ Khúc đồng thủ cung Thân, Mệnh, không có Sát Phá.",
+      "luanGiai": "Trăm việc đều thông, vinh hiển hơn người.",
+      "nguon": "tu-vi-giang-minh"
+    },
+    {
+      "id": "van-tinh-trieu-menh-cach",
+      "ten": "Văn Tinh Triều Mạng",
+      "nhom": "phú quý",
+      "dieuKien": "Văn Xương, Văn Khúc cùng chầu về cung Mệnh, tam phương có thêm sao tốt.",
+      "luanGiai": "Con nhà giàu sang, phú quý.",
+      "nguon": "tu-vi-giang-minh"
+    },
+    {
+      "id": "hoa-quy-cach",
+      "ten": "Hỏa Quý Cách",
+      "nhom": "phú quý",
+      "dieuKien": "Tham Lang gặp Hỏa Tinh ở tam phương chiếu Thân Mệnh, tam phương không có hung sát.",
+      "luanGiai": "Được phong hầu, hưởng lộc; nếu lập Mệnh tại cung thuộc Thủy (như Hợi) thì Hỏa bị Thủy khắc, không còn quý nữa (phá cách).",
+      "nguon": "tu-vi-giang-minh"
+    },
+    {
+      "id": "hung-tu-trieu-nguyen-cach",
+      "ten": "Hùng Tú Triều Nguyên",
+      "nhom": "phú quý",
+      "dieuKien": "Liêm Trinh miếu địa tại cung Thân.",
+      "luanGiai": "Thêm Tả Hữu và cát tinh hội chiếu thì phúc càng hưng thịnh.",
+      "nguon": "tu-vi-giang-minh"
+    },
+    {
+      "id": "vu-tham-tai-trach",
+      "ten": "Vũ Tham Hoạnh Phát",
+      "nhom": "giàu",
+      "dieuKien": "Vũ Khúc, Tham Lang thủ cung Tài Bạch; hoặc Tử Vi - Thiên Phủ - Vũ Khúc thủ cung Tài Bạch thêm Hóa Quyền Hóa Lộc.",
+      "luanGiai": "Nhất định thành phú ông, phát mạnh vào đại hạn thứ hai.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "tai-am-giap-an",
+      "ten": "Tài Ấm Giáp Ấn",
+      "nhom": "giàu",
+      "dieuKien": "Thiên Lương thủ Mệnh (hoặc thủ cung Điền Trạch), Vũ Khúc - Thiên Tướng kẹp hai bên.",
+      "luanGiai": "Là phú cục.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "nhat-nguyet-giap-tai",
+      "ten": "Nhật Nguyệt Giáp Tài",
+      "nhom": "giàu",
+      "dieuKien": "Vũ Khúc (hoặc Thiên Phủ) thủ Mệnh hoặc thủ cung Tài Bạch, Nhật Nguyệt kẹp hai bên, thêm cát tinh.",
+      "luanGiai": "Không phú thì quý.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "tai-loc-giap-ma",
+      "ten": "Tài Lộc Giáp Mã",
+      "nhom": "giàu",
+      "dieuKien": "Thiên Mã thủ Mệnh, Vũ Khúc - Lộc Tồn/Hóa Lộc kẹp hai bên.",
+      "luanGiai": "Gặp sinh vượng càng đẹp.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "luong-tuong-cung-than",
+      "ten": "Lương Tướng Củng Thân",
+      "tenKhac": ["Ấm Ấn Củng Thân"],
+      "nhom": "giàu",
+      "dieuKien": "Cung Thân (thân cung) lâm vào cung Tài Bạch, Thiên Lương - Thiên Tướng ở tam phương củng chiếu.",
+      "luanGiai": "Kỵ tọa Không Vong.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "nhat-nguyet-chieu-bich",
+      "ten": "Nhật Nguyệt Chiếu Bích",
+      "nhom": "giàu",
+      "dieuKien": "Nhật Nguyệt lâm cung Điền Trạch, lại ở một trong bốn cung Tứ Mộ.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "kim-xan-quang-huy",
+      "ten": "Kim Xán Quang Huy",
+      "nhom": "giàu",
+      "dieuKien": "Thái Dương thủ Mệnh tại cung Ngọ; người tuổi Đinh, Tân, hoặc Giáp Thân, Giáp Tý, Giáp Thìn.",
+      "luanGiai": "Chủ phú.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "loc-ton-thu-dien-tai",
+      "ten": "Lộc Tồn Thủ Điền Tài",
+      "nhom": "giàu",
+      "dieuKien": "Lộc Tồn thủ cung Điền Trạch hoặc cung Tài Bạch, không có sao Không Vong nào phá cách.",
+      "luanGiai": "Tài sản vô số, chủ đại phú.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "tai-am-toa-thien-di",
+      "ten": "Tài Ấm Tọa Thiên Di",
+      "nhom": "giàu",
+      "dieuKien": "Vũ Khúc (Tài) và Thiên Lương (Ấm) - một trong hai có Hóa Quyền hoặc Hóa Lộc - cùng cát tinh tọa cung Thiên Di.",
+      "luanGiai": "Chủ nhà buôn lớn (đại thương gia); nếu thêm Sát Kị thì chỉ bình thường.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "khong-kiep-phan-doat-tai-phuc",
+      "ten": "Không Kiếp Phân Đoạt Tài Phúc",
+      "nhom": "bần hàn",
+      "dieuKien": "Mệnh không có phú quý cách, chính tinh không miếu vượng, Địa Kiếp - Thiên Không chia nhau chiếm hai cung Tài Bạch và Phúc Đức.",
+      "luanGiai": "Chủ bần hàn từ nhỏ; gặp thân Mệnh tốt thì chủ tiêu pha phung phí, tiền vào lại ra. Nếu Mệnh Thân cũng bị Không Kiếp phân chiếm, thêm Cô Thần - Quả Tú thì cô quả bần tiện; Không Kiếp giáp Mệnh càng hung.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "sinh-bat-ngo-thoi",
+      "ten": "Sinh Bất Ngộ Thời",
+      "nhom": "bần hàn",
+      "dieuKien": "Mệnh tọa cung hãm địa lại gặp Không Vong (Chính Không nặng, Phụ Không nhẹ hơn), Địa Kiếp - Thiên Không.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "loc-phung-xung-pha",
+      "ten": "Lộc Phùng Xung Phá, Cát Xứ Tàng Hung",
+      "nhom": "bần hàn",
+      "dieuKien": "Lộc Tồn, Hóa Lộc tọa Mệnh Thân bị Không Kiếp, Hóa Kị, Không Vong xung phá.",
+      "luanGiai": "Thường trước thành sau bại, tiền phú hậu bần; gặp ở hành hạn cũng vậy, hai sao Không Kiếp cùng đến càng hung.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "ma-lac-khong-vong",
+      "ten": "Mã Lạc Không Vong",
+      "nhom": "bần hàn",
+      "dieuKien": "Thiên Mã gặp Không Vong (ví dụ tuổi Giáp có Triệt Không tại Thân Dậu mà an Mệnh tại Thân).",
+      "luanGiai": "Cả đời bôn ba vất vả mà vô công; gặp Chính Không thì nặng, Phụ Không thì nhẹ.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "nhat-nguyet-that-ham-ngo-cu-mon",
+      "ten": "Nhật Nguyệt Thất Hãm Ngộ Cự Môn",
+      "nhom": "bần hàn",
+      "dieuKien": "Nhật Nguyệt hãm địa thủ Mệnh, gặp Cự Môn đồng cung hoặc chiếu.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "vu-liem-ham-dia-gia-sat-ky",
+      "ten": "Vũ Liêm Hãm Địa Gia Sát Kị",
+      "nhom": "bần hàn",
+      "dieuKien": "Vũ Khúc, Liêm Trinh phân thủ Mệnh Thân, lạc hãm lại thêm Sát Kị (Liêm Trinh hãm địa mới thành tù tinh).",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "pha-quan-ham-dia-co-ban",
+      "ten": "Phá Quân Hãm Địa Cô Bần",
+      "nhom": "bần hàn",
+      "dieuKien": "Phá Quân thủ Mệnh ở hãm địa; Phá Quân và Văn Khúc đồng thủ cung Mão.",
+      "luanGiai": "Cô độc, nghèo khổ; nếu là kẻ sĩ thì cả đời bần khổ.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "tu-sat-tham-duong-giao-hoi",
+      "ten": "Tứ Sát Tham Dương Giao Hội",
+      "nhom": "bần hàn",
+      "dieuKien": "Tứ Sát thủ Mệnh Thân, gặp Tham Lang, Kình Dương giao hội, chính tinh nhiều sao thất hãm.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "dai-hao-ngo-ac-sat",
+      "ten": "Đại Hao Ngộ Ác Sát",
+      "tenKhac": ["Đặng Thông Chết Đói"],
+      "nhom": "bần hàn",
+      "dieuKien": "Mệnh an tại Tý, đại hạn thứ hai hành đến đất Đại Hao, gặp thêm ác diệu Sát Kị.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "phu-mau-phu-the-tu-tuc-khong-kiep",
+      "ten": "Phụ Mẫu - Phu Thê - Tử Tức Đều Không Kiếp Sát Kị",
+      "nhom": "bần hàn",
+      "dieuKien": "Ba cung Phụ Mẫu, Phu Thê, Tử Tức đều có Không Kiếp, Sát Kị.",
+      "luanGiai": "Là số đi tu; nếu không thì cô đơn bần tiện.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "liem-pha-vu-hoa-ky-giap-khong-kiep-kinh-da",
+      "ten": "Liêm Phá Vũ Hóa Kị Giáp Không Kiếp Kình Đà",
+      "nhom": "bần hàn",
+      "dieuKien": "Mệnh Thân gặp Liêm Trinh, Phá Quân, Vũ Khúc hóa Kị, lại bị Không Kiếp - Kình Đà kẹp hai bên.",
+      "luanGiai": "Là hạ cách cô đơn; nếu Lộc Tồn ở đất sinh vượng thì dù bị Kình Đà kẹp cũng không phải hạ cách. Nếu Kình Đà, Không Kiếp không kẹp cùng lúc mà tam phương có Hóa Quyền - Hóa Lộc thì cũng không phải hạ cách, nhưng gặp vận Sát vẫn có phá bại.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "menh-vo-chinh-dieu-khong-kiep",
+      "ten": "Mệnh Vô Chính Diệu Chỉ Có Không Kiếp",
+      "nhom": "bần hàn",
+      "dieuKien": "Cung Mệnh không có chính tinh, chỉ có Thiên Không - Địa Kiếp tọa thủ, tam phương không có cát tinh cứu giải.",
+      "luanGiai": "Không tụ tài, bần tiện, phiêu bạt, bệnh tật khổ sở; nếu bản cung còn gặp thêm Sát tinh thì đa số yểu chiết.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "sinh-gap-bai-dia",
+      "ten": "Sinh Gặp Bại Địa",
+      "nhom": "bần hàn",
+      "dieuKien": "Người mệnh cục Thủy an Mệnh tại Ngọ (tuyệt địa).",
+      "luanGiai": "Phát cũng bị hư hao tổn thương; nếu có kim tinh đồng cung sinh trợ thì có cứu. Tứ Tuyệt (Dần Thân Tỵ Hợi) cũng là Tứ Sinh, tùy trường hợp mà luận.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "hao-cu-loc-vi",
+      "ten": "Hao Cư Lộc Vị",
+      "nhom": "bần hàn",
+      "dieuKien": "Phá Quân cư cung Quan Lộc, gặp Kình Dương - Hóa Kị; kết hợp năm sinh với vị trí an Mệnh theo tứ cục (Dần Ngọ Tuất tại Ngọ, Tỵ Dậu Sửu tại Dậu, Hợi Mão Mùi tại Mão, Thân Tý Thìn tại Tý).",
+      "luanGiai": "Khất thực ven đường.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "ki-am-dong-cu-menh-tat",
+      "ten": "Kị Ám Đồng Cư Mệnh Tật",
+      "nhom": "bần hàn",
+      "dieuKien": "Các cung Mệnh, Thân, Tật Ách gặp Cự Môn - Kình Dương/Đà La cùng thủ.",
+      "luanGiai": "Nghèo khó, yếu nhược, tàn phế, phá sạch tổ nghiệp, bôn ba vất vả.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "tu-sat-ham-dia-thu-than-menh",
+      "ten": "Tứ Sát Hãm Địa Thủ Thân Mệnh",
+      "tenKhac": ["Quân Tử Bất Tại Dã"],
+      "nhom": "bần hàn",
+      "dieuKien": "Tứ Sát tinh thủ Thân Mệnh, ở hãm địa.",
+      "luanGiai": "Không có quyền hành gì.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "loc-suy-ma-khon",
+      "ten": "Lộc Suy Mã Khốn",
+      "nhom": "bần hàn",
+      "dieuKien": "Hạn gặp Thất Sát, Lộc Tồn - Thiên Mã đóng ở đất Không Vong.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "liem-sat-tham-pha-that-ham",
+      "ten": "Liêm Sát Tham Phá Thất Hãm",
+      "nhom": "bần hàn",
+      "dieuKien": "Mệnh cung có Liêm Trinh, Thất Sát, Tham Lang, Phá Quân thất hãm, lại phùng thêm Thất Sát.",
+      "luanGiai": "Bần tiện.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "that-sat-duong-da-diet-tinh",
+      "ten": "Thất Sát Dương Đà Điệt Tịnh",
+      "nhom": "hung",
+      "dieuKien": "Thất Sát đồng cung hoặc hội chiếu với Kình Dương - Đà La; lưu niên lại gặp Dương Đà quấy nhiễu.",
+      "luanGiai": "Khi các sao thay nhau tụ họp (điệt tịnh) sẽ xuất hiện hung tượng.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "tam-phuong-sat-tu-hung-cach",
+      "ten": "Tam Phương Sát Tụ",
+      "nhom": "hung",
+      "dieuKien": "Tam phương tứ chính của một cung nào đó đều có Sát tinh.",
+      "luanGiai": "Hành hạn gặp thêm Kị tinh quấy nhiễu hoặc Sát xâm thì rõ ràng là hung tượng.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "song-ky-kep-sat",
+      "ten": "Song Kị Kẹp Sát",
+      "nhom": "hung",
+      "dieuKien": "Hóa Kị của ba đời (năm sinh, đại hạn, lưu niên) đóng ở hai cung kẹp Sát tinh.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "linh-xuong-da-vu",
+      "ten": "Linh Xương Đà Vũ",
+      "nhom": "hung",
+      "dieuKien": "Tổ hợp Linh Tinh, Văn Xương, Đà La, Vũ Khúc (thiếu Đà La nguyên cục thì Đà La lưu niên có thể thay thế).",
+      "luanGiai": "Gặp Lộc thì cát, gặp Kị thì hung.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "co-luong-duong-da-hoi",
+      "ten": "Cơ Lương Dương Đà Hội",
+      "nhom": "hung",
+      "dieuKien": "Thiên Cơ, Thiên Lương, Kình Dương (hoặc Đà La) hội hợp.",
+      "luanGiai": "Thiên Cơ chủ cơ trí, Thiên Lương chủ phân tích, Dương Đà chủ nghị lực - tổ hợp này thiên về lấy trí năng hóa thành vật chất, dễ xuất hiện hành vi bất chấp để đạt mục đích.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "hinh-tu-giap-an",
+      "ten": "Hình Tù Giáp Ấn",
+      "nhom": "hung",
+      "dieuKien": "Liêm Trinh (hóa khí Tù), Thiên Tướng (hóa khí Ấn), Kình Dương (hóa khí Hình) kẹp nhau - thiếu Kình Dương thì Đà La thay cũng thành cách.",
+      "luanGiai": "Liêm Trinh Hóa Lộc thì đầu óc thanh tĩnh; Liêm Trinh Hóa Kị thì dễ cấu kết trục lợi, phạm pháp - cách này có thiên hướng vi phạm pháp luật.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "liem-sat-duong-da-lo-thuong-mai-thi",
+      "ten": "Liêm Sát Dương Đà",
+      "tenKhac": ["Lộ Thượng Mai Thi"],
+      "nhom": "hung",
+      "dieuKien": "Liêm Trinh, Thất Sát, Kình Dương (hoặc Đà La) hội hợp.",
+      "luanGiai": "Dễ đánh giá sai tình thế, phản trắc, phạm pháp, thân bại danh liệt; ứng hung khi bị Hóa Kị dẫn động.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "ma-dau-doi-kiem",
+      "ten": "Mã Đầu Đới Kiếm",
+      "nhom": "hung",
+      "dieuKien": "Kình Dương đóng một mình tại cung Ngọ.",
+      "luanGiai": "Ngọ là đất hỏa vượng, kim gặp hỏa luyện thành kiếm sắc - uy lực hiển đạt, uy chấn biên cương; tuy phú quý nhưng không bền lâu.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "cu-hoa-duong-da",
+      "ten": "Cự Hỏa Dương (Đà)",
+      "nhom": "hung",
+      "dieuKien": "Cự Môn, Hỏa Tinh, Kình Dương (hoặc Đà La) - tính là kẹp Sát thành cách.",
+      "luanGiai": "Thành hay bại đều do Lộc hoặc Kị dẫn động.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "cu-linh-duong-da",
+      "ten": "Cự Linh Dương (Đà)",
+      "nhom": "hung",
+      "dieuKien": "Cự Môn, Linh Tinh, Kình Dương (hoặc Đà La) - cũng là kẹp Sát thành cách.",
+      "luanGiai": "Thành hay bại đều do Lộc hoặc Kị dẫn động.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "hiep-sat-cach",
+      "ten": "Hiệp Sát Cách",
+      "nhom": "hung",
+      "dieuKien": "Bất kỳ chính tinh nào bị kẹp bởi một trong bốn nhóm sát tinh Hỏa-Dương, Hỏa-Đà, Linh-Dương, Linh-Đà.",
+      "luanGiai": "Có chính tinh thì mục tiêu theo đuổi mang đặc tính của chính tinh đó (ví dụ Tử Vi bị Hỏa, Dương kẹp thì đặc tính Tử Vi trở thành mục tiêu theo đuổi chính).",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "bat-to-hop-hoa-linh-duong-da-gap-khong-kiep",
+      "ten": "Tám Tổ Hợp Hỏa/Linh - Dương/Đà Gặp Không/Kiếp",
+      "tenKhac": ["Hỏa Không Thì Phát, Kim Không Thì Kêu"],
+      "nhom": "hung",
+      "dieuKien": "Tám tổ hợp: Hỏa Dương Không, Hỏa Đà Không, Hỏa Dương Kiếp, Hỏa Đà Kiếp, Linh Dương Không, Linh Đà Không, Linh Dương Kiếp, Linh Đà Kiếp - tức các cách Hỏa/Linh Dương/Đà nguyên bản bị Không Kiếp xung phá.",
+      "luanGiai": "Vốn là hung cách nhưng gặp Không Kiếp lại phản hung thành cát, nhất là khi có Song Lộc phù trợ đồng cung. Hợp làm nghề nghiên cứu, thiết kế, khai phá nhân tài. Nếu bị Kị tinh xâm nhập thì tổn hại nguyên khí nhưng vẫn có cơ hội làm lại từ đầu khi gặp vận Lộc.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "giap-ky-thanh-ac-cach",
+      "ten": "Giáp Kị Thành Ác Cách",
+      "nhom": "ác",
+      "dieuKien": "Kình Dương - Đà La, Hỏa Tinh - Linh Tinh, hoặc Địa Kiếp - Thiên Không kẹp Hóa Kị hai bên.",
+      "luanGiai": "Gặp phải càng hung; Hóa Kị được tính ở cả nguyên cục, đại hạn, lưu niên.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "hoa-ky-hiep-sat-thanh-cach",
+      "ten": "Hóa Kị Hiệp Sát Thành Cách",
+      "nhom": "ác",
+      "dieuKien": "Hóa Kị hiệp cùng một trong bốn tổ hợp Hỏa Dương, Hỏa Đà, Linh Dương, Linh Đà (không có Không Kiếp).",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "tam-phuong-ky-sat-cach",
+      "ten": "Tam Phương Kị Sát Cách",
+      "nhom": "ác",
+      "dieuKien": "Tam phương tứ chính của một cung đều có Sát tinh và Hóa Kị.",
+      "luanGiai": "Khác Tam Phương Sát Tụ ở chỗ có thêm Hóa Kị.",
+      "nguon": "dau-so-tinh-thanh"
+    },
+    {
+      "id": "tam-ky-xung-khac",
+      "ten": "Tam Kỳ Xung Khắc",
+      "nhom": "ác",
+      "dieuKien": "Hóa Kị, Hóa Quyền, Hóa Khoa đồng thời hội nhập vào cùng một cung.",
+      "luanGiai": "Thê thảm, nhất định có tai họa.",
+      "nguon": "dau-so-tinh-thanh"
+    }
   ]
 }
