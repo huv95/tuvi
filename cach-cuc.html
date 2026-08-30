@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <script>if (localStorage.getItem('tuvi-giao-dien') === 'sang') document.documentElement.classList.add('giay');</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tra Cứu Cách Cục - Tử Vi Myn 001</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        mystic: {
+                            900: 'var(--nen)',
+                            800: 'var(--nen-noi)',
+                            700: 'var(--vien-mo)',
+                            600: 'var(--vien)',
+                            500: 'var(--chu-nhat)',
+                            accent: '#d97706',
+                            gold: '#fbbf24',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="./assets/theme.css">
+    <style>
+        body {
+            background-color: var(--nen);
+            color: var(--chu);
+            font-family: var(--font-chu);
+        }
+        .mystic-card {
+            background: rgba(30, 23, 56, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(251, 191, 36, 0.15);
+        }
+        .mystic-card:hover { border-color: rgba(251, 191, 36, 0.4); }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--nen); }
+        ::-webkit-scrollbar-thumb { background: #2d2252; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #fbbf24; }
+
+        .nhom-btn { transition: all .15s ease; }
+        .nhom-btn.active { box-shadow: 0 0 0 1px currentColor inset; }
+
+        .the-cach {
+            background: rgba(30, 23, 56, 0.55);
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            border-left-width: 4px;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-16 flex flex-col">
+
+    <!-- Header -->
+    <header class="border-b border-mystic-700/60 bg-mystic-900/80 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-purple-800 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                    <i class="fa-solid font-serif">☯</i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold font-serif tracking-wide gold-gradient-text">TRA CỨU CÁCH CỤC</h1>
+                    <p class="text-xs text-gray-400">94 cách cục cổ điển — tổng hợp từ Đẩu Số Tinh Thành &amp; Tử Vi Giảng Minh</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="nutChuyenGiaoDien" class="nut-giao-dien"></button>
+                <a href="index.html" class="text-xs sm:text-sm text-gray-300 hover:text-amber-300 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-arrow-left"></i> Mục lục
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full space-y-8">
+
+        <!-- CẢNH BÁO TRẠNG THÁI -->
+        <div class="flex items-start gap-3 rounded-xl border border-dashed border-rose-400/30 bg-rose-400/5 px-4 py-3">
+            <i class="fa-solid fa-triangle-exclamation text-rose-300 mt-0.5"></i>
+            <p class="text-xs text-rose-200/90 leading-relaxed">
+                Cô giáo <strong>chưa dạy chính thức</strong> phần Cách Cục (Giai Đoạn 3 trên trang Mục lục vẫn ở trạng thái
+                "chờ cô dạy tiếp"). Trang này là công cụ <strong>tra cứu tham khảo</strong> — tổng hợp nguyên văn từ hai bộ sách cổ
+                trong <code class="text-[11px]">refs/</code>, chưa phải nội dung đã được cô chốt theo lộ trình học.
+            </p>
+        </div>
+
+        <!-- INTRO -->
+        <section class="mystic-card rounded-2xl p-6 sm:p-8">
+            <span class="text-xs uppercase tracking-widest text-amber-400 font-semibold">Kho Cách Cục</span>
+            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white mt-1 mb-3">Tổ Hợp Sao Kinh Điển Trong Tử Vi Đẩu Số</h2>
+            <p class="text-sm text-gray-300 leading-relaxed max-w-4xl">
+                Mỗi "cách cục" là một tổ hợp sao + vị trí cung được tiền nhân đặt tên riêng và tổng kết cát hung. Dữ liệu dưới đây lấy
+                từ <code class="text-[11px] text-amber-200/80">refs/dau-so-tinh-thanh.md</code> (Tiết 4: Khái luận về cách cục) và
+                <code class="text-[11px] text-amber-200/80">refs/tu-vi-giang-minh.md</code> (chương Các Cách Cuộc Trong Tử Vi Đầu Số),
+                lưu tại <code class="text-[11px] text-amber-200/80">data/cach-cuc.json</code> (khoá <code class="text-[11px]">cachCuc</code>).
+            </p>
+        </section>
+
+        <!-- FILTER BAR -->
+        <div class="mystic-card rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row gap-4 items-center justify-between sticky top-[72px] z-40">
+            <div class="relative w-full md:w-80">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-purple-400"></i>
+                <input type="text" id="oTimKiem" placeholder="Tìm tên cách cục, tên sao, điều kiện..."
+                    class="w-full pl-10 pr-4 py-2 bg-mystic-900/80 border border-mystic-700 rounded-xl text-sm text-inherit focus:outline-none focus:border-amber-400 transition-colors">
+            </div>
+            <div id="oLocNhom" class="flex flex-wrap items-center gap-2 w-full md:w-auto justify-start md:justify-end">
+                <!-- nut loc theo nhom, render bang JS -->
+            </div>
+        </div>
+
+        <!-- KET QUA -->
+        <p id="oDemKetQua" class="text-xs text-gray-400"></p>
+        <div id="oLuoiCachCuc" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+        <p id="oRong" class="hidden text-center text-sm text-gray-500 py-10">Không tìm thấy cách cục nào khớp.</p>
+
+        <footer class="text-center text-xs text-gray-500 pt-4 border-t border-mystic-700/40">
+            <p class="mb-2">Nguồn: refs/dau-so-tinh-thanh.md · refs/tu-vi-giang-minh.md — xem data/schema.md để biết cấu trúc dữ liệu.</p>
+            <p>© Tử Vi Myn 001</p>
+        </footer>
+
+    </main>
+
+    <script type="module">
+        import { getCachCuc } from './lib/repo.js';
+        import { initThemeToggle } from './assets/theme-toggle.js';
+        initThemeToggle();
+
+        const esc = (t) => String(t ?? '').replace(/[&<>"]/g,
+            c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]));
+
+        // Trình bày theo nhóm — dữ liệu (nhóm nào tồn tại) đọc từ chính data, chỉ màu sắc là hằng ở đây.
+        const MAU_NHOM = {
+            'phú quý': { vien: 'border-l-emerald-400', chu: 'text-emerald-300', nen: 'bg-emerald-950/60 border-emerald-800/60' },
+            'giàu':    { vien: 'border-l-amber-400',   chu: 'text-amber-300',   nen: 'bg-amber-950/60 border-amber-800/60' },
+            'bần hàn': { vien: 'border-l-slate-400',   chu: 'text-slate-300',   nen: 'bg-slate-800/60 border-slate-600/60' },
+            'hung':    { vien: 'border-l-orange-500',  chu: 'text-orange-300',  nen: 'bg-orange-950/60 border-orange-800/60' },
+            'ác':      { vien: 'border-l-rose-600',    chu: 'text-rose-300',    nen: 'bg-rose-950/60 border-rose-800/60' },
+        };
+        const mauMacDinh = { vien: 'border-l-purple-400', chu: 'text-purple-300', nen: 'bg-purple-950/60 border-purple-800/60' };
+
+        let TAT_CA = [];
+        let nhomDangChon = 'tất cả';
+
+        function veThe(c) {
+            const mau = MAU_NHOM[c.nhom] || mauMacDinh;
+            const tenKhac = (c.tenKhac && c.tenKhac.length)
+                ? '<span class="text-gray-400 font-normal text-xs"> (còn gọi: ' + c.tenKhac.map(esc).join(', ') + ')</span>'
+                : '';
+            const luanGiai = c.luanGiai
+                ? '<p class="text-xs text-gray-300 leading-relaxed mt-2">' + esc(c.luanGiai) + '</p>'
+                : '';
+            return '<div class="the-cach ' + mau.vien + ' p-5 rounded-xl">' +
+                '<div class="flex items-start justify-between gap-2 mb-1.5">' +
+                    '<h3 class="font-serif font-bold text-white leading-snug">' + esc(c.ten) + tenKhac + '</h3>' +
+                    '<span class="shrink-0 text-[10px] px-2 py-0.5 rounded border font-semibold uppercase tracking-wide ' + mau.nen + ' ' + mau.chu + '">' + esc(c.nhom) + '</span>' +
+                '</div>' +
+                '<p class="text-xs text-amber-200/90 leading-relaxed"><strong class="font-semibold">Điều kiện:</strong> ' + esc(c.dieuKien) + '</p>' +
+                luanGiai +
+                '<p class="text-[10px] text-gray-500 mt-3">Nguồn: ' + esc(c.nguon) + '</p>' +
+            '</div>';
+        }
+
+        function locVaVe() {
+            const tuKhoa = document.getElementById('oTimKiem').value.trim().toLowerCase();
+            const ds = TAT_CA.filter(c => {
+                if (nhomDangChon !== 'tất cả' && c.nhom !== nhomDangChon) return false;
+                if (!tuKhoa) return true;
+                const gop = [c.ten, ...(c.tenKhac || []), c.dieuKien, c.luanGiai].filter(Boolean).join(' ').toLowerCase();
+                return gop.includes(tuKhoa);
+            });
+            document.getElementById('oLuoiCachCuc').innerHTML = ds.map(veThe).join('');
+            document.getElementById('oDemKetQua').textContent = 'Hiển thị ' + ds.length + ' / ' + TAT_CA.length + ' cách cục';
+            document.getElementById('oRong').classList.toggle('hidden', ds.length !== 0);
+        }
+
+        function veThanhLoc() {
+            const nhomCoTrongDuLieu = [...new Set(TAT_CA.map(c => c.nhom))];
+            const cacNhom = ['tất cả', ...nhomCoTrongDuLieu];
+            document.getElementById('oLocNhom').innerHTML = cacNhom.map(n => {
+                const nhan = n === 'tất cả' ? 'Tất cả' : n[0].toUpperCase() + n.slice(1);
+                const dangChon = n === nhomDangChon;
+                const mau = n === 'tất cả' ? { chu: 'text-amber-200', nen: 'bg-amber-400/10 border-amber-400/40' } :
+                    (MAU_NHOM[n] || mauMacDinh);
+                const lop = dangChon
+                    ? 'active ' + (mau.nen || 'bg-amber-400/10 border-amber-400/40') + ' ' + (mau.chu || 'text-amber-200')
+                    : 'border-mystic-700 bg-mystic-900/40 text-gray-400 hover:border-amber-400/40';
+                return '<button type="button" data-nhom="' + esc(n) + '" class="nhom-btn text-xs px-3 py-1.5 rounded-lg border font-semibold ' + lop + '">' + esc(nhan) + '</button>';
+            }).join('');
+            document.getElementById('oLocNhom').querySelectorAll('[data-nhom]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    nhomDangChon = btn.dataset.nhom;
+                    veThanhLoc();
+                    locVaVe();
+                });
+            });
+        }
+
+        try {
+            const duLieu = await getCachCuc();
+            TAT_CA = duLieu.cachCuc || [];
+            veThanhLoc();
+            locVaVe();
+            document.getElementById('oTimKiem').addEventListener('input', locVaVe);
+        } catch (e) {
+            document.getElementById('oLuoiCachCuc').innerHTML =
+                '<div class="col-span-full bg-rose-900/70 text-rose-100 text-sm p-3 rounded-xl text-center">' +
+                'Không tải được dữ liệu: ' + esc(e.message) + '. Trang cần chạy qua server tĩnh (npm run dev).</div>';
+        }
+    </script>
+</body>
+</html>
