@@ -5,7 +5,7 @@
     "loai": "chinh-tinh",
     "nguHanh": "Thổ",
     "amDuong": "Dương",
-    "dauTinh": null,
+    "dauTinh": "Nam Đẩu & Bắc Đẩu Tinh",
     "bo": "Tử Phủ Vũ Tướng Liêm",
     "vongSao": "Vòng Tử Vi",
     "loaiTinh": "Đế Tinh",
@@ -22,8 +22,8 @@
       "tu-tuc"
     ],
     "kyGap": [],
-    "luanCungTot": "Khi thủ Mệnh hoặc Quan Lộc, Tử Vi phát huy tối đa khí chất \"minh quân\", có năng lực chỉ huy đắc lực, gánh vác trách nhiệm lớn và dễ đạt được danh vị cao.",
-    "luanCungXau": "Do bản chất Đế tinh mang cái tôi rất cao và sĩ diện, khi đóng ở các cung Lục thân dễ gây ra sự cô khắc, lấn át người thân, hoặc khiến đương số phải gánh vác trách nhiệm gia đình quá nặng nề dẫn đến mệt mỏi. Tại cung Bào, Tử Vi chủ về sự đơn độc, hình khắc.",
+    "luanCungTot": "Tử Vi thuộc Dương Thổ — hành Thổ chủ nền tảng, quy tụ và gánh vác — đúng vai trò Đế tinh cần một \"ngôi vị\" để trị vì. Khi thủ Mệnh hoặc Quan Lộc, Tử Vi phát huy tối đa khí chất \"minh quân\", có năng lực chỉ huy đắc lực, gánh vác trách nhiệm lớn và dễ đạt được danh vị cao.",
+    "luanCungXau": "Do bản chất Đế tinh mang cái tôi rất cao, quen ở ngôi tôn quý hơn là đứng ngang hàng, khi đóng ở các cung Lục thân (Huynh Đệ, Phụ Mẫu, Tử Tức) — vốn cần sự bình đẳng, sẻ chia — Tử Vi dễ gây ra sự cô khắc, lấn át người thân hoặc khiến đương số phải gánh vác trách nhiệm gia đình quá nặng nề dẫn đến mệt mỏi. Tại cung Bào, Tử Vi chủ về sự đơn độc, hình khắc.",
     "tuKhoa": [
       "Đế vương",
       "Quyền lực",
@@ -40,7 +40,7 @@
     "loai": "chinh-tinh",
     "nguHanh": "Thổ",
     "amDuong": "Âm",
-    "dauTinh": null,
+    "dauTinh": "Nam Đẩu Tinh",
     "bo": "Tử Phủ Vũ Tướng Liêm",
     "vongSao": "Vòng Thiên Phủ",
     "loaiTinh": "Kho Tinh",
@@ -55,8 +55,8 @@
     "kyGap": [
       "Đồng cung Không vong (Địa Không, Địa Kiếp, Tuần, Triệt)"
     ],
-    "luanCungTot": "Đóng tại Tài Bạch, Điền Trạch là đắc vị, ví như kho vàng bạc được cất giữ cẩn mật, chủ về điền sản dồi dào, tài chính tích lũy vững bền.",
-    "luanCungXau": "Thiên Phủ rất kỵ gặp các sao Không (Địa Không, Địa Kiếp, Tuần, Triệt). Khi gặp Không vong, kho tiền bị \"thủng\" thành \"không khố\" (kho rỗng), khiến đương số dễ lâm vào cảnh túng thiếu đột ngột, phá tán di sản tổ nghiệp.",
+    "luanCungTot": "Thiên Phủ là Âm Thổ — hành Thổ chủ tích chứa, bồi đắp — đúng bản chất Kho Tinh cần một nơi để cất giữ. Đóng tại Tài Bạch, Điền Trạch là đắc vị, ví như kho vàng bạc được cất giữ cẩn mật, chủ về điền sản dồi dào, tài chính tích lũy vững bền.",
+    "luanCungXau": "Vì bản tính Thổ ôn hòa, bao dung nên Thiên Phủ gần như không có cung an vị nào là xấu — cái kỵ của sao này nằm ở việc gặp sao chứ không phải ở cung. Thiên Phủ rất kỵ gặp các sao Không (Địa Không, Địa Kiếp, Tuần, Triệt): khi gặp Không vong, kho tiền bị \"thủng\" thành \"không khố\" (kho rỗng), khiến đương số dễ lâm vào cảnh túng thiếu đột ngột, phá tán di sản tổ nghiệp.",
     "tuKhoa": [
       "Lộc khố",
       "Tích lũy",
@@ -73,7 +73,7 @@
     "loai": "chinh-tinh",
     "nguHanh": "Kim",
     "amDuong": "Âm",
-    "dauTinh": null,
+    "dauTinh": "Bắc Đẩu Tinh",
     "bo": "Tử Phủ Vũ Tướng Liêm",
     "vongSao": "Vòng Tử Vi",
     "loaiTinh": "Tài Tinh",
@@ -81,15 +81,16 @@
     "tomTat": "Chính Tài tinh quả cảm, dứt khoát, giỏi kinh doanh nhưng mang thuộc tính Âm Kim thu liễm, dễ cô khắc gia đạo.",
     "moTa": "Chủ về tiền tài, sự quả quyết, cô độc tích cực và tính thực tế cao.",
     "cungTot": [
-      "tai-bach"
+      "tai-bach",
+      "dien-trach"
     ],
     "cungXau": [
       "phu-the",
       "tu-tuc"
     ],
     "kyGap": [],
-    "luanCungTot": "Đóng tại Tài Bạch giúp đương số có tư duy tài chính sắc bén, khả năng kinh doanh xuất sắc, dứt khoát và dòng tiền dồi dào.",
-    "luanCungXau": "Hóa khí của Vũ Khúc là \"Tù\" và \"Cô độc\" (Quả tú tinh). Ngũ hành Âm Kim mang tính chất thu liễm, lạnh lùng. Khi đóng ở cung Phu Thê hay Tử Tức, nó gây ra sự hình khắc mạnh mẽ, vợ chồng lãnh đạm, sinh ly tử biệt hoặc hiếm muộn con cái.",
+    "luanCungTot": "Vũ Khúc là Âm Kim — hành Kim chủ sự sắc bén, quyết đoán và thu góp — nên rất vượng khi đóng tại Tài Bạch, Điền Trạch: giúp đương số có tư duy tài chính sắc bén, khả năng kinh doanh xuất sắc, dứt khoát, dòng tiền dồi dào và giữ vững được điền sản.",
+    "luanCungXau": "Hóa khí của Vũ Khúc là \"Tù\" và \"Cô độc\" (Quả tú tinh). Ngũ hành Âm Kim mang tính chất thu liễm, lạnh lùng — trái ngược với sự ấm áp, sinh sôi mà các cung tình cảm như Phu Thê, Tử Tức cần có. Khi đóng ở hai cung này, nó gây ra sự hình khắc mạnh mẽ, vợ chồng lãnh đạm, sinh ly tử biệt hoặc hiếm muộn con cái.",
     "tuKhoa": [
       "Chính tài",
       "Quả cảm",
@@ -106,7 +107,7 @@
     "loai": "chinh-tinh",
     "nguHanh": "Thủy",
     "amDuong": "Dương",
-    "dauTinh": null,
+    "dauTinh": "Nam Đẩu Tinh",
     "bo": "Tử Phủ Vũ Tướng Liêm",
     "vongSao": "Vòng Thiên Phủ",
     "loaiTinh": "Ấn Tinh",
@@ -123,7 +124,7 @@
     "kyGap": [
       "Cung gặp Tuần, Triệt"
     ],
-    "luanCungTot": "Đóng tại Quan Lộc chủ về công danh an định, bình ổn, cực kỳ hợp với vai trò phò tá đắc lực (thư ký, tham mưu, phó phòng, trợ lý cao cấp).",
+    "luanCungTot": "Thiên Tướng là Dương Thủy — hành Thủy chủ lưu chuyển, thích nghi, phò trợ — hợp với vai trò Ấn Tinh cần vận hành trong guồng máy quyền lực của người khác. Đóng tại Quan Lộc chủ về công danh an định, bình ổn, cực kỳ hợp với vai trò phò tá đắc lực (thư ký, tham mưu, phó phòng, trợ lý cao cấp).",
     "luanCungXau": "Thiên Tướng tượng trưng cho khuôn mặt và danh dự. Nếu gặp Tuần, Triệt án ngữ, chủ về bị \"mất mặt\", gãy đổ công danh tai hại hoặc tàn tật. Đóng tại Phu Thê hãm địa chủ về sự lấn lướt bạn đời, gia đạo hay cãi vã.",
     "tuKhoa": [
       "Ấn tín",
@@ -141,7 +142,7 @@
     "loai": "chinh-tinh",
     "nguHanh": "Hỏa",
     "amDuong": "Âm",
-    "dauTinh": null,
+    "dauTinh": "Bắc Đẩu Tinh",
     "bo": "Tử Phủ Vũ Tướng Liêm",
     "vongSao": "Vòng Tử Vi",
     "loaiTinh": "Tù Tinh / Đào Hoa",
@@ -156,8 +157,8 @@
       "tat-ach"
     ],
     "kyGap": [],
-    "luanCungTot": "Khi đắc địa ở Quan Lộc (đặc biệt Dần, Thân), Liêm Trinh bộc lộ tính chất của một vị quan thanh liêm, giúp đương số thăng tiến nhanh, nắm giữ uy quyền lớn.",
-    "luanCungXau": "Liêm Trinh mang ngọn lửa Âm Hỏa dồn nén bên trong. Đóng tại Phu Thê chủ về sự ghen tuông khắc nghiệt, dễ gây hình khắc, ly hôn nhiều lần. Đóng tại Tật Ách dễ bộc phát các bệnh về máu mủ, tim mạch hoặc tai nạn mổ xẻ dữ dội.",
+    "luanCungTot": "Liêm Trinh là Âm Hỏa — hành Hỏa chủ uy nghiêm, quyết liệt — khi đắc địa ở Quan Lộc (đặc biệt Dần, Thân), Liêm Trinh bộc lộ tính chất của một vị quan thanh liêm, khuôn phép nghiêm minh, giúp đương số thăng tiến nhanh, nắm giữ uy quyền lớn.",
+    "luanCungXau": "Liêm Trinh mang ngọn lửa Âm Hỏa dồn nén bên trong, tính vốn khắc nghiệt và đa nghi. Đóng tại Phu Thê chủ về sự ghen tuông khắc nghiệt, dễ gây hình khắc, ly hôn nhiều lần. Đóng tại Tật Ách, ngọn lửa dồn nén ấy dễ bộc phát thành các bệnh về máu mủ, tim mạch hoặc tai nạn mổ xẻ dữ dội.",
     "tuKhoa": [
       "Quan tư pháp",
       "Kỷ luật",
@@ -174,7 +175,7 @@
     "loai": "chinh-tinh",
     "nguHanh": "Kim",
     "amDuong": "Dương",
-    "dauTinh": null,
+    "dauTinh": "Nam Đẩu Tinh",
     "bo": "Sát Phá Tham",
     "vongSao": "Vòng Thiên Phủ",
     "loaiTinh": "Tướng Tinh",
@@ -192,8 +193,8 @@
       "phu-the"
     ],
     "kyGap": [],
-    "luanCungTot": "Đóng tại Mệnh hay Quan Lộc giúp đương số có tư duy độc lập, chịu được áp lực cực lớn, dám dấn thân và dễ lập chiến công lừng lẫy trong võ nghiệp hoặc kinh doanh mạo hiểm.",
-    "luanCungXau": "Do mang sát khí mạnh và tính chất cô độc, Thất Sát đóng ở các cung Lục thân như Phu Thê, Phụ Mẫu, Tử Tức chủ về sự hình khắc nặng nề, gia đình ly tán, khó tìm được sự nâng đỡ từ người thân.",
+    "luanCungTot": "Thất Sát là Dương Kim — hành Kim chủ sự sắc bén, quyết liệt và chinh phạt — đúng chất Tướng Tinh xông pha trận mạc. Đóng tại Mệnh hay Quan Lộc giúp đương số có tư duy độc lập, chịu được áp lực cực lớn, dám dấn thân và dễ lập chiến công lừng lẫy trong võ nghiệp hoặc kinh doanh mạo hiểm.",
+    "luanCungXau": "Kim khí của Thất Sát mang sát khí mạnh và tính cô độc bẩm sinh, không dễ dung hòa như Thổ hay Thủy. Đóng ở các cung Lục thân như Phu Thê, Phụ Mẫu, Tử Tức, Huynh Đệ — vốn cần sự mềm mỏng, gắn kết — Thất Sát chủ về sự hình khắc nặng nề, gia đình ly tán, khó tìm được sự nâng đỡ từ người thân.",
     "tuKhoa": [
       "Tướng tinh",
       "Dũng mãnh",
@@ -210,7 +211,7 @@
     "loai": "chinh-tinh",
     "nguHanh": "Thủy",
     "amDuong": "Dương",
-    "dauTinh": null,
+    "dauTinh": "Bắc Đẩu Tinh",
     "bo": "Sát Phá Tham",
     "vongSao": "Vòng Thiên Phủ",
     "loaiTinh": "Hao Tinh",
@@ -227,8 +228,8 @@
       "tai-bach"
     ],
     "kyGap": [],
-    "luanCungTot": "Đắc địa tại Mệnh, Quan (đặc biệt tại Tý, Ngọ) giúp đương số có uy quyền hiển hách, tạo nên những bước ngoặt vĩ đại và mang tính cách mạng cho sự nghiệp.",
-    "luanCungXau": "Phá Quân là \"Hao tinh\" chủ về sự hao tán, biến động đột ngột. Đóng tại Phu Thê chủ sự hao tán phu thê, vợ chồng bất nghĩa phải chắp nối nhiều lần; đóng tại Tử Tức gây hiếm con, khó nuôi; đóng tại Tài Bạch hãm địa chủ về tiền bạc ra vào thất thường, dễ bị phá sản.",
+    "luanCungTot": "Phá Quân là Dương Thủy — hành Thủy chủ biến động, cuộn chảy không ngừng — đắc địa tại Mệnh, Quan (đặc biệt tại Tý, Ngọ) giúp đương số có uy quyền hiển hách, tạo nên những bước ngoặt vĩ đại và mang tính cách mạng cho sự nghiệp.",
+    "luanCungXau": "Phá Quân là \"Hao tinh\", dòng Thủy chảy xiết của nó chủ sự hao tán, biến động đột ngột — bất lợi cho những cung vốn cần sự bền vững, tích lũy. Đóng tại Phu Thê chủ sự hao tán phu thê, vợ chồng bất nghĩa phải chắp nối nhiều lần; đóng tại Tử Tức gây hiếm con, khó nuôi; đóng tại Tài Bạch hãm địa chủ về tiền bạc ra vào thất thường, dễ bị phá sản.",
     "tuKhoa": [
       "Đột phá",
       "Hao tinh",
@@ -245,7 +246,7 @@
     "loai": "chinh-tinh",
     "nguHanh": "Thủy",
     "amDuong": "Dương",
-    "dauTinh": null,
+    "dauTinh": "Bắc Đẩu Tinh",
     "bo": "Sát Phá Tham",
     "vongSao": "Vòng Thiên Phủ",
     "loaiTinh": "Dục Tinh",
@@ -262,8 +263,8 @@
     "kyGap": [
       "Hãm địa tại Tỵ, Hợi"
     ],
-    "luanCungTot": "Khi tọa Mệnh, Tài gặp Hỏa Tinh/Linh Tinh (cách Hỏa Tham, Linh Tham) chủ về sự hoạnh phát tài lộc rực rỡ, giàu sang tột bậc đột ngột.",
-    "luanCungXau": "Khi rơi vào vị trí hãm địa (Tỵ, Hợi) hoặc đóng ở cung Phu Thê, Tham Lang bộc lộ tính chất \"Đào hoa lộ\" dâm dật, chơi bời sa đọa, gây hình khắc gia đạo và lụy thân vì tửu sắc.",
+    "luanCungTot": "Tham Lang là Dương Thủy pha Kim, tính chất linh hoạt, đa tài và nhạy bén tài chính. Khi tọa Mệnh, Tài gặp Hỏa Tinh/Linh Tinh (cách Hỏa Tham, Linh Tham) chủ về sự hoạnh phát tài lộc rực rỡ, giàu sang tột bậc đột ngột.",
+    "luanCungXau": "Phu Thê vốn cần sự chung thủy, ổn định — trái ngược hẳn với bản chất Dục Tinh đa mang của Tham Lang. Khi rơi vào vị trí hãm địa (Tỵ, Hợi) hoặc đóng ở cung Phu Thê, Tham Lang bộc lộ tính chất \"Đào hoa lộ\" dâm dật, chơi bời sa đọa, gây hình khắc gia đạo và lụy thân vì tửu sắc.",
     "tuKhoa": [
       "Đa tài",
       "Hỏa Tham hoạnh phát",
@@ -297,8 +298,8 @@
       "dien-trach"
     ],
     "kyGap": [],
-    "luanCungTot": "Đóng tại Mệnh, Quan, Phúc giúp đương số có trí tuệ siêu việt, giỏi lên kế hoạch, tham mưu, học vấn cao rộng và giỏi giải quyết vấn đề.",
-    "luanCungXau": "Thiên Cơ là một \"Động tinh\" uyển chuyển như dây leo Âm Mộc. Khi đóng ở Phu Thê dễ gây ra biến động lớn trong tình cảm, vợ chồng bất hòa. Đóng ở Điền Trạch hãm địa (như tại Dậu) dễ gây ra cảnh phá sản, lìa bỏ tổ nghiệp, nhà đất ít và phải chuyển nhà thường xuyên.",
+    "luanCungTot": "Thiên Cơ là Âm Mộc — hành Mộc chủ sinh trưởng, uyển chuyển và trí tuệ — đóng tại Mệnh, Quan, Phúc giúp đương số có trí tuệ siêu việt, giỏi lên kế hoạch, tham mưu, học vấn cao rộng và giỏi giải quyết vấn đề; là Ích Thọ Tinh nên đặc biệt vượng khí tại Phúc Đức, cung của tinh thần và phúc thọ.",
+    "luanCungXau": "Thiên Cơ là một \"Động tinh\" uyển chuyển như dây leo Âm Mộc, khó đứng yên một chỗ — trái ngược với sự bền vững mà Điền Trạch cần và sự chung thủy mà Phu Thê cần. Khi đóng ở Phu Thê dễ gây ra biến động lớn trong tình cảm, vợ chồng bất hòa. Đóng ở Điền Trạch hãm địa (như tại Dậu) dễ gây ra cảnh phá sản, lìa bỏ tổ nghiệp, nhà đất ít và phải chuyển nhà thường xuyên.",
     "tuKhoa": [
       "Bộ não",
       "Mưu trí",
@@ -343,7 +344,7 @@
     "kyGap": [
       "Hãm địa tại các cung ban ngày"
     ],
-    "luanCungTot": "Đóng tại Điền, Tài sáng sủa giúp đương số có duyên lớn với điền sản, bất động sản nhiều và tích lũy được khối tài sản khổng lồ.",
+    "luanCungTot": "Thái Âm là Âm Thủy — hành Thủy chủ tích tụ, thẩm thấu âm thầm — đúng bản chất Phú Tinh cần một nơi lặng lẽ bồi đắp của cải. Sách vở xưa xem Tài, Điền là hai cung đắc địa nhất của Thái Âm: đóng tại Điền, Tài sáng sủa giúp đương số có duyên lớn với điền sản, bất động sản nhiều và tích lũy được khối tài sản khổng lồ.",
     "luanCungXau": "Thái Âm hãm địa đóng ở Tật Ách dễ gây ra các bệnh sinh lý nữ hoặc đau mắt. Nếu hãm địa thủ Mệnh, tính chất âm nhu quá mức khiến đương số dễ rơi vào đa sầu đa cảm, suy nghĩ tiêu cực, tự gây áp lực tinh thần cho bản thân.",
     "tuKhoa": [
       "Mặt Trăng",
@@ -390,8 +391,8 @@
       "tai-bach"
     ],
     "kyGap": [],
-    "luanCungTot": "Đóng tại Mệnh, Phúc giúp đương số có đời sống tinh thần an lạc, sống thọ, tấm lòng nhân hậu và luôn gặp hung hóa cát.",
-    "luanCungXau": "Thiên Đồng có nhược điểm là lười biếng, thiếu kiên nhẫn và dễ thỏa hiệp. Nếu đóng ở Quan, Tài hãm địa mà không được sát tinh kích phát, đương số sẽ thiếu ý chí tiến thủ, làm việc đầu voi đuôi chuột, tiền bạc túng thiếu và sự nghiệp trì trệ.",
+    "luanCungTot": "Thiên Đồng là Dương Thủy hiền hòa, êm ả — đúng chất Phúc Tinh. Đóng tại Mệnh, Phúc giúp đương số có đời sống tinh thần an lạc, sống thọ, tấm lòng nhân hậu và luôn gặp hung hóa cát.",
+    "luanCungXau": "Thiên Đồng có nhược điểm là lười biếng, thiếu kiên nhẫn và dễ thỏa hiệp — \"phúc bất trùng lai\" nên cần có sát tinh (như Kình Dương) kích phát mới bừng dậy ý chí. Nếu đóng ở Quan, Tài — hai cung vốn đòi hỏi sự phấn đấu, cạnh tranh — mà không được sát tinh kích phát, đương số sẽ thiếu ý chí tiến thủ, làm việc đầu voi đuôi chuột, tiền bạc túng thiếu và sự nghiệp trì trệ.",
     "tuKhoa": [
       "Phúc tinh",
       "An nhàn",
@@ -455,8 +456,8 @@
       "phu-the"
     ],
     "kyGap": [],
-    "luanCungTot": "Đóng tại Phụ Mẫu giúp cha mẹ thọ trường, đóng tại Tật Ách là đệ nhất cứu giải giúp hóa giải mọi bệnh tật, tai ương nan y.",
-    "luanCungXau": "Bản chất của Thiên Lương mang tính chất \"Trưởng lão\" bảo thủ, thích giáo huấn người khác. Khi đóng ở Tử Tức hay Phu Thê hãm địa, tính chất này dễ gây ra sự cô đơn, xa cách về mặt tình cảm, vợ chồng hình khắc hoặc chậm con cái.",
+    "luanCungTot": "Thiên Lương là Dương Mộc — hành Mộc mang tính che chở, nuôi dưỡng như bóng cây đại thụ — đúng bản chất Ấm Tinh, đệ nhất sao cứu giải. Đóng tại Phụ Mẫu giúp cha mẹ thọ trường, đóng tại Tật Ách là đệ nhất cứu giải giúp hóa giải mọi bệnh tật, tai ương nan y.",
+    "luanCungXau": "Bản chất của Thiên Lương mang tính chất \"Trưởng lão\" bảo thủ, thích giáo huấn hơn là đối xử bình đẳng. Ở những vị trí hãm địa (Tỵ, Hợi), tính khí này bộc lộ rõ nhất: khi đóng ở Tử Tức hay Phu Thê, nó dễ gây ra sự cô đơn, xa cách về mặt tình cảm, vợ chồng hình khắc hoặc chậm con cái — dù ở các vị trí đắc địa khác, Thiên Lương tại hai cung này vẫn có thể tốt đẹp nếu đi cùng Thiên Đồng, Thái Dương hay Thiên Cơ.",
     "tuKhoa": [
       "Ấm tinh",
       "Giải tai ách",
@@ -483,7 +484,7 @@
     "loai": "chinh-tinh",
     "nguHanh": "Thủy",
     "amDuong": "Âm",
-    "dauTinh": null,
+    "dauTinh": "Bắc Đẩu Tinh",
     "bo": "Cự Nhật",
     "vongSao": "Vòng Thiên Phủ",
     "loaiTinh": "Ám Tinh",
@@ -500,8 +501,8 @@
       "phu-mau"
     ],
     "kyGap": [],
-    "luanCungTot": "Đóng ở Quan Lộc đắc địa giúp đương số hiển đạt trong ngành tư pháp, thẩm phán, ngoại giao hay diễn thuyết. Đóng ở Điền Trạch mang tượng nhà cửa cao ráo, điền sản vượng.",
-    "luanCungXau": "Hóa khí của Cự Môn là \"Ám\" (che lấp ánh sáng) và chủ về thị phi. Khi đóng ở các cung tình cảm như Phu Thê, Phụ Mẫu, Phúc Đức, nó kích hoạt sự nghi ngờ, khắt khe, dễ gây ra tranh cãi khẩu thiệt, gia đạo lạnh nhạt, bất hòa và ly tán.",
+    "luanCungTot": "Cự Môn là Âm Thủy — hành Thủy chủ về trí tuệ, ngôn từ và biện luận sắc bén. Đóng ở Quan Lộc đắc địa giúp đương số hiển đạt trong ngành tư pháp, thẩm phán, ngoại giao hay diễn thuyết — nơi cái miệng sắc bén trở thành công cụ hành nghề. Đóng ở Điền Trạch mang tượng nhà cửa cao ráo, điền sản vượng.",
+    "luanCungXau": "Hóa khí của Cự Môn là \"Ám\" (che lấp ánh sáng) và chủ về thị phi — bản chất này khắc chế trực tiếp sự hòa hợp, tin cậy mà các cung tình cảm gia đạo (Phu Thê, Phụ Mẫu, Phúc Đức) cần có. Khi đóng ở đây, nó kích hoạt sự nghi ngờ, khắt khe, dễ gây ra tranh cãi khẩu thiệt, gia đạo lạnh nhạt, bất hòa và ly tán.",
     "tuKhoa": [
       "Ngoại giao",
       "Khẩu tài",
@@ -525,7 +526,7 @@
     "loai": "chinh-tinh",
     "nguHanh": "Hỏa",
     "amDuong": "Dương",
-    "dauTinh": null,
+    "dauTinh": "Nam Đẩu Tinh",
     "bo": "Cự Nhật",
     "vongSao": "Vòng Tử Vi",
     "loaiTinh": "Nhật Tinh",
@@ -542,7 +543,7 @@
     "kyGap": [
       "Cung ban đêm (Thân đến Tý)"
     ],
-    "luanCungTot": "Đóng ở Mệnh, Quan đắc địa (sinh ban ngày, các cung từ Dần đến Ngọ) giúp đương số sớm thành đạt, công danh hiển hách, tâm hồn quang minh chính đại.",
+    "luanCungTot": "Thái Dương là Dương Hỏa — hành Hỏa chủ tỏa sáng, cho đi và uy quyền công khai — nên Quan Lộc, cung của danh vọng nơi công chúng, chính là nơi ánh sáng Thái Dương phát huy trọn vẹn nhất. Đóng ở Mệnh, Quan đắc địa (sinh ban ngày, các cung từ Dần đến Ngọ) giúp đương số sớm thành đạt, công danh hiển hách, tâm hồn quang minh chính đại.",
     "luanCungXau": "Thái Dương tượng trưng cho người cha, người chồng. Khi hãm địa đóng ở Phu Thê hoặc các cung ban đêm, nó chủ về sự lu mờ ánh sáng, gây bất lợi cực lớn cho nam giới trong nhà (cha/chồng dễ đoản thọ, yếu nhược), hoặc khiến đương số dễ thu hút thị phi, bôi nhọ danh dự.",
     "tuKhoa": [
       "Mặt Trời",
