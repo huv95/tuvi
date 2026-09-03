@@ -160,7 +160,7 @@ export function veDiaBan(khung, laSo, tuyChon = {}) {
 
 // Nội dung chi tiết một cung (chính tinh, cát tinh, hung tinh) cho modal/panel.
 export function moModalCung(cung) {
-  const starChip = (s) => `<span class="bg-slate-800/70 border border-slate-700 px-2 py-0.5 rounded text-[11px] ${lopHanh(s.el)}">${s.name}${s.tuHoa || ''}</span>`;
+  const starChip = (s) => `<span class="the-sao-chip px-2 py-0.5 rounded text-[11px] ${lopHanh(s.el)}">${s.name}${s.tuHoa || ''}</span>`;
   const chinhStarsText = cung.chinhTinh.map(s => `<li class="font-bold ${lopHanh(s.el)}">${s.name} (${s.el})${s.tuHoa || ''}</li>`).join('') || '<li class="text-slate-500">Vô Chính Diệu</li>';
   const phuTotText = cung.phuTinhTot.map(starChip).join(' ') || '<span class="text-slate-500">Không có</span>';
   const phuXauText = cung.phuTinhXau.map(starChip).join(' ') || '<span class="text-slate-500">Không có</span>';
