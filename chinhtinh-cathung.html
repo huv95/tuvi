@@ -908,6 +908,24 @@
             quizScore = 0;
             loadQuizQuestion();
         }
+
+        // Các hàm dưới đây được gọi từ thuộc tính onclick/onchange trong HTML.
+        // <script type="module"> có scope riêng nên phải gắn tay lên window.
+        Object.assign(window, {
+            switchTab,
+            setGroupFilter,
+            filterStars,
+            openStarModal,
+            closeStarModal,
+            setPalaceMode,
+            renderPalaceAnalysis,
+            renderComparison,
+            setPrompt,
+            askGemini,
+            checkAnswer,
+            nextQuestion,
+            resetQuiz,
+        });
     </script>
 </body>
 </html>
