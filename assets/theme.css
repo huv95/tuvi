@@ -93,6 +93,13 @@
   background: color-mix(in srgb, currentColor 13%, transparent);
 }
 
+/* Chip tên sao nhỏ (modal chi tiết cung) — nền/viền theo token, tự đổi đúng
+   giữa nền tối/giấy, khác với .hanh-* (chỉ đổi màu chữ, không đổi nền). */
+.the-sao-chip {
+  background: var(--nen-noi-2);
+  border: 1px solid var(--vien);
+}
+
 /* Chấm tròn nhỏ chỉ ngũ hành */
 .cham-hanh {
   display: inline-block; width: .5rem; height: .5rem;

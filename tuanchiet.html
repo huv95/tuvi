@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <script>if (localStorage.getItem('tuvi-giao-dien') === 'sang') document.documentElement.classList.add('giay');</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuần Không - Triệt Không - Tử Vi Myn 001</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        mystic: {
+                            900: 'var(--nen)',
+                            800: 'var(--nen-noi)',
+                            700: 'var(--vien-mo)',
+                            600: 'var(--vien)',
+                            500: 'var(--chu-nhat)',
+                            accent: '#d97706',
+                            gold: '#fbbf24',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="./assets/theme.css">
+    <style>
+        body {
+            background-color: var(--nen);
+            color: var(--chu);
+            font-family: var(--font-chu);
+        }
+        .mystic-card {
+            background: rgba(30, 23, 56, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(251, 191, 36, 0.15);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--nen); }
+        ::-webkit-scrollbar-thumb { background: #2d2252; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #fbbf24; }
+
+        .so-buoc {
+            width: 2.25rem; height: 2.25rem; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 9999px; font-family: var(--font-nhan); font-weight: 700; font-size: 1.1rem;
+            background: rgba(251, 191, 36, 0.12); color: var(--nhan); border: 1px solid rgba(251, 191, 36, 0.4);
+        }
+
+        /* Bảng tra cứu: dòng khớp với năm sinh vừa nhập được tô sáng */
+        .tra-cuu td, .tra-cuu th { padding: .5rem .75rem; font-size: .8rem; }
+        .tra-cuu th { text-align: left; color: var(--nhan); text-transform: uppercase; font-size: .65rem; letter-spacing: .05em; border-bottom: 1px solid rgba(251,191,36,.25); }
+        .tra-cuu td { border-bottom: 1px solid rgba(148,116,255,.08); color: #cbd5e1; }
+        .tra-cuu tr.khop td { background: rgba(251, 191, 36, 0.1); color: #fde68a; font-weight: 600; }
+
+        /* Bàn cờ rút gọn 12 cung: chỉ hiện Chi/Cung + có bị Không vong hay không */
+        .o-cung {
+            border: 1px solid var(--vien); border-radius: .6rem; padding: .4rem .5rem;
+            display: flex; flex-direction: column; justify-content: space-between; min-height: 5.5rem;
+            background: var(--nen-noi-2);
+        }
+        .o-cung.tuan { border-color: #38bdf8; box-shadow: inset 0 0 0 1px rgba(56,189,248,.4); }
+        .o-cung.triet { border-color: #fb7185; box-shadow: inset 0 0 0 1px rgba(251,113,133,.4); }
+        .o-cung.tuan.triet { background: linear-gradient(135deg, rgba(56,189,248,.12), rgba(251,113,133,.12)); }
+        .o-cung .ten-cung { color: var(--chu); }
+        .o-cung .chi-cung { color: var(--chu-nhat); }
+    </style>
+</head>
+<body class="min-h-screen pb-16 flex flex-col">
+
+    <!-- Header -->
+    <header class="border-b border-mystic-700/60 bg-mystic-900/80 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-rose-600 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                    <i class="fa-solid font-serif">☯</i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold font-serif tracking-wide gold-gradient-text">TUẦN KHÔNG — TRIỆT KHÔNG</h1>
+                    <p class="text-xs text-gray-400">An Sao — Giai Đoạn 2</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="nutChuyenGiaoDien" class="nut-giao-dien"></button>
+                <a href="index.html" class="text-xs sm:text-sm text-gray-300 hover:text-amber-300 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-arrow-left"></i> Mục lục
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-8 flex-1 w-full space-y-8">
+
+        <!-- INTRO -->
+        <section class="mystic-card rounded-2xl p-6 sm:p-8">
+            <span class="text-xs uppercase tracking-widest text-amber-400 font-semibold">Học Cách An Sao</span>
+            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white mt-1 mb-3">Tuần Không &amp; Triệt Không</h2>
+            <p class="text-sm text-gray-300 leading-relaxed">
+                Tuần và Triệt không phải một sao đơn lẻ mà là <strong class="text-sky-300">phép khoanh vùng hai cung liền nhau</strong> —
+                nơi các sao đóng vào đó coi như rơi vào "khoảng trống", lực sao bị che mờ hoặc giảm đi phần nào. Cả hai đã được an sẵn
+                trong <a href="ansaotudong.html" class="text-amber-300 hover:underline">công cụ lập lá số tự động</a> (đủ trong danh sách
+                phụ tinh của mỗi cung), trang này chỉ tách riêng ra để giải thích rõ <strong class="text-sky-300">công thức an</strong> —
+                còn ý nghĩa cát hung chi tiết khi Tuần/Triệt gặp từng chính tinh cụ thể thuộc phần luận giải ở Giai Đoạn 3/4, chưa bàn ở đây.
+            </p>
+        </section>
+
+        <!-- FORM -->
+        <section class="mystic-card rounded-2xl p-6 sm:p-8">
+            <h2 class="text-lg font-serif font-bold text-amber-300 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-user-pen"></i> Nhập Ngày Sinh Để Tra Theo Đúng Lá Số Của Bạn
+            </h2>
+            <form id="form-sinh" class="grid grid-cols-2 sm:grid-cols-4 gap-3" onsubmit="handleSubmit(event)">
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Giới tính</label>
+                    <select id="gender" class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                        <option value="1">Nam</option>
+                        <option value="0">Nữ</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Loại lịch</label>
+                    <select id="calendarType" onchange="toggleLeap()" class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                        <option value="solar">Dương lịch</option>
+                        <option value="lunar">Âm lịch</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Ngày</label>
+                    <input type="number" id="day" min="1" max="31" value="17" required class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Tháng</label>
+                    <input type="number" id="month" min="1" max="12" value="3" required class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Năm</label>
+                    <input type="number" id="year" min="1900" max="2100" value="1995" required class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Giờ</label>
+                    <input type="number" id="hour" min="0" max="23" value="4" required class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                </div>
+                <div id="leap-container" class="hidden col-span-2 sm:col-span-1 flex items-end">
+                    <label class="inline-flex items-center text-xs text-amber-300 cursor-pointer">
+                        <input type="checkbox" id="isLeapMonth" class="rounded bg-mystic-900 border-mystic-600 text-amber-500 mr-2">
+                        Tháng nhuận
+                    </label>
+                </div>
+                <div class="col-span-2 sm:col-span-4">
+                    <button type="submit" class="w-full bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 text-slate-950 font-bold py-2.5 px-4 rounded-xl shadow-lg transition-all">
+                        <i class="fa-solid fa-magnifying-glass mr-1.5"></i> Tra Tuần / Triệt
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- BUOC 1: TRIET -->
+        <section class="mystic-card rounded-2xl p-6 sm:p-8">
+            <div class="flex gap-4">
+                <div class="so-buoc">1</div>
+                <div class="flex-1 min-w-0">
+                    <h3 class="font-serif font-bold text-white text-lg mb-1.5">An Triệt Không</h3>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-3">
+                        Triệt cố định theo <strong class="text-rose-300">Thiên Can năm sinh</strong> (năm âm lịch) — mỗi Can luôn khoanh
+                        đúng một cặp cung liền nhau, không đổi theo Chi, giới tính hay giờ sinh.
+                    </p>
+                    <div id="ket-qua-triet" class="text-sm mb-3"></div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full tra-cuu">
+                            <thead><tr><th>Thiên Can năm sinh</th><th>Triệt Không tại</th></tr></thead>
+                            <tbody id="bang-triet"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BUOC 2: TUAN -->
+        <section class="mystic-card rounded-2xl p-6 sm:p-8">
+            <div class="flex gap-4">
+                <div class="so-buoc">2</div>
+                <div class="flex-1 min-w-0">
+                    <h3 class="font-serif font-bold text-white text-lg mb-1.5">An Tuần Không</h3>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-3">
+                        Lục thập hoa giáp (60 năm) chia thành 6 "tuần Giáp" liên tiếp, mỗi tuần dài 10 năm (10 Can ghép với 10 trong 12
+                        Chi). Hai Chi còn dư không ghép được Can trong tuần đó — vì "thiếu Can" nên gọi là <strong class="text-sky-300">Tuần
+                        Không</strong> — chính là cặp cung bị khoanh Tuần. Vì vậy Tuần chỉ phụ thuộc <strong class="text-sky-300">năm sinh
+                        rơi vào tuần Giáp nào</strong>, không tính riêng theo Can hay Chi như Triệt.
+                    </p>
+                    <div id="ket-qua-tuan" class="text-sm mb-3"></div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full tra-cuu">
+                            <thead><tr><th>Tuần Giáp (10 năm)</th><th>Gồm các năm Can Chi</th><th>Tuần Không tại</th></tr></thead>
+                            <tbody id="bang-tuan"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BAN CO MINH HOA -->
+        <section class="mystic-card rounded-2xl p-6 sm:p-8">
+            <h3 class="font-serif font-bold text-white text-lg mb-1.5 flex items-center gap-2">
+                <i class="fa-solid fa-chess-board"></i> Vị Trí Trên Bàn Cờ
+            </h3>
+            <p class="text-xs text-gray-400 mb-4">
+                <span class="inline-flex items-center gap-1"><span class="w-3 h-3 rounded-sm inline-block" style="border:2px solid #fb7185"></span> viền đỏ = Triệt Không</span>
+                &nbsp;·&nbsp;
+                <span class="inline-flex items-center gap-1"><span class="w-3 h-3 rounded-sm inline-block" style="border:2px solid #38bdf8"></span> viền xanh = Tuần Không</span>
+                — hai cặp này không nhất thiết liền kề nhau trên bàn cờ.
+            </p>
+            <div id="dia-ban-rut-gon" class="grid grid-cols-4 grid-rows-4 gap-1.5 md:gap-2 aspect-square md:aspect-auto min-h-[420px]"></div>
+        </section>
+
+        <footer class="text-center text-xs text-gray-500 pt-4 border-t border-mystic-700/40">
+            <p class="mb-2">Công thức an Tuần/Triệt lấy đúng từ <code class="text-[11px]">lib/ansao.js</code> — không tính lại riêng ở trang này.</p>
+            <p>© Tử Vi Myn 001</p>
+        </footer>
+
+    </main>
+
+    <script type="module">
+        import { generateTuViChart } from './lib/ansao.js';
+        import { getCanChiYear, convertSolarToLunar, convertLunarToSolar, CAN, CHI } from './lib/lich.js';
+        import { O_LUOI, veKhungLuoi } from './assets/ui.js';
+        import { initThemeToggle } from './assets/theme-toggle.js';
+        initThemeToggle();
+
+        const GRID_IDX_TU_K = (k) => (k + 3) % 12;
+
+        // Bảng tra Triệt: 5 cặp Can (chỉ số Can % 5 trùng nhau) -> cặp Chi cố định.
+        // Lấy nguyên công thức trong lib/ansao.js (trietChi), không tính lại khác đi.
+        const TRIET_THEO_CAN = [
+            { cans: [0, 5], chis: [8, 9] },   // Giáp/Kỷ -> Thân Dậu
+            { cans: [1, 6], chis: [6, 7] },   // Ất/Canh -> Ngọ Mùi
+            { cans: [2, 7], chis: [4, 5] },   // Bính/Tân -> Thìn Tỵ
+            { cans: [3, 8], chis: [2, 3] },   // Đinh/Nhâm -> Dần Mão
+            { cans: [4, 9], chis: [0, 1] },   // Mậu/Quý -> Tý Sửu
+        ];
+
+        // Bảng tra Tuần: 6 "tuần Giáp" — mỗi tuần bắt đầu ở một Chi cố định của năm Giáp,
+        // suy trực tiếp từ công thức tuanChi1 = (yChi - yCan + 10) % 12 trong lib/ansao.js.
+        const TUAN_THEO_GIAP = [
+            { chiGiap: 0,  chis: [10, 11] },  // Giáp Tý  -> Tuất Hợi
+            { chiGiap: 10, chis: [8, 9]   },  // Giáp Tuất -> Thân Dậu
+            { chiGiap: 8,  chis: [6, 7]   },  // Giáp Thân -> Ngọ Mùi
+            { chiGiap: 6,  chis: [4, 5]   },  // Giáp Ngọ  -> Thìn Tỵ
+            { chiGiap: 4,  chis: [2, 3]   },  // Giáp Thìn -> Dần Mão
+            { chiGiap: 2,  chis: [0, 1]   },  // Giáp Dần  -> Tý Sửu
+        ];
+
+        function veBangTriet(canHienTaiIdx) {
+            document.getElementById('bang-triet').innerHTML = TRIET_THEO_CAN.map(row => `
+                <tr class="${row.cans.includes(canHienTaiIdx) ? 'khop' : ''}">
+                    <td>${row.cans.map(i => CAN[i]).join(' / ')}</td>
+                    <td>${row.chis.map(i => CHI[i]).join(' - ')}</td>
+                </tr>
+            `).join('');
+        }
+
+        function veBangTuan(chiGiapHienTai) {
+            document.getElementById('bang-tuan').innerHTML = TUAN_THEO_GIAP.map(row => {
+                const namTrongTuan = Array.from({ length: 10 }, (_, i) => `${CAN[i]}${CHI[(row.chiGiap + i) % 12]}`).join(', ');
+                return `
+                <tr class="${row.chiGiap === chiGiapHienTai ? 'khop' : ''}">
+                    <td>Giáp ${CHI[row.chiGiap]} tuần</td>
+                    <td class="text-[11px] text-gray-400">${namTrongTuan}</td>
+                    <td>${row.chis.map(i => CHI[i]).join(' - ')}</td>
+                </tr>
+            `; }).join('');
+        }
+
+        function veBanCoRutGon(grid) {
+            const khung = document.getElementById('dia-ban-rut-gon');
+            veKhungLuoi(khung, {
+                taoTam: () => {
+                    const el = document.createElement('div');
+                    el.className = 'col-span-2 row-span-2 flex items-center justify-center text-center text-xs text-gray-400 p-3';
+                    el.innerHTML = 'Bàn cờ chỉ hiện<br>vị trí Tuần/Triệt —<br>xem đầy đủ chính tinh ở<br><a href="ansaotudong.html" class="text-amber-300 hover:underline">công cụ tự động</a>';
+                    return el;
+                },
+                taoO: (k) => {
+                    const cung = grid[GRID_IDX_TU_K(k)];
+                    const coTriet = cung.phuTinhXau.some(s => s.name === 'Triệt');
+                    const coTuan = cung.phuTinhXau.some(s => s.name === 'Tuần');
+                    const el = document.createElement('div');
+                    el.className = `o-cung ${coTuan ? 'tuan' : ''} ${coTriet ? 'triet' : ''}`.trim();
+                    el.innerHTML = `
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="font-serif font-bold ten-cung">${cung.palaceName}</span>
+                            <span class="chi-cung font-mono">${cung.chiName}</span>
+                        </div>
+                        <div class="text-[10px] font-semibold">
+                            ${coTriet ? '<span class="text-rose-300">Triệt Không</span>' : ''}
+                            ${coTuan ? '<span class="text-sky-300">Tuần Không</span>' : ''}
+                        </div>
+                    `;
+                    return el;
+                },
+            });
+        }
+
+        function toggleLeap() {
+            document.getElementById('leap-container').classList.toggle('hidden', document.getElementById('calendarType').value !== 'lunar');
+        }
+
+        function handleSubmit(e) {
+            if (e) e.preventDefault();
+
+            const data = {
+                name: 'Bạn',
+                gender: document.getElementById('gender').value,
+                isSolar: document.getElementById('calendarType').value === 'solar',
+                day: parseInt(document.getElementById('day').value),
+                month: parseInt(document.getElementById('month').value),
+                year: parseInt(document.getElementById('year').value),
+                hour: parseInt(document.getElementById('hour').value),
+                minute: 0,
+                viewYear: new Date().getFullYear(),
+                isLeapMonth: document.getElementById('isLeapMonth').checked,
+            };
+
+            const chart = generateTuViChart(data);
+
+            let lunar;
+            if (data.isSolar) {
+                lunar = convertSolarToLunar(data.day, data.month, data.year);
+            } else {
+                const solar = convertLunarToSolar(data.day, data.month, data.year, data.isLeapMonth);
+                lunar = convertSolarToLunar(solar.day, solar.month, solar.year);
+            }
+            const yearCanChi = getCanChiYear(lunar.year);
+            const chiGiapHienTai = (yearCanChi.chiIdx - yearCanChi.canIdx + 10 + 1200) % 12;
+
+            const trietCell = chart.grid.filter(c => c.phuTinhXau.some(s => s.name === 'Triệt'));
+            const tuanCell = chart.grid.filter(c => c.phuTinhXau.some(s => s.name === 'Tuần'));
+
+            document.getElementById('ket-qua-triet').innerHTML = `
+                <span class="text-gray-500">Năm sinh</span> <strong class="text-amber-300">${yearCanChi.can} ${yearCanChi.chi}</strong>
+                → Can <strong class="text-amber-300">${yearCanChi.can}</strong> →
+                <span class="text-gray-500">Triệt Không tại</span>
+                <strong class="text-rose-300">${trietCell.map(c => `${c.chiName} (${c.palaceName})`).join(' - ')}</strong>
+            `;
+            document.getElementById('ket-qua-tuan').innerHTML = `
+                <span class="text-gray-500">Năm sinh</span> <strong class="text-amber-300">${yearCanChi.can} ${yearCanChi.chi}</strong>
+                → thuộc <strong class="text-amber-300">Giáp ${CHI[chiGiapHienTai]} tuần</strong> →
+                <span class="text-gray-500">Tuần Không tại</span>
+                <strong class="text-sky-300">${tuanCell.map(c => `${c.chiName} (${c.palaceName})`).join(' - ')}</strong>
+            `;
+
+            veBangTriet(yearCanChi.canIdx);
+            veBangTuan(chiGiapHienTai);
+            veBanCoRutGon(chart.grid);
+        }
+
+        handleSubmit();
+
+        Object.assign(window, { handleSubmit, toggleLeap });
+    </script>
+</body>
+</html>

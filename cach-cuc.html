@@ -109,6 +109,57 @@
             </p>
         </section>
 
+        <!-- DOI CHIEU LA SO -->
+        <section class="mystic-card rounded-2xl p-5 sm:p-6">
+            <button type="button" onclick="toggleFormDoiChieu()"
+                class="w-full text-sm font-bold font-serif text-amber-400 flex items-center justify-between gap-2">
+                <span class="flex items-center gap-2"><i class="fa-solid fa-wand-magic-sparkles"></i> Đối Chiếu Tự Động Với Một Lá Số</span>
+                <i id="iconFormDoiChieu" class="fa-solid fa-chevron-down text-xs transition-transform"></i>
+            </button>
+            <form id="formDoiChieu" onsubmit="handleDoiChieuSubmit(event)" class="hidden mt-4 space-y-3">
+                <p class="text-xs text-gray-400 leading-relaxed">
+                    Nhập ngày giờ sinh để lập lá số, engine <code class="text-[11px]">lib/cachcuc.js</code> sẽ tự đối chiếu với cả 94 cách cục
+                    bên dưới — kết quả chỉ dựa trên phần điều kiện có thể kiểm tra được bằng dữ liệu (vị trí sao, miếu/vượng, Tứ Hóa, Sát/Không
+                    Kiếp); phần mô tả mang tính chủ quan (trùng điệp, ngày/đêm sinh...) được đánh dấu độ tin cậy thấp hơn thay vì bỏ qua.
+                </p>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                    <div>
+                        <label class="block text-[11px] text-gray-500 mb-1">Giới tính</label>
+                        <select id="dcGender" class="w-full bg-mystic-900 border border-mystic-700 rounded-lg px-2.5 py-1.5 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+                            <option value="1">Nam</option>
+                            <option value="0">Nữ</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] text-gray-500 mb-1">Ngày</label>
+                        <input type="number" id="dcDay" min="1" max="31" value="1" required class="w-full bg-mystic-900 border border-mystic-700 rounded-lg px-2.5 py-1.5 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] text-gray-500 mb-1">Tháng</label>
+                        <input type="number" id="dcMonth" min="1" max="12" value="1" required class="w-full bg-mystic-900 border border-mystic-700 rounded-lg px-2.5 py-1.5 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] text-gray-500 mb-1">Năm (dương lịch)</label>
+                        <input type="number" id="dcYear" min="1900" max="2100" value="2000" required class="w-full bg-mystic-900 border border-mystic-700 rounded-lg px-2.5 py-1.5 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2.5 max-w-xs">
+                    <div>
+                        <label class="block text-[11px] text-gray-500 mb-1">Giờ</label>
+                        <input type="number" id="dcHour" min="0" max="23" value="12" required class="w-full bg-mystic-900 border border-mystic-700 rounded-lg px-2.5 py-1.5 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] text-gray-500 mb-1">Phút</label>
+                        <input type="number" id="dcMinute" min="0" max="59" value="0" required class="w-full bg-mystic-900 border border-mystic-700 rounded-lg px-2.5 py-1.5 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+                    </div>
+                </div>
+                <button type="submit" class="bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 hover:from-amber-500 hover:to-yellow-400 text-slate-950 font-bold py-2 px-4 rounded-xl shadow-lg shadow-amber-500/20 transition-all flex items-center justify-center gap-2 text-sm">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i> Đối Chiếu 94 Cách Cục
+                </button>
+                <p id="dcKetQuaTomTat" class="hidden text-xs text-amber-200/90 pt-1"></p>
+            </form>
+        </section>
+
         <!-- FILTER BAR -->
         <div class="mystic-card rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row gap-4 items-center justify-between sticky top-[72px] z-40">
             <div class="relative w-full md:w-80">
@@ -116,6 +167,10 @@
                 <input type="text" id="oTimKiem" placeholder="Tìm tên cách cục, tên sao, điều kiện..."
                     class="w-full pl-10 pr-4 py-2 bg-mystic-900/80 border border-mystic-700 rounded-xl text-sm text-inherit focus:outline-none focus:border-amber-400 transition-colors">
             </div>
+            <label id="lblChiKhop" class="hidden items-center gap-2 text-xs text-amber-200 cursor-pointer select-none">
+                <input type="checkbox" id="oChiKhop" class="rounded bg-mystic-900 border-mystic-700 text-amber-500 focus:ring-amber-500">
+                Chỉ hiện cách khớp lá số vừa đối chiếu
+            </label>
             <div id="oLocNhom" class="flex flex-wrap items-center gap-2 w-full md:w-auto justify-start md:justify-end">
                 <!-- nut loc theo nhom, render bang JS -->
             </div>
@@ -135,6 +190,8 @@
 
     <script type="module">
         import { getCachCuc } from './lib/repo.js';
+        import { generateTuViChart } from './lib/ansao.js';
+        import { khopCachCuc } from './lib/cachcuc.js';
         import { initThemeToggle } from './assets/theme-toggle.js';
         initThemeToggle();
 
@@ -153,6 +210,10 @@
 
         let TAT_CA = [];
         let nhomDangChon = 'tất cả';
+        let ketQuaKhop = null; // Map id -> { khop, doTinCay, lyDo } sau khi đối chiếu một lá số
+        let chiHienKhop = false;
+
+        const NHAN_TIN_CAY = { cao: 'tin cậy cao', trungbinh: 'tin cậy vừa', thap: 'tin cậy thấp' };
 
         function veThe(c) {
             const mau = MAU_NHOM[c.nhom] || mauMacDinh;
@@ -162,28 +223,72 @@
             const luanGiai = c.luanGiai
                 ? '<p class="text-xs text-gray-300 leading-relaxed mt-2">' + esc(c.luanGiai) + '</p>'
                 : '';
-            return '<div class="the-cach ' + mau.vien + ' p-5 rounded-xl">' +
+            const kq = ketQuaKhop && ketQuaKhop.get(c.id);
+            const khopRibbon = (kq && kq.khop)
+                ? '<div class="mt-2 rounded-lg border border-emerald-400/40 bg-emerald-950/40 px-3 py-2">' +
+                    '<p class="text-[11px] font-semibold text-emerald-300 uppercase tracking-wide">' +
+                        '<i class="fa-solid fa-circle-check mr-1"></i>Khớp lá số vừa đối chiếu (' + esc(NHAN_TIN_CAY[kq.doTinCay] || kq.doTinCay) + ')</p>' +
+                    '<p class="text-xs text-emerald-100/90 leading-relaxed mt-1">' + esc(kq.lyDo) + '</p>' +
+                '</div>'
+                : '';
+            return '<div class="the-cach ' + mau.vien + ' p-5 rounded-xl' + (kq && kq.khop ? ' ring-1 ring-emerald-400/50' : '') + '">' +
                 '<div class="flex items-start justify-between gap-2 mb-1.5">' +
                     '<h3 class="font-serif font-bold text-white leading-snug">' + esc(c.ten) + tenKhac + '</h3>' +
                     '<span class="shrink-0 text-[10px] px-2 py-0.5 rounded border font-semibold uppercase tracking-wide ' + mau.nen + ' ' + mau.chu + '">' + esc(c.nhom) + '</span>' +
                 '</div>' +
                 '<p class="text-xs text-amber-200/90 leading-relaxed"><strong class="font-semibold">Điều kiện:</strong> ' + esc(c.dieuKien) + '</p>' +
-                luanGiai +
+                luanGiai + khopRibbon +
                 '<p class="text-[10px] text-gray-500 mt-3">Nguồn: ' + esc(c.nguon) + '</p>' +
             '</div>';
         }
 
         function locVaVe() {
             const tuKhoa = document.getElementById('oTimKiem').value.trim().toLowerCase();
-            const ds = TAT_CA.filter(c => {
+            let ds = TAT_CA.filter(c => {
                 if (nhomDangChon !== 'tất cả' && c.nhom !== nhomDangChon) return false;
+                if (chiHienKhop && !(ketQuaKhop && ketQuaKhop.get(c.id)?.khop)) return false;
                 if (!tuKhoa) return true;
                 const gop = [c.ten, ...(c.tenKhac || []), c.dieuKien, c.luanGiai].filter(Boolean).join(' ').toLowerCase();
                 return gop.includes(tuKhoa);
             });
+            if (ketQuaKhop) ds = [...ds].sort((a, b) => (ketQuaKhop.get(b.id)?.khop ? 1 : 0) - (ketQuaKhop.get(a.id)?.khop ? 1 : 0));
             document.getElementById('oLuoiCachCuc').innerHTML = ds.map(veThe).join('');
             document.getElementById('oDemKetQua').textContent = 'Hiển thị ' + ds.length + ' / ' + TAT_CA.length + ' cách cục';
             document.getElementById('oRong').classList.toggle('hidden', ds.length !== 0);
+        }
+
+        function toggleFormDoiChieu() {
+            document.getElementById('formDoiChieu').classList.toggle('hidden');
+            document.getElementById('iconFormDoiChieu').classList.toggle('fa-chevron-down');
+            document.getElementById('iconFormDoiChieu').classList.toggle('fa-chevron-up');
+        }
+
+        async function handleDoiChieuSubmit(e) {
+            e.preventDefault();
+            const data = {
+                name: 'Đương số',
+                gender: document.getElementById('dcGender').value,
+                isSolar: true,
+                day: parseInt(document.getElementById('dcDay').value) || 1,
+                month: parseInt(document.getElementById('dcMonth').value) || 1,
+                year: parseInt(document.getElementById('dcYear').value) || 2000,
+                hour: parseInt(document.getElementById('dcHour').value) || 12,
+                minute: parseInt(document.getElementById('dcMinute').value) || 0,
+                viewYear: parseInt(document.getElementById('dcYear').value) || 2000,
+                isLeapMonth: false,
+            };
+            const chart = generateTuViChart(data);
+            const ket = await khopCachCuc(chart);
+            ketQuaKhop = new Map(ket.map(k => [k.id, k]));
+            const soKhop = ket.filter(k => k.khop).length;
+
+            const tomTat = document.getElementById('dcKetQuaTomTat');
+            tomTat.textContent = `Đã đối chiếu: ${chart.userInfo.amDuongNamNu}, ${chart.userInfo.napAm}, ${chart.userInfo.cuc.name} — khớp ${soKhop}/${TAT_CA.length} cách cục.`;
+            tomTat.classList.remove('hidden');
+
+            document.getElementById('lblChiKhop').classList.remove('hidden');
+            document.getElementById('lblChiKhop').classList.add('flex');
+            locVaVe();
         }
 
         function veThanhLoc() {
@@ -214,11 +319,17 @@
             veThanhLoc();
             locVaVe();
             document.getElementById('oTimKiem').addEventListener('input', locVaVe);
+            document.getElementById('oChiKhop').addEventListener('change', (e) => {
+                chiHienKhop = e.target.checked;
+                locVaVe();
+            });
         } catch (e) {
             document.getElementById('oLuoiCachCuc').innerHTML =
                 '<div class="col-span-full bg-rose-900/70 text-rose-100 text-sm p-3 rounded-xl text-center">' +
                 'Không tải được dữ liệu: ' + esc(e.message) + '. Trang cần chạy qua server tĩnh (npm run dev).</div>';
         }
+
+        Object.assign(window, { toggleFormDoiChieu, handleDoiChieuSubmit });
     </script>
 </body>
 </html>
