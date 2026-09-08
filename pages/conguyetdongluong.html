@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <script>if (localStorage.getItem('tuvi-giao-dien') === 'sang') document.documentElement.classList.add('giay');</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cơ Nguyệt Đồng Lương - Tử Vi Myn 001</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        mystic: {
+                            900: 'var(--nen)',
+                            800: 'var(--nen-noi)',
+                            700: 'var(--vien-mo)',
+                            600: 'var(--vien)',
+                            500: 'var(--chu-nhat)',
+                            accent: '#d97706',
+                            gold: '#fbbf24',
+                        },
+                        co: 'var(--mau-co)',          /* Thiên Cơ - Lục / Mộc */
+                        nguyet: 'var(--mau-nguyet)',  /* Thái Âm - Chàm / Thủy */
+                        dong: 'var(--mau-dong)',      /* Thiên Đồng - Xanh da trời / Thủy */
+                        luong: 'var(--mau-luong)'     /* Thiên Lương - Vàng / Dương Mộc (không dùng lục để tránh trùng Thiên Cơ) */
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="../assets/theme.css">
+    <style>
+        /* Màu riêng 4 sao của cách cục — tối cho nền tối, đậm hơn cho nền giấy
+           (đủ tương phản khi dùng làm text-co/text-nguyet/... trên nền sáng). */
+        :root {
+            --mau-co:     #34d399;
+            --mau-nguyet: #818cf8;
+            --mau-dong:   #38bdf8;
+            --mau-luong:  #fbbf24;
+        }
+        .giay {
+            --mau-co:     #047857;
+            --mau-nguyet: #4338CA;
+            --mau-dong:   #0369A1;
+            --mau-luong:  var(--nhan);
+        }
+        body {
+            background-color: var(--nen);
+            color: var(--chu);
+            font-family: var(--font-chu);
+        }
+        .mystic-card {
+            background: rgba(30, 23, 56, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(251, 191, 36, 0.15);
+        }
+        .mystic-card:hover {
+            border-color: rgba(251, 191, 36, 0.4);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--nen); }
+        ::-webkit-scrollbar-thumb { background: #2d2252; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #fbbf24; }
+    </style>
+</head>
+<body class="min-h-screen pb-16 flex flex-col">
+
+    <!-- Header -->
+    <header class="border-b border-mystic-700/60 bg-mystic-900/80 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-indigo-700 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                    <i class="fa-solid font-serif">☯</i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold font-serif tracking-wide gold-gradient-text">CƠ NGUYỆT ĐỒNG LƯƠNG</h1>
+                    <p class="text-xs text-gray-400">Bộ Tứ Chính Tinh Thiên Về Trí Tuệ, Hoạch Định & Phò Tá</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="nutChuyenGiaoDien" class="nut-giao-dien"></button>
+                <a href="../index.html" class="text-xs sm:text-sm text-gray-300 hover:text-amber-300 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-arrow-left"></i> Mục lục
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full space-y-10">
+
+        <!-- INTRO -->
+        <section class="mystic-card rounded-2xl p-6 sm:p-8">
+            <span class="text-xs uppercase tracking-widest text-amber-400 font-semibold">Tổng Quan Bộ Sao</span>
+            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white mt-1 mb-3">Thiên Cơ – Thái Âm – Thiên Đồng – Thiên Lương</h2>
+            <p class="text-sm text-gray-300 leading-relaxed max-w-4xl">
+                Tên cách cục được ghép từ chữ đầu của bốn chính tinh: <strong class="text-emerald-400">Cơ</strong> (Thiên Cơ),
+                <strong class="text-indigo-300">Nguyệt</strong> (Thái Âm), <strong class="text-sky-300">Đồng</strong> (Thiên Đồng),
+                <strong class="text-amber-300">Lương</strong> (Thiên Lương). Cách cục thành hình khi cả bốn sao cùng xuất hiện trong
+                <em>tam phương tứ chính</em> của cung Mệnh (Mệnh, hai cung Tam Hợp và cung Xung Chiếu). Đây được giới Tử Vi xem là
+                một trong những bộ cách tốt nhất về mặt trí tuệ, hiền hòa và an ổn.
+            </p>
+            <div class="flex flex-wrap gap-2 mt-5">
+                <span class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-950/60 text-emerald-300 border border-emerald-800/60">Hiền lành, từ thiện</span>
+                <span class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-950/60 text-indigo-300 border border-indigo-800/60">Ôn hòa, nhẫn nại</span>
+                <span class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-950/60 text-sky-300 border border-sky-800/60">Giỏi hoạch định, mưu lược</span>
+                <span class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-950/60 text-amber-300 border border-amber-800/60">Hợp phò tá, phục vụ tổ chức</span>
+            </div>
+        </section>
+
+        <!-- 4 STAR CARDS -->
+        <section>
+            <h2 class="text-lg font-serif font-bold text-amber-300 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-star"></i> Đặc Tính Bốn Chính Tinh
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+                <div id="the-sao" class="contents"></div>
+            </div>
+        </section>
+
+        <!-- CACH CUC -->
+        <section>
+            <h2 class="text-lg font-serif font-bold text-amber-300 mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-scroll"></i> Các Cách Cục Nổi Bật
+            </h2>
+            <p class="text-xs text-gray-400 mb-4 max-w-3xl">Mỗi cách cục dưới đây gắn với vị trí cung cụ thể — vì các sao Thiên Cơ/Thiên Đồng và Thái Âm/Thiên Lương thuộc hai chuỗi an sao khác nhau nên không phải lúc nào cả bốn cũng đồng cung; phần lớn cách cục nổi tiếng là sự kết hợp của hai trong bốn sao tại một cung nhất định.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                <div class="mystic-card p-5 rounded-xl border-l-4 border-l-amber-400">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-serif font-bold text-white">Cơ Nguyệt Đồng Lương Cách</h3>
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-mystic-700 text-amber-200">Tam phương tứ chính Mệnh</span>
+                    </div>
+                    <p class="text-xs text-gray-300 leading-relaxed">Mệnh hội đủ bốn sao trong tam phương tứ chính. Đắc địa chủ phúc thọ song toàn, tài hoạch định xuất sắc, rất hợp làm công chức, viên chức văn phòng, nghiên cứu, tư vấn chiến lược.</p>
+                    <div class="flex flex-wrap gap-1.5 mt-3">
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800">Ổn Định</span>
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800">Hoạch Định</span>
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-amber-950/80 text-amber-300 border border-amber-800">⚠ Yếu Về Lãnh Đạo</span>
+                    </div>
+                </div>
+
+                <div class="mystic-card p-5 rounded-xl border-l-4 border-l-luong">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-serif font-bold text-white">Thiện Ấm Triều Cương</h3>
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-mystic-700 text-amber-200">Cơ Lương tại Thìn / Tuất</span>
+                    </div>
+                    <p class="text-xs text-gray-300 leading-relaxed">Thiên Cơ (Thiện) và Thiên Lương (Ấm) đồng cung. Cách cục "nho phong" — có sở trường/chuyên môn vượt trội hơn người, hoặc giỏi một nghề phổ thông đến mức xuất chúng. Gặp sát tinh hay Tuần/Triệt phá cách dễ gian truân nhưng có căn cơ hướng đạo, tu hành.</p>
+                    <div class="flex flex-wrap gap-1.5 mt-3">
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800">Chuyên Môn Cao</span>
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800">Đức Độ</span>
+                    </div>
+                </div>
+
+                <div class="mystic-card p-5 rounded-xl border-l-4 border-l-co">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-serif font-bold text-white">Cơ Cự Đồng Cung <span class="text-gray-400 font-normal text-xs">(Chúng Thủy Triều Đông)</span></h3>
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-mystic-700 text-amber-200">Tại Mão / Dậu</span>
+                    </div>
+                    <p class="text-xs text-gray-300 leading-relaxed">Thiên Cơ gặp Cự Môn, ví như trăm dòng nước đổ về đông — chủ tiền tài không ít. Học vấn rất cao, hợp chính trị hoặc kinh doanh, chủ đại phú đại quý. Nhược điểm: đường gia đạo trắc trở, vợ chồng dễ cãi cọ, thân tâm khó an, cả đời bận rộn lo toan.</p>
+                    <div class="flex flex-wrap gap-1.5 mt-3">
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800">Đại Phú</span>
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-amber-950/80 text-amber-300 border border-amber-800">⚠ Gia Đạo Trắc Trở</span>
+                    </div>
+                </div>
+
+                <div class="mystic-card p-5 rounded-xl border-l-4 border-l-dong">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-serif font-bold text-white">Đồng Lương Hội</h3>
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-mystic-700 text-amber-200">Tại Dần / Thân</span>
+                    </div>
+                    <p class="text-xs text-gray-300 leading-relaxed">Vị trí đẹp nhất của bộ Cơ Nguyệt Đồng Lương — một sao Phúc (Thiên Đồng) và một sao Thọ/Ấm (Thiên Lương) cùng trấn giữ. Từ thiện, bác ái, suốt đời như được thần linh che chở, gặp dữ hóa lành, có thể làm nên danh giá lớn. Lá số đắc cách này khá hiếm gặp.</p>
+                    <div class="flex flex-wrap gap-1.5 mt-3">
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800">Phúc Thọ</span>
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800">Hiếm Gặp</span>
+                    </div>
+                </div>
+
+                <div class="mystic-card p-5 rounded-xl border-l-4 border-l-nguyet">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-serif font-bold text-white">Đồng Âm Đồng Cung</h3>
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-mystic-700 text-amber-200">Tại Tý</span>
+                    </div>
+                    <p class="text-xs text-gray-300 leading-relaxed">Thiên Đồng gặp Thái Âm tại Tý — cả hai đều miếu vượng. Vừa đẹp đẽ vừa phúc hậu, sống thọ. Nữ mệnh đắc cách này đoan trang tú lệ, vượng phu ích tử, hưởng phú quý trọn đời.</p>
+                    <div class="flex flex-wrap gap-1.5 mt-3">
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800">Vượng Phu Ích Tử</span>
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800">Nhan Sắc</span>
+                    </div>
+                </div>
+
+                <div class="mystic-card p-5 rounded-xl border-l-4 border-l-nguyet">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-serif font-bold text-white">Nguyệt Lãng Thiên Môn</h3>
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-mystic-700 text-amber-200">Thái Âm độc tọa tại Hợi</span>
+                    </div>
+                    <p class="text-xs text-gray-300 leading-relaxed">"Trăng sáng cửa trời" — vị trí miếu vượng đẹp nhất của Thái Âm, còn gọi cách "Triều Thiên". Chủ đại phú, tiền của đến bất ngờ, nhiều mưu kế, giỏi vạch chiến lược. Sinh ban đêm, gặp thêm Lộc Tồn, Khoa Quyền Lộc, Tả Hữu Xương Khúc, Khôi Việt càng hợp cách — không đại quý cũng đại phú.</p>
+                    <div class="flex flex-wrap gap-1.5 mt-3">
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800">Đại Phú</span>
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800">Mưu Lược</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- BALANCED VIEW -->
+        <section class="mystic-card rounded-2xl p-6 sm:p-8 bg-gradient-to-r from-mystic-800/90 to-mystic-900/90">
+            <h2 class="text-lg font-serif font-bold text-amber-300 mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-scale-balanced"></i> Góc Nhìn Cân Bằng
+            </h2>
+            <p class="text-xs sm:text-sm text-gray-300 leading-relaxed max-w-4xl">
+                Cơ Nguyệt Đồng Lương được xem là một trong những bộ cách "vàng" vì mang lại sự ổn định, an nhàn, trí tuệ và đời sống ít
+                biến cố — rất hợp với con đường công chức, học thuật, phò tá. Tuy nhiên đây cũng được đánh giá là bộ cách <strong class="text-amber-200">yếu nhất
+                về khả năng lãnh đạo, đột phá và xông pha</strong> so với các bộ cách hướng ngoại như <strong class="text-amber-200">Cự Nhật</strong> (ngôn luận,
+                quang minh) hay <strong class="text-amber-200">Sát Phá Tham</strong> (quyết liệt, khai phá). Để bù đắp, cách cục cần thêm Khôi Quyền, Song Lộc
+                hoặc các cát tinh trợ lực nhằm tăng tính chủ động và bản lĩnh quyết đoán.
+            </p>
+        </section>
+
+        <!-- SOURCES -->
+        <footer class="text-center text-xs text-gray-500 pt-4 border-t border-mystic-700/40">
+            <p class="mb-2">Nội dung tổng hợp từ ghi chú cá nhân và các nguồn tham khảo Tử Vi Đẩu Số công khai.</p>
+            <p>© Tử Vi Myn 001</p>
+        </footer>
+
+    </main>
+
+    <script type="module">
+        import { getSao } from '../lib/repo.js';
+        import { initThemeToggle } from '../assets/theme-toggle.js';
+        initThemeToggle();
+
+        // Biểu tượng và màu là trình bày, giữ tại trang.
+        // Mọi dữ kiện về sao lấy từ data/sao.json, không viết tay trong markup nữa.
+        const TRINH_BAY = {
+            'thien-co':    { icon: 'fa-brain',          mau: 'co',     chu: 'text-emerald-300' },
+            'thai-am':     { icon: 'fa-moon',           mau: 'nguyet', chu: 'text-indigo-300'  },
+            'thien-dong':  { icon: 'fa-child-reaching', mau: 'dong',   chu: 'text-sky-300'     },
+            'thien-luong': { icon: 'fa-user-graduate',  mau: 'luong',  chu: 'text-amber-300'   },
+        };
+        const esc = (t) => String(t ?? '').replace(/[&<>"]/g,
+            c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]));
+
+        try {
+            const sao = await getSao();
+            document.getElementById('the-sao').innerHTML = Object.keys(TRINH_BAY).map(id => {
+                const s = sao.find(x => x.id === id), t = TRINH_BAY[id];
+                const dong1 = [s.amDuong + ' ' + s.nguHanh, s.dauTinh].filter(Boolean).join(' • ');
+                const dong2 = ['Hóa khí: ' + s.hoaKhi,
+                               s.bieuTuong?.length ? 'Hình ảnh: ' + s.bieuTuong.join(', ') : null]
+                              .filter(Boolean).join(' — ');
+                return '<div class="mystic-card p-5 rounded-2xl border-t-4 border-' + t.mau + ' space-y-3">' +
+                    '<div class="flex items-center gap-3">' +
+                      '<div class="w-11 h-11 rounded-xl bg-slate-900/80 border border-' + t.mau + '/40 flex items-center justify-center text-' + t.mau + ' text-xl">' +
+                        '<i class="fa-solid ' + t.icon + '"></i></div>' +
+                      '<div><h3 class="text-lg font-serif font-bold text-white">' + esc(s.ten) + '</h3>' +
+                        '<span class="text-[11px] ' + t.chu + ' font-medium">' + esc(dong1) + '</span></div>' +
+                    '</div>' +
+                    '<p class="text-xs text-amber-200/90 font-semibold">' + esc(dong2) + '</p>' +
+                    '<p class="text-xs text-gray-300 leading-relaxed">' + esc(s.luanBoSao) + '</p>' +
+                  '</div>';
+            }).join('');
+        } catch (e) {
+            document.getElementById('the-sao').innerHTML =
+                '<div class="col-span-full bg-rose-900/70 text-rose-100 text-sm p-3 rounded-xl text-center">' +
+                'Không tải được dữ liệu: ' + esc(e.message) + '. Trang cần chạy qua server tĩnh (npm run dev).</div>';
+        }
+    </script>
+</body>
+</html>

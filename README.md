@@ -17,7 +17,7 @@ Chrome/Edge cài sẵn ở chế độ headless, ví dụ trên macOS:
 ```bash
 "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge" \
   --headless --disable-gpu --window-size=1400,1300 \
-  --screenshot=out.png http://localhost:8000/ansaotudong.html
+  --screenshot=out.png http://localhost:8000/pages/ansaotudong.html
 ```
 
 ### Các trang, mở sau khi `npm run dev`
@@ -25,15 +25,15 @@ Chrome/Edge cài sẵn ở chế độ headless, ví dụ trên macOS:
 | Trang | Nội dung |
 |---|---|
 | `index.html` | Mục lục, cũng là nơi lập lá số nhanh |
-| `ansaotudong.html` | Lập lá số đầy đủ (đại/tiểu hạn, luận giải AI) |
-| `SatPhaTham.html` | Khám phá tam hợp Sát Phá Tham |
-| `ansaothucong.html` | Tự tay lập lá số từng bước, an 14 chính tinh |
-| `chinhtinh-chucnang.html` | Tra cứu 14 chính tinh với các cung chức năng |
-| `chinhtinh-cathung.html` | 14 chính tinh & quy luật cát hung |
-| `conguyetdongluong.html` | Cơ Nguyệt Đồng Lương |
-| `amduongnguhanh.html` | Âm Dương Ngũ Hành — kiến thức nền |
-| `canchi.html` | Can Chi — 10 Thiên Can, 12 Địa Chi, Tam Hợp/Lục Xung/Nhị Hợp/Tứ Mộ Khố |
-| `thiepcuoi-nhagai.html` / `thiepcuoi-nhatrai.html` | Thiệp cưới, ngoài phạm vi lá số |
+| `pages/ansaotudong.html` | Lập lá số đầy đủ (đại/tiểu hạn, luận giải AI) |
+| `pages/SatPhaTham.html` | Khám phá tam hợp Sát Phá Tham |
+| `pages/ansaothucong.html` | Tự tay lập lá số từng bước, an 14 chính tinh |
+| `pages/chinhtinh-chucnang.html` | Tra cứu 14 chính tinh với các cung chức năng |
+| `pages/chinhtinh-cathung.html` | 14 chính tinh & quy luật cát hung |
+| `pages/conguyetdongluong.html` | Cơ Nguyệt Đồng Lương |
+| `pages/amduongnguhanh.html` | Âm Dương Ngũ Hành — kiến thức nền |
+| `pages/canchi.html` | Can Chi — 10 Thiên Can, 12 Địa Chi, Tam Hợp/Lục Xung/Nhị Hợp/Tứ Mộ Khố |
+| `pages/thiepcuoi-nhagai.html` / `pages/thiepcuoi-nhatrai.html` | Thiệp cưới, ngoài phạm vi lá số |
 
 ## Ba tầng
 
@@ -49,6 +49,7 @@ data/*.json                            dữ liệu — không một class CSS n�
 
 | Thư mục | Nội dung |
 |---|---|
+| `pages/` | Toàn bộ trang nội dung (`index.html` ở gốc repo là trang mục lục, còn lại nằm trong `pages/`) |
 | `lib/` | `lich.js` đổi lịch Âm–Dương · `ansao.js` engine an sao · `repo.js` lớp truy cập dữ liệu |
 | `data/` | 8 file JSON + `schema.md` mô tả từng trường và nguồn gốc |
 | `assets/` | `theme.css` — 25 token màu và chữ, khai lại cho mặt giấy; dùng chung mọi trang |

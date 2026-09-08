@@ -28,7 +28,7 @@ const ctxA = {};
 new Function('c', R('data.js') + ';c.S=starsData;c.P=palacesData;c.Q=quizQuestions;')(ctxA);
 
 // ---- 2. chinhtinh-chucnang.html (object literal lồng trong Alpine) --------
-const js = [...R('chinh' + 'tinh-chucnang.html').matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]).join('');
+const js = [...R('pages/chinh' + 'tinh-chucnang.html').matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]).join('');
 function layObject(ten) {
   const i = js.indexOf(ten + ': {'), a = js.indexOf('{', i);
   let d = 0, b = a;

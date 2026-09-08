@@ -1,4 +1,6 @@
 tools/shots/
-refs/
+refs/zraw/
 note/
 .DS_Store
+gsheet/
+laso/

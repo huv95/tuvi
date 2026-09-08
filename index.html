@@ -30,33 +30,6 @@
             box-shadow: 0 10px 25px -5px rgba(212, 175, 55, 0.15);
             transform: translateY(-4px);
         }
-        #wanderingHeart {
-            position: fixed;
-            width: 44px;
-            height: 44px;
-            border-radius: 9999px;
-            background: rgba(236, 72, 153, 0.15);
-            border: 1px solid rgba(236, 72, 153, 0.4);
-            color: #f472b6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            cursor: pointer;
-            z-index: 40;
-            box-shadow: 0 0 20px rgba(236, 72, 153, 0.25);
-            transition: top 4s ease-in-out, left 4s ease-in-out, transform 0.2s ease;
-            animation: heartbeat 1.6s ease-in-out infinite;
-        }
-        #wanderingHeart:hover {
-            transform: scale(1.15);
-        }
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            25% { transform: scale(1.15); }
-            40% { transform: scale(0.95); }
-        }
-
         #wanderingStar {
             position: fixed;
             width: 44px;
@@ -116,7 +89,7 @@
     <main class="max-w-3xl mx-auto px-4 sm:px-6 pb-16">
 
         <!-- LỐI TẮT: ai chỉ muốn xem kết quả ngay, không theo lộ trình -->
-        <a href="ansaotudong.html" class="glass-card rounded-2xl p-6 transition-all flex items-start gap-5 border-amber-400/40 mb-10">
+        <a href="pages/ansaotudong.html" class="glass-card rounded-2xl p-6 transition-all flex items-start gap-5 border-amber-400/40 mb-10">
             <i class="fa-solid fa-compass text-3xl text-amber-400 mt-1"></i>
             <div class="flex-1">
                 <div class="flex items-center gap-2 flex-wrap">
@@ -145,10 +118,10 @@
                     <h3 class="font-bold font-serif text-white mb-1">Nền Tảng Lý Thuyết Vũ Trụ</h3>
                     <p class="text-xs text-purple-200/70 mb-3 leading-relaxed">Âm Dương - Ngũ Hành - Can Chi: ngôn ngữ biểu tượng bắt buộc phải nắm trước khi chạm vào một lá số cụ thể.</p>
                     <div class="grid sm:grid-cols-2 gap-2">
-                        <a href="amduongnguhanh.html" class="thanh-phan"><span>Âm Dương - Ngũ Hành, vòng Tràng Sinh</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
-                        <a href="canchi.html" class="thanh-phan"><span>Can Chi, Lục xung - Tam hợp - Nhị hợp</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
+                        <a href="pages/amduongnguhanh.html" class="thanh-phan"><span>Âm Dương - Ngũ Hành, vòng Tràng Sinh</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
+                        <a href="pages/canchi.html" class="thanh-phan"><span>Can Chi, Lục xung - Tam hợp - Nhị hợp</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
                         <div class="thanh-phan chua-co"><span>Nạp Âm Ngũ Hành</span><span class="text-[9px] uppercase">Chưa có</span></div>
-                        <a href="ansaothucong.html" class="thanh-phan"><span>Nguyên tắc lập lá số (An Sao)</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
+                        <a href="pages/ansaothucong.html" class="thanh-phan"><span>Nguyên tắc lập lá số (An Sao)</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
                     </div>
                 </div>
             </div>
@@ -166,10 +139,10 @@
                     </div>
                     <p class="text-xs text-purple-200/70 mb-3 leading-relaxed">Lá số là sự kết hợp giữa Cung (ngôi nhà) và Sao (người ở trong nhà) — phải hiểu rõ cả hai trước khi phối hợp chúng.</p>
                     <div class="grid sm:grid-cols-2 gap-2">
-                        <a href="chinhtinh-chucnang.html" class="thanh-phan"><span>Các cung chức năng</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
-                        <a href="chinhtinh-cathung.html" class="thanh-phan"><span>Chính tinh, hóa khí & cát hung</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
+                        <a href="pages/chinhtinh-chucnang.html" class="thanh-phan"><span>Các cung chức năng</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
+                        <a href="pages/chinhtinh-cathung.html" class="thanh-phan"><span>Chính tinh, hóa khí & cát hung</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
                         <div class="thanh-phan chua-co"><span>Phân cấp phụ tinh (Giáp/Ất/Bính/Đinh/Mậu cấp)</span><span class="text-[9px] uppercase">Chưa có</span></div>
-                        <a href="tuanchiet.html" class="thanh-phan"><span>Tuần Không - Triệt Không, công thức an sao</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
+                        <a href="pages/tuanchiet.html" class="thanh-phan"><span>Tuần Không - Triệt Không, công thức an sao</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
                     </div>
                 </div>
             </div>
@@ -187,10 +160,10 @@
                     </div>
                     <p class="text-xs text-purple-200/70 mb-3 leading-relaxed">Sao không bao giờ đứng đơn lẻ — các cung tam hợp, xung chiếu, nhị hợp tác động qua lại, kết tinh thành các cách cục kinh điển.</p>
                     <div class="grid sm:grid-cols-2 gap-2">
-                        <a href="SatPhaTham.html" class="thanh-phan"><span>Cách cục Sát Phá Tham</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
-                        <a href="conguyetdongluong.html" class="thanh-phan"><span>Cách cục Cơ Nguyệt Đồng Lương</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
+                        <a href="pages/SatPhaTham.html" class="thanh-phan"><span>Cách cục Sát Phá Tham</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
+                        <a href="pages/conguyetdongluong.html" class="thanh-phan"><span>Cách cục Cơ Nguyệt Đồng Lương</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
                         <div class="thanh-phan chua-co"><span>Cách cục Tử Phủ Vũ Tướng Liêm</span><span class="text-[9px] uppercase">Chưa có</span></div>
-                        <a href="cach-cuc.html" class="thanh-phan"><span>Tra cứu 94 cách cục cổ điển</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
+                        <a href="pages/cach-cuc.html" class="thanh-phan"><span>Tra cứu 94 cách cục cổ điển</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
                     </div>
                 </div>
             </div>
@@ -208,9 +181,9 @@
                     </div>
                     <p class="text-xs text-purple-200/70 mb-3 leading-relaxed">Đánh giá thế cục Âm Dương - Cục - Bản Mệnh, đoán định phẩm vị 9 bậc, luận chi tiết từng cung chức năng.</p>
                     <div class="grid sm:grid-cols-2 gap-2">
-                        <a href="luangiaitinh.html" class="thanh-phan"><span>Phương pháp luận giải (khung 3 cột, 8 bước)</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
-                        <a href="luangiaimau.html" class="thanh-phan"><span>Luận giải mẫu — Nam giới</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
-                        <a href="luangiaimau-nu.html" class="thanh-phan"><span>Luận giải mẫu — Nữ giới</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
+                        <a href="pages/luangiaitinh.html" class="thanh-phan"><span>Phương pháp luận giải (khung 3 cột, 8 bước)</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
+                        <a href="pages/luangiaimau.html" class="thanh-phan"><span>Luận giải mẫu — Nam giới</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
+                        <a href="pages/luangiaimau-nu.html" class="thanh-phan"><span>Luận giải mẫu — Nữ giới</span><i class="fa-solid fa-arrow-right text-[10px]"></i></a>
                         <div class="thanh-phan chua-co"><span>Đoán định phẩm vị 9 bậc</span><span class="text-[9px] uppercase">Chưa có</span></div>
                     </div>
                 </div>
@@ -225,7 +198,7 @@
                 <div class="glass-card rounded-2xl p-5 flex-1 mb-6">
                     <h3 class="font-bold font-serif text-white mb-1">Luận Đoán Biến Động: Vận Thế & Tứ Hóa</h3>
                     <p class="text-xs text-purple-200/70 mb-3 leading-relaxed">Chuyển từ tư duy Tĩnh sang Động — Đại hạn, Lưu niên và khoa Tứ Hóa (Lộc - Quyền - Khoa - Kỵ) là chìa khoá tìm bước ngoặt cuộc đời.</p>
-                    <a href="ansaotudong.html" class="thanh-phan"><span>Đại hạn, Tiểu hạn & Tứ Hóa — tính đầy đủ trong Lập Lá Số Tự Động ở trên</span><i class="fa-solid fa-arrow-up text-[10px]"></i></a>
+                    <a href="pages/ansaotudong.html" class="thanh-phan"><span>Đại hạn, Tiểu hạn & Tứ Hóa — tính đầy đủ trong Lập Lá Số Tự Động ở trên</span><i class="fa-solid fa-arrow-up text-[10px]"></i></a>
                 </div>
             </div>
 
@@ -247,33 +220,6 @@
     <footer class="border-t border-tuvi-border/40 py-4 text-center text-xs text-purple-400/60">
         <p>© Tử Vi Myn 001</p>
     </footer>
-
-    <!-- WANDERING HEART EASTER EGG -->
-    <div id="wanderingHeart" onclick="openThiepModal()" title="???">
-        <i class="fa-solid fa-heart"></i>
-    </div>
-
-    <!-- THIEP CUOI SIDE-SELECT MODAL -->
-    <div id="thiepModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden" onclick="if(event.target === this) closeThiepModal()">
-        <div class="glass-card bg-[#1A1028] border-pink-400/30 rounded-2xl max-w-sm w-full p-6 relative space-y-5 text-center">
-            <button onclick="closeThiepModal()" class="absolute top-4 right-4 text-purple-400 hover:text-pink-300 w-8 h-8 rounded-full bg-tuvi-darkBg flex items-center justify-center border border-tuvi-border">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
-            <i class="fa-solid fa-heart text-3xl text-pink-400"></i>
-            <h3 class="font-bold font-serif text-xl text-pink-200">Bạn là khách mời của nhà nào?</h3>
-            <p class="text-xs text-purple-300/70">Chọn để xem thiệp mời phù hợp.</p>
-
-            <div class="grid grid-cols-2 gap-3 pt-2">
-                <a href="thiepcuoi-nhatrai.html" class="bg-tuvi-purple/60 hover:bg-pink-500/20 border border-tuvi-border hover:border-pink-400 rounded-xl px-4 py-3 text-sm font-semibold text-purple-100 transition">
-                    Nhà Trai
-                </a>
-                <a href="thiepcuoi-nhagai.html" class="bg-tuvi-purple/60 hover:bg-pink-500/20 border border-tuvi-border hover:border-pink-400 rounded-xl px-4 py-3 text-sm font-semibold text-purple-100 transition">
-                    Nhà Gái
-                </a>
-            </div>
-        </div>
-    </div>
 
     <!-- WANDERING STAR EASTER EGG -->
     <div id="wanderingStar" onclick="openQuizModal()" title="???">
@@ -399,29 +345,7 @@
     </script>
 
     <script>
-        function openThiepModal() {
-            document.getElementById('thiepModal').classList.remove('hidden');
-        }
-        function closeThiepModal() {
-            document.getElementById('thiepModal').classList.add('hidden');
-        }
-
-        // Wandering heart easter egg: move to a random spot every few seconds
-        function moveWanderingHeart() {
-            const heart = document.getElementById('wanderingHeart');
-            if (!heart) return;
-            const margin = 24;
-            const maxX = window.innerWidth - heart.offsetWidth - margin;
-            const maxY = window.innerHeight - heart.offsetHeight - margin;
-            const x = margin + Math.random() * Math.max(0, maxX - margin);
-            const y = margin + Math.random() * Math.max(0, maxY - margin);
-            heart.style.left = `${x}px`;
-            heart.style.top = `${y}px`;
-        }
-        moveWanderingHeart();
-        setInterval(moveWanderingHeart, 4000);
-
-        // Wandering star easter egg: cùng cơ chế nhưng random độc lập với trái tim
+        // Wandering star easter egg
         function moveWanderingStar() {
             const star = document.getElementById('wanderingStar');
             if (!star) return;
