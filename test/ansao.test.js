@@ -13,7 +13,7 @@
 //   C. Quy tắc an sao- bảng tra và khẩu quyết
 //   D. Bất biến      - tính chất phải đúng với MỌI lá số
 //   E. Dữ liệu       - cấu trúc data/*.json và tính toàn vẹn tham chiếu
-//   F. Hạn           - cung đại/tiểu hạn của năm xem
+//   F. Hạn           - cung đại hạn / lưu niên đại hạn / tiểu hạn của năm xem
 // ============================================================================
 import { CAN, CHI, jdFromDate, jdToSolar,
          convertSolarToLunar, convertLunarToSolar,
@@ -364,6 +364,77 @@ head('F. Hạn của năm xem — đối chiếu với bảng đại/tiểu hạ
   ck('đại hạn vòng 2 lặp lại cung của vòng 1, tuổi không quay về đầu',
      c.han.daiHan.vong === 2 && c.han.daiHan.chiName === chiCungCu && c.han.daiHan.tuTuoi === cucNum + i * 10,
      JSON.stringify(c.han.daiHan)); }
+
+// ---- Lưu Niên Đại Hạn ------------------------------------------------------
+// Mốc đối chiếu duy nhất tìm được trong refs: refs/tu-vi-tong-hop/
+// quyen2-19-giai-doan-la-so-dien-hinh.md ("SỐ BỊ ÁM HẠI") — Âm Nam, Kim tứ cục,
+// Mệnh ở Dậu, "chết vào năm Hợi 43 tuổi. Tiểu hạn tại Quan, lưu niên đại hạn
+// tại tử". 10/2/1929 giờ Tỵ là một lá số thật khớp đủ 4 điều kiện đầu bài
+// (Kỷ Tỵ · Âm Nam · Kim Tứ Cục · Mệnh Dậu), và 43 tuổi âm của nó rơi đúng năm
+// Tân Hợi 1971 như sách nói.
+{ const c = chartOf({ day:10, month:2, year:1929, gender:1, viewYear:1971 });
+  const u = c.userInfo, menh = c.grid.find(g => g.isMenh);
+  ck('ví dụ sách — lá số đối chiếu đúng đầu bài (Âm Nam · Kim tứ cục · Mệnh Dậu · năm Hợi 43 tuổi)',
+     u.amDuongNamNu === 'Âm Nam' && u.cuc.num === 4 && menh.chiName === 'Dậu'
+       && u.viewYearCanChi === 'Tân Hợi' && c.han.tuoi === 43,
+     `${u.amDuongNamNu}/${u.cuc.name}/Mệnh ${menh.chiName}/${u.viewYearCanChi}/${c.han.tuoi}t`);
+  ck('ví dụ sách — tiểu hạn tại Quan Lộc', c.han.tieuHan.palaceName === 'Quan Lộc', c.han.tieuHan.palaceName);
+  ck('ví dụ sách — lưu niên đại hạn tại Tử Tức', c.han.luuNienDaiHan.palaceName === 'Tử Tức',
+     c.han.luuNienDaiHan.palaceName); }
+
+// Khẩu quyết: Gốc -> xung chiếu -> lùi 1 cung -> tiến liên tiếp, đếm theo chiều
+// đi của đại hạn. Kiểm trên cả 11 lá số mẫu, mọi năm của đại vận đang đi.
+{ let bad = [], soCa = 0;
+  for (const C of LA_SO_MAU) {
+    const c0 = generateTuViChart(C.birth);
+    const namAm = +c0.userInfo.lunarStr.match(/\/(\d+)\s*\(/)[1];
+    const d = c0.userInfo.isThuanLy ? 1 : -1;
+    const G = c0.han.daiHan.gridIdx;
+    const mong = (k) => (G + (k === 1 ? 0 : k === 2 ? 6 : 6 + (k - 4) * d) + 120) % 12;
+    for (let k = 1; k <= 10; k++) {
+      const viewYear = c0.han.daiHan.tuNam + k - 1;
+      const { han } = generateTuViChart({ ...C.birth, viewYear });
+      soCa++;
+      if (han.luuNienDaiHan.namThu !== k) bad.push(`${C.label}/${viewYear}: năm thứ ${han.luuNienDaiHan.namThu}≠${k}`);
+      if (han.luuNienDaiHan.gridIdx !== mong(k))
+        bad.push(`${C.label}/năm ${k}: ${nm(han.luuNienDaiHan.gridIdx)}≠${nm(mong(k))}`);
+      if (han.tuoi !== viewYear - namAm + 1) bad.push(`${C.label}/${viewYear}: tuổi ${han.tuoi}≠${viewYear - namAm + 1}`);
+    }
+  }
+  ck(`lộ trình Gốc/xung chiếu/lùi 1/tiến liên tiếp đúng trên ${soCa} năm`, bad.length === 0, bad.slice(0, 3).join(' | ')); }
+
+// Tính chất tự kiểm mà khẩu quyết đòi: năm thứ 10 về đúng Gốc, nên bước tiếp
+// theo (năm đầu đại vận sau) chạm đúng cung đại vận kế tiếp — lộ trình cũ giao
+// lại cho lộ trình mới, không hở.
+{ let bad = [], soCa = 0;
+  for (const C of LA_SO_MAU) for (const lech of [0, 10, 20, 30]) {
+    const c0 = generateTuViChart(C.birth);
+    const namCuoi = c0.han.daiHan.tuNam + 9 + lech;      // năm thứ 10 của một đại vận
+    const cuoi = generateTuViChart({ ...C.birth, viewYear: namCuoi });
+    const sau = generateTuViChart({ ...C.birth, viewYear: namCuoi + 1 });
+    soCa++;
+    if (cuoi.han.luuNienDaiHan.namThu !== 10) { bad.push(`${C.label}: năm cuối không phải năm thứ 10`); continue; }
+    if (cuoi.han.luuNienDaiHan.gridIdx !== cuoi.han.daiHan.gridIdx)
+      bad.push(`${C.label}/${namCuoi}: năm thứ 10 ở ${nm(cuoi.han.luuNienDaiHan.gridIdx)}, Gốc ở ${nm(cuoi.han.daiHan.gridIdx)}`);
+    if (sau.han.daiHan.gridIdx === cuoi.han.daiHan.gridIdx)
+      bad.push(`${C.label}/${namCuoi + 1}: chưa sang đại vận mới`);
+    if (sau.han.luuNienDaiHan.gridIdx !== sau.han.daiHan.gridIdx || sau.han.luuNienDaiHan.namThu !== 1)
+      bad.push(`${C.label}/${namCuoi + 1}: lộ trình mới không khởi tại cung đại vận kế tiếp`);
+  }
+  ck(`năm thứ 10 về Gốc và giao đúng cho đại vận kế tiếp (${soCa} lần chuyển hạn)`, bad.length === 0, bad.slice(0, 3).join(' | ')); }
+
+// Cờ trên lưới + không có lưu niên đại hạn khi chưa vào đại hạn nào
+{ let bad = [];
+  for (const C of LA_SO_MAU) {
+    const c = generateTuViChart({ ...C.birth, viewYear: 2026 });
+    const co = c.grid.filter(g => g.isLuuNienDaiHan);
+    if (co.length !== 1 || co[0].gridIdx !== c.han.luuNienDaiHan.gridIdx) bad.push(C.label);
+  }
+  ck('cờ isLuuNienDaiHan đúng 1 cung và khớp object han', bad.length === 0, bad.join(' | '));
+  const c2 = chartOf({ year: 1990, viewYear: 1991 });
+  ck('chưa vào đại hạn thì không có lưu niên đại hạn',
+     c2.userInfo.cuc.num <= 2 ? true : c2.han.luuNienDaiHan === null,
+     `cục ${c2.userInfo.cuc.num}, ${JSON.stringify(c2.han.luuNienDaiHan)}`); }
 
 // ================================ KẾT QUẢ ===================================
 console.log('\n' + '='.repeat(70));

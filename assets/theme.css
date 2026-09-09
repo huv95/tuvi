@@ -47,8 +47,9 @@
   --hung: #F87171;
   --tu-hoa: #C084FC;
 
-  /* --- hạn của năm xem: viền cung Đại Hạn / Tiểu Hạn ------------------- */
+  /* --- hạn của năm xem: viền cung Đại Hạn / Lưu Niên Đại Hạn / Tiểu Hạn - */
   --han-dai:  #34D399;
+  --han-luu:  #F472B6;
   --han-tieu: #38BDF8;
 
   /* --- độ sáng của sao: miếu / vượng / đắc / hãm ----------------------- */
@@ -84,6 +85,7 @@
   --tu-hoa: #6D28D9;
 
   --han-dai:  #15803D;
+  --han-luu:  #9D174D;
   --han-tieu: #0369A1;
 }
 
@@ -107,17 +109,14 @@
   border: 1px solid var(--vien);
 }
 
-/* Cung đang đi hạn của năm xem, gắn bởi assets/ui.js theo cờ isDaiHan /
-   isTieuHan trong lá số. Dùng box-shadow inset thay vì border để không làm
-   xô lệch bố cục ô — border sẽ cộng thêm chiều rộng, lưới 4x4 lệch theo.
-   Cung vừa là Đại Hạn vừa là Tiểu Hạn thì xếp hai viền lồng nhau. */
-.cung-dai-han  { box-shadow: inset 0 0 0 2px var(--han-dai); }
-.cung-tieu-han { box-shadow: inset 0 0 0 2px var(--han-tieu); }
-.cung-dai-han.cung-tieu-han {
-  box-shadow: inset 0 0 0 2px var(--han-dai), inset 0 0 0 5px var(--han-tieu);
-}
+/* Cung đang đi hạn của năm xem: ba loại hạn có thể trùng nhau trên cùng một
+   cung, nên phần TÔ VIỀN do assets/ui.js ghép bằng box-shadow inset nhiều lớp
+   lồng nhau (2px, 5px, 8px) thay vì liệt kê 7 tổ hợp lớp ở đây. Ba lớp dưới
+   chỉ để đánh dấu, tiện chọn bằng CSS/JS. Dùng box-shadow chứ không dùng
+   border vì border cộng thêm chiều rộng, làm lưới 4x4 lệch theo. */
+.cung-dai-han, .cung-luu-han, .cung-tieu-han { /* đánh dấu, xem ui.js */ }
 
-/* Nhãn nhỏ "Đại Hạn" / "Tiểu Hạn" trên đầu ô cung và trong bảng tóm tắt */
+/* Nhãn nhỏ "Đại Hạn" / "Lưu Niên" / "Tiểu Hạn" trên đầu ô cung và bảng tóm tắt */
 .nhan-han {
   font-size: 9px; line-height: 1.2; font-weight: 700;
   padding: 1px 4px; border-radius: 4px; white-space: nowrap;
@@ -125,6 +124,7 @@
   background: color-mix(in srgb, currentColor 15%, transparent);
 }
 .nhan-han-dai  { color: var(--han-dai); }
+.nhan-han-luu  { color: var(--han-luu); }
 .nhan-han-tieu { color: var(--han-tieu); }
 
 /* ---- Lá số: đảo sang nền giấy -------------------------------------- */
@@ -186,6 +186,18 @@
    nằm ngoài vùng .la-so-giay và được hai trang khác nhau nhúng, nên phải tự
    đọc đúng trên cả nền tối và nền giấy. */
 .the-han { background: var(--nen-noi-2); border: 1px solid var(--vien); }
+
+/* Bảng lộ trình Lưu Niên Đại Hạn (veLoTrinhLuuNien ở assets/ui.js) */
+.bang-lo-trinh th {
+  text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: .04em;
+  color: var(--nhan); padding: .25rem .5rem; border-bottom: 1px solid var(--vien);
+}
+.bang-lo-trinh td { padding: .25rem .5rem; border-bottom: 1px solid var(--vien-mo); }
+.bang-lo-trinh tr.dang-xem td {
+  background: color-mix(in srgb, var(--han-luu) 15%, transparent);
+  color: var(--chu); font-weight: 600;
+}
+.bang-lo-trinh tr.dang-xem td:first-child { box-shadow: inset 3px 0 0 var(--han-luu); }
 
 /* Chấm tròn nhỏ chỉ ngũ hành */
 .cham-hanh {

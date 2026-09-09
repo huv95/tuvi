@@ -50,9 +50,9 @@
         ::-webkit-scrollbar-thumb { background: var(--vien); border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--nhan-mo); }
 
-        /* Lớp .la-so-giay (đảo lá số sang nền giấy), .cung-dai-han / .cung-tieu-han
-           (viền cung đang đi hạn) và .nhan-han đều nằm trong assets/theme.css,
-           dùng chung với pages/ansaotudong.html. */
+        /* Lớp .la-so-giay (đảo lá số sang nền giấy), .nhan-han (nhãn hạn) và
+           .bang-lo-trinh đều nằm trong assets/theme.css, dùng chung với
+           pages/ansaotudong.html. Viền cung đang đi hạn do assets/ui.js ghép. */
 
         .o-nhap {
             width: 100%; background: var(--nen); border: 1px solid var(--vien);
@@ -76,7 +76,7 @@
                 </div>
                 <div>
                     <h1 class="text-xl font-bold font-serif tracking-wide gold-gradient-text">XEM HẠN THEO NĂM</h1>
-                    <p class="text-xs text-gray-400">Đại Hạn 10 năm &amp; Tiểu Hạn từng năm</p>
+                    <p class="text-xs text-gray-400">Đại Hạn · Lưu Niên Đại Hạn · Tiểu Hạn</p>
                 </div>
             </div>
             <div class="flex items-center gap-3">
@@ -98,7 +98,7 @@
                 <p>
                     Lá số an một lần rồi giữ nguyên cả đời, nhưng <strong class="text-emerald-300">hạn</strong> thì
                     chạy: mỗi năm người ta đứng ở một cung khác để luận. Trang này chỉ trả lời đúng một câu hỏi —
-                    <em>năm đó cung Đại Hạn và cung Tiểu Hạn nằm ở đâu</em> — rồi tô sáng hai cung ấy trên địa bàn.
+                    <em>năm đó ba loại hạn nằm ở cung nào</em> — rồi tô sáng các cung ấy trên địa bàn.
                     Xem lá số đầy đủ (phụ tinh, đổi lịch, luận giải AI) thì sang
                     <a href="ansaotudong.html" class="text-amber-300 hover:underline">công cụ lập lá số tự động</a>.
                 </p>
@@ -114,14 +114,23 @@
                         Dần Ngọ Tuất khởi Thìn · Hợi Mão Mùi khởi Sửu), nam đi thuận, nữ đi nghịch.
                     </li>
                     <li>
+                        <strong class="text-pink-300">Lưu Niên Đại Hạn</strong> — lộ trình 10 năm <em>bên trong</em>
+                        một đại vận, sang đại vận khác thì lập lộ trình mới. Đếm theo chiều đi của đại hạn:
+                        năm 1 đứng ngay cung đại vận (Gốc), năm 2 sang cung xung chiếu, năm 3 lùi 1 cung,
+                        từ năm 4 tiến liên tiếp mỗi năm một cung. Năm thứ 10 quay về Gốc, nên bước tiếp theo
+                        rơi đúng vào cung đại vận kế tiếp.
+                    </li>
+                    <li>
                         Tuổi ở đây là <strong>tuổi âm</strong> (tuổi mụ): sinh ra đã tính 1 tuổi, qua Tết thêm 1.
                         Năm xem cũng là năm âm lịch.
                     </li>
                 </ul>
                 <p class="text-xs text-gray-500">
-                    Hai bảng đại hạn / tiểu hạn của 12 cung đã được đối chiếu khớp 11 lá số chuẩn tuvivietnam.vn
-                    (<code class="text-[11px]">test/ansao.test.js</code> mục B và F). Phần <em>luận</em> ý nghĩa hạn
-                    thì chưa có ở đây — trang này chỉ định vị cung.
+                    Đại hạn / tiểu hạn của 12 cung đối chiếu khớp 11 lá số chuẩn tuvivietnam.vn, còn lưu niên đại hạn
+                    đối chiếu với lá số ví dụ trong <code class="text-[11px]">refs/tu-vi-tong-hop/</code>
+                    (quyển 2, "Số bị ám hại": Âm Nam Kim tứ cục, năm Hợi 43 tuổi — tiểu hạn tại Quan, lưu niên đại hạn
+                    tại Tử) — xem <code class="text-[11px]">test/ansao.test.js</code> mục B và F. Phần <em>luận</em>
+                    ý nghĩa hạn thì chưa có ở đây — trang này chỉ định vị cung.
                 </p>
             </div>
         </section>
@@ -218,6 +227,13 @@
                 <span id="tomTatSinh" class="text-xs text-gray-400 font-mono">--</span>
             </div>
             <div id="tom-tat-han"></div>
+
+            <div class="pt-2 border-t border-mystic-600/60">
+                <h3 class="text-xs uppercase tracking-wider font-semibold text-gray-400 mb-2">
+                    Lộ trình Lưu Niên Đại Hạn — 10 năm của đại vận đang đi
+                </h3>
+                <div id="lo-trinh-luu-nien" class="overflow-x-auto"></div>
+            </div>
         </section>
 
         <!-- ĐỊA BÀN -->
@@ -225,8 +241,10 @@
             <div class="flex flex-wrap items-center justify-between gap-2 px-1">
                 <p class="text-xs text-gray-400">
                     Bấm một cung để xem chi tiết sao. Viền
-                    <span class="nhan-han nhan-han-dai">Đại Hạn</span> và
-                    <span class="nhan-han nhan-han-tieu">Tiểu Hạn</span> đánh dấu hai cung đang đi hạn của năm xem.
+                    <span class="nhan-han nhan-han-dai">Đại Hạn</span>,
+                    <span class="nhan-han nhan-han-luu">Lưu Niên</span> và
+                    <span class="nhan-han nhan-han-tieu">Tiểu Hạn</span> đánh dấu các cung đang đi hạn của năm xem
+                    (rơi cùng một cung thì viền lồng nhau).
                 </p>
             </div>
             <div class="la-so-giay giay bg-mystic-900 border-2 border-amber-600/50 rounded-2xl p-2 md:p-3 shadow-2xl">
@@ -237,7 +255,7 @@
 
         <footer class="text-center text-xs text-gray-500 pt-4 border-t border-mystic-700/40">
             <p class="mb-2">
-                Công thức đại hạn / tiểu hạn nằm trong <code class="text-[11px]">lib/ansao.js</code>
+                Công thức đại hạn / lưu niên đại hạn / tiểu hạn nằm trong <code class="text-[11px]">lib/ansao.js</code>
                 (<code class="text-[11px]">tinhHan</code>), giao diện dùng chung
                 <code class="text-[11px]">assets/ui.js</code> với trang lập lá số tự động.
             </p>
@@ -263,7 +281,7 @@
 
     <script type="module">
         import { generateTuViChart } from '../lib/ansao.js';
-        import { veDiaBan, moModalCung, veTomTatHan } from '../assets/ui.js';
+        import { veDiaBan, moModalCung, veTomTatHan, veLoTrinhLuuNien } from '../assets/ui.js';
         import { initThemeToggle } from '../assets/theme-toggle.js';
         initThemeToggle();
 
@@ -293,6 +311,12 @@
             oHan.innerHTML = '';
             oHan.appendChild(veTomTatHan(laSo));
 
+            const oLoTrinh = g('lo-trinh-luu-nien');
+            oLoTrinh.innerHTML = '';
+            const bang = veLoTrinhLuuNien(laSo);
+            if (bang) oLoTrinh.appendChild(bang);
+            else oLoTrinh.innerHTML = `<p class="text-xs text-gray-500 italic">${laSo.han.ghiChu || 'Chưa vào đại vận nào.'}</p>`;
+
             veDiaBan(g('dia-ban'), laSo, { onCungClick: moCung });
         }
 
@@ -321,6 +345,7 @@
             document.getElementById('modal-cung-title').textContent = `Cung ${cung.palaceName} — ${cung.chiName}`;
             const nhan = [
                 cung.isDaiHan ? `ĐANG ĐI ĐẠI HẠN (${laSo.han.daiHan.tuTuoi}-${laSo.han.daiHan.denTuoi} tuổi)` : '',
+                cung.isLuuNienDaiHan ? `LƯU NIÊN ĐẠI HẠN (năm thứ ${laSo.han.luuNienDaiHan.namThu}/10)` : '',
                 cung.isTieuHan ? `TIỂU HẠN NĂM ${laSo.userInfo.viewYear}` : '',
             ].filter(Boolean).join(' • ');
             document.getElementById('modal-cung-sub').textContent =

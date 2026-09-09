@@ -4,7 +4,7 @@ Bộ công cụ lập lá số và tra cứu Tử Vi. Trang tĩnh thuần, khôn
 
 ```bash
 npm run dev     # python3 -m http.server 8000 → mở localhost:8000
-npm test        # 216 phép kiểm cho lib/ và data/
+npm test        # 223 phép kiểm cho lib/ và data/
 ```
 
 Phải chạy qua server tĩnh, **không mở trực tiếp bằng `file://`** — trình duyệt
@@ -33,7 +33,7 @@ Chrome/Edge cài sẵn ở chế độ headless, ví dụ trên macOS:
 | `pages/conguyetdongluong.html` | Cơ Nguyệt Đồng Lương |
 | `pages/amduongnguhanh.html` | Âm Dương Ngũ Hành — kiến thức nền |
 | `pages/canchi.html` | Can Chi — 10 Thiên Can, 12 Địa Chi, Tam Hợp/Lục Xung/Nhị Hợp/Tứ Mộ Khố |
-| `pages/xemhan.html` | Xem hạn theo năm — định vị cung Đại Hạn &amp; Tiểu Hạn |
+| `pages/xemhan.html` | Xem hạn theo năm — Đại Hạn, Lưu Niên Đại Hạn, Tiểu Hạn |
 | `pages/tuanchiet.html` | Tuần Không – Triệt Không |
 | `pages/cach-cuc.html` | Tra cứu 94 cách cục cổ điển, đối chiếu tự động với lá số |
 | `pages/luangiaitinh.html` | Phương pháp luận giải lá số tĩnh — khung 8 bước |
@@ -58,7 +58,7 @@ data/*.json                            dữ liệu — không một class CSS n�
 | `lib/` | `lich.js` đổi lịch Âm–Dương · `ansao.js` engine an sao · `repo.js` lớp truy cập dữ liệu · `cachcuc.js` đối chiếu lá số với 94 cách cục |
 | `data/` | 8 file JSON + `schema.md` mô tả từng trường và nguồn gốc |
 | `assets/` | `theme.css` — 25 token màu và chữ, khai lại cho mặt giấy; dùng chung mọi trang |
-| `test/` | 216 phép kiểm, đối chiếu 11 lá số chuẩn tuvivietnam.vn |
+| `test/` | 223 phép kiểm, đối chiếu 11 lá số chuẩn tuvivietnam.vn |
 | `tools/` | `shot.mjs` chụp ảnh trang · hai script di trú dữ liệu |
 | `refs/` | Ba cuốn sách tham khảo, tách nhỏ theo chương, mỗi cuốn có `_muc-luc.md` điều hướng |
 
@@ -234,7 +234,7 @@ client vẫn nhanh hơn, backend chỉ cần lưu tham số đầu vào — lá 
 - Không còn `apiKey` nào trong mã client
 - Trang vẫn chạy được ở chế độ tĩnh khi không có backend (tính năng AI tắt,
   phần còn lại nguyên vẹn)
-- `npm test` vẫn 216/216 — `lib/` không được phụ thuộc vào mạng
+- `npm test` vẫn 223/223 — `lib/` không được phụ thuộc vào mạng
 
 ---
 
@@ -325,6 +325,42 @@ Kéo theo một việc dọn: khối CSS đảo lá số sang nền giấy (`.la
 phải sửa song song. Viền cung hạn cũng là token (`--han-dai`, `--han-tieu`)
 nên đọc đúng trên cả nền tối và nền giấy.
 
+### Lưu Niên Đại Hạn
+
+Loại hạn thứ ba, thêm sau. `refs/tu-vi-tong-hop/quyen2-01-thuat-giai-doan.md`
+(dòng 391) kể **6 loại hạn** — đại hạn, *lưu niên đại hạn*, tiểu hạn, nguyệt
+hạn, nhật hạn, thời hạn — nhưng ngay dòng 395 đẩy quy tắc an sang quyển
+**Tử Vi Hàm Số**, không có trong `refs/`. Khẩu quyết dùng ở đây do chủ repo
+cung cấp:
+
+> Gốc → xung chiếu → lùi 1 cung → tiến liên tiếp, đếm **theo chiều đi của đại
+> hạn**, đổi lộ trình khi sang đại vận khác.
+
+Thành công thức (`d = +1` nếu thuận lý, `-1` nếu nghịch lý; `G` = cung đại hạn;
+`k` = năm thứ mấy trong đại vận, 1..10):
+
+| Năm | Cung |
+|---|---|
+| 1 | `G` — đứng ngay cung đại vận |
+| 2 | `G + 6` — cung xung chiếu |
+| 3 | `G + 6 - d` — lùi 1 cung từ cung xung chiếu |
+| 4..10 | `G + 6 + (k-4)·d` — tiến liên tiếp |
+
+Hai điều đáng ghi rõ vì trông như lỗi mà không phải:
+
+- Năm thứ 4 **trở lại đúng cung của năm thứ 2**, nên 10 năm chỉ đi qua 8 cung
+  khác nhau. Đó là hệ quả trực tiếp của khẩu quyết, không phải sai sót cài đặt.
+- Năm thứ 10 **luôn quay về `G`** với cả hai chiều, nên bước tiếp theo rơi đúng
+  cung đại vận kế tiếp — lộ trình cũ giao lại cho lộ trình mới không hở. Đây
+  chính là điều kiện tự kiểm mà khẩu quyết đòi, và mục F kiểm nó trên mọi lá số
+  mẫu ở 4 lần chuyển hạn liên tiếp.
+
+`tinhHan` trả thêm `han.luuNienDaiHan` gồm cung của năm xem, `namThu` (1..10) và
+`loTrinh` — mảng đủ 10 năm, dùng cho bảng lộ trình ở `pages/xemhan.html`
+(`veLoTrinhLuuNien` trong `assets/ui.js`). Ba loại hạn có thể rơi cùng một cung
+nên viền cung do `ui.js` ghép thành nhiều lớp `box-shadow` lồng nhau, thay vì
+liệt kê 7 tổ hợp lớp trong CSS.
+
 ### Kiểm chứng
 
 Mục F của `test/ansao.test.js`: với 11 lá số mẫu × 5 năm xem (55 cặp), kỳ vọng
@@ -334,6 +370,15 @@ trên lưới khớp `laSo.han`, hai trường hợp rìa và vòng đại hạn
 đảo chiều thuận/nghịch trong `tinhHan` để chắc bộ kiểm không rỗng — hỏng ngay
 2 phép kiểm.
 
+Lưu niên đại hạn chỉ có **một** mốc đối chiếu tìm được trong `refs/`:
+`tu-vi-tong-hop/quyen2-19-giai-doan-la-so-dien-hinh.md` (lá số "SỐ BỊ ÁM HẠI" —
+Âm Nam, Kim tứ cục, Mệnh ở Dậu, *"chết vào năm Hợi 43 tuổi. Tiểu hạn tại Quan,
+lưu niên đại hạn tại tử"*). `10/2/1929 giờ Tỵ` là một lá số thật khớp đủ bốn
+điều kiện đầu bài và có 43 tuổi âm rơi đúng năm Tân Hợi 1971, nên mục F dùng nó
+làm mốc: engine ra tiểu hạn tại **Quan Lộc** và lưu niên đại hạn tại **Tử Tức**,
+đúng câu sách. Chính mốc này loại bỏ cách đọc "đếm theo chiều chi thuận" — cách
+đó cũng khớp năm thứ 10 nhưng lại không chạm cung đại vận kế tiếp.
+
 ### Chưa làm
 
 - **Nguyệt hạn** (12 tháng trong năm) — khẩu quyết có nhiều dị bản, cần chốt
@@ -341,7 +386,8 @@ trên lưới khớp `laSo.han`, hai trường hợp rìa và vòng đại hạn
 - **Lưu Tứ Hóa theo can năm xem** — hiện chỉ có 9 sao lưu (`L.Lộc Tồn`,
   `L.Kình Dương`, `L.Đà La`, `L.Thái Tuế`, `L.Tang Môn`, `L.Bạch Hổ`,
   `L.Thiên Mã`, `L.Thiên Khốc`, `L.Thiên Hư`).
-- **Dòng thời gian 12 đại hạn** trong một bảng.
+- **Dòng thời gian 12 đại hạn** trong một bảng (đã có bảng lộ trình 10 năm của
+  *một* đại vận, chưa có bảng cả đời).
 - **Luận nghĩa của hạn** — trang chỉ định vị cung, không nói cung đó tốt xấu.
 
 ---

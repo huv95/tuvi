@@ -154,7 +154,7 @@
               </div>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">Xem Năm (Đại / Tiểu Hạn)</label>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Xem Năm (Hạn)</label>
               <input type="number" id="viewYear" min="1950" max="2100" value="2026" required
                 class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-amber-500">
             </div>
@@ -431,8 +431,9 @@
           let modal = document.getElementById('cungModal');
 
           document.getElementById('modal-cung-title').textContent = `Cung ${cell.palaceName} - Vị Trí Cung ${cell.chiName}`;
-          const nhanHan = [cell.isDaiHan ? 'ĐANG ĐI ĐẠI HẠN' : '', cell.isTieuHan ? 'TIỂU HẠN NĂM NAY' : '']
-            .filter(Boolean).join(' • ');
+          const nhanHan = [cell.isDaiHan ? 'ĐANG ĐI ĐẠI HẠN' : '',
+                           cell.isLuuNienDaiHan ? 'LƯU NIÊN ĐẠI HẠN' : '',
+                           cell.isTieuHan ? 'TIỂU HẠN NĂM NAY' : ''].filter(Boolean).join(' • ');
           document.getElementById('modal-cung-sub').textContent =
             `Địa Chi: ${cell.chiName} • Đại Hạn: ${cell.daiHan} tuổi • Tiểu Hạn: Năm ${cell.tieuHan} • ${cell.trangSinh}`
             + (nhanHan ? ` • ${nhanHan}` : '');
@@ -487,6 +488,9 @@
     - Đại Hạn đang đi: ${han.daiHan
         ? `cung ${han.daiHan.palaceName} (${han.daiHan.chiName}), ${han.daiHan.tuTuoi}-${han.daiHan.denTuoi} tuổi, sao: ${grid[han.daiHan.gridIdx].chinhTinh.map(s => s.name + (s.tuHoa || '')).join(', ') || 'Vô Chính Diệu'}`
         : han.ghiChu}
+    - Lưu Niên Đại Hạn (năm thứ ${han.luuNienDaiHan ? han.luuNienDaiHan.namThu : '?'}/10 của đại vận): ${han.luuNienDaiHan
+        ? `cung ${han.luuNienDaiHan.palaceName} (${han.luuNienDaiHan.chiName}), sao: ${grid[han.luuNienDaiHan.gridIdx].chinhTinh.map(s => s.name + (s.tuHoa || '')).join(', ') || 'Vô Chính Diệu'}`
+        : '—'}
     - Tiểu Hạn năm này: ${han.tieuHan
         ? `cung ${han.tieuHan.palaceName} (${han.tieuHan.chiName}), sao: ${grid[han.tieuHan.gridIdx].chinhTinh.map(s => s.name + (s.tuHoa || '')).join(', ') || 'Vô Chính Diệu'}`
         : '—'}
