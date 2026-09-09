@@ -7,12 +7,13 @@
 //
 // Thoát mã 1 nếu có lỗi, để dùng được trong CI / pre-commit hook.
 //
-// Gồm 4 tầng:
+// Gồm 6 tầng:
 //   A. Đổi lịch      - đối chiếu mốc lịch VN + tự nghịch đảo trên 400.000 ngày
 //   B. Lá số mẫu     - 11 lá số chuẩn từ tuvivietnam.vn (test/lasomau.js)
 //   C. Quy tắc an sao- bảng tra và khẩu quyết
 //   D. Bất biến      - tính chất phải đúng với MỌI lá số
 //   E. Dữ liệu       - cấu trúc data/*.json và tính toàn vẹn tham chiếu
+//   F. Hạn           - cung đại/tiểu hạn của năm xem
 // ============================================================================
 import { CAN, CHI, jdFromDate, jdToSolar,
          convertSolarToLunar, convertLunarToSolar,
@@ -299,6 +300,70 @@ head('E. Cấu trúc và toàn vẹn của data/*.json');
      sao.filter(s => s.nguHanhBatDong).every(s => HANH.has(s.nguHanh)),
      sao.filter(s => s.nguHanhBatDong).map(s => `${s.ten}: ${s.nguHanhBatDong}`).join(' | '));
 }
+
+// ================================ F. HẠN ====================================
+head('F. Hạn của năm xem — đối chiếu với bảng đại/tiểu hạn của 11 lá số chuẩn');
+// Mỗi lá số mẫu đã ghi sẵn dh (mốc tuổi đại hạn) và th (Chi năm tiểu hạn) cho
+// cả 12 cung, và mục B đã kiểm hai bảng đó khớp tuvivietnam.vn. Ở đây suy kỳ
+// vọng TỪ hai bảng ấy rồi so với tinhHan() — không suy từ chính công thức
+// đang kiểm:
+//   cung Đại Hạn  = cung có dh <= tuổi <= dh+9
+//   cung Tiểu Hạn = cung có th trùng Chi của năm xem
+{ const NAM_XEM = [1996, 2010, 2026, 2060, 2100];
+  let bad = [], soCa = 0;
+  for (const C of LA_SO_MAU) {
+    const namAm = +generateTuViChart(C.birth).userInfo.lunarStr.match(/\/(\d+)\s*\(/)[1];
+    for (const viewYear of NAM_XEM) {
+      const c = generateTuViChart({ ...C.birth, viewYear });
+      const { han } = c, tuoi = viewYear - namAm + 1;
+      soCa++;
+      if (han.tuoi !== tuoi) { bad.push(`${C.label}/${viewYear}: tuổi ${han.tuoi}≠${tuoi}`); continue; }
+
+      const dhChi = Object.entries(C.P).find(([, r]) => tuoi >= r.dh && tuoi <= r.dh + 9)?.[0];
+      const dhRa = han.daiHan?.chiName ?? null;
+      if (dhRa !== (dhChi ?? null)) bad.push(`${C.label}/${viewYear} (${tuoi}t): ĐH ${dhRa}≠${dhChi ?? 'null'}`);
+      if (han.daiHan && han.daiHan.tuTuoi !== C.P[dhChi].dh)
+        bad.push(`${C.label}/${viewYear}: mốc ĐH ${han.daiHan.tuTuoi}≠${C.P[dhChi].dh}`);
+
+      const thChi = Object.entries(C.P).find(([, r]) => r.th === getCanChiYear(viewYear).chi)?.[0];
+      const thRa = han.tieuHan?.chiName ?? null;
+      if (tuoi >= 1 && thRa !== thChi) bad.push(`${C.label}/${viewYear}: TH ${thRa}≠${thChi}`);
+    }
+  }
+  ck(`cung Đại Hạn & Tiểu Hạn đúng trên ${soCa} cặp (lá số × năm xem)`, bad.length === 0, bad.slice(0, 4).join(' | ')); }
+
+// Cờ trên lưới phải trùng với object han, và chỉ đúng một cung mỗi loại
+{ let bad = [];
+  for (const C of LA_SO_MAU) for (const viewYear of [2026, 2071]) {
+    const c = generateTuViChart({ ...C.birth, viewYear });
+    const dh = c.grid.filter(g => g.isDaiHan), th = c.grid.filter(g => g.isTieuHan);
+    if (dh.length !== 1 || th.length !== 1) bad.push(`${C.label}/${viewYear}: ${dh.length} cờ ĐH, ${th.length} cờ TH`);
+    else if (dh[0].chiName !== c.han.daiHan.chiName || th[0].chiName !== c.han.tieuHan.chiName)
+      bad.push(`${C.label}/${viewYear}: cờ lệch han`);
+    else if (dh[0].daiHan !== c.han.daiHan.tuTuoi) bad.push(`${C.label}/${viewYear}: cờ ĐH sai mốc tuổi`);
+  }
+  ck('cờ isDaiHan / isTieuHan trên lưới khớp object han, mỗi loại đúng 1 cung', bad.length === 0, bad.slice(0, 3).join(' | ')); }
+
+// Chưa tới tuổi khởi hạn, và năm xem trước năm sinh
+{ const c = chartOf({ year: 1990, viewYear: 1991 });      // cục >= 2 nên 2 tuổi có thể chưa vào hạn
+  const cucNum = c.userInfo.cuc.num;
+  ck('trước tuổi khởi Đại Hạn thì daiHan = null, có ghi chú',
+     cucNum <= 2 ? true : (c.han.daiHan === null && /Chưa vào Đại Hạn/.test(c.han.ghiChu)),
+     `cục ${cucNum}, tuổi ${c.han.tuoi}, ra ${JSON.stringify(c.han.daiHan)}`);
+  const c2 = chartOf({ year: 1990, viewYear: 1985 });
+  ck('năm xem trước năm sinh thì không có hạn nào',
+     c2.han.daiHan === null && c2.han.tieuHan === null && /trước năm sinh/.test(c2.han.ghiChu),
+     JSON.stringify(c2.han)); }
+
+// Vòng thứ hai: quá 120 năm thì lặp lại cung cũ nhưng tuổi vẫn chạy tiếp
+{ const C = LA_SO_MAU[0];
+  const namAm = +generateTuViChart(C.birth).userInfo.lunarStr.match(/\/(\d+)\s*\(/)[1];
+  const c = generateTuViChart({ ...C.birth, viewYear: namAm + 130 });   // 131 tuổi
+  const cucNum = c.userInfo.cuc.num, i = Math.floor((131 - cucNum) / 10);
+  const chiCungCu = Object.entries(C.P).find(([, r]) => r.dh === cucNum + (i % 12) * 10)?.[0];
+  ck('đại hạn vòng 2 lặp lại cung của vòng 1, tuổi không quay về đầu',
+     c.han.daiHan.vong === 2 && c.han.daiHan.chiName === chiCungCu && c.han.daiHan.tuTuoi === cucNum + i * 10,
+     JSON.stringify(c.han.daiHan)); }
 
 // ================================ KẾT QUẢ ===================================
 console.log('\n' + '='.repeat(70));

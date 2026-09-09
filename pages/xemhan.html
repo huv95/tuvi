@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <script>if (localStorage.getItem('tuvi-giao-dien') === 'sang') document.documentElement.classList.add('giay');</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xem Hạn Theo Năm - Tử Vi Myn 001</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Be Vietnam Pro"', 'sans-serif'],
+                    },
+                    colors: {
+                        mystic: {
+                            900: 'var(--nen)',
+                            800: 'var(--nen-noi)',
+                            700: 'var(--vien-mo)',
+                            600: 'var(--vien)',
+                            500: 'var(--chu-nhat)',
+                            accent: '#d97706',
+                            gold: '#fbbf24',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="../assets/theme.css">
+    <style>
+        body {
+            background-color: var(--nen);
+            color: var(--chu);
+            font-family: var(--font-chu);
+        }
+        .mystic-card {
+            background: var(--nen-noi);
+            border: 1px solid var(--vien);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--nen); }
+        ::-webkit-scrollbar-thumb { background: var(--vien); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--nhan-mo); }
+
+        /* Lớp .la-so-giay (đảo lá số sang nền giấy), .cung-dai-han / .cung-tieu-han
+           (viền cung đang đi hạn) và .nhan-han đều nằm trong assets/theme.css,
+           dùng chung với pages/ansaotudong.html. */
+
+        .o-nhap {
+            width: 100%; background: var(--nen); border: 1px solid var(--vien);
+            border-radius: .5rem; padding: .5rem .75rem; font-size: .875rem; color: var(--chu);
+        }
+        .o-nhap:focus { outline: none; border-color: var(--nhan); }
+        .nut-nam {
+            width: 2rem; height: 2rem; border-radius: .5rem; font-weight: 700;
+            background: var(--nen-noi-2); border: 1px solid var(--vien); color: var(--chu);
+        }
+        .nut-nam:hover { border-color: var(--nhan); color: var(--nhan); }
+    </style>
+</head>
+<body class="min-h-screen pb-16 flex flex-col">
+
+    <header class="border-b border-mystic-700/60 bg-mystic-900/80 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-sky-600 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                    <i class="fa-solid font-serif">☯</i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold font-serif tracking-wide gold-gradient-text">XEM HẠN THEO NĂM</h1>
+                    <p class="text-xs text-gray-400">Đại Hạn 10 năm &amp; Tiểu Hạn từng năm</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="nutChuyenGiaoDien" class="nut-giao-dien"></button>
+                <a href="../index.html" class="text-xs sm:text-sm text-gray-300 hover:text-amber-300 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-arrow-left"></i> Mục lục
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full space-y-6">
+
+        <!-- INTRO -->
+        <section class="mystic-card rounded-2xl p-6">
+            <span class="text-xs uppercase tracking-widest text-amber-400 font-semibold">Vận Hạn</span>
+            <h2 class="text-2xl font-serif font-bold text-white mt-1 mb-3">Năm nay đi hạn ở cung nào?</h2>
+            <div class="text-sm text-gray-300 leading-relaxed space-y-2">
+                <p>
+                    Lá số an một lần rồi giữ nguyên cả đời, nhưng <strong class="text-emerald-300">hạn</strong> thì
+                    chạy: mỗi năm người ta đứng ở một cung khác để luận. Trang này chỉ trả lời đúng một câu hỏi —
+                    <em>năm đó cung Đại Hạn và cung Tiểu Hạn nằm ở đâu</em> — rồi tô sáng hai cung ấy trên địa bàn.
+                    Xem lá số đầy đủ (phụ tinh, đổi lịch, luận giải AI) thì sang
+                    <a href="ansaotudong.html" class="text-amber-300 hover:underline">công cụ lập lá số tự động</a>.
+                </p>
+                <ul class="list-disc list-inside space-y-1 text-gray-400">
+                    <li>
+                        <strong class="text-emerald-300">Đại Hạn</strong> — mỗi cung 10 năm. Hạn đầu khởi ngay tại
+                        cung Mệnh vào đúng năm bằng <em>số Cục</em> (Thủy nhị cục thì 2 tuổi, Hỏa lục cục thì 6 tuổi),
+                        rồi đi thuận nếu <em>thuận lý</em> (dương nam / âm nữ), đi nghịch nếu nghịch lý.
+                    </li>
+                    <li>
+                        <strong class="text-sky-300">Tiểu Hạn</strong> — mỗi cung 1 năm, vòng 12 năm. Một tuổi khởi
+                        tại cung theo tam hợp Chi năm sinh (Thân Tý Thìn khởi Tuất · Tỵ Dậu Sửu khởi Mùi ·
+                        Dần Ngọ Tuất khởi Thìn · Hợi Mão Mùi khởi Sửu), nam đi thuận, nữ đi nghịch.
+                    </li>
+                    <li>
+                        Tuổi ở đây là <strong>tuổi âm</strong> (tuổi mụ): sinh ra đã tính 1 tuổi, qua Tết thêm 1.
+                        Năm xem cũng là năm âm lịch.
+                    </li>
+                </ul>
+                <p class="text-xs text-gray-500">
+                    Hai bảng đại hạn / tiểu hạn của 12 cung đã được đối chiếu khớp 11 lá số chuẩn tuvivietnam.vn
+                    (<code class="text-[11px]">test/ansao.test.js</code> mục B và F). Phần <em>luận</em> ý nghĩa hạn
+                    thì chưa có ở đây — trang này chỉ định vị cung.
+                </p>
+            </div>
+        </section>
+
+        <!-- FORM -->
+        <section class="mystic-card rounded-2xl p-6">
+            <h2 class="text-lg font-serif font-bold text-amber-300 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-user-pen"></i> Thông tin ngày sinh
+            </h2>
+            <form id="form-han" class="space-y-4" onsubmit="lapLaSo(event)">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div class="col-span-2">
+                        <label class="block text-xs text-gray-400 mb-1">Họ và tên</label>
+                        <input type="text" id="fullname" value="Nguyễn Văn An" class="o-nhap">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Giới tính</label>
+                        <select id="gender" class="o-nhap">
+                            <option value="1">Nam</option>
+                            <option value="0">Nữ</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Loại lịch sinh</label>
+                        <select id="calendarType" class="o-nhap" onchange="doiLoaiLich()">
+                            <option value="solar">Dương lịch</option>
+                            <option value="lunar">Âm lịch</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Ngày</label>
+                        <input type="number" id="day" min="1" max="31" value="17" required class="o-nhap">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Tháng</label>
+                        <input type="number" id="month" min="1" max="12" value="3" required class="o-nhap">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Năm sinh</label>
+                        <input type="number" id="year" min="1900" max="2100" value="1995" required class="o-nhap">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Giờ (0-23)</label>
+                        <input type="number" id="hour" min="0" max="23" value="4" required class="o-nhap">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Phút</label>
+                        <input type="number" id="minute" min="0" max="59" value="30" required class="o-nhap">
+                    </div>
+                </div>
+
+                <div id="oNhuan" class="hidden">
+                    <label class="inline-flex items-center text-xs text-amber-300 cursor-pointer">
+                        <input type="checkbox" id="isLeapMonth" class="mr-2">
+                        Là tháng nhuận (âm lịch)
+                    </label>
+                </div>
+
+                <div class="flex flex-wrap items-end gap-3 pt-2 border-t border-mystic-600/60">
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Năm xem hạn (âm lịch)</label>
+                        <div class="flex items-center gap-1.5">
+                            <button type="button" class="nut-nam" onclick="doiNamXem(-1)" title="Năm trước">−</button>
+                            <input type="number" id="viewYear" min="1900" max="2200" value="2026" required
+                                class="o-nhap text-center font-mono font-bold" style="width: 6rem">
+                            <button type="button" class="nut-nam" onclick="doiNamXem(1)" title="Năm sau">+</button>
+                            <button type="button" onclick="veNamNay()"
+                                class="text-xs px-2.5 py-1.5 rounded-lg border border-mystic-600 text-gray-300 hover:border-amber-500 hover:text-amber-300">
+                                Năm nay
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="ml-auto bg-gradient-to-r from-amber-600 to-yellow-500 text-slate-950 font-bold py-2.5 px-5 rounded-xl shadow-lg flex items-center gap-2">
+                        <i class="fa-solid fa-compass"></i> Xem hạn
+                    </button>
+                </div>
+                <p class="text-[11px] text-gray-500">
+                    Đổi năm xem là lá số được an lại: cung đại/tiểu hạn và cả các sao lưu niên (tiền tố
+                    <code class="text-[11px]">L.</code>) đều phụ thuộc năm xem.
+                </p>
+            </form>
+        </section>
+
+        <!-- KẾT QUẢ HẠN -->
+        <section class="mystic-card rounded-2xl p-6 space-y-4">
+            <div class="flex flex-wrap items-baseline justify-between gap-2">
+                <h2 class="text-lg font-serif font-bold text-amber-300 flex items-center gap-2">
+                    <i class="fa-solid fa-hourglass-half"></i> Hạn của <span id="tenChuLaSo">--</span>
+                </h2>
+                <span id="tomTatSinh" class="text-xs text-gray-400 font-mono">--</span>
+            </div>
+            <div id="tom-tat-han"></div>
+        </section>
+
+        <!-- ĐỊA BÀN -->
+        <section class="space-y-2">
+            <div class="flex flex-wrap items-center justify-between gap-2 px-1">
+                <p class="text-xs text-gray-400">
+                    Bấm một cung để xem chi tiết sao. Viền
+                    <span class="nhan-han nhan-han-dai">Đại Hạn</span> và
+                    <span class="nhan-han nhan-han-tieu">Tiểu Hạn</span> đánh dấu hai cung đang đi hạn của năm xem.
+                </p>
+            </div>
+            <div class="la-so-giay giay bg-mystic-900 border-2 border-amber-600/50 rounded-2xl p-2 md:p-3 shadow-2xl">
+                <!-- 12 cung + Thiên Bàn giữa: vẽ bằng veDiaBan(), xem assets/ui.js -->
+                <div id="dia-ban" class="grid grid-cols-4 grid-rows-4 gap-1.5 md:gap-2 aspect-square md:aspect-auto min-h-[700px] text-slate-200 text-xs"></div>
+            </div>
+        </section>
+
+        <footer class="text-center text-xs text-gray-500 pt-4 border-t border-mystic-700/40">
+            <p class="mb-2">
+                Công thức đại hạn / tiểu hạn nằm trong <code class="text-[11px]">lib/ansao.js</code>
+                (<code class="text-[11px]">tinhHan</code>), giao diện dùng chung
+                <code class="text-[11px]">assets/ui.js</code> với trang lập lá số tự động.
+            </p>
+            <p>© Tử Vi Myn 001</p>
+        </footer>
+    </main>
+
+    <!-- MODAL CHI TIẾT CUNG -->
+    <div id="cungModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="la-so-giay giay bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-800/50">
+                <div>
+                    <h3 id="modal-cung-title" class="font-bold font-serif text-lg text-amber-400">--</h3>
+                    <p id="modal-cung-sub" class="text-xs text-slate-400">--</p>
+                </div>
+                <button onclick="dongModal()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-slate-100 transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="modal-cung-body" class="p-5 overflow-y-auto space-y-4 text-xs"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { generateTuViChart } from '../lib/ansao.js';
+        import { veDiaBan, moModalCung, veTomTatHan } from '../assets/ui.js';
+        import { initThemeToggle } from '../assets/theme-toggle.js';
+        initThemeToggle();
+
+        let laSo = null;
+
+        function lapLaSo(e) {
+            if (e) e.preventDefault();
+            const g = (id) => document.getElementById(id);
+            laSo = generateTuViChart({
+                name: g('fullname').value || 'Nguyễn Văn An',
+                gender: g('gender').value,
+                isSolar: g('calendarType').value === 'solar',
+                day: parseInt(g('day').value) || 1,
+                month: parseInt(g('month').value) || 1,
+                year: parseInt(g('year').value) || 1995,
+                hour: parseInt(g('hour').value) || 0,
+                minute: parseInt(g('minute').value) || 0,
+                viewYear: parseInt(g('viewYear').value) || new Date().getFullYear(),
+                isLeapMonth: g('isLeapMonth').checked,
+            });
+
+            g('tenChuLaSo').textContent = laSo.userInfo.name;
+            g('tomTatSinh').textContent =
+                `${laSo.userInfo.solarStr} · ${laSo.userInfo.lunarStr} · ${laSo.userInfo.amDuongNamNu} · ${laSo.userInfo.cuc.name}`;
+
+            const oHan = g('tom-tat-han');
+            oHan.innerHTML = '';
+            oHan.appendChild(veTomTatHan(laSo));
+
+            veDiaBan(g('dia-ban'), laSo, { onCungClick: moCung });
+        }
+
+        // Bước năm xem lên/xuống rồi an lại lá số ngay — không cần bấm "Xem hạn".
+        function doiNamXem(buoc) {
+            const o = document.getElementById('viewYear');
+            const nam = (parseInt(o.value) || new Date().getFullYear()) + buoc;
+            if (nam < parseInt(o.min) || nam > parseInt(o.max)) return;
+            o.value = nam;
+            lapLaSo();
+        }
+
+        function veNamNay() {
+            document.getElementById('viewYear').value = new Date().getFullYear();
+            lapLaSo();
+        }
+
+        function doiLoaiLich() {
+            const lunar = document.getElementById('calendarType').value === 'lunar';
+            document.getElementById('oNhuan').classList.toggle('hidden', !lunar);
+        }
+
+        function moCung(gridIdx) {
+            if (!laSo) return;
+            const cung = laSo.grid[gridIdx];
+            document.getElementById('modal-cung-title').textContent = `Cung ${cung.palaceName} — ${cung.chiName}`;
+            const nhan = [
+                cung.isDaiHan ? `ĐANG ĐI ĐẠI HẠN (${laSo.han.daiHan.tuTuoi}-${laSo.han.daiHan.denTuoi} tuổi)` : '',
+                cung.isTieuHan ? `TIỂU HẠN NĂM ${laSo.userInfo.viewYear}` : '',
+            ].filter(Boolean).join(' • ');
+            document.getElementById('modal-cung-sub').textContent =
+                `Đại Hạn khởi ${cung.daiHan} tuổi • Tiểu Hạn năm ${cung.tieuHan} • ${cung.trangSinh}`
+                + (nhan ? ` • ${nhan}` : '');
+
+            const body = document.getElementById('modal-cung-body');
+            body.innerHTML = '';
+            body.appendChild(moModalCung(cung));
+            document.getElementById('cungModal').classList.remove('hidden');
+        }
+
+        function dongModal() {
+            document.getElementById('cungModal').classList.add('hidden');
+        }
+
+        document.getElementById('cungModal').addEventListener('click', (ev) => {
+            if (ev.target.id === 'cungModal') dongModal();
+        });
+
+        // Mặc định mở là xem hạn năm hiện tại của lá số mẫu.
+        document.getElementById('viewYear').value = new Date().getFullYear();
+        lapLaSo();
+
+        // <script type="module"> có scope riêng nên phải gắn tay lên window để
+        // các thuộc tính onclick/onsubmit trong HTML gọi được.
+        Object.assign(window, { lapLaSo, doiNamXem, veNamNay, doiLoaiLich, dongModal });
+    </script>
+</body>
+</html>

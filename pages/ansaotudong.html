@@ -39,57 +39,8 @@
 
     /* Màu ngũ hành lấy từ assets/theme.css, tự đổi theo mặt nền (tối / giấy). */
 
-    /* ---- Lá số: đảo sang nền giấy -------------------------------------- */
-    /* Selector 2 lớp thắng utility 1 lớp của Tailwind, không cần !important.
-       Danh sách dưới đây liệt kê đủ mọi biến thể opacity đang dùng trong
-       vùng .la-so-giay (lưới lá số + modal chi tiết cung) — sót một cái
-       là chỗ đó tối om trên nền giấy.
-       Giai đoạn 3 của quy hoạch sẽ thay cả khối này bằng token trong theme.css. */
-    .la-so-giay   { background: var(--nen); border-color: var(--nhan-mo); }
-    #cungModal .la-so-giay { background: var(--nen-noi); border-color: var(--vien); }
-    .la-so-giay #thien-ban { background: var(--nen-noi); background-image: none; border-color: var(--nhan-mo); }
-    .la-so-giay .cung-box  { background: var(--nen-noi); border-color: var(--vien); }
-    .la-so-giay .cung-box:hover { border-color: var(--nhan-mo); }
-
-    .la-so-giay .text-slate-100,
-    .la-so-giay .text-slate-200 { color: var(--chu); }
-    .la-so-giay .text-slate-300 { color: var(--chu-mo); }
-    .la-so-giay .text-slate-400 { color: var(--chu-mo); }
-    .la-so-giay .text-slate-500 { color: var(--chu-nhat); }
-    .la-so-giay .text-amber-200,
-    .la-so-giay .text-amber-200\/90,
-    .la-so-giay .text-amber-300,
-    .la-so-giay .text-amber-400,
-    .la-so-giay .text-amber-500 { color: var(--nhan); }
-    .la-so-giay .text-emerald-400 { color: var(--hanh-moc); }
-
-    .la-so-giay .border-slate-700,
-    .la-so-giay .border-slate-700\/50,
-    .la-so-giay .border-slate-700\/60,
-    .la-so-giay .border-slate-800,
-    .la-so-giay .border-slate-800\/80 { border-color: var(--vien-mo); }
-    .la-so-giay .border-amber-500\/20,
-    .la-so-giay .border-amber-500\/30,
-    .la-so-giay .border-amber-500\/60,
-    .la-so-giay .border-amber-600\/50 { border-color: var(--nhan-mo); }
-
-    .la-so-giay .bg-slate-800\/30,
-    .la-so-giay .bg-slate-800\/50,
-    .la-so-giay .bg-slate-800\/60,
-    .la-so-giay .bg-slate-800\/80 { background: var(--nen-noi-2); }
-    .la-so-giay .bg-slate-900,
-    .la-so-giay .bg-slate-900\/70,
-    .la-so-giay .bg-slate-900\/90,
-    .la-so-giay .bg-slate-950,
-    .la-so-giay .bg-slate-950\/90 { background: var(--nen-noi); }
-    .la-so-giay .bg-amber-500\/10,
-    .la-so-giay .bg-amber-500\/20 { background: var(--nhan-nen); }
-    .la-so-giay .bg-amber-500 { background: var(--nhan-mo); }
-
-    .la-so-giay .star-tuhoa           { color: var(--tu-hoa); }
-    .la-so-giay .decoration-amber-500 { text-decoration-color: var(--nhan-mo); }
-    .star-major { color: var(--hanh-tho); font-weight: 700; }
-    .star-tuhoa { color: var(--tu-hoa); font-weight: 600; }
+    /* Khối đảo lá số sang nền giấy (.la-so-giay) và lớp .star-* đã chuyển về
+       assets/theme.css — dùng chung với pages/xemhan.html. */
 
     @media print {
       body { background: white !important; color: black !important; }
@@ -203,7 +154,7 @@
               </div>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">Xem Năm (Tiểu Hạn)</label>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Xem Năm (Đại / Tiểu Hạn)</label>
               <input type="number" id="viewYear" min="1950" max="2100" value="2026" required
                 class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-amber-500">
             </div>
@@ -247,6 +198,15 @@
             <span id="chartOwner" class="text-sm font-bold text-amber-400">Chưa tạo</span>
           </div>
           <div class="flex items-center gap-2">
+            <!-- Đổi nhanh năm xem hạn, lập lại lá số ngay (không cần cuộn lên form) -->
+            <div class="flex items-center gap-1 mr-1 border-r border-slate-700 pr-2">
+              <span class="text-xs text-slate-400 hidden sm:inline">Hạn năm</span>
+              <button onclick="doiNamXem(-1)" title="Năm trước"
+                class="w-7 h-7 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs">−</button>
+              <span id="namXemTag" class="text-xs font-bold text-amber-400 font-mono w-10 text-center">--</span>
+              <button onclick="doiNamXem(1)" title="Năm sau"
+                class="w-7 h-7 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs">+</button>
+            </div>
             <button onclick="window.print()" class="px-3 py-1.5 text-xs rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 transition-colors">
               <i class="fa-solid fa-print mr-1"></i> In / Xuất PDF
             </button>
@@ -254,6 +214,11 @@
               <i class="fa-solid fa-copy mr-1"></i> Sao Chép
             </button>
           </div>
+        </div>
+
+        <!-- Tóm tắt hạn năm xem: vẽ bằng veTomTatHan(), xem assets/ui.js -->
+        <div id="tom-tat-han" class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-3 no-print">
+          <p class="text-xs text-slate-400 italic">Lập lá số để xem hạn của năm đang chọn.</p>
         </div>
 
         <!-- Tử Vi 12 Cung Grid Container -->
@@ -368,7 +333,7 @@
 
     <script type="module">
       import { generateTuViChart } from '../lib/ansao.js';
-      import { veDiaBan, moModalCung } from '../assets/ui.js';
+      import { veDiaBan, moModalCung, veTomTatHan } from '../assets/ui.js';
       import { initThemeToggle } from '../assets/theme-toggle.js';
       initThemeToggle();
 
@@ -405,6 +370,21 @@
 
         function renderChartUI(chartPackage) {
           veDiaBan(document.getElementById('dia-ban'), chartPackage, { onCungClick: openCungModal });
+
+          const oHan = document.getElementById('tom-tat-han');
+          oHan.innerHTML = '';
+          oHan.appendChild(veTomTatHan(chartPackage));
+          document.getElementById('namXemTag').textContent = chartPackage.userInfo.viewYear;
+        }
+
+        // Bước năm xem hạn lên/xuống rồi lập lại lá số — sao lưu niên và cung
+        // đại/tiểu hạn đều phụ thuộc năm xem nên phải tính lại cả lá số.
+        function doiNamXem(buoc) {
+          const o = document.getElementById('viewYear');
+          const nam = (parseInt(o.value) || new Date().getFullYear()) + buoc;
+          if (nam < parseInt(o.min) || nam > parseInt(o.max)) return;
+          o.value = nam;
+          handleFormSubmit();
         }
 
         function renderConverterUI(chartPackage) {
@@ -451,7 +431,11 @@
           let modal = document.getElementById('cungModal');
 
           document.getElementById('modal-cung-title').textContent = `Cung ${cell.palaceName} - Vị Trí Cung ${cell.chiName}`;
-          document.getElementById('modal-cung-sub').textContent = `Địa Chi: ${cell.chiName} • Đại Hạn: ${cell.daiHan} tuổi • Tiểu Hạn: Năm ${cell.tieuHan} • ${cell.trangSinh}`;
+          const nhanHan = [cell.isDaiHan ? 'ĐANG ĐI ĐẠI HẠN' : '', cell.isTieuHan ? 'TIỂU HẠN NĂM NAY' : '']
+            .filter(Boolean).join(' • ');
+          document.getElementById('modal-cung-sub').textContent =
+            `Địa Chi: ${cell.chiName} • Đại Hạn: ${cell.daiHan} tuổi • Tiểu Hạn: Năm ${cell.tieuHan} • ${cell.trangSinh}`
+            + (nhanHan ? ` • ${nhanHan}` : '');
 
           let body = document.getElementById('modal-cung-body');
           body.innerHTML = '';
@@ -478,7 +462,7 @@
           loading.classList.remove('hidden');
           content.classList.add('hidden');
 
-          let { userInfo, grid } = currentChartData;
+          let { userInfo, grid, han } = currentChartData;
           let menhCell = grid.find(c => c.isMenh);
           let thanCell = grid.find(c => c.isThan);
           let quanCell = grid.find(c => c.palaceName === "Quan Lộc");
@@ -499,13 +483,20 @@
     - Cung Thân (${thanCell.chiName}): ${thanCell.chinhTinh.map(s => s.name + (s.tuHoa || '')).join(', ') || 'Vô Chính Diệu'}
     - Cung Quan Lộc (${quanCell.chiName}): ${quanCell.chinhTinh.map(s => s.name).join(', ')}
     - Cung Tài Bạch (${taiCell.chiName}): ${taiCell.chinhTinh.map(s => s.name).join(', ')}
-    - Năm Xem Hạn: ${userInfo.viewYear} (${userInfo.viewYearCanChi})
+    - Năm Xem Hạn: ${userInfo.viewYear} (${userInfo.viewYearCanChi}) — ${han.tuoi} tuổi âm
+    - Đại Hạn đang đi: ${han.daiHan
+        ? `cung ${han.daiHan.palaceName} (${han.daiHan.chiName}), ${han.daiHan.tuTuoi}-${han.daiHan.denTuoi} tuổi, sao: ${grid[han.daiHan.gridIdx].chinhTinh.map(s => s.name + (s.tuHoa || '')).join(', ') || 'Vô Chính Diệu'}`
+        : han.ghiChu}
+    - Tiểu Hạn năm này: ${han.tieuHan
+        ? `cung ${han.tieuHan.palaceName} (${han.tieuHan.chiName}), sao: ${grid[han.tieuHan.gridIdx].chinhTinh.map(s => s.name + (s.tuHoa || '')).join(', ') || 'Vô Chính Diệu'}`
+        : '—'}
 
     Hãy trình bày luận giải dạng HTML đẹp sạch với h3, p, ul, li:
     1. Tổng quan Bản Mệnh Nạp Âm, Cục & Độ Tương Sinh.
     2. Luận giải Cung Mệnh & Cung Thân (Tính cách, sở trường, tố chất).
     3. Luận giải Công Danh Sự Nghiệp (Quan Lộc) & Tài Lộc (Tài Bạch).
-    4. Dự đoán vận hạn năm ${userInfo.viewYear} (${userInfo.viewYearCanChi}) và lời khuyên.
+    4. Dự đoán vận hạn năm ${userInfo.viewYear} (${userInfo.viewYearCanChi}): luận theo cung Đại Hạn
+       và cung Tiểu Hạn nêu trên, có xét sao lưu niên, rồi cho lời khuyên.
           `;
 
           try {
@@ -561,6 +552,7 @@
       // <script type="module"> có scope riêng nên phải gắn tay lên window.
       Object.assign(window, {
         handleFormSubmit,
+        doiNamXem,
         switchTab,
         toggleCalendarType,
         openCungModal,

@@ -4,7 +4,7 @@ Bộ công cụ lập lá số và tra cứu Tử Vi. Trang tĩnh thuần, khôn
 
 ```bash
 npm run dev     # python3 -m http.server 8000 → mở localhost:8000
-npm test        # 211 phép kiểm cho lib/ và data/
+npm test        # 216 phép kiểm cho lib/ và data/
 ```
 
 Phải chạy qua server tĩnh, **không mở trực tiếp bằng `file://`** — trình duyệt
@@ -33,6 +33,7 @@ Chrome/Edge cài sẵn ở chế độ headless, ví dụ trên macOS:
 | `pages/conguyetdongluong.html` | Cơ Nguyệt Đồng Lương |
 | `pages/amduongnguhanh.html` | Âm Dương Ngũ Hành — kiến thức nền |
 | `pages/canchi.html` | Can Chi — 10 Thiên Can, 12 Địa Chi, Tam Hợp/Lục Xung/Nhị Hợp/Tứ Mộ Khố |
+| `pages/xemhan.html` | Xem hạn theo năm — định vị cung Đại Hạn &amp; Tiểu Hạn |
 | `pages/tuanchiet.html` | Tuần Không – Triệt Không |
 | `pages/cach-cuc.html` | Tra cứu 94 cách cục cổ điển, đối chiếu tự động với lá số |
 | `pages/luangiaitinh.html` | Phương pháp luận giải lá số tĩnh — khung 8 bước |
@@ -57,7 +58,7 @@ data/*.json                            dữ liệu — không một class CSS n�
 | `lib/` | `lich.js` đổi lịch Âm–Dương · `ansao.js` engine an sao · `repo.js` lớp truy cập dữ liệu · `cachcuc.js` đối chiếu lá số với 94 cách cục |
 | `data/` | 8 file JSON + `schema.md` mô tả từng trường và nguồn gốc |
 | `assets/` | `theme.css` — 25 token màu và chữ, khai lại cho mặt giấy; dùng chung mọi trang |
-| `test/` | 211 phép kiểm, đối chiếu 11 lá số chuẩn tuvivietnam.vn |
+| `test/` | 216 phép kiểm, đối chiếu 11 lá số chuẩn tuvivietnam.vn |
 | `tools/` | `shot.mjs` chụp ảnh trang · hai script di trú dữ liệu |
 | `refs/` | Ba cuốn sách tham khảo, tách nhỏ theo chương, mỗi cuốn có `_muc-luc.md` điều hướng |
 
@@ -233,7 +234,7 @@ client vẫn nhanh hơn, backend chỉ cần lưu tham số đầu vào — lá 
 - Không còn `apiKey` nào trong mã client
 - Trang vẫn chạy được ở chế độ tĩnh khi không có backend (tính năng AI tắt,
   phần còn lại nguyên vẹn)
-- `npm test` vẫn 211/211 — `lib/` không được phụ thuộc vào mạng
+- `npm test` vẫn 216/216 — `lib/` không được phụ thuộc vào mạng
 
 ---
 
@@ -267,6 +268,81 @@ nên không lệch với bàn cờ cuối cùng. Hai việc phải sửa `lib/an
 Đối chiếu kết quả trang với đúng ví dụ tính tay trong `note/An sao.html`
 (Ất Hợi 1995, Âm Nam, giờ Dần) — khớp hoàn toàn từng bước: Cục, Chủ Mệnh, Chủ
 Thân, vị trí Tử Vi/Thiên Phủ.
+
+---
+
+## Xem hạn theo năm
+
+Lá số an một lần là xong, nhưng **hạn** thì chạy: mỗi năm đứng ở một cung khác
+để luận. Dữ liệu vốn đã có sẵn từ trước — mỗi cung mang mốc tuổi Đại Hạn và
+Chi năm Tiểu Hạn, cả hai đã đối chiếu khớp 11 lá số chuẩn (mục B của
+`test/ansao.test.js`) — nhưng không chỗ nào trả lời câu hỏi thực tế: *năm nay
+đi hạn ở cung nào*. Người xem phải tự dò mốc tuổi trong 12 ô.
+
+### Đã làm
+
+`lib/ansao.js` xuất thêm một hàm thuần:
+
+```js
+tinhHan(grid, { lunarYear, viewYear, viewYearChi, menhIdx, cucNum, isThuanLy })
+// -> { tuoi, daiHan: {gridIdx, chiName, palaceName, tuTuoi, denTuoi, tuNam, denNam, thuTu, vong} | null,
+//      tieuHan: {gridIdx, chiName, palaceName} | null, ghiChu }
+```
+
+`generateTuViChart` gọi sẵn hàm này, trả kết quả ở `laSo.han` và gắn cờ
+`isDaiHan` / `isTieuHan` lên đúng hai cung trong `grid` — trường thêm vào, không
+đổi trường cũ nên chỗ gọi sẵn không phải sửa gì.
+
+Quy ước: **tuổi âm** (sinh ra là 1 tuổi, qua Tết thêm 1), năm xem cũng là năm
+âm lịch, nên `tuoi = viewYear - lunarYear + 1`. Ba trường hợp rìa được trả về
+tường minh chứ không gán bừa vào cung Mệnh:
+
+| Trường hợp | Kết quả |
+|---|---|
+| Năm xem trước năm sinh | `daiHan` và `tieuHan` đều `null`, có `ghiChu` |
+| Chưa tới tuổi khởi hạn (tuổi < số Cục) | `daiHan = null`, `tieuHan` vẫn có |
+| Quá 120 năm | lặp lại cung của vòng trước, `vong = 2`, mốc tuổi vẫn chạy tiếp |
+
+Giao diện gom vào `assets/ui.js`, dùng chung cho mọi trang có địa bàn:
+
+- `veOCung` tự gắn lớp `.cung-dai-han` / `.cung-tieu-han` + nhãn theo hai cờ
+  trên. Cung vừa là Đại Hạn vừa là Tiểu Hạn thì hai viền lồng nhau.
+- `veThienBan` thêm một dòng "ĐH · tuổi · TH" ở đáy thiên bàn.
+- `veTomTatHan(laSo)` — bảng tóm tắt hai cung hạn kèm chính tinh và sao lưu
+  niên trong đó. Hàm mới, trả DOM element, trang tự đặt vào đâu thì tuỳ.
+
+Hai trang dùng:
+
+1. **`pages/ansaotudong.html`** — thêm bảng tóm tắt trên địa bàn và bộ chuyển
+   năm (−/+) ngay thanh điều khiển, đổi năm là an lại lá số. Prompt luận giải
+   AI cũng được bổ sung cung Đại Hạn / Tiểu Hạn thay vì chỉ đưa số năm xem.
+2. **`pages/xemhan.html`** (mới) — trang chuyên xem hạn: nhập ngày sinh, bước
+   năm xem, đọc thẳng hai cung hạn, kèm phần giải thích công thức.
+
+Kéo theo một việc dọn: khối CSS đảo lá số sang nền giấy (`.la-so-giay`) trước
+đây nằm trong `<style>` của `ansaotudong.html`, giờ chuyển về
+`assets/theme.css` — trang thứ hai cần đúng lưới đó, chép lại là có hai bản
+phải sửa song song. Viền cung hạn cũng là token (`--han-dai`, `--han-tieu`)
+nên đọc đúng trên cả nền tối và nền giấy.
+
+### Kiểm chứng
+
+Mục F của `test/ansao.test.js`: với 11 lá số mẫu × 5 năm xem (55 cặp), kỳ vọng
+được suy **từ bảng dh/th của tuvivietnam.vn** trong `test/lasomau.js` rồi so
+với `tinhHan` — không suy từ chính công thức đang kiểm. Cộng thêm phép kiểm cờ
+trên lưới khớp `laSo.han`, hai trường hợp rìa và vòng đại hạn thứ hai. Đã thử
+đảo chiều thuận/nghịch trong `tinhHan` để chắc bộ kiểm không rỗng — hỏng ngay
+2 phép kiểm.
+
+### Chưa làm
+
+- **Nguyệt hạn** (12 tháng trong năm) — khẩu quyết có nhiều dị bản, cần chốt
+  nguồn trước khi viết.
+- **Lưu Tứ Hóa theo can năm xem** — hiện chỉ có 9 sao lưu (`L.Lộc Tồn`,
+  `L.Kình Dương`, `L.Đà La`, `L.Thái Tuế`, `L.Tang Môn`, `L.Bạch Hổ`,
+  `L.Thiên Mã`, `L.Thiên Khốc`, `L.Thiên Hư`).
+- **Dòng thời gian 12 đại hạn** trong một bảng.
+- **Luận nghĩa của hạn** — trang chỉ định vị cung, không nói cung đó tốt xấu.
 
 ---
 

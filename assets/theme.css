@@ -47,6 +47,10 @@
   --hung: #F87171;
   --tu-hoa: #C084FC;
 
+  /* --- hạn của năm xem: viền cung Đại Hạn / Tiểu Hạn ------------------- */
+  --han-dai:  #34D399;
+  --han-tieu: #38BDF8;
+
   /* --- độ sáng của sao: miếu / vượng / đắc / hãm ----------------------- */
   --sang-mieu:  #9333EA;
   --sang-vuong: #2563EB;
@@ -78,6 +82,9 @@
   --cat:  #15803D;
   --hung: #B4231C;
   --tu-hoa: #6D28D9;
+
+  --han-dai:  #15803D;
+  --han-tieu: #0369A1;
 }
 
 /* --- lớp tiện ích ------------------------------------------------------ */
@@ -99,6 +106,86 @@
   background: var(--nen-noi-2);
   border: 1px solid var(--vien);
 }
+
+/* Cung đang đi hạn của năm xem, gắn bởi assets/ui.js theo cờ isDaiHan /
+   isTieuHan trong lá số. Dùng box-shadow inset thay vì border để không làm
+   xô lệch bố cục ô — border sẽ cộng thêm chiều rộng, lưới 4x4 lệch theo.
+   Cung vừa là Đại Hạn vừa là Tiểu Hạn thì xếp hai viền lồng nhau. */
+.cung-dai-han  { box-shadow: inset 0 0 0 2px var(--han-dai); }
+.cung-tieu-han { box-shadow: inset 0 0 0 2px var(--han-tieu); }
+.cung-dai-han.cung-tieu-han {
+  box-shadow: inset 0 0 0 2px var(--han-dai), inset 0 0 0 5px var(--han-tieu);
+}
+
+/* Nhãn nhỏ "Đại Hạn" / "Tiểu Hạn" trên đầu ô cung và trong bảng tóm tắt */
+.nhan-han {
+  font-size: 9px; line-height: 1.2; font-weight: 700;
+  padding: 1px 4px; border-radius: 4px; white-space: nowrap;
+  border: 1px solid currentColor;
+  background: color-mix(in srgb, currentColor 15%, transparent);
+}
+.nhan-han-dai  { color: var(--han-dai); }
+.nhan-han-tieu { color: var(--han-tieu); }
+
+/* ---- Lá số: đảo sang nền giấy -------------------------------------- */
+/* Dùng cho mọi trang vẽ địa bàn bằng assets/ui.js (ansaotudong, ansaothucong,
+   xemhan) — trước đây khối này nằm trong <style> của ansaotudong.html, chuyển
+   về đây khi trang thứ hai cần đúng lưới đó.
+   Selector 2 lớp thắng utility 1 lớp của Tailwind, không cần !important.
+   Danh sách dưới đây liệt kê đủ mọi biến thể opacity đang dùng trong
+   vùng .la-so-giay (lưới lá số + modal chi tiết cung) — sót một cái
+   là chỗ đó tối om trên nền giấy. */
+.la-so-giay   { background: var(--nen); border-color: var(--nhan-mo); }
+#cungModal .la-so-giay { background: var(--nen-noi); border-color: var(--vien); }
+.la-so-giay #thien-ban { background: var(--nen-noi); background-image: none; border-color: var(--nhan-mo); }
+.la-so-giay .cung-box  { background: var(--nen-noi); border-color: var(--vien); }
+.la-so-giay .cung-box:hover { border-color: var(--nhan-mo); }
+
+.la-so-giay .text-slate-100,
+.la-so-giay .text-slate-200 { color: var(--chu); }
+.la-so-giay .text-slate-300 { color: var(--chu-mo); }
+.la-so-giay .text-slate-400 { color: var(--chu-mo); }
+.la-so-giay .text-slate-500 { color: var(--chu-nhat); }
+.la-so-giay .text-amber-200,
+.la-so-giay .text-amber-200\/90,
+.la-so-giay .text-amber-300,
+.la-so-giay .text-amber-400,
+.la-so-giay .text-amber-500 { color: var(--nhan); }
+.la-so-giay .text-emerald-400 { color: var(--hanh-moc); }
+
+.la-so-giay .border-slate-700,
+.la-so-giay .border-slate-700\/50,
+.la-so-giay .border-slate-700\/60,
+.la-so-giay .border-slate-800,
+.la-so-giay .border-slate-800\/80 { border-color: var(--vien-mo); }
+.la-so-giay .border-amber-500\/20,
+.la-so-giay .border-amber-500\/30,
+.la-so-giay .border-amber-500\/60,
+.la-so-giay .border-amber-600\/50 { border-color: var(--nhan-mo); }
+
+.la-so-giay .bg-slate-800\/30,
+.la-so-giay .bg-slate-800\/50,
+.la-so-giay .bg-slate-800\/60,
+.la-so-giay .bg-slate-800\/80 { background: var(--nen-noi-2); }
+.la-so-giay .bg-slate-900,
+.la-so-giay .bg-slate-900\/70,
+.la-so-giay .bg-slate-900\/90,
+.la-so-giay .bg-slate-950,
+.la-so-giay .bg-slate-950\/90 { background: var(--nen-noi); }
+.la-so-giay .bg-amber-500\/10,
+.la-so-giay .bg-amber-500\/20 { background: var(--nhan-nen); }
+.la-so-giay .bg-amber-500 { background: var(--nhan-mo); }
+
+.la-so-giay .star-tuhoa           { color: var(--tu-hoa); }
+.la-so-giay .decoration-amber-500 { text-decoration-color: var(--nhan-mo); }
+.star-major { color: var(--hanh-tho); font-weight: 700; }
+.star-tuhoa { color: var(--tu-hoa); font-weight: 600; }
+
+/* Thẻ Đại Hạn / Tiểu Hạn trong bảng tóm tắt hạn (veTomTatHan ở assets/ui.js).
+   Nền và viền lấy theo token thay vì utility slate của Tailwind: bảng này
+   nằm ngoài vùng .la-so-giay và được hai trang khác nhau nhúng, nên phải tự
+   đọc đúng trên cả nền tối và nền giấy. */
+.the-han { background: var(--nen-noi-2); border: 1px solid var(--vien); }
 
 /* Chấm tròn nhỏ chỉ ngũ hành */
 .cham-hanh {

@@ -59,7 +59,13 @@ function veOCung(cung, tuyChon) {
   const el = document.createElement('div');
   el.id = `cung-${cung.gridIdx}`;
   el.className = 'cung-box bg-slate-900/90 border border-slate-800 rounded-lg p-2 flex flex-col justify-between hover:border-amber-500/80 cursor-pointer transition-all overflow-hidden';
+  // Cung đang đi hạn của năm xem: viền màu (lớp trong assets/theme.css)
+  if (cung.isDaiHan) el.classList.add('cung-dai-han');
+  if (cung.isTieuHan) el.classList.add('cung-tieu-han');
   if (tuyChon.onCungClick) el.addEventListener('click', () => tuyChon.onCungClick(cung.gridIdx));
+
+  const nhanHan = (cung.isDaiHan ? '<span class="nhan-han nhan-han-dai">Đại Hạn</span>' : '')
+                + (cung.isTieuHan ? '<span class="nhan-han nhan-han-tieu">Tiểu Hạn</span>' : '');
 
   const chinhTinhHTML = cung.chinhTinh.map(s => `
     <div class="font-bold text-[11px] ${lopHanh(s.el)} flex items-center justify-between">
@@ -79,7 +85,10 @@ function veOCung(cung, tuyChon) {
       <span class="font-serif font-bold text-xs ${cung.isMenh ? 'text-amber-400 underline decoration-amber-500' : 'text-slate-100'}">
         ${cung.palaceName} ${cung.isThan ? '<span class="text-[9px] bg-amber-500/20 text-amber-300 px-1 rounded ml-0.5">Thân</span>' : ''}
       </span>
-      <span class="text-[10px] text-slate-400 font-mono font-semibold">${cung.chiName}</span>
+      <span class="flex items-center gap-1">
+        ${nhanHan}
+        <span class="text-[10px] text-slate-400 font-mono font-semibold">${cung.chiName}</span>
+      </span>
     </div>
     <div class="my-1.5 space-y-0.5">${chinhTinhHTML}</div>
     ${tuyChon.rutGon ? '' : `
@@ -96,7 +105,7 @@ function veOCung(cung, tuyChon) {
   return el;
 }
 
-function veThienBan(userInfo) {
+function veThienBan(userInfo, han) {
   const el = document.createElement('div');
   el.id = 'thien-ban';
   el.className = 'col-span-2 row-span-2 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 border-2 border-amber-500/60 rounded-xl p-3 flex flex-col justify-between items-center text-center shadow-inner relative overflow-y-auto';
@@ -141,6 +150,12 @@ function veThienBan(userInfo) {
       <span>Xem Hạn Năm: <strong class="text-amber-400">${userInfo.viewYear}</strong></span>
       <span class="text-amber-300 font-bold">Năm ${userInfo.viewYearCanChi}</span>
     </div>
+    ${han ? `
+    <div class="text-[10px] w-full flex justify-between gap-1 border-t border-slate-800 pt-1">
+      <span class="nhan-han nhan-han-dai">ĐH: ${han.daiHan ? `${han.daiHan.palaceName} · ${han.daiHan.tuTuoi}-${han.daiHan.denTuoi}t` : '—'}</span>
+      <span class="text-slate-400 font-mono">${han.tuoi > 0 ? han.tuoi + ' tuổi' : '—'}</span>
+      <span class="nhan-han nhan-han-tieu">TH: ${han.tieuHan ? han.tieuHan.palaceName : '—'}</span>
+    </div>` : ''}
   `;
   return el;
 }
@@ -152,7 +167,7 @@ function veThienBan(userInfo) {
 //   rutGon                true: chỉ hiện chính tinh, ẩn phụ tinh và đại/tiểu hạn
 export function veDiaBan(khung, laSo, tuyChon = {}) {
   veKhungLuoi(khung, {
-    taoTam: () => veThienBan(laSo.userInfo),
+    taoTam: () => veThienBan(laSo.userInfo, laSo.han),
     taoO: (k) => veOCung(laSo.grid[GRID_IDX_TU_K(k)], tuyChon),
   });
   return khung;
@@ -180,6 +195,64 @@ export function moModalCung(cung) {
       <h4 class="text-rose-400 font-semibold mb-1">Hung Tinh & Sát Tinh:</h4>
       <div class="flex flex-wrap gap-1.5">${phuXauText}</div>
     </div>
+  `;
+  return el;
+}
+
+// Bảng tóm tắt hạn của năm xem: cung Đại Hạn, cung Tiểu Hạn và các sao đáng
+// chú ý trong hai cung đó. laSo là object trả về từ generateTuViChart (cần
+// laSo.han — có sẵn từ khi lib/ansao.js tính hạn). Trả về DOM element, trang
+// tự đặt vào đâu thì tuỳ.
+export function veTomTatHan(laSo) {
+  const { han, userInfo, grid } = laSo;
+  const el = document.createElement('div');
+  el.className = 'space-y-2';
+
+  // Sao lưu niên mang tiền tố "L." (an theo năm xem, xem lib/ansao.js)
+  const saoLuu = (cung) => [...cung.phuTinhTot, ...cung.phuTinhXau].filter(s => s.name.startsWith('L.'));
+
+  const the = (nhan, lopNhan, cung, phu) => {
+    if (!cung) return `
+      <div class="the-han rounded-xl p-3">
+        <span class="nhan-han ${lopNhan}">${nhan}</span>
+        <p class="text-[11px] text-slate-400 mt-2">${han.ghiChu || 'Không xác định'}</p>
+      </div>`;
+    const o = grid[cung.gridIdx];
+    const chinh = o.chinhTinh.map(s => veTheSao(s).outerHTML).join(' · ')
+      || '<span class="text-slate-500 italic">Vô Chính Diệu</span>';
+    const luu = saoLuu(o).map(s => `<span class="the-sao-chip px-1.5 py-0.5 rounded text-[10px] ${lopHanh(s.el)}">${s.name}</span>`).join(' ')
+      || '<span class="text-slate-500">không có</span>';
+    return `
+      <div class="the-han rounded-xl p-3 space-y-1.5">
+        <div class="flex items-center justify-between">
+          <span class="nhan-han ${lopNhan}">${nhan}</span>
+          <span class="text-[10px] text-slate-400 font-mono">${phu}</span>
+        </div>
+        <div class="font-serif font-bold text-amber-300 text-sm">
+          Cung ${o.palaceName}
+          <span class="text-slate-400 font-mono text-[11px] font-normal">(${o.chiName})</span>
+          ${o.isMenh ? '<span class="text-[9px] text-amber-400">· Mệnh</span>' : ''}
+          ${o.isThan ? '<span class="text-[9px] text-amber-400">· Thân</span>' : ''}
+        </div>
+        <div class="text-[11px] leading-relaxed">${chinh}</div>
+        <div class="text-[10px] text-slate-400">Sao lưu niên: ${luu}</div>
+      </div>`;
+  };
+
+  el.innerHTML = `
+    <div class="flex items-center justify-between border-b border-slate-700/60 pb-1.5">
+      <span class="text-xs uppercase tracking-wider font-semibold text-slate-400">
+        Hạn năm <strong class="text-amber-400">${userInfo.viewYear}</strong>
+        <span class="text-amber-300">(${userInfo.viewYearCanChi})</span>
+      </span>
+      <span class="text-[11px] text-slate-300 font-mono">${han.tuoi > 0 ? han.tuoi + ' tuổi âm' : 'chưa sinh'}</span>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+      ${the('Đại Hạn', 'nhan-han-dai', han.daiHan,
+            han.daiHan ? `${han.daiHan.tuTuoi}-${han.daiHan.denTuoi} tuổi · ${han.daiHan.tuNam}-${han.daiHan.denNam}` : '')}
+      ${the('Tiểu Hạn', 'nhan-han-tieu', han.tieuHan, `năm ${userInfo.viewYearCanChi.split(' ')[1]}`)}
+    </div>
+    ${han.ghiChu && han.daiHan ? `<p class="text-[10px] text-amber-200/80">${han.ghiChu}</p>` : ''}
   `;
   return el;
 }
