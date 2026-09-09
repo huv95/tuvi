@@ -76,7 +76,7 @@
                 </div>
                 <div>
                     <h1 class="text-xl font-bold font-serif tracking-wide gold-gradient-text">XEM HẠN THEO NĂM</h1>
-                    <p class="text-xs text-gray-400">Đại Hạn · Lưu Niên Đại Hạn · Tiểu Hạn</p>
+                    <p class="text-xs text-gray-400">Đại Hạn · Lưu Niên Đại Hạn · Tiểu Hạn · Nguyệt Hạn</p>
                 </div>
             </div>
             <div class="flex items-center gap-3">
@@ -119,6 +119,14 @@
                         năm 1 đứng ngay cung đại vận (Gốc), năm 2 sang cung xung chiếu, năm 3 lùi 1 cung,
                         từ năm 4 tiến liên tiếp mỗi năm một cung. Năm thứ 10 quay về Gốc, nên bước tiếp theo
                         rơi đúng vào cung đại vận kế tiếp.
+                    </li>
+                    <li>
+                        <strong class="text-amber-300">Nguyệt Hạn</strong> — mỗi cung 1 tháng. Tháng Giêng đứng tại
+                        cung <strong>Đẩu Quân</strong> của năm xem, rồi thuận 1 cung mỗi tháng. Đẩu Quân an từ cung
+                        Thái Tuế của năm xem, đếm nghịch tới tháng sinh rồi đếm thuận tới giờ sinh — nên nó dịch
+                        1 cung mỗi năm, và lộ trình 12 tháng xoay theo. Theo phái Đẩu Số
+                        (<code class="text-[11px]">refs/dau-so-tinh-thanh/chuong-10</code>); Tử Vi Giảng Minh dùng
+                        cách khác (tháng Giêng cố định ở cung Dần), chưa cài.
                     </li>
                     <li>
                         Tuổi ở đây là <strong>tuổi âm</strong> (tuổi mụ): sinh ra đã tính 1 tuổi, qua Tết thêm 1.
@@ -206,14 +214,21 @@
                             </button>
                         </div>
                     </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Tháng xem (nguyệt hạn)</label>
+                        <select id="viewMonth" class="o-nhap" onchange="lapLaSo()" style="width: 11rem">
+                            <option value="">— không xem tháng —</option>
+                        </select>
+                    </div>
                     <button type="submit"
                         class="ml-auto bg-gradient-to-r from-amber-600 to-yellow-500 text-slate-950 font-bold py-2.5 px-5 rounded-xl shadow-lg flex items-center gap-2">
                         <i class="fa-solid fa-compass"></i> Xem hạn
                     </button>
                 </div>
                 <p class="text-[11px] text-gray-500">
-                    Đổi năm xem là lá số được an lại: cung đại/tiểu hạn và cả các sao lưu niên (tiền tố
-                    <code class="text-[11px]">L.</code>) đều phụ thuộc năm xem.
+                    Đổi năm xem là lá số được an lại: cung các hạn và cả các sao lưu niên (tiền tố
+                    <code class="text-[11px]">L.</code>) đều phụ thuộc năm xem. Tháng xem chỉ ảnh hưởng nguyệt hạn;
+                    tháng nhuận dùng chung cung với tháng chính.
                 </p>
             </form>
         </section>
@@ -228,11 +243,19 @@
             </div>
             <div id="tom-tat-han"></div>
 
-            <div class="pt-2 border-t border-mystic-600/60">
-                <h3 class="text-xs uppercase tracking-wider font-semibold text-gray-400 mb-2">
-                    Lộ trình Lưu Niên Đại Hạn — 10 năm của đại vận đang đi
-                </h3>
-                <div id="lo-trinh-luu-nien" class="overflow-x-auto"></div>
+            <div class="pt-2 border-t border-mystic-600/60 grid grid-cols-1 xl:grid-cols-2 gap-5">
+                <div>
+                    <h3 class="text-xs uppercase tracking-wider font-semibold text-gray-400 mb-2">
+                        Lưu Niên Đại Hạn — 10 năm của đại vận đang đi
+                    </h3>
+                    <div id="lo-trinh-luu-nien" class="overflow-x-auto"></div>
+                </div>
+                <div>
+                    <h3 class="text-xs uppercase tracking-wider font-semibold text-gray-400 mb-2">
+                        Nguyệt Hạn — 12 tháng của năm <span id="namNguyetHan">--</span>
+                    </h3>
+                    <div id="lo-trinh-nguyet" class="overflow-x-auto"></div>
+                </div>
             </div>
         </section>
 
@@ -243,7 +266,8 @@
                     Bấm một cung để xem chi tiết sao. Viền
                     <span class="nhan-han nhan-han-dai">Đại Hạn</span>,
                     <span class="nhan-han nhan-han-luu">Lưu Niên</span> và
-                    <span class="nhan-han nhan-han-tieu">Tiểu Hạn</span> đánh dấu các cung đang đi hạn của năm xem
+                    <span class="nhan-han nhan-han-tieu">Tiểu Hạn</span>,
+                    <span class="nhan-han nhan-han-nguyet">Nguyệt Hạn</span> đánh dấu các cung đang đi hạn
                     (rơi cùng một cung thì viền lồng nhau).
                 </p>
             </div>
@@ -255,7 +279,7 @@
 
         <footer class="text-center text-xs text-gray-500 pt-4 border-t border-mystic-700/40">
             <p class="mb-2">
-                Công thức đại hạn / lưu niên đại hạn / tiểu hạn nằm trong <code class="text-[11px]">lib/ansao.js</code>
+                Công thức bốn loại hạn nằm trong <code class="text-[11px]">lib/ansao.js</code>
                 (<code class="text-[11px]">tinhHan</code>), giao diện dùng chung
                 <code class="text-[11px]">assets/ui.js</code> với trang lập lá số tự động.
             </p>
@@ -281,7 +305,8 @@
 
     <script type="module">
         import { generateTuViChart } from '../lib/ansao.js';
-        import { veDiaBan, moModalCung, veTomTatHan, veLoTrinhLuuNien } from '../assets/ui.js';
+        import { veDiaBan, moModalCung, veTomTatHan, veLoTrinhHan } from '../assets/ui.js';
+        import { convertSolarToLunar } from '../lib/lich.js';
         import { initThemeToggle } from '../assets/theme-toggle.js';
         initThemeToggle();
 
@@ -300,6 +325,7 @@
                 hour: parseInt(g('hour').value) || 0,
                 minute: parseInt(g('minute').value) || 0,
                 viewYear: parseInt(g('viewYear').value) || new Date().getFullYear(),
+                viewMonth: parseInt(g('viewMonth').value) || null,
                 isLeapMonth: g('isLeapMonth').checked,
             });
 
@@ -311,13 +337,19 @@
             oHan.innerHTML = '';
             oHan.appendChild(veTomTatHan(laSo));
 
-            const oLoTrinh = g('lo-trinh-luu-nien');
-            oLoTrinh.innerHTML = '';
-            const bang = veLoTrinhLuuNien(laSo);
-            if (bang) oLoTrinh.appendChild(bang);
-            else oLoTrinh.innerHTML = `<p class="text-xs text-gray-500 italic">${laSo.han.ghiChu || 'Chưa vào đại vận nào.'}</p>`;
+            veBang('lo-trinh-luu-nien', 'luuNien', laSo.han.ghiChu || 'Chưa vào đại vận nào.');
+            veBang('lo-trinh-nguyet', 'nguyet', 'Chọn tháng xem ở trên để an nguyệt hạn.');
+            g('namNguyetHan').textContent = laSo.userInfo.viewYear;
 
             veDiaBan(g('dia-ban'), laSo, { onCungClick: moCung });
+        }
+
+        function veBang(oId, loai, khiTrong) {
+            const o = document.getElementById(oId);
+            o.innerHTML = '';
+            const bang = veLoTrinhHan(laSo, loai);
+            if (bang) o.appendChild(bang);
+            else o.innerHTML = `<p class="text-xs text-gray-500 italic">${khiTrong}</p>`;
         }
 
         // Bước năm xem lên/xuống rồi an lại lá số ngay — không cần bấm "Xem hạn".
@@ -347,6 +379,7 @@
                 cung.isDaiHan ? `ĐANG ĐI ĐẠI HẠN (${laSo.han.daiHan.tuTuoi}-${laSo.han.daiHan.denTuoi} tuổi)` : '',
                 cung.isLuuNienDaiHan ? `LƯU NIÊN ĐẠI HẠN (năm thứ ${laSo.han.luuNienDaiHan.namThu}/10)` : '',
                 cung.isTieuHan ? `TIỂU HẠN NĂM ${laSo.userInfo.viewYear}` : '',
+                cung.isNguyetHan ? `NGUYỆT HẠN THÁNG ${laSo.han.nguyetHan.thangXem}` : '',
             ].filter(Boolean).join(' • ');
             document.getElementById('modal-cung-sub').textContent =
                 `Đại Hạn khởi ${cung.daiHan} tuổi • Tiểu Hạn năm ${cung.tieuHan} • ${cung.trangSinh}`
@@ -366,8 +399,18 @@
             if (ev.target.id === 'cungModal') dongModal();
         });
 
-        // Mặc định mở là xem hạn năm hiện tại của lá số mẫu.
-        document.getElementById('viewYear').value = new Date().getFullYear();
+        // Mặc định mở là xem hạn năm hiện tại, tháng âm lịch hiện tại.
+        const homNay = new Date();
+        const amHomNay = convertSolarToLunar(homNay.getDate(), homNay.getMonth() + 1, homNay.getFullYear());
+        const oThang = document.getElementById('viewMonth');
+        for (let t = 1; t <= 12; t++) {
+            const opt = document.createElement('option');
+            opt.value = t;
+            opt.textContent = `Tháng ${t} âm lịch`;
+            oThang.appendChild(opt);
+        }
+        oThang.value = amHomNay.month;
+        document.getElementById('viewYear').value = homNay.getFullYear();
         lapLaSo();
 
         // <script type="module"> có scope riêng nên phải gắn tay lên window để

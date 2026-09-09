@@ -4,7 +4,7 @@ Bộ công cụ lập lá số và tra cứu Tử Vi. Trang tĩnh thuần, khôn
 
 ```bash
 npm run dev     # python3 -m http.server 8000 → mở localhost:8000
-npm test        # 223 phép kiểm cho lib/ và data/
+npm test        # 231 phép kiểm cho lib/ và data/
 ```
 
 Phải chạy qua server tĩnh, **không mở trực tiếp bằng `file://`** — trình duyệt
@@ -33,7 +33,7 @@ Chrome/Edge cài sẵn ở chế độ headless, ví dụ trên macOS:
 | `pages/conguyetdongluong.html` | Cơ Nguyệt Đồng Lương |
 | `pages/amduongnguhanh.html` | Âm Dương Ngũ Hành — kiến thức nền |
 | `pages/canchi.html` | Can Chi — 10 Thiên Can, 12 Địa Chi, Tam Hợp/Lục Xung/Nhị Hợp/Tứ Mộ Khố |
-| `pages/xemhan.html` | Xem hạn theo năm — Đại Hạn, Lưu Niên Đại Hạn, Tiểu Hạn |
+| `pages/xemhan.html` | Xem hạn theo năm — Đại Hạn, Lưu Niên Đại Hạn, Tiểu Hạn, Nguyệt Hạn |
 | `pages/tuanchiet.html` | Tuần Không – Triệt Không |
 | `pages/cach-cuc.html` | Tra cứu 94 cách cục cổ điển, đối chiếu tự động với lá số |
 | `pages/luangiaitinh.html` | Phương pháp luận giải lá số tĩnh — khung 8 bước |
@@ -58,7 +58,7 @@ data/*.json                            dữ liệu — không một class CSS n�
 | `lib/` | `lich.js` đổi lịch Âm–Dương · `ansao.js` engine an sao · `repo.js` lớp truy cập dữ liệu · `cachcuc.js` đối chiếu lá số với 94 cách cục |
 | `data/` | 8 file JSON + `schema.md` mô tả từng trường và nguồn gốc |
 | `assets/` | `theme.css` — 25 token màu và chữ, khai lại cho mặt giấy; dùng chung mọi trang |
-| `test/` | 223 phép kiểm, đối chiếu 11 lá số chuẩn tuvivietnam.vn |
+| `test/` | 231 phép kiểm, đối chiếu 11 lá số chuẩn tuvivietnam.vn |
 | `tools/` | `shot.mjs` chụp ảnh trang · hai script di trú dữ liệu |
 | `refs/` | Ba cuốn sách tham khảo, tách nhỏ theo chương, mỗi cuốn có `_muc-luc.md` điều hướng |
 
@@ -234,7 +234,7 @@ client vẫn nhanh hơn, backend chỉ cần lưu tham số đầu vào — lá 
 - Không còn `apiKey` nào trong mã client
 - Trang vẫn chạy được ở chế độ tĩnh khi không có backend (tính năng AI tắt,
   phần còn lại nguyên vẹn)
-- `npm test` vẫn 223/223 — `lib/` không được phụ thuộc vào mạng
+- `npm test` vẫn 231/231 — `lib/` không được phụ thuộc vào mạng
 
 ---
 
@@ -361,6 +361,47 @@ Hai điều đáng ghi rõ vì trông như lỗi mà không phải:
 nên viền cung do `ui.js` ghép thành nhiều lớp `box-shadow` lồng nhau, thay vì
 liệt kê 7 tổ hợp lớp trong CSS.
 
+### Nguyệt Hạn
+
+Loại hạn thứ tư. Bài "Thuật giải đoán"
+(`refs/tu-vi-tong-hop/quyen2-01-thuat-giai-doan.md:391`) kể **6 loại hạn** và tự
+gạt hai cái ngắn nhất: *"vì nhật hạn và thời hạn quá ngắn nên thiếu chính xác,
+không đáng được cứu xét"* — nên nguyệt hạn là bậc cuối cùng đáng làm, và giờ đã
+có. Hai phái trong `refs/` không giống nhau, chốt dùng **phái Đẩu Số**:
+
+| Phái | Cung tháng Giêng | Phụ thuộc |
+|---|---|---|
+| Đẩu Số Tinh Thành (`chuong-10` mục 134) — **đang dùng** | cung Đẩu Quân của năm xem | tháng sinh · giờ sinh · năm xem |
+| Tử Vi Giảng Minh (`phan-3-chuong-05-van.md:636`) — chưa cài | cung Dần, cố định | không |
+
+Phần khó nhất đã có sẵn từ trước: **sao Đẩu Quân** vốn được an trên lá số
+(`Thái Tuế → nghịch tháng sinh → thuận giờ sinh`) và đã khớp cả 11 lá số chuẩn.
+Đợt này chỉ rút công thức đó ra thành `viTriDauQuan(chiNamIdx, lunarMonth,
+hourChiIdx)` để dùng chung hai chỗ — an sao thì truyền Chi năm sinh, nguyệt hạn
+thì truyền Chi năm xem. Đúng như sách viết: *"Đấu quân năm sinh định ra, về sau
+từng năm Đấu quân thuận bàn mà đẩy, một năm một cung"* — hai cách diễn đạt cho
+cùng một vị trí, nên không phải chọn.
+
+Từ đó: tháng Giêng tại Đẩu Quân, mỗi tháng thuận một cung, 12 tháng đi đủ 12
+cung (khác lưu niên đại hạn — lộ trình đó chỉ qua 8 cung).
+
+`generateTuViChart` nhận thêm `viewMonth` (1..12, âm lịch, tuỳ chọn):
+
+- không truyền → `han.nguyetHan` chỉ có `dauQuan` và `loTrinh` 12 tháng, không
+  cung nào mang cờ `isNguyetHan`, bảng tóm tắt hiện 3 thẻ như trước.
+- có truyền → thêm cung của tháng đó và cờ trên lưới, bảng tóm tắt thành 4 thẻ.
+
+`pages/xemhan.html` có ô chọn tháng, mặc định là tháng âm lịch hôm nay.
+`pages/ansaotudong.html` không có ô tháng nên giữ 3 thẻ.
+
+**Chưa xử lý tháng nhuận** — tháng nhuận dùng chung cung với tháng chính. Cách
+chia nửa tháng nhuận sang cung kế tiếp thì chính sách cũng nói *"còn đang tranh
+chấp"* (`quyen2-01` mục 3), nên chưa chọn bên nào.
+
+Hai bảng lộ trình (10 năm của lưu niên đại hạn, 12 tháng của nguyệt hạn) dùng
+chung một hàm `veLoTrinhHan(laSo, loai)` trong `assets/ui.js` — cùng khung
+bảng, chỉ khác mấy cột đầu và màu dòng đang xem (biến `--mau-dang-xem`).
+
 ### Kiểm chứng
 
 Mục F của `test/ansao.test.js`: với 11 lá số mẫu × 5 năm xem (55 cặp), kỳ vọng
@@ -369,6 +410,12 @@ với `tinhHan` — không suy từ chính công thức đang kiểm. Cộng th�
 trên lưới khớp `laSo.han`, hai trường hợp rìa và vòng đại hạn thứ hai. Đã thử
 đảo chiều thuận/nghịch trong `tinhHan` để chắc bộ kiểm không rỗng — hỏng ngay
 2 phép kiểm.
+
+Nguyệt hạn không cần mốc mới: neo vào **sao Đẩu Quân** đã được 11 lá số chuẩn
+xác nhận ở mục B. Lấy năm xem = năm sinh thì cung tháng Giêng phải rơi đúng vị
+trí sao đó — mục F kiểm điều này trên cả 11 lá số, cộng với "Đẩu Quân đẩy thuận
+1 cung mỗi năm", lộ trình 12 tháng đủ 12 cung, và 3 phép tự tính tay cho
+`viTriDauQuan`. Đảo dấu trong công thức Đẩu Quân để thử thì hỏng 12 phép kiểm.
 
 Lưu niên đại hạn chỉ có **một** mốc đối chiếu tìm được trong `refs/`:
 `tu-vi-tong-hop/quyen2-19-giai-doan-la-so-dien-hinh.md` (lá số "SỐ BỊ ÁM HẠI" —
@@ -381,8 +428,15 @@ làm mốc: engine ra tiểu hạn tại **Quan Lộc** và lưu niên đại h�
 
 ### Chưa làm
 
-- **Nguyệt hạn** (12 tháng trong năm) — khẩu quyết có nhiều dị bản, cần chốt
-  nguồn trước khi viết.
+- **Nhật hạn, thời hạn** — hai bậc cuối của 6 loại hạn. Chính bài học gạt đi
+  ("quá ngắn nên thiếu chính xác"), nên không làm.
+- **Nguyệt hạn theo phái Giảng Minh** (tháng Giêng cố định ở cung Dần) và
+  **tháng nhuận** — xem mục Nguyệt Hạn ở trên.
+- **Cung Lưu Thái Tuế như một cung phải đọc** — `quyen2-01:397` nói cung chứa
+  Lưu Thái Tuế cũng dùng để đoán lãnh vực nổi bật trong năm; engine đã an
+  `L.Thái Tuế` nhưng bảng tóm tắt hạn chưa nêu cung đó ra.
+- **Tam chiếu / xung chiếu / nhị hợp của cung hạn** — bài học đòi đọc kèm, hiện
+  chỉ nêu chính cung.
 - **Lưu Tứ Hóa theo can năm xem** — hiện chỉ có 9 sao lưu (`L.Lộc Tồn`,
   `L.Kình Dương`, `L.Đà La`, `L.Thái Tuế`, `L.Tang Môn`, `L.Bạch Hổ`,
   `L.Thiên Mã`, `L.Thiên Khốc`, `L.Thiên Hư`).

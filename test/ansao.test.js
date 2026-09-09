@@ -13,12 +13,12 @@
 //   C. Quy tắc an sao- bảng tra và khẩu quyết
 //   D. Bất biến      - tính chất phải đúng với MỌI lá số
 //   E. Dữ liệu       - cấu trúc data/*.json và tính toàn vẹn tham chiếu
-//   F. Hạn           - cung đại hạn / lưu niên đại hạn / tiểu hạn của năm xem
+//   F. Hạn           - 4 loại hạn: đại hạn, lưu niên đại hạn, tiểu hạn, nguyệt hạn
 // ============================================================================
 import { CAN, CHI, jdFromDate, jdToSolar,
          convertSolarToLunar, convertLunarToSolar,
          getCanChiYear, getCanChiDay, getCanChiHour } from '../lib/lich.js';
-import { generateTuViChart } from '../lib/ansao.js';
+import { generateTuViChart, viTriDauQuan } from '../lib/ansao.js';
 import LA_SO_MAU from './lasomau.js';
 import * as repo from '../lib/repo.js';
 
@@ -435,6 +435,81 @@ head('F. Hạn của năm xem — đối chiếu với bảng đại/tiểu hạ
   ck('chưa vào đại hạn thì không có lưu niên đại hạn',
      c2.userInfo.cuc.num <= 2 ? true : c2.han.luuNienDaiHan === null,
      `cục ${c2.userInfo.cuc.num}, ${JSON.stringify(c2.han.luuNienDaiHan)}`); }
+
+// ---- Nguyệt Hạn (lưu Nguyệt, phái Đẩu Số) ----------------------------------
+// Khẩu quyết: tháng Giêng tại Đẩu Quân của năm xem, mỗi tháng thuận một cung;
+// Đẩu Quân an từ Thái Tuế năm xem, nghịch tới tháng sinh rồi thuận tới giờ sinh
+// (refs/dau-so-tinh-thanh/chuong-10-van-the-hau-thien-nien-han.md mục 134).
+//
+// Mốc kiểm không nằm ở công thức mới mà ở SAO Đẩu Quân vốn có trên lá số — sao
+// này đã khớp cả 11 lá số chuẩn ở mục B. Lấy năm xem = năm sinh thì Đẩu Quân
+// của nguyệt hạn phải rơi đúng vị trí sao đó.
+{ let bad = [];
+  for (const C of LA_SO_MAU) {
+    const c0 = generateTuViChart(C.birth);
+    const namAm = +c0.userInfo.lunarStr.match(/\/(\d+)\s*\(/)[1];
+    const c = generateTuViChart({ ...C.birth, viewYear: namAm });
+    const sao = c.grid.findIndex(g => [...g.phuTinhTot, ...g.phuTinhXau].some(s => s.name === 'Đẩu Quân'));
+    if (c.han.nguyetHan.dauQuan.gridIdx !== sao)
+      bad.push(`${C.label}: ${nm(c.han.nguyetHan.dauQuan.gridIdx)}≠${nm(sao)}`);
+  }
+  ck('Đẩu Quân của năm sinh trùng vị trí sao Đẩu Quân trên lá số', bad.length === 0, bad.join(' | ')); }
+
+// "Đấu quân năm sinh định ra, về sau từng năm thuận bàn mà đẩy, một năm một cung"
+{ let bad = [];
+  for (const C of LA_SO_MAU) {
+    const namAm = +generateTuViChart(C.birth).userInfo.lunarStr.match(/\/(\d+)\s*\(/)[1];
+    const goc = generateTuViChart({ ...C.birth, viewYear: namAm }).han.nguyetHan.dauQuan.gridIdx;
+    for (const k of [1, 5, 12, 31, 40]) {
+      const ra = generateTuViChart({ ...C.birth, viewYear: namAm + k }).han.nguyetHan.dauQuan.gridIdx;
+      if (ra !== (goc + k) % 12) bad.push(`${C.label}/+${k} năm: ${nm(ra)}≠${nm(goc + k)}`);
+    }
+  }
+  ck('Đẩu Quân đẩy thuận đúng 1 cung mỗi năm', bad.length === 0, bad.slice(0, 3).join(' | ')); }
+
+// Lộ trình 12 tháng: tháng Giêng tại Đẩu Quân, thuận một cung mỗi tháng, đi đủ
+// 12 cung khác nhau (khác lưu niên đại hạn — lộ trình đó chỉ qua 8 cung).
+{ let bad = [];
+  for (const C of LA_SO_MAU) for (const viewYear of [2026, 2044]) {
+    const { han } = generateTuViChart({ ...C.birth, viewYear });
+    const dq = han.nguyetHan.dauQuan.gridIdx, lt = han.nguyetHan.loTrinh;
+    if (lt.length !== 12) bad.push(`${C.label}: ${lt.length} dòng`);
+    if (new Set(lt.map(r => r.gridIdx)).size !== 12) bad.push(`${C.label}: không đủ 12 cung`);
+    lt.forEach(r => { if (r.gridIdx !== (dq + r.thang - 1) % 12) bad.push(`${C.label}/T${r.thang}`); });
+  }
+  ck('lộ trình 12 tháng khởi tại Đẩu Quân, thuận 1 cung mỗi tháng', bad.length === 0, bad.slice(0, 3).join(' | ')); }
+
+// Tháng xem: không truyền thì chỉ có lộ trình, không gán cờ lên lưới
+{ const khong = generateTuViChart({ ...LA_SO_MAU[0].birth, viewYear: 2026 });
+  ck('không chọn tháng xem thì thangXem = null và không cung nào mang cờ nguyệt hạn',
+     khong.han.nguyetHan.thangXem === null && khong.grid.every(g => !g.isNguyetHan)
+       && khong.han.nguyetHan.loTrinh.length === 12,
+     JSON.stringify(khong.han.nguyetHan.thangXem));
+  let bad = [];
+  for (let t = 1; t <= 12; t++) {
+    const c = generateTuViChart({ ...LA_SO_MAU[0].birth, viewYear: 2026, viewMonth: t });
+    const co = c.grid.filter(g => g.isNguyetHan);
+    if (co.length !== 1 || co[0].gridIdx !== c.han.nguyetHan.gridIdx
+        || c.han.nguyetHan.gridIdx !== c.han.nguyetHan.loTrinh[t - 1].gridIdx)
+      bad.push(`T${t}`);
+  }
+  ck('chọn tháng xem thì đúng 1 cung mang cờ nguyệt hạn, khớp lộ trình', bad.length === 0, bad.join(' ')); }
+
+// Hàm viTriDauQuan dùng chung cho cả an sao và nguyệt hạn — kiểm trực tiếp
+// bằng khẩu quyết trên vài trường hợp tự tính tay.
+{ const G = (chi) => (CHI.indexOf(chi) - 2 + 12) % 12;
+  // Thái Tuế năm Tý ở cung Tý; sinh tháng 1 giờ Tý -> Đẩu Quân ngay tại Tý
+  ck('viTriDauQuan — năm Tý, tháng 1, giờ Tý: Đẩu Quân tại Tý',
+     viTriDauQuan(CHI.indexOf('Tý'), 1, CHI.indexOf('Tý')) === G('Tý'),
+     nm(viTriDauQuan(0, 1, 0)));
+  // sinh tháng 3 giờ Tý: nghịch 2 cung từ Tý -> Tuất
+  ck('viTriDauQuan — năm Tý, tháng 3, giờ Tý: nghịch 2 cung tới Tuất',
+     viTriDauQuan(CHI.indexOf('Tý'), 3, CHI.indexOf('Tý')) === G('Tuất'),
+     nm(viTriDauQuan(0, 3, 0)));
+  // sinh tháng 3 giờ Dần (thuận 2): Tuất -> Tý
+  ck('viTriDauQuan — năm Tý, tháng 3, giờ Dần: thuận 2 cung về Tý',
+     viTriDauQuan(CHI.indexOf('Tý'), 3, CHI.indexOf('Dần')) === G('Tý'),
+     nm(viTriDauQuan(0, 3, 2))); }
 
 // ================================ KẾT QUẢ ===================================
 console.log('\n' + '='.repeat(70));

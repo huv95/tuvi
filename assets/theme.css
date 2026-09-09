@@ -48,9 +48,10 @@
   --tu-hoa: #C084FC;
 
   /* --- hạn của năm xem: viền cung Đại Hạn / Lưu Niên Đại Hạn / Tiểu Hạn - */
-  --han-dai:  #34D399;
-  --han-luu:  #F472B6;
-  --han-tieu: #38BDF8;
+  --han-dai:    #34D399;
+  --han-luu:    #F472B6;
+  --han-tieu:   #38BDF8;
+  --han-nguyet: #FBBF24;
 
   /* --- độ sáng của sao: miếu / vượng / đắc / hãm ----------------------- */
   --sang-mieu:  #9333EA;
@@ -84,9 +85,10 @@
   --hung: #B4231C;
   --tu-hoa: #6D28D9;
 
-  --han-dai:  #15803D;
-  --han-luu:  #9D174D;
-  --han-tieu: #0369A1;
+  --han-dai:    #15803D;
+  --han-luu:    #9D174D;
+  --han-tieu:   #0369A1;
+  --han-nguyet: #92400E;
 }
 
 /* --- lớp tiện ích ------------------------------------------------------ */
@@ -114,9 +116,10 @@
    lồng nhau (2px, 5px, 8px) thay vì liệt kê 7 tổ hợp lớp ở đây. Ba lớp dưới
    chỉ để đánh dấu, tiện chọn bằng CSS/JS. Dùng box-shadow chứ không dùng
    border vì border cộng thêm chiều rộng, làm lưới 4x4 lệch theo. */
-.cung-dai-han, .cung-luu-han, .cung-tieu-han { /* đánh dấu, xem ui.js */ }
+.cung-dai-han, .cung-luu-han, .cung-tieu-han, .cung-nguyet-han { /* đánh dấu, xem ui.js */ }
 
-/* Nhãn nhỏ "Đại Hạn" / "Lưu Niên" / "Tiểu Hạn" trên đầu ô cung và bảng tóm tắt */
+/* Nhãn nhỏ "Đại Hạn" / "Lưu Niên" / "Tiểu Hạn" / "Nguyệt Hạn" trên ô cung
+   và trong bảng tóm tắt */
 .nhan-han {
   font-size: 9px; line-height: 1.2; font-weight: 700;
   padding: 1px 4px; border-radius: 4px; white-space: nowrap;
@@ -125,7 +128,8 @@
 }
 .nhan-han-dai  { color: var(--han-dai); }
 .nhan-han-luu  { color: var(--han-luu); }
-.nhan-han-tieu { color: var(--han-tieu); }
+.nhan-han-tieu   { color: var(--han-tieu); }
+.nhan-han-nguyet { color: var(--han-nguyet); }
 
 /* ---- Lá số: đảo sang nền giấy -------------------------------------- */
 /* Dùng cho mọi trang vẽ địa bàn bằng assets/ui.js (ansaotudong, ansaothucong,
@@ -187,17 +191,20 @@
    đọc đúng trên cả nền tối và nền giấy. */
 .the-han { background: var(--nen-noi-2); border: 1px solid var(--vien); }
 
-/* Bảng lộ trình Lưu Niên Đại Hạn (veLoTrinhLuuNien ở assets/ui.js) */
+/* Bảng lộ trình hạn (veLoTrinhHan ở assets/ui.js). Màu dòng đang xem lấy theo
+   loại hạn qua biến --mau-dang-xem, mặc định là màu Lưu Niên Đại Hạn. */
+.bang-lo-trinh { --mau-dang-xem: var(--han-luu); }
+.bang-lo-trinh.lo-trinh-nguyet { --mau-dang-xem: var(--han-nguyet); }
 .bang-lo-trinh th {
   text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: .04em;
   color: var(--nhan); padding: .25rem .5rem; border-bottom: 1px solid var(--vien);
 }
 .bang-lo-trinh td { padding: .25rem .5rem; border-bottom: 1px solid var(--vien-mo); }
 .bang-lo-trinh tr.dang-xem td {
-  background: color-mix(in srgb, var(--han-luu) 15%, transparent);
+  background: color-mix(in srgb, var(--mau-dang-xem) 15%, transparent);
   color: var(--chu); font-weight: 600;
 }
-.bang-lo-trinh tr.dang-xem td:first-child { box-shadow: inset 3px 0 0 var(--han-luu); }
+.bang-lo-trinh tr.dang-xem td:first-child { box-shadow: inset 3px 0 0 var(--mau-dang-xem); }
 
 /* Chấm tròn nhỏ chỉ ngũ hành */
 .cham-hanh {

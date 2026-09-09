@@ -67,6 +67,7 @@ function veOCung(cung, tuyChon) {
     ['isDaiHan', 'cung-dai-han', 'nhan-han-dai', 'Đại Hạn', 'var(--han-dai)'],
     ['isLuuNienDaiHan', 'cung-luu-han', 'nhan-han-luu', 'Lưu Niên', 'var(--han-luu)'],
     ['isTieuHan', 'cung-tieu-han', 'nhan-han-tieu', 'Tiểu Hạn', 'var(--han-tieu)'],
+    ['isNguyetHan', 'cung-nguyet-han', 'nhan-han-nguyet', 'Nguyệt Hạn', 'var(--han-nguyet)'],
   ].filter(([co]) => cung[co]);
   HAN.forEach(([, lop]) => el.classList.add(lop));
   if (HAN.length) el.style.boxShadow = HAN.map(([, , , , mau], i) => `inset 0 0 0 ${2 + i * 3}px ${mau}`).join(', ');
@@ -213,6 +214,8 @@ export function moModalCung(cung) {
 // tự đặt vào đâu thì tuỳ.
 export function veTomTatHan(laSo) {
   const { han, userInfo, grid } = laSo;
+  // Nguyệt hạn chỉ hiện khi trang có chọn tháng xem (viewMonth), xem tinhHan.
+  const coNguyet = !!(han.nguyetHan && han.nguyetHan.thangXem);
   const el = document.createElement('div');
   el.className = 'space-y-2';
 
@@ -255,35 +258,51 @@ export function veTomTatHan(laSo) {
       </span>
       <span class="text-[11px] text-slate-300 font-mono">${han.tuoi > 0 ? han.tuoi + ' tuổi âm' : 'chưa sinh'}</span>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+    <div class="grid grid-cols-1 sm:grid-cols-2 ${coNguyet ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-2">
       ${the('Đại Hạn', 'nhan-han-dai', han.daiHan,
             han.daiHan ? `${han.daiHan.tuTuoi}-${han.daiHan.denTuoi} tuổi · ${han.daiHan.tuNam}-${han.daiHan.denNam}` : '')}
       ${the('Lưu Niên Đại Hạn', 'nhan-han-luu', han.luuNienDaiHan,
             han.luuNienDaiHan ? `năm thứ ${han.luuNienDaiHan.namThu}/10 của đại vận` : '')}
       ${the('Tiểu Hạn', 'nhan-han-tieu', han.tieuHan, `năm ${userInfo.viewYearCanChi.split(' ')[1]}`)}
+      ${coNguyet ? the('Nguyệt Hạn', 'nhan-han-nguyet', han.nguyetHan, `tháng ${han.nguyetHan.thangXem} âm lịch`) : ''}
     </div>
     ${han.ghiChu && han.daiHan ? `<p class="text-[10px] text-amber-200/80">${han.ghiChu}</p>` : ''}
   `;
   return el;
 }
 
-// Bảng lộ trình 10 năm của Lưu Niên Đại Hạn trong đại vận đang đi: mỗi năm một
-// cung, năm đang xem được tô sáng. Trả về DOM element (null nếu chưa vào đại
-// hạn nào — xem tinhHan trong lib/ansao.js).
-export function veLoTrinhLuuNien(laSo) {
+// Bảng lộ trình hạn: mỗi dòng một chặng, chặng đang xem được tô sáng.
+//   loai = 'luuNien'  10 năm của đại vận đang đi (Lưu Niên Đại Hạn)
+//   loai = 'nguyet'   12 tháng của năm xem (Nguyệt Hạn)
+// Trả về null nếu lá số không có chặng đó (chưa vào đại hạn, hoặc trang không
+// chọn tháng xem) — xem tinhHan trong lib/ansao.js.
+export function veLoTrinhHan(laSo, loai = 'luuNien') {
   const { han, grid } = laSo;
-  if (!han.luuNienDaiHan) return null;
+  const CAU_HINH = {
+    luuNien: {
+      nguon: han.luuNienDaiHan,
+      cot: ['Năm thứ', 'Tuổi', 'Năm âm'],
+      o: (r) => [r.namThu, r.tuoi, r.nam],
+      dangXem: (r) => r.namThu === han.luuNienDaiHan.namThu,
+      lop: '',
+    },
+    nguyet: {
+      nguon: han.nguyetHan && han.nguyetHan.thangXem ? han.nguyetHan : null,
+      cot: ['Tháng âm'],
+      o: (r) => [r.thang],
+      dangXem: (r) => r.thang === han.nguyetHan.thangXem,
+      lop: 'lo-trinh-nguyet',
+    },
+  }[loai];
+  if (!CAU_HINH || !CAU_HINH.nguon) return null;
 
   const el = document.createElement('div');
-  el.className = 'bang-han space-y-2';
+  el.className = 'bang-han';
   const dong = (r) => {
     const o = grid[r.gridIdx];
-    const dangXem = r.namThu === han.luuNienDaiHan.namThu;
     return `
-      <tr class="${dangXem ? 'dang-xem' : ''}">
-        <td class="text-center font-mono">${r.namThu}</td>
-        <td class="text-center font-mono">${r.tuoi}</td>
-        <td class="text-center font-mono">${r.nam}</td>
+      <tr class="${CAU_HINH.dangXem(r) ? 'dang-xem' : ''}">
+        ${CAU_HINH.o(r).map(v => `<td class="text-center font-mono">${v}</td>`).join('')}
         <td class="font-mono">${r.chiName}</td>
         <td class="font-semibold">${r.palaceName}</td>
         <td class="text-[10px]">${o.chinhTinh.map(s => veTheSao(s).outerHTML).join(' · ')
@@ -292,18 +311,14 @@ export function veLoTrinhLuuNien(laSo) {
   };
 
   el.innerHTML = `
-    <table class="bang-lo-trinh w-full text-[11px]">
+    <table class="bang-lo-trinh ${CAU_HINH.lop} w-full text-[11px]">
       <thead>
         <tr>
-          <th class="text-center">Năm thứ</th>
-          <th class="text-center">Tuổi</th>
-          <th class="text-center">Năm âm</th>
-          <th>Chi</th>
-          <th>Cung</th>
-          <th>Chính tinh</th>
+          ${CAU_HINH.cot.map(c => `<th class="text-center">${c}</th>`).join('')}
+          <th>Chi</th><th>Cung</th><th>Chính tinh</th>
         </tr>
       </thead>
-      <tbody>${han.luuNienDaiHan.loTrinh.map(dong).join('')}</tbody>
+      <tbody>${CAU_HINH.nguon.loTrinh.map(dong).join('')}</tbody>
     </table>
   `;
   return el;
