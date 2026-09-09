@@ -4,7 +4,7 @@ Bộ công cụ lập lá số và tra cứu Tử Vi. Trang tĩnh thuần, khôn
 
 ```bash
 npm run dev     # python3 -m http.server 8000 → mở localhost:8000
-npm test        # 209 phép kiểm cho lib/ và data/
+npm test        # 211 phép kiểm cho lib/ và data/
 ```
 
 Phải chạy qua server tĩnh, **không mở trực tiếp bằng `file://`** — trình duyệt
@@ -33,6 +33,11 @@ Chrome/Edge cài sẵn ở chế độ headless, ví dụ trên macOS:
 | `pages/conguyetdongluong.html` | Cơ Nguyệt Đồng Lương |
 | `pages/amduongnguhanh.html` | Âm Dương Ngũ Hành — kiến thức nền |
 | `pages/canchi.html` | Can Chi — 10 Thiên Can, 12 Địa Chi, Tam Hợp/Lục Xung/Nhị Hợp/Tứ Mộ Khố |
+| `pages/tuanchiet.html` | Tuần Không – Triệt Không |
+| `pages/cach-cuc.html` | Tra cứu 94 cách cục cổ điển, đối chiếu tự động với lá số |
+| `pages/luangiaitinh.html` | Phương pháp luận giải lá số tĩnh — khung 8 bước |
+| `pages/luangiaimau.html` | Ví dụ luận giải một lá số nam theo khung 8 bước |
+| `pages/luangiaimau-nu.html` | Ví dụ luận giải một lá số nữ theo khung 8 bước |
 
 ## Ba tầng
 
@@ -49,11 +54,12 @@ data/*.json                            dữ liệu — không một class CSS n�
 | Thư mục | Nội dung |
 |---|---|
 | `pages/` | Toàn bộ trang nội dung (`index.html` ở gốc repo là trang mục lục, còn lại nằm trong `pages/`) |
-| `lib/` | `lich.js` đổi lịch Âm–Dương · `ansao.js` engine an sao · `repo.js` lớp truy cập dữ liệu |
+| `lib/` | `lich.js` đổi lịch Âm–Dương · `ansao.js` engine an sao · `repo.js` lớp truy cập dữ liệu · `cachcuc.js` đối chiếu lá số với 94 cách cục |
 | `data/` | 8 file JSON + `schema.md` mô tả từng trường và nguồn gốc |
 | `assets/` | `theme.css` — 25 token màu và chữ, khai lại cho mặt giấy; dùng chung mọi trang |
-| `test/` | 209 phép kiểm, đối chiếu 11 lá số chuẩn tuvivietnam.vn |
+| `test/` | 211 phép kiểm, đối chiếu 11 lá số chuẩn tuvivietnam.vn |
 | `tools/` | `shot.mjs` chụp ảnh trang · hai script di trú dữ liệu |
+| `refs/` | Ba cuốn sách tham khảo, tách nhỏ theo chương, mỗi cuốn có `_muc-luc.md` điều hướng |
 
 ## Lộ trình
 
@@ -227,7 +233,7 @@ client vẫn nhanh hơn, backend chỉ cần lưu tham số đầu vào — lá 
 - Không còn `apiKey` nào trong mã client
 - Trang vẫn chạy được ở chế độ tĩnh khi không có backend (tính năng AI tắt,
   phần còn lại nguyên vẹn)
-- `npm test` vẫn 209/209 — `lib/` không được phụ thuộc vào mạng
+- `npm test` vẫn 211/211 — `lib/` không được phụ thuộc vào mạng
 
 ---
 
@@ -299,7 +305,3 @@ mở rộng.~~
   không cần làm gì thêm. Vòng Bác Sĩ (khởi theo Lộc Tồn/Can năm sinh) và vòng
   Thái Tuế (khởi theo Chi năm sinh) đã có sẵn trong `lib/ansao.js` — về cấu
   trúc đây chính là các vòng Trường Sinh phụ, chỉ đổi tên 12 vị trí.
-
-**Thiệp cưới dùng Marcellus và Great Vibes** — hai font này không có subset
-tiếng Việt nên dấu rơi về font dự phòng. Để nguyên vì đó là thế giới hình ảnh
-riêng, nhưng nếu chỉnh thì đây là chỗ cần biết.

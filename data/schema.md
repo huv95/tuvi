@@ -68,12 +68,12 @@ Giá trị: `M` Miếu · `V` Vượng · `Đ` Đắc · `H` Hãm.
 - `tamHop[]`: `id` · `ten` · `loai` · `cung` (id[]) · `moTa`
 - `theSatPhaTham[]`: `cungThatSat` · `cungPhaQuan` · `cungThamLang` (id) ·
   `luanThatSat` / `luanPhaQuan` / `luanThamLang` · `tuKhoa…` · `ngheNghiep` · `loiKhuyen`
-- `cachCuc[]` — 94 cách cục cổ điển có tên riêng, tổng hợp từ `refs/dau-so-tinh-thanh.md`
-  (Tiết 4: Khái luận về cách cục) và `refs/tu-vi-giang-minh.md` (chương Các Cách Cuộc
+- `cachCuc[]` — 94 cách cục cổ điển có tên riêng, tổng hợp từ `refs/dau-so-tinh-thanh/chuong-06-phan-tich-suy-luan.md`
+  (Tiết 4: Khái luận về cách cục) và `refs/tu-vi-giang-minh/phu-luc.md` (chương Các Cách Cuộc
   Trong Tử Vi Đẩu Số): `id` · `ten` · `tenKhac` (string[], tên gọi khác, không phải
   file nào cũng có) · `nhom` (`phú quý` / `giàu` / `bần hàn` / `hung` / `ác`) ·
   `dieuKien` (tổ hợp sao + vị trí cần có) · `luanGiai` (không phải cách nào cũng có) ·
-  `nguon` (tên file trong `refs/`, không phải đường dẫn — tra nguyên văn khi cần đối
+  `nguon` (tên sách, khớp tên thư mục trong `refs/` — tra nguyên văn khi cần đối
   chiếu). Vị trí sao dùng tên địa chi thô (Tý, Sửu, Dần…) trong `dieuKien`, không quy
   về `id` của `cung.json`, vì cách cục cổ điển định vị theo địa chi chứ không theo cung
   chức năng.
