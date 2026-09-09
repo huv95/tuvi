@@ -33,7 +33,6 @@ Chrome/Edge cài sẵn ở chế độ headless, ví dụ trên macOS:
 | `pages/conguyetdongluong.html` | Cơ Nguyệt Đồng Lương |
 | `pages/amduongnguhanh.html` | Âm Dương Ngũ Hành — kiến thức nền |
 | `pages/canchi.html` | Can Chi — 10 Thiên Can, 12 Địa Chi, Tam Hợp/Lục Xung/Nhị Hợp/Tứ Mộ Khố |
-| `pages/thiepcuoi-nhagai.html` / `pages/thiepcuoi-nhatrai.html` | Thiệp cưới, ngoài phạm vi lá số |
 
 ## Ba tầng
 
