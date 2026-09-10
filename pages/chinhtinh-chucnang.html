@@ -76,25 +76,49 @@
         /* Ngũ hành lấy từ assets/theme.css: .hanh-* cho màu chữ,
            .the-hanh cho nền mờ và gạch màu bên trái. */
 
-        /* Chart 12 Palaces Grid Layout */
+        /* Chart 12 Palaces Grid Layout — vị trí từng ô đặt bằng left/top (%)
+           thay vì grid-column/row, vì grid-column/row là thuộc tính rời rạc
+           (không nội suy được khi transition) nên đổi vị trí sẽ nhảy cóc
+           thay vì trượt. left/top là số, transition mượt được. */
         .tuvi-board {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            grid-template-rows: repeat(4, minmax(0, 1fr));
-            gap: 8px;
+            position: relative;
             aspect-ratio: 1;
             max-width: 820px;
             margin: 0 auto;
+            --gap: 8px;
+            --cell: calc((100% - 3 * var(--gap)) / 4);
         }
 
         .palace-cell {
-            transition: all 0.2s ease-in-out;
+            position: absolute;
+            transition: left 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        top 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        border-color 0.2s ease-in-out,
+                        box-shadow 0.2s ease-in-out;
         }
 
         /* Vị trí 12 cung lấy từ O_LUOI (assets/ui.js) qua :style, xem
-           getPalaceGridStyle() trong <script type="module">. Chỉ còn khối
-           giữa là vị trí cố định, khai ở đây vì không phụ thuộc Chi. */
-        .pos-Center { grid-column: 2 / span 2; grid-row: 2 / span 2; }
+           getPalaceGridStyle() trong <script type="module">. Khối giữa
+           đứng im (không phụ thuộc Chi) nên toạ độ khai thẳng ở đây, theo
+           đúng công thức left/top của getPalaceGridStyle với c=r=1, span 2. */
+        .pos-Center {
+            position: absolute;
+            left: calc(var(--cell) + var(--gap));
+            top: calc(var(--cell) + var(--gap));
+            width: calc(2 * var(--cell) + var(--gap));
+            height: calc(2 * var(--cell) + var(--gap));
+        }
+
+        /* Chip 1 trong 14 chính tinh, phủ trên bàn cờ, định vị theo Chi qua
+           getStarStyle() — tách khỏi palace-cell để left/top đổi mượt được
+           khi bấm mũi tên "Tử Vi tại" (transition riêng dài hơn palace-cell,
+           2s, vì đây là chuyển động chính người dùng muốn thấy). */
+        .star-chip {
+            position: absolute;
+            transition: left 2s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        top 2s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        transform 0.3s ease-in-out;
+        }
 
         /* Bong bóng hội thoại cho vòng Luận Giải (tab Bánh Xe Cung-Sao) —
            đuôi luôn quay vào tâm bánh xe, hướng chọn theo huongBongBong(). */
@@ -189,23 +213,19 @@
                     </p>
                 </div>
                 
-                <!-- Chọn Cung Mệnh + vị trí Tử Vi, phần còn lại suy ra bằng quy tắc an sao thật -->
-                <div class="flex flex-wrap items-center gap-3">
+                <!-- Chọn Cung Mệnh + vị trí Tử Vi bằng mũi tên (thay vì <select>), phần còn lại suy ra bằng quy tắc an sao thật -->
+                <div class="flex flex-wrap items-center gap-4">
                     <div class="flex items-center gap-1.5">
                         <label class="text-xs text-gray-400">Cung Mệnh tại:</label>
-                        <select x-model="boardMenhChi" class="bg-cosmic-900 border border-gray-700 text-xs text-amber-300 rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500">
-                            <template x-for="chi in earthlyBranches" :key="chi">
-                                <option :value="chi" x-text="chi"></option>
-                            </template>
-                        </select>
+                        <button @click="nhichBoard('menh', -1)" class="w-6 h-6 rounded-full bg-cosmic-900 border border-amber-500/60 text-amber-300 hover:bg-amber-500/20 text-[10px] flex items-center justify-center shadow"><i class="fa-solid fa-chevron-left"></i></button>
+                        <span class="text-xs font-bold text-amber-300 w-8 text-center" x-text="boardMenhChi"></span>
+                        <button @click="nhichBoard('menh', 1)" class="w-6 h-6 rounded-full bg-cosmic-900 border border-amber-500/60 text-amber-300 hover:bg-amber-500/20 text-[10px] flex items-center justify-center shadow"><i class="fa-solid fa-chevron-right"></i></button>
                     </div>
                     <div class="flex items-center gap-1.5">
                         <label class="text-xs text-gray-400">Tử Vi tại:</label>
-                        <select x-model="boardTuViChi" class="bg-cosmic-900 border border-gray-700 text-xs text-amber-300 rounded-lg px-3 py-2 focus:outline-none focus:border-amber-500">
-                            <template x-for="chi in earthlyBranches" :key="chi">
-                                <option :value="chi" x-text="chi"></option>
-                            </template>
-                        </select>
+                        <button @click="nhichBoard('tuvi', -1)" class="w-6 h-6 rounded-full bg-cosmic-900 border border-purple-500/60 text-purple-300 hover:bg-purple-500/20 text-[10px] flex items-center justify-center shadow"><i class="fa-solid fa-chevron-left"></i></button>
+                        <span class="text-xs font-bold text-purple-300 w-8 text-center" x-text="boardTuViChi"></span>
+                        <button @click="nhichBoard('tuvi', 1)" class="w-6 h-6 rounded-full bg-cosmic-900 border border-purple-500/60 text-purple-300 hover:bg-purple-500/20 text-[10px] flex items-center justify-center shadow"><i class="fa-solid fa-chevron-right"></i></button>
                     </div>
                 </div>
             </div>
@@ -220,7 +240,7 @@
                         <!-- 12 Earthly Branches Cells -->
                         <template x-for="(palace, key) in palacesData" :key="key">
                             <div :style="getPalaceGridStyle(chiCuaCung(key))"
-                                 :class="`palace-cell bg-cosmic-900 border ${selectedPalaceKey === key ? 'border-amber-400 ring-2 ring-amber-500/30' : 'border-gray-800 hover:border-amber-500/50'} rounded-xl p-2 flex flex-col justify-between cursor-pointer relative overflow-hidden group`"
+                                 :class="`palace-cell bg-cosmic-900 border ${selectedPalaceKey === key ? 'border-amber-400 ring-2 ring-amber-500/30' : 'border-gray-800 hover:border-amber-500/50'} rounded-xl p-2 flex flex-col justify-between cursor-pointer overflow-hidden group`"
                                  @click="selectPalace(key)">
                                 
                                 <!-- Top Bar: Palace Name & Earthly Branch -->
@@ -229,17 +249,10 @@
                                     <span class="text-[10px] font-serif text-gray-500 uppercase px-1.5 py-0.5 bg-gray-800/50 rounded" x-text="chiCuaCung(key)"></span>
                                 </div>
 
-                                <!-- Middle: Placed Main Stars list -->
-                                <div class="my-1.5 space-y-1 min-h-[42px] flex flex-col justify-center">
-                                    <template x-for="starKey in boardPlacements[key]" :key="starKey">
-                                        <div class="flex items-center justify-between text-xs px-1.5 py-0.5 rounded"
-                                             :class="starsData[starKey]?.nguHanhClass || 'bg-gray-800 text-gray-200'">
-                                            <span class="font-medium text-[11px] sm:text-xs truncate" x-text="starsData[starKey]?.ten"></span>
-                                            <span class="text-[9px] font-bold uppercase px-1 rounded bg-black/40"
-                                                  :class="getBrightnessBadgeClass(getStarBrightness(starKey, key))"
-                                                  x-text="getStarBrightness(starKey, key)"></span>
-                                        </div>
-                                    </template>
+                                <!-- Middle: giữ chỗ cho tên sao — nội dung sao thật nằm ở lớp
+                                     phủ .star-chip riêng (định vị theo Chi, xem bên dưới) để
+                                     trượt được qua ô khác, không lồng trong palace-cell nữa. -->
+                                <div class="my-1.5 min-h-[42px] flex flex-col justify-center relative">
                                     <template x-if="!boardPlacements[key] || boardPlacements[key].length === 0">
                                         <span class="text-[10px] text-gray-600 italic text-center block">Vô Chính Diệu</span>
                                     </template>
@@ -256,7 +269,7 @@
                         </template>
 
                         <!-- Center Box (Trung Cung) -->
-                        <div class="pos-Center bg-gradient-to-br from-cosmic-800 via-cosmic-900 to-black border border-amber-500/30 rounded-xl p-3 sm:p-4 flex flex-col justify-between items-center text-center shadow-inner relative overflow-hidden">
+                        <div class="pos-Center bg-gradient-to-br from-cosmic-800 via-cosmic-900 to-black border border-amber-500/30 rounded-xl p-3 sm:p-4 flex flex-col justify-between items-center text-center shadow-inner overflow-hidden">
                             <div class="absolute inset-0 bg-[radial-gradient(#dfb25d_1px,transparent_1px)] [background-size:16px_16px] opacity-10"></div>
                             <div class="relative z-10 w-full flex flex-col h-full justify-between">
                                 <div>
@@ -283,6 +296,21 @@
                                 </button>
                             </div>
                         </div>
+
+                        <!-- 14 Chính Tinh: lớp phủ riêng, định vị theo Chi (không theo
+                             Cung) — khi bấm mũi tên đổi vị trí Tử Vi, mỗi sao trượt
+                             mượt sang ô mới (2s) thay vì lồng trong palace-cell và
+                             biến mất/hiện ra tức thì. -->
+                        <template x-for="starKey in Object.keys(starsData)" :key="'chip-' + starKey">
+                            <div :style="getStarStyle(starKey)"
+                                 class="star-chip z-10 pointer-events-none flex items-center justify-between gap-1 px-1.5 py-0.5 rounded text-xs"
+                                 :class="layLopMauVongSao(starKey)">
+                                <span class="font-medium text-[11px] sm:text-xs truncate" x-text="starsData[starKey]?.ten"></span>
+                                <span class="text-[9px] font-bold uppercase px-1 rounded bg-black/40"
+                                      :class="getBrightnessBadgeClass(getStarBrightnessByChi(starKey, starLayout[starKey]?.chi))"
+                                      x-text="getStarBrightnessByChi(starKey, starLayout[starKey]?.chi)"></span>
+                            </div>
+                        </template>
 
                     </div>
                 </div>
@@ -682,6 +710,10 @@
         const THU_TU_TU_MENH = ['menh', 'huynh-de', 'phu-the', 'tu-tuc', 'tai-bach', 'tat-ach',
                                  'thien-di', 'no-boc', 'quan-loc', 'dien-trach', 'phuc-duc', 'phu-mau'];
 
+        // 6 sao vòng Tử Vi (đi nghịch) — dùng để tô màu chip sao trên bàn cờ
+        // khác với 8 sao vòng Thiên Phủ (đi thuận), xem tinhVongSao().
+        const VONG_TU_VI_KEYS = ['tu-vi', 'thien-co', 'thai-duong', 'vu-khuc', 'thien-dong', 'liem-trinh'];
+
         function tuViApp() {
             return {
                 activeTab: 'board',
@@ -773,6 +805,16 @@
                     return `cham-hanh ${this.layLopMauHanh(element)}`;
                 },
 
+                // Màu chip sao trên bàn cờ theo vòng (Tử Vi / Thiên Phủ) thay vì
+                // theo ngũ hành, để phân biệt ngay 6 sao vòng Tử Vi (đi nghịch)
+                // với 8 sao vòng Thiên Phủ (đi thuận) — 2 vòng luôn cùng dịch
+                // chuyển với nhau nhưng có gốc và chiều đi khác nhau.
+                layLopMauVongSao(starKey) {
+                    return VONG_TU_VI_KEYS.includes(starKey)
+                        ? 'bg-amber-500/20 border border-amber-400/50 text-amber-200'
+                        : 'bg-violet-500/20 border border-violet-400/50 text-violet-200';
+                },
+
                 // cungXungChieu lưu id (vd "thien-di"), không phải tên hiển thị
                 // — phải tra ngược qua palacesData mới ra "Thiên Di".
                 getOppositePalaceName(palaceKey) {
@@ -796,7 +838,12 @@
                 getPalaceGridStyle(chi) {
                     const k = (this.earthlyBranches.indexOf(chi) - 5 + 12) % 12;
                     const [r, c] = O_LUOI[k];
-                    return { gridColumn: c + 1, gridRow: r + 1 };
+                    return {
+                        left: `calc(${c} * (var(--cell) + var(--gap)))`,
+                        top: `calc(${r} * (var(--cell) + var(--gap)))`,
+                        width: 'var(--cell)',
+                        height: 'var(--cell)',
+                    };
                 },
 
                 getBranchElement(chi) {
@@ -935,6 +982,16 @@
                     else this.wheelTuViChi = chiMoi;
                 },
 
+                // Nhích vị trí Cung Mệnh ('menh') hoặc Tử Vi ('tuvi') trên bàn
+                // cờ 12 cung đi `buoc` ô — thay cho việc chọn thẳng bằng <select>.
+                nhichBoard(loai, buoc) {
+                    const chiHienTai = loai === 'menh' ? this.boardMenhChi : this.boardTuViChi;
+                    const idxMoi = ((this.earthlyBranches.indexOf(chiHienTai) + buoc) % 12 + 12) % 12;
+                    const chiMoi = this.earthlyBranches[idxMoi];
+                    if (loai === 'menh') this.boardMenhChi = chiMoi;
+                    else this.boardTuViChi = chiMoi;
+                },
+
                 // Detailed combination analytical text generator — cùng nguyên
                 // tắc: dùng luanCungTot/luanCungXau thật khi cung nằm trong
                 // danh sách ghi nhận riêng cho sao, chỉ suy luận chung theo độ
@@ -1046,6 +1103,42 @@
                     const out = {};
                     THU_TU_TU_MENH.forEach(id => { out[id] = saoTheoChi[this.chiCuaCung(id)] || []; });
                     return out;
+                },
+
+                // Đảo ngược tinhVongSao(): id sao -> { chi đang đóng, thứ tự xếp
+                // chồng trong cùng 1 Chi, tổng số sao chung Chi đó } — dùng cho
+                // .star-chip (lớp phủ 14 chính tinh) để mỗi sao tự biết toạ độ
+                // của mình mà không phải lồng trong palace-cell.
+                get starLayout() {
+                    const saoTheoChi = this.tinhVongSao(this.boardTuViChi);
+                    const out = {};
+                    Object.entries(saoTheoChi).forEach(([chi, keys]) => {
+                        keys.forEach((key, i) => { out[key] = { chi, stackIndex: i, total: keys.length }; });
+                    });
+                    return out;
+                },
+
+                // Toạ độ 1 chip sao: cắm vào giữa ô lấy từ getPalaceGridStyle(chi)
+                // (chỉ phụ thuộc Chi, không phụ thuộc Cung nào đang đứng ở đó).
+                // Chip chỉ cao 1 dòng (~24px, xem badgeH) chứ không cao bằng cả
+                // ô — trước để height = cả ô nên chip đè kín luôn tên Cung/Chi
+                // và dòng "Chi tiết" phía dưới nó. top tính bằng nửa chiều cao ô
+                // trừ nửa badgeH để tự canh giữa; dịch thêm bằng transform khi 2
+                // sao trở lên rơi cùng 1 Chi.
+                getStarStyle(starKey) {
+                    const layout = this.starLayout[starKey];
+                    if (!layout) return { display: 'none' };
+                    const o = this.getPalaceGridStyle(layout.chi);
+                    const badgeH = 24; // px, chiều cao ước lượng của 1 chip
+                    const row = 22; // px giữa 2 sao xếp chồng trong cùng 1 cung
+                    const offsetPx = (layout.stackIndex - (layout.total - 1) / 2) * row;
+                    return {
+                        left: `calc(${o.left} + 8px)`,
+                        top: `calc(${o.top} + var(--cell) / 2 - ${badgeH / 2}px)`,
+                        width: `calc(${o.width} - 16px)`,
+                        height: `${badgeH}px`,
+                        transform: `translateY(${offsetPx}px)`,
+                    };
                 },
 
                 calculateStarPlacement() {
