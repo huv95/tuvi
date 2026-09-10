@@ -58,16 +58,22 @@
             border-radius: 9999px; font-family: var(--font-nhan); font-weight: 700; font-size: 1.1rem;
             background: rgba(251, 191, 36, 0.12); color: var(--nhan); border: 1px solid rgba(251, 191, 36, 0.4);
         }
-        /* Bàn cờ dùng đúng màu slate/amber mặc định của veDiaBan (assets/ui.js)
-           — không cần đảo sang nền giấy như ansaotudong.html vì trang này
-           không có nhu cầu in. */
+        /* Bàn cờ tự vẽ bằng taoO/taoTam (script bên dưới), không dùng
+           veDiaBan() nữa vì cần hiện dần theo bước đang chọn — nhưng vẫn
+           giữ đúng màu slate/amber mặc định, không đảo sang nền giấy vì
+           trang này không có nhu cầu in. */
+
+        /* Sao/tên Cung vừa hiện ra khi bấm 1 bước: nhích nhẹ + mờ dần vào,
+           để mắt bắt được đúng chỗ vừa thay đổi trên bàn cờ. */
+        @keyframes hienDan { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
+        .hien-dan { animation: hienDan 0.35s ease-out; }
     </style>
 </head>
 <body class="min-h-screen pb-16 flex flex-col">
 
     <!-- Header -->
     <header class="border-b border-mystic-700/60 bg-mystic-900/80 sticky top-0 z-50 backdrop-blur-md">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-purple-800 flex items-center justify-center text-white font-bold text-xl shadow-lg">
                     <i class="fa-solid font-serif">☯</i>
@@ -86,108 +92,117 @@
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto px-4 py-8 flex-1 w-full space-y-8">
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-1 w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
-        <!-- INTRO -->
-        <section class="mystic-card rounded-2xl p-6 sm:p-8">
-            <span class="text-xs uppercase tracking-widest text-amber-400 font-semibold">Học Cách Tự Lập Lá Số</span>
-            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white mt-1 mb-3">An Sao Thủ Công</h2>
-            <p class="text-sm text-gray-300 leading-relaxed">
-                Nhập ngày giờ sinh bên dưới — trang sẽ phanh nhỏ đúng những phép tính mà
-                <a href="ansaotudong.html" class="text-amber-300 hover:underline">công cụ lập lá số tự động</a>
-                làm ngầm bên trong, hiện ra từng bước có công thức và số liệu thật của bạn, thay vì chỉ đưa ra kết
-                quả cuối cùng. Gồm hai chặng: <strong class="text-amber-300">thiết lập lá số</strong> (Âm Dương, Cung
-                Mệnh, Cục, Chủ Mệnh/Chủ Thân) rồi đến <strong class="text-amber-300">an 14 chính tinh</strong> lên
-                bàn cờ.
-            </p>
-        </section>
+            <!-- CỘT TRÁI: nhập thông tin + danh sách các bước -->
+            <div class="lg:col-span-5 space-y-6">
 
-        <!-- FORM -->
-        <section class="mystic-card rounded-2xl p-6 sm:p-8">
-            <form id="form-sinh" class="space-y-4">
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-300 mb-1">Giới Tính</label>
-                        <select id="gender" class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
-                            <option value="1">Nam</option>
-                            <option value="0">Nữ</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-300 mb-1">Loại Lịch Sinh</label>
-                        <select id="calendarType" onchange="toggleLeap()" class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
-                            <option value="solar">Dương Lịch</option>
-                            <option value="lunar">Âm Lịch</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="grid grid-cols-3 gap-3">
-                    <div>
-                        <label class="block text-xs text-gray-400 mb-1">Ngày</label>
-                        <input type="number" id="day" min="1" max="31" value="17" required class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
-                    </div>
-                    <div>
-                        <label class="block text-xs text-gray-400 mb-1">Tháng</label>
-                        <input type="number" id="month" min="1" max="12" value="3" required class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
-                    </div>
-                    <div>
-                        <label class="block text-xs text-gray-400 mb-1">Năm</label>
-                        <input type="number" id="year" min="1900" max="2100" value="1995" required class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs text-gray-400 mb-1">Giờ (0-23)</label>
-                        <input type="number" id="hour" min="0" max="23" value="4" required class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
-                    </div>
-                    <div>
-                        <label class="block text-xs text-gray-400 mb-1">Phút</label>
-                        <input type="number" id="minute" min="0" max="59" value="30" required class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
-                    </div>
-                </div>
-                <div id="leap-container" class="hidden">
-                    <label class="inline-flex items-center text-xs text-amber-300 cursor-pointer">
-                        <input type="checkbox" id="isLeapMonth" class="rounded bg-mystic-900 border-mystic-600 text-amber-500 mr-2">
-                        Là Tháng Nhuận (Âm Lịch)
-                    </label>
-                </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 text-slate-950 font-bold py-2.5 px-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-pen-ruler"></i> Tính Từng Bước
-                </button>
-            </form>
-        </section>
+                <!-- INTRO -->
+                <section class="mystic-card rounded-2xl p-6 sm:p-8">
+                    <span class="text-xs uppercase tracking-widest text-amber-400 font-semibold">Học Cách Tự Lập Lá Số</span>
+                    <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white mt-1 mb-3">An Sao Thủ Công</h2>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        Nhập ngày giờ sinh bên dưới rồi bấm từng bước — bước nào bấm thì đúng phần đó được vẽ lên
+                        lá số bên phải, theo đúng phép tính mà
+                        <a href="ansaotudong.html" class="text-amber-300 hover:underline">công cụ lập lá số tự động</a>
+                        làm ngầm bên trong. Gồm hai chặng: <strong class="text-amber-300">thiết lập lá số</strong>
+                        (Âm Dương, Cung Mệnh, Cục, Chủ Mệnh/Chủ Thân) rồi đến <strong class="text-amber-300">an 14
+                        chính tinh</strong> lên bàn cờ.
+                    </p>
+                </section>
 
-        <!-- KẾT QUẢ -->
-        <section id="ket-qua" class="hidden space-y-8">
+                <!-- FORM -->
+                <section class="mystic-card rounded-2xl p-6 sm:p-8">
+                    <form id="form-sinh" class="space-y-4">
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-300 mb-1">Giới Tính</label>
+                                <select id="gender" class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                                    <option value="1">Nam</option>
+                                    <option value="0">Nữ</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-300 mb-1">Loại Lịch Sinh</label>
+                                <select id="calendarType" onchange="toggleLeap()" class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                                    <option value="solar">Dương Lịch</option>
+                                    <option value="lunar">Âm Lịch</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">Ngày</label>
+                                <input type="number" id="day" min="1" max="31" value="17" required class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">Tháng</label>
+                                <input type="number" id="month" min="1" max="12" value="3" required class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">Năm</label>
+                                <input type="number" id="year" min="1900" max="2100" value="1995" required class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">Giờ (0-23)</label>
+                                <input type="number" id="hour" min="0" max="23" value="4" required class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">Phút</label>
+                                <input type="number" id="minute" min="0" max="59" value="30" required class="w-full bg-mystic-900 border border-mystic-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500">
+                            </div>
+                        </div>
+                        <div id="leap-container" class="hidden">
+                            <label class="inline-flex items-center text-xs text-amber-300 cursor-pointer">
+                                <input type="checkbox" id="isLeapMonth" class="rounded bg-mystic-900 border-mystic-600 text-amber-500 mr-2">
+                                Là Tháng Nhuận (Âm Lịch)
+                            </label>
+                        </div>
+                        <button type="submit" class="w-full bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 text-slate-950 font-bold py-2.5 px-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-pen-ruler"></i> Tính Từng Bước
+                        </button>
+                    </form>
+                </section>
 
-            <div>
-                <h2 class="text-lg font-serif font-bold text-amber-300 mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-compass-drafting"></i> Chặng 1 — Thiết Lập Lá Số
-                </h2>
-                <div id="chang-1" class="space-y-3"></div>
+                <!-- DANH SÁCH CÁC BƯỚC: bấm bước nào, lá số bên phải vẽ tới bước đó -->
+                <section id="danh-sach-buoc" class="mystic-card rounded-2xl p-6 sm:p-8 space-y-5 hidden">
+                    <div>
+                        <h2 class="text-sm font-serif font-bold text-amber-300 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-compass-drafting"></i> Chặng 1 — Thiết Lập Lá Số
+                        </h2>
+                        <div id="chang-1" class="space-y-2"></div>
+                    </div>
+                    <div>
+                        <h2 class="text-sm font-serif font-bold text-amber-300 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-star"></i> Chặng 2 — An 14 Chính Tinh
+                        </h2>
+                        <div id="chang-2" class="space-y-2"></div>
+                    </div>
+                </section>
+
             </div>
 
-            <div>
-                <h2 class="text-lg font-serif font-bold text-amber-300 mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-star"></i> Chặng 2 — An 14 Chính Tinh
-                </h2>
-                <div id="chang-2" class="space-y-3"></div>
-            </div>
+            <!-- CỘT PHẢI: chi tiết bước đang chọn + lá số -->
+            <div class="lg:col-span-7 space-y-4 lg:sticky lg:top-20">
 
-            <div>
-                <h2 class="text-lg font-serif font-bold text-amber-300 mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-chess-board"></i> Bàn Cờ Kết Quả
-                </h2>
-                <p class="text-xs text-gray-400 mb-3">Bấm vào một cung để xem chi tiết. Mỗi cung chỉ hiện chính
-                    tinh vừa an ở trên — đúng trọng tâm của trang này; xem đầy đủ phụ tinh, đại/tiểu hạn ở
-                    <a href="ansaotudong.html" class="text-amber-300 hover:underline">công cụ lập lá số tự động</a>.</p>
-                <div class="bg-mystic-900 border-2 border-amber-600/50 rounded-2xl p-2 md:p-3 shadow-2xl">
-                    <div id="dia-ban" class="grid grid-cols-4 grid-rows-4 gap-1.5 md:gap-2 aspect-square md:aspect-auto min-h-[600px] text-slate-200 text-xs"></div>
+                <div id="chi-tiet-buoc" class="mystic-card rounded-2xl p-5 sm:p-6 hidden"></div>
+
+                <div>
+                    <p class="text-xs text-gray-400 mb-3">Bấm vào một cung trên bàn cờ để xem chi tiết đầy đủ (kể cả
+                        phần chưa bấm tới) — chỉ để tra cứu nhanh, phần vẽ dần theo từng bước vẫn ở danh sách bên
+                        trái. Xem đầy đủ phụ tinh, đại/tiểu hạn ở
+                        <a href="ansaotudong.html" class="text-amber-300 hover:underline">công cụ lập lá số tự động</a>.</p>
+                    <div class="bg-mystic-900 border-2 border-amber-600/50 rounded-2xl p-2 md:p-3 shadow-2xl">
+                        <div id="dia-ban" class="grid grid-cols-4 grid-rows-4 gap-1.5 md:gap-2 aspect-square md:aspect-auto min-h-[600px] text-slate-200 text-xs"></div>
+                    </div>
                 </div>
+
             </div>
 
-        </section>
-
+        </div>
     </main>
 
     <!-- Modal chi tiết cung -->
@@ -210,31 +225,224 @@
         import { generateTuViChart, calculateNgocHanhCuc, calculateTuViPosition,
                  MENH_CHU, THAN_CHU, TU_VI_GROUP, THIEN_PHU_GROUP } from '../lib/ansao.js';
         import { getCanChiYear, getCanChiHour, convertSolarToLunar, convertLunarToSolar, CAN, CHI } from '../lib/lich.js';
-        import { veDiaBan, moModalCung } from '../assets/ui.js';
+        import { veKhungLuoi, moModalCung } from '../assets/ui.js';
         import { initThemeToggle } from '../assets/theme-toggle.js';
         initThemeToggle();
 
+        // Tên hiển thị + số thứ tự của 8 bước (Chặng 1: 1-4, Chặng 2: 5-8).
+        const TEN_BUOC = {
+            1: 'Âm Dương',
+            2: 'Cung Mệnh & Cung Thân',
+            3: 'Cục',
+            4: 'Chủ Mệnh & Chủ Thân',
+            5: 'Vị Trí Tử Vi',
+            6: 'Vị Trí Thiên Phủ',
+            7: 'Vòng Tử Vi (6 sao, đi nghịch)',
+            8: 'Vòng Thiên Phủ (8 sao, đi thuận)',
+        };
+
         let currentChartData = null;
+        // step: bước đang chọn (0 = chưa bấm bước nào); ctx: các biến trung
+        // gian tính 1 lần lúc submit, dùng chung cho nội dung bước + bàn cờ.
+        const state = { step: 0, ctx: null };
 
         function toggleLeap() {
             document.getElementById('leap-container').classList.toggle('hidden', document.getElementById('calendarType').value !== 'lunar');
         }
 
-        // Thẻ một bước: số thứ tự + tiêu đề + nội dung HTML tự do
-        function veBuoc(so, tieuDe, noiDungHTML) {
-            const el = document.createElement('div');
-            el.className = 'mystic-card rounded-xl p-4 sm:p-5 flex gap-4';
-            el.innerHTML = `
-                <div class="so-buoc">${so}</div>
-                <div class="flex-1 min-w-0">
-                    <h3 class="font-serif font-bold text-white mb-1.5">${tieuDe}</h3>
-                    <div class="text-xs sm:text-sm text-gray-300 leading-relaxed space-y-1.5">${noiDungHTML}</div>
+        const kq = (nhan, gia) => `<div class="flex flex-wrap items-baseline gap-x-1.5"><span class="text-gray-500">${nhan}:</span> <strong class="text-amber-300">${gia}</strong></div>`;
+
+        function cellHanhClass(el) {
+            return { Kim: 'hanh-kim', Mộc: 'hanh-moc', Thủy: 'hanh-thuy', Hỏa: 'hanh-hoa', Thổ: 'hanh-tho' }[el] || 'hanh-tho';
+        }
+
+        const veVong = (nhomSao, goc, chieu, grid) => {
+            const rows = nhomSao.map(s => {
+                const cell = grid.find(c => c.chinhTinh.some(x => x.name === s.name));
+                return `<tr class="border-t border-mystic-700/60">
+                    <td class="py-1 pr-3 text-gray-500 font-mono">${s.offset >= 0 ? '+' : ''}${s.offset}</td>
+                    <td class="py-1 pr-3 font-semibold ${cellHanhClass(s.el)}">${s.name}</td>
+                    <td class="py-1 text-amber-300">${cell.chiName} (${cell.palaceName})</td>
+                </tr>`;
+            }).join('');
+            return `<p class="text-gray-400">Đi ${chieu} từ ${goc}, mỗi sao lệch một số cung cố định (offset).</p>
+                <table class="w-full text-xs mt-2"><tbody>${rows}</tbody></table>`;
+        };
+
+        // Nội dung giải thích của 1 bước (tiêu đề + HTML) — tính từ ctx đã
+        // lưu lúc submit, không tính lại để tránh lệch với bàn cờ.
+        function noiDungBuoc(n, ctx) {
+            const { data, lunar, yearCanChi, hourCanChi, isYangYear, isThuanLy,
+                    userInfo, grid, menhCell, thanCell, menhChiIdx, tuViCell, thienPhuCell } = ctx;
+            switch (n) {
+                case 1: return `
+                    ${kq('Năm sinh', `${yearCanChi.can} ${yearCanChi.chi} (${data.year})`)}
+                    ${kq('Can', `${yearCanChi.can} → thuộc ${isYangYear ? 'Dương' : 'Âm'}`)}
+                    ${kq('Kết hợp giới tính', userInfo.amDuongNamNu)}
+                    ${kq('Chiều an vòng sao', `${isThuanLy ? 'Thuận' : 'Nghịch'} (Dương Nam / Âm Nữ đi thuận, còn lại đi nghịch)`)}
+                `;
+                case 2: return `
+                    <p class="text-gray-400">Công thức: từ tháng sinh (âm lịch) đếm nghịch theo giờ sinh ra Cung Mệnh; đếm thuận theo giờ sinh ra Cung Thân.</p>
+                    ${kq('Tháng sinh (âm lịch)', lunar.month)}
+                    ${kq('Giờ sinh', `${hourCanChi.chi} (chi thứ ${hourCanChi.chiIdx})`)}
+                    ${kq('→ Cung Mệnh', `tại ${menhCell.chiName} (${menhCell.palaceName})`)}
+                    ${kq('→ Cung Thân', `tại ${thanCell.chiName} (${thanCell.palaceName})`)}
+                `;
+                case 3: return `
+                    <p class="text-gray-400">Công thức: Can năm sinh xác định Can của cung Dần, cộng dồn tới cung Mệnh ra Can-Chi cung Mệnh, tra Nạp Âm của cặp Can-Chi đó ra ngũ hành Cục.</p>
+                    ${kq('Can-Chi cung Mệnh', userInfo.cuc.canChi)}
+                    ${kq('Nạp Âm cung Mệnh', userInfo.cuc.napAm)}
+                    ${kq('→ Cục', `${userInfo.cuc.name} (số ${userInfo.cuc.num}, hành ${userInfo.cuc.element})`)}
+                `;
+                case 4: return `
+                    <p class="text-gray-400">Tra bảng: Chủ Mệnh theo Chi của cung Mệnh; Chủ Thân theo Chi năm sinh.</p>
+                    ${kq('Cung Mệnh tại', menhCell.chiName)}
+                    ${kq('→ Chủ Mệnh', MENH_CHU[menhChiIdx])}
+                    ${kq('Năm sinh, Chi', yearCanChi.chi)}
+                    ${kq('→ Chủ Thân', THAN_CHU[yearCanChi.chiIdx])}
+                `;
+                case 5: return `
+                    <p class="text-gray-400">Công thức dựa trên ngày sinh (âm lịch) và số Cục — thuật toán trong <code class="text-amber-300/90">calculateTuViPosition()</code>, tương đương cách "mò X" thủ công trong sách (X lẻ thì tiến, chẵn thì lùi).</p>
+                    ${kq('Ngày sinh (âm lịch)', lunar.day)}
+                    ${kq('Cục', userInfo.cuc.num)}
+                    ${kq('→ Tử Vi an tại', `${tuViCell.chiName} (${tuViCell.palaceName})`)}
+                `;
+                case 6: return `
+                    <p class="text-gray-400">Thiên Phủ luôn đối xứng Tử Vi qua trục Dần - Thân.</p>
+                    ${kq('Tử Vi tại', tuViCell.chiName)}
+                    ${kq('→ Thiên Phủ an tại', `${thienPhuCell.chiName} (${thienPhuCell.palaceName})`)}
+                `;
+                case 7: return veVong(TU_VI_GROUP, 'Tử Vi', 'nghịch', grid);
+                case 8: return veVong(THIEN_PHU_GROUP, 'Thiên Phủ', 'thuận', grid);
+            }
+        }
+
+        // Sao nào được phép hiện ở 1 cung, tại bước đang chọn — tích luỹ dần:
+        // bước 5 chỉ Tử Vi, bước 6 thêm Thiên Phủ, bước 7 đủ 6 sao vòng Tử
+        // Vi, bước 8 đủ cả 14 chính tinh.
+        function saoChoPhepHienThi() {
+            const ten = new Set();
+            if (state.step >= 5) ten.add('Tử Vi');
+            if (state.step >= 6) ten.add('Thiên Phủ');
+            if (state.step >= 7) TU_VI_GROUP.forEach(s => ten.add(s.name));
+            if (state.step >= 8) THIEN_PHU_GROUP.forEach(s => ten.add(s.name));
+            return ten;
+        }
+
+        // Nội dung khối Thiên Bàn giữa bàn cờ — cũng hiện dần theo state.step,
+        // đồng bộ với vòng ngoài thay vì hiện hết ngay khi có dữ liệu.
+        function noiDungTrungCung() {
+            if (!currentChartData) {
+                return `
+                    <div class="text-amber-400 font-serif text-xs font-bold uppercase tracking-widest">Tử Vi Đẩu Số</div>
+                    <h3 class="text-sm sm:text-base font-bold text-white my-1">THIÊN BÀN</h3>
+                    <p class="text-[11px] text-gray-400">Điền thông tin bên trái rồi bấm "Tính Từng Bước" để bắt đầu.</p>
+                `;
+            }
+            const { userInfo } = currentChartData;
+            const rows = [];
+            if (state.step >= 1) rows.push(kq('Âm Dương', userInfo.amDuongNamNu));
+            if (state.step >= 3) rows.push(kq('Cục', userInfo.cuc.name));
+            if (state.step >= 4) rows.push(kq('Chủ Mệnh', userInfo.menhChu));
+            if (state.step >= 4) rows.push(kq('Chủ Thân', userInfo.thanChu));
+            return `
+                <div class="text-amber-400 font-serif text-xs font-bold uppercase tracking-widest">Tử Vi Đẩu Số</div>
+                <h3 class="text-sm sm:text-base font-bold text-white my-1">THIÊN BÀN</h3>
+                <div class="hien-dan text-left w-full text-[11px] space-y-1 mt-2">
+                    ${rows.join('') || '<p class="text-gray-500 italic text-center">Bấm bước 1 bên trái để bắt đầu.</p>'}
                 </div>
+            `;
+        }
+
+        function taoTam() {
+            const el = document.createElement('div');
+            el.className = 'bg-gradient-to-br from-mystic-800 via-mystic-900 to-black border border-amber-500/30 rounded-xl p-3 flex flex-col justify-center items-center text-center overflow-hidden';
+            el.innerHTML = noiDungTrungCung();
+            return el;
+        }
+
+        // 1 ô cung trên viền — k là vị trí trên lưới (xem O_LUOI/assets/ui.js),
+        // i = (k+3)%12 mới là chỉ số gridIdx thật trong currentChartData.grid.
+        function taoO(k) {
+            const el = document.createElement('div');
+            const i = (k + 3) % 12;
+
+            if (!currentChartData) {
+                el.className = 'cung-box bg-mystic-900/60 border border-mystic-700/60 rounded-lg p-2 flex flex-col justify-between overflow-hidden';
+                el.innerHTML = `<div class="flex justify-end"><span class="text-[10px] text-gray-500 font-mono">${CHI[(i + 2) % 12]}</span></div>`;
+                return el;
+            }
+
+            const cung = currentChartData.grid[i];
+            const hienCung = state.step >= 2; // đã biết Cung Mệnh nên biết tên 12 cung
+            const tenChoPhep = saoChoPhepHienThi();
+            const chinhTinhHTML = cung.chinhTinh
+                .filter(s => tenChoPhep.has(s.name))
+                .map(s => `<div class="hien-dan font-bold text-[11px] ${cellHanhClass(s.el)}">${s.name}</div>`)
+                .join('') || (hienCung ? '<div class="text-[10px] text-gray-600 italic">—</div>' : '');
+
+            el.className = 'cung-box bg-mystic-900/90 border border-mystic-700 rounded-lg p-2 flex flex-col justify-between overflow-hidden cursor-pointer hover:border-amber-500/70 transition-colors';
+            el.addEventListener('click', () => openCungModal(i));
+            el.innerHTML = `
+                <div class="flex items-center justify-between border-b border-mystic-700/60 pb-1">
+                    <span class="hien-dan font-serif font-bold text-xs ${hienCung && cung.isMenh ? 'text-amber-400 underline decoration-amber-500' : 'text-gray-100'}">
+                        ${hienCung ? cung.palaceName : ''}${hienCung && cung.isThan ? ' <span class="text-[9px] bg-amber-500/20 text-amber-300 px-1 rounded">Thân</span>' : ''}
+                    </span>
+                    <span class="text-[10px] text-gray-400 font-mono font-semibold">${cung.chiName}</span>
+                </div>
+                <div class="my-1.5 space-y-0.5 min-h-[20px]">${chinhTinhHTML}</div>
             `;
             return el;
         }
 
-        const kq = (nhan, gia) => `<div class="flex flex-wrap items-baseline gap-x-1.5"><span class="text-gray-500">${nhan}:</span> <strong class="text-amber-300">${gia}</strong></div>`;
+        function renderBanCo() {
+            veKhungLuoi(document.getElementById('dia-ban'), { taoO, taoTam });
+        }
+
+        function veNutBuoc(n) {
+            const dangChon = state.step === n;
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = `w-full flex items-center gap-3 p-3 rounded-xl border text-left transition-all ${dangChon ? 'border-amber-500 bg-amber-500/10' : 'border-mystic-700 bg-mystic-900/40 hover:border-amber-500/50'}`;
+            btn.innerHTML = `
+                <div class="so-buoc" style="${dangChon ? '' : 'opacity:.7'}">${n}</div>
+                <div class="flex-1 min-w-0">
+                    <h3 class="font-serif font-bold text-sm ${dangChon ? 'text-amber-300' : 'text-white'}">${TEN_BUOC[n]}</h3>
+                </div>
+                <i class="fa-solid fa-chevron-right text-xs ${dangChon ? 'text-amber-400' : 'text-gray-600'}"></i>
+            `;
+            btn.addEventListener('click', () => chonBuoc(n));
+            return btn;
+        }
+
+        function renderDanhSachBuoc() {
+            const c1 = document.getElementById('chang-1'); c1.innerHTML = '';
+            const c2 = document.getElementById('chang-2'); c2.innerHTML = '';
+            [1, 2, 3, 4].forEach(n => c1.appendChild(veNutBuoc(n)));
+            [5, 6, 7, 8].forEach(n => c2.appendChild(veNutBuoc(n)));
+        }
+
+        // Bấm 1 bước bên trái: chọn bước đó, vẽ lại panel chi tiết + bàn cờ
+        // (bàn cờ hiện tích luỹ tới đúng bước này, xem saoChoPhepHienThi()).
+        function chonBuoc(n) {
+            if (!currentChartData) return;
+            state.step = n;
+
+            const panel = document.getElementById('chi-tiet-buoc');
+            panel.classList.remove('hidden');
+            panel.innerHTML = `
+                <div class="flex gap-4">
+                    <div class="so-buoc">${n}</div>
+                    <div class="flex-1 min-w-0">
+                        <h3 class="font-serif font-bold text-white mb-1.5">${TEN_BUOC[n]}</h3>
+                        <div class="text-xs sm:text-sm text-gray-300 leading-relaxed space-y-1.5">${noiDungBuoc(n, state.ctx)}</div>
+                    </div>
+                </div>
+            `;
+
+            renderDanhSachBuoc();
+            renderBanCo();
+        }
 
         function handleSubmit(e) {
             if (e) e.preventDefault();
@@ -277,78 +485,13 @@
             const tuViCell = grid.find(c => c.chinhTinh.some(s => s.name === 'Tử Vi'));
             const thienPhuCell = grid.find(c => c.chinhTinh.some(s => s.name === 'Thiên Phủ'));
 
-            const chang1 = document.getElementById('chang-1');
-            chang1.innerHTML = '';
+            state.ctx = { data, lunar, solar, yearCanChi, hourCanChi, isYangYear, isThuanLy,
+                           userInfo, grid, menhCell, thanCell, menhChiIdx, tuViCell, thienPhuCell };
 
-            chang1.appendChild(veBuoc(1, 'Âm Dương', `
-                ${kq('Năm sinh', `${yearCanChi.can} ${yearCanChi.chi} (${data.year})`)}
-                ${kq('Can', `${yearCanChi.can} → thuộc ${isYangYear ? 'Dương' : 'Âm'}`)}
-                ${kq('Kết hợp giới tính', userInfo.amDuongNamNu)}
-                ${kq('Chiều an vòng sao', `${isThuanLy ? 'Thuận' : 'Nghịch'} (Dương Nam / Âm Nữ đi thuận, còn lại đi nghịch)`)}
-            `));
+            document.getElementById('danh-sach-buoc').classList.remove('hidden');
+            chonBuoc(1);
 
-            chang1.appendChild(veBuoc(2, 'Cung Mệnh & Cung Thân', `
-                <p class="text-gray-400">Công thức: từ tháng sinh (âm lịch) đếm nghịch theo giờ sinh ra Cung Mệnh; đếm thuận theo giờ sinh ra Cung Thân.</p>
-                ${kq('Tháng sinh (âm lịch)', lunar.month)}
-                ${kq('Giờ sinh', `${hourCanChi.chi} (chi thứ ${hourCanChi.chiIdx})`)}
-                ${kq('→ Cung Mệnh', `tại ${menhCell.chiName} (${menhCell.palaceName})`)}
-                ${kq('→ Cung Thân', `tại ${thanCell.chiName} (${thanCell.palaceName})`)}
-            `));
-
-            chang1.appendChild(veBuoc(3, 'Cục', `
-                <p class="text-gray-400">Công thức: Can năm sinh xác định Can của cung Dần, cộng dồn tới cung Mệnh ra Can-Chi cung Mệnh, tra Nạp Âm của cặp Can-Chi đó ra ngũ hành Cục.</p>
-                ${kq('Can-Chi cung Mệnh', userInfo.cuc.canChi)}
-                ${kq('Nạp Âm cung Mệnh', userInfo.cuc.napAm)}
-                ${kq('→ Cục', `${userInfo.cuc.name} (số ${userInfo.cuc.num}, hành ${userInfo.cuc.element})`)}
-            `));
-
-            chang1.appendChild(veBuoc(4, 'Chủ Mệnh & Chủ Thân', `
-                <p class="text-gray-400">Tra bảng: Chủ Mệnh theo Chi của cung Mệnh; Chủ Thân theo Chi năm sinh.</p>
-                ${kq('Cung Mệnh tại', menhCell.chiName)}
-                ${kq('→ Chủ Mệnh', MENH_CHU[menhChiIdx])}
-                ${kq('Năm sinh, Chi', yearCanChi.chi)}
-                ${kq('→ Chủ Thân', THAN_CHU[yearCanChi.chiIdx])}
-            `));
-
-            const chang2 = document.getElementById('chang-2');
-            chang2.innerHTML = '';
-
-            chang2.appendChild(veBuoc(5, 'Vị trí Tử Vi', `
-                <p class="text-gray-400">Công thức dựa trên ngày sinh (âm lịch) và số Cục — thuật toán trong <code class="text-amber-300/90">calculateTuViPosition()</code>, tương đương cách "mò X" thủ công trong sách (X lẻ thì tiến, chẵn thì lùi).</p>
-                ${kq('Ngày sinh (âm lịch)', lunar.day)}
-                ${kq('Cục', userInfo.cuc.num)}
-                ${kq('→ Tử Vi an tại', `${tuViCell.chiName} (${tuViCell.palaceName})`)}
-            `));
-
-            chang2.appendChild(veBuoc(6, 'Vị trí Thiên Phủ', `
-                <p class="text-gray-400">Thiên Phủ luôn đối xứng Tử Vi qua trục Dần - Thân.</p>
-                ${kq('Tử Vi tại', tuViCell.chiName)}
-                ${kq('→ Thiên Phủ an tại', `${thienPhuCell.chiName} (${thienPhuCell.palaceName})`)}
-            `));
-
-            const veVong = (nhomSao, goc, chieu) => {
-                const rows = nhomSao.map(s => {
-                    const cell = grid.find(c => c.chinhTinh.some(x => x.name === s.name));
-                    return `<tr class="border-t border-mystic-700/60">
-                        <td class="py-1 pr-3 text-gray-500 font-mono">${s.offset >= 0 ? '+' : ''}${s.offset}</td>
-                        <td class="py-1 pr-3 font-semibold ${cellHanhClass(s.el)}">${s.name}</td>
-                        <td class="py-1 text-amber-300">${cell.chiName} (${cell.palaceName})</td>
-                    </tr>`;
-                }).join('');
-                return `<p class="text-gray-400">Đi ${chieu} từ ${goc}, mỗi sao lệch một số cung cố định (offset).</p>
-                    <table class="w-full text-xs mt-2"><tbody>${rows}</tbody></table>`;
-            };
-            function cellHanhClass(el) {
-                return { Kim: 'hanh-kim', Mộc: 'hanh-moc', Thủy: 'hanh-thuy', Hỏa: 'hanh-hoa', Thổ: 'hanh-tho' }[el] || 'hanh-tho';
-            }
-
-            chang2.appendChild(veBuoc(7, 'Vòng Tử Vi — 6 sao, đi nghịch', veVong(TU_VI_GROUP, 'Tử Vi', 'nghịch')));
-            chang2.appendChild(veBuoc(8, 'Vòng Thiên Phủ — 8 sao, đi thuận', veVong(THIEN_PHU_GROUP, 'Thiên Phủ', 'thuận')));
-
-            veDiaBan(document.getElementById('dia-ban'), currentChartData, { onCungClick: openCungModal, rutGon: true });
-
-            document.getElementById('ket-qua').classList.remove('hidden');
-            if (e) document.getElementById('ket-qua').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (e) document.getElementById('danh-sach-buoc').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function openCungModal(gridIdx) {
@@ -366,7 +509,10 @@
         }
 
         document.getElementById('form-sinh').addEventListener('submit', handleSubmit);
-        window.addEventListener('load', () => handleSubmit());
+        window.addEventListener('load', () => {
+            renderBanCo(); // bàn cờ trống (chỉ 12 Chi) hiện ngay cả trước khi submit
+            handleSubmit();
+        });
 
         // <script type="module"> có scope riêng; onclick/onchange trong HTML
         // nên phải gắn tay lên window.
